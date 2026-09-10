@@ -946,9 +946,9 @@ body{
     var wCurrent = 0, morti = 0;
     for(var i=0;i<effectiveAttacks;i++){
       wCurrent += combat.danni;
-      if(wCurrent > combat.w){ morti++; wCurrent = 0; }
+      if(wCurrent >= combat.w){ morti++; wCurrent = 0; }
     }
-    var feriteResidue = (wCurrent === combat.w) ? 0 : wCurrent;
+    var feriteResidue = wCurrent;
 
     // render
     document.getElementById("r-att-ok").textContent = attOk;
