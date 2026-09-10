@@ -1,0 +1,1001 @@
+<title>Calcolatore D6</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600;700&display=swap">
+<style>
+:root{
+  --bg:#eef1f6;
+  --surface:#ffffff;
+  --surface-2:#f5f7fb;
+  --border:#d7dce4;
+  --text:#1a1e27;
+  --text-dim:#5b6270;
+  --text-faint:#8790a0;
+  --att:#c1502a;
+  --att-soft:#c1502a1a;
+  --def:#256e84;
+  --def-soft:#256e841a;
+  --ok:#2f8f57;
+  --ok-soft:#2f8f5720;
+  --crit:#a67816;
+  --crit-soft:#a6781620;
+  --fail:#a63f3f;
+  --fail-soft:#a63f3f1a;
+  --accent:#c1502a;
+  --shadow:0 1px 2px rgba(20,24,32,.06), 0 4px 14px rgba(20,24,32,.05);
+  --radius-card:10px;
+  --radius-tile:5px;
+  --radius-pill:999px;
+  font-variant-numeric: tabular-nums;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#10131a;
+    --surface:#181c25;
+    --surface-2:#1e232e;
+    --border:#2c3240;
+    --text:#eaecf2;
+    --text-dim:#9198a8;
+    --text-faint:#666e80;
+    --att:#e0824a;
+    --att-soft:#e0824a26;
+    --def:#5db2cc;
+    --def-soft:#5db2cc26;
+    --ok:#5fbf82;
+    --ok-soft:#5fbf8226;
+    --crit:#e6b84a;
+    --crit-soft:#e6b84a26;
+    --fail:#e07a75;
+    --fail-soft:#e07a7520;
+    --accent:#e0824a;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 6px 20px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#10131a;
+  --surface:#181c25;
+  --surface-2:#1e232e;
+  --border:#2c3240;
+  --text:#eaecf2;
+  --text-dim:#9198a8;
+  --text-faint:#666e80;
+  --att:#e0824a;
+  --att-soft:#e0824a26;
+  --def:#5db2cc;
+  --def-soft:#5db2cc26;
+  --ok:#5fbf82;
+  --ok-soft:#5fbf8226;
+  --crit:#e6b84a;
+  --crit-soft:#e6b84a26;
+  --fail:#e07a75;
+  --fail-soft:#e07a7520;
+  --accent:#e0824a;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 6px 20px rgba(0,0,0,.35);
+}
+
+*{box-sizing:border-box;}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:"IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  -webkit-tap-highlight-color:transparent;
+}
+.wrap{
+  max-width:1080px;
+  margin:0 auto;
+  padding:16px 16px 64px;
+}
+@media (min-width:720px){
+  .wrap{padding:28px 32px 80px;}
+}
+
+/* ---------- header ---------- */
+.page-head{
+  display:flex;
+  align-items:baseline;
+  gap:12px;
+  margin-bottom:18px;
+  flex-wrap:wrap;
+}
+.page-head h1{
+  font-family:"Rajdhani",sans-serif;
+  font-weight:700;
+  font-size:1.7rem;
+  letter-spacing:.02em;
+  margin:0;
+  text-wrap:balance;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.page-head .pip{
+  width:20px;height:20px;flex:none;
+}
+.page-head p{
+  margin:0;
+  color:var(--text-dim);
+  font-size:.85rem;
+}
+
+/* ---------- tab bar ---------- */
+.tabbar{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  background:var(--surface-2);
+  border:1px solid var(--border);
+  border-radius:var(--radius-card);
+  padding:4px;
+  margin-bottom:20px;
+  position:sticky;
+  top:8px;
+  z-index:20;
+  box-shadow:var(--shadow);
+}
+.tab-btn{
+  font-family:"Rajdhani",sans-serif;
+  font-weight:600;
+  font-size:1rem;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+  padding:12px 10px;
+  border:none;
+  border-radius:calc(var(--radius-card) - 3px);
+  background:transparent;
+  color:var(--text-dim);
+  cursor:pointer;
+  transition:background .15s ease, color .15s ease;
+}
+.tab-btn.active{
+  background:var(--surface);
+  color:var(--text);
+  box-shadow:0 1px 3px rgba(0,0,0,.15);
+}
+.tab-btn:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
+
+.panel{display:none;}
+.panel.active{display:block; animation:fadein .18s ease;}
+@keyframes fadein{from{opacity:0; transform:translateY(3px);} to{opacity:1; transform:none;}}
+@media (prefers-reduced-motion:reduce){.panel.active{animation:none;}}
+
+/* ---------- card ---------- */
+.card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius-card);
+  padding:16px;
+  box-shadow:var(--shadow);
+  margin-bottom:14px;
+}
+.card + .card{margin-top:14px;}
+.card-title{
+  font-family:"Rajdhani",sans-serif;
+  font-weight:700;
+  font-size:1.05rem;
+  letter-spacing:.03em;
+  text-transform:uppercase;
+  margin:0 0 14px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.side-card{
+  border-top:2px solid var(--accent);
+}
+.side-card.attacker{--accent:var(--att);}
+.side-card.defender{--accent:var(--def);}
+.side-card .card-title{color:var(--accent);}
+
+.field-row{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  margin-bottom:16px;
+}
+.field-row:last-child{margin-bottom:0;}
+.field-label{
+  font-size:.72rem;
+  font-weight:600;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--text-dim);
+}
+.field-hint{
+  font-size:.72rem;
+  color:var(--text-faint);
+  margin-top:-4px;
+}
+
+/* ---------- stepper ---------- */
+.stepper{
+  display:grid;
+  grid-template-columns:44px 44px 1fr 44px 44px;
+  gap:6px;
+  align-items:stretch;
+}
+.step-btn{
+  font-family:"IBM Plex Mono",monospace;
+  font-weight:600;
+  font-size:.95rem;
+  border:1px solid var(--border);
+  background:var(--surface-2);
+  color:var(--text);
+  border-radius:8px;
+  min-height:44px;
+  cursor:pointer;
+  transition:background .12s ease, transform .05s ease;
+}
+.step-btn:active{transform:scale(.95);}
+.step-btn:hover{background:var(--border);}
+.step-btn:focus-visible{outline:2px solid var(--accent, var(--att)); outline-offset:1px;}
+.step-value{
+  font-family:"IBM Plex Mono",monospace;
+  font-weight:700;
+  font-size:1.3rem;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:var(--surface-2);
+  border:1px solid var(--border);
+  border-radius:8px;
+  min-height:44px;
+}
+
+/* ---------- number input ---------- */
+.num-input{
+  width:100%;
+  min-height:44px;
+  font-family:"IBM Plex Mono",monospace;
+  font-weight:600;
+  font-size:1.1rem;
+  color:var(--text);
+  background:var(--surface-2);
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:0 14px;
+}
+.num-input:focus-visible{outline:2px solid var(--accent, var(--att)); outline-offset:1px;}
+
+/* ---------- threshold pills ---------- */
+.threshold-group{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:6px;
+}
+.pill-btn{
+  font-family:"Rajdhani",sans-serif;
+  font-weight:700;
+  font-size:1.05rem;
+  min-height:44px;
+  border:1px solid var(--border);
+  background:var(--surface-2);
+  color:var(--text-dim);
+  border-radius:var(--radius-pill);
+  cursor:pointer;
+  transition:all .12s ease;
+}
+.pill-btn:hover{border-color:var(--accent, var(--att));}
+.pill-btn.selected{
+  background:var(--accent, var(--att));
+  border-color:var(--accent, var(--att));
+  color:#fff;
+}
+.pill-btn:focus-visible{outline:2px solid var(--accent, var(--att)); outline-offset:2px;}
+
+/* ---------- sustained group ---------- */
+.choice-group{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:6px;
+}
+.choice-btn{
+  font-family:"IBM Plex Sans",sans-serif;
+  font-weight:600;
+  font-size:.82rem;
+  min-height:40px;
+  border:1px solid var(--border);
+  background:var(--surface-2);
+  color:var(--text-dim);
+  border-radius:8px;
+  cursor:pointer;
+}
+.choice-btn.selected{
+  background:var(--att-soft);
+  border-color:var(--att);
+  color:var(--att);
+}
+
+/* ---------- toggle switch ---------- */
+.toggle-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:10px 0;
+  border-top:1px solid var(--border);
+}
+.toggle-row:first-of-type{border-top:none;}
+.toggle-label{
+  font-size:.9rem;
+  font-weight:500;
+  color:var(--text);
+}
+.toggle-desc{
+  font-size:.74rem;
+  color:var(--text-faint);
+  margin-top:1px;
+}
+.switch{
+  position:relative;
+  width:46px;height:27px;
+  flex:none;
+  appearance:none;
+  background:var(--border);
+  border-radius:var(--radius-pill);
+  cursor:pointer;
+  transition:background .15s ease;
+}
+.switch::before{
+  content:"";
+  position:absolute;
+  top:3px;left:3px;
+  width:21px;height:21px;
+  background:#fff;
+  border-radius:50%;
+  transition:transform .15s ease;
+  box-shadow:0 1px 3px rgba(0,0,0,.3);
+}
+.switch:checked{background:var(--accent, var(--att));}
+.switch:checked::before{transform:translateX(19px);}
+.switch:focus-visible{outline:2px solid var(--accent, var(--att)); outline-offset:2px;}
+
+.sub-threshold{
+  margin-top:10px;
+  padding-top:10px;
+}
+
+/* ---------- statistiche results ---------- */
+.stat-results{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
+  gap:10px;
+}
+.result-tile{
+  background:var(--surface-2);
+  border:1px solid var(--border);
+  border-radius:var(--radius-tile);
+  padding:14px 14px 12px;
+}
+.result-tile .rt-label{
+  font-size:.68rem;
+  font-weight:600;
+  letter-spacing:.09em;
+  text-transform:uppercase;
+  color:var(--text-dim);
+  display:block;
+  margin-bottom:4px;
+}
+.result-tile .rt-value{
+  font-family:"IBM Plex Mono",monospace;
+  font-weight:700;
+  font-size:2rem;
+  line-height:1;
+  display:block;
+}
+.result-tile.ok .rt-value{color:var(--ok);}
+.result-tile.crit .rt-value{color:var(--crit);}
+.result-tile.fail .rt-value{color:var(--fail);}
+.result-tile.ok{background:var(--ok-soft); border-color:var(--ok);}
+.result-tile.crit{background:var(--crit-soft); border-color:var(--crit);}
+.result-tile.fail{background:var(--fail-soft); border-color:var(--fail);}
+
+/* ---------- combat layout ---------- */
+.combat-sides{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:14px;
+  align-items:start;
+}
+@media (min-width:800px){
+  .combat-sides{grid-template-columns:1fr 1fr;}
+}
+
+/* ---------- pipeline ---------- */
+.pipeline-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius-card);
+  padding:16px;
+  box-shadow:var(--shadow);
+}
+.pipeline{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:10px;
+}
+@media (min-width:800px){
+  .pipeline{
+    grid-template-columns:repeat(4,1fr);
+  }
+}
+.pl-step{
+  background:var(--surface-2);
+  border:1px solid var(--border);
+  border-radius:var(--radius-tile);
+  padding:12px 14px;
+  position:relative;
+}
+.pl-step .rt-label{
+  font-size:.66rem;
+  font-weight:600;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--text-dim);
+  display:block;
+  margin-bottom:4px;
+}
+.pl-step .rt-value{
+  font-family:"IBM Plex Mono",monospace;
+  font-weight:700;
+  font-size:1.5rem;
+  line-height:1;
+}
+.pl-step .rt-sub{
+  font-size:.68rem;
+  color:var(--text-faint);
+  margin-top:3px;
+}
+.pl-arrow{
+  display:none;
+  position:absolute;
+  right:-9px; top:50%;
+  transform:translateY(-50%);
+  color:var(--text-faint);
+  font-size:1rem;
+  z-index:1;
+}
+@media (min-width:800px){
+  .pl-step:not(.pl-last-in-row) .pl-arrow{display:block;}
+}
+.pl-step.hit{border-left:3px solid var(--att);}
+.pl-step.wound{border-left:3px solid var(--att);}
+.pl-step.save{border-left:3px solid var(--def);}
+.pl-step.fnp{border-left:3px solid var(--def);}
+
+.pipeline-final{
+  margin-top:12px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+.pl-final{
+  border-radius:var(--radius-tile);
+  padding:16px 16px 14px;
+  border:1px solid var(--border);
+}
+.pl-final .rt-label{
+  font-size:.7rem;
+  font-weight:600;
+  letter-spacing:.09em;
+  text-transform:uppercase;
+  display:block;
+  margin-bottom:4px;
+}
+.pl-final .rt-value{
+  font-family:"IBM Plex Mono",monospace;
+  font-weight:700;
+  font-size:2.4rem;
+  line-height:1;
+}
+.pl-final.morti{background:var(--fail-soft); border-color:var(--fail);}
+.pl-final.morti .rt-label,.pl-final.morti .rt-value{color:var(--fail);}
+.pl-final.ferite{background:var(--ok-soft); border-color:var(--ok);}
+.pl-final.ferite .rt-label,.pl-final.ferite .rt-value{color:var(--ok);}
+
+.footnote{
+  font-size:.7rem;
+  color:var(--text-faint);
+  margin-top:14px;
+  line-height:1.5;
+}
+</style>
+
+<div class="wrap">
+  <header class="page-head">
+    <h1>
+      <svg class="pip" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="2" y="2" width="20" height="20" rx="4" stroke="currentColor" stroke-width="2"/>
+        <circle cx="8" cy="8" r="1.6" fill="currentColor"/>
+        <circle cx="16" cy="8" r="1.6" fill="currentColor"/>
+        <circle cx="8" cy="16" r="1.6" fill="currentColor"/>
+        <circle cx="16" cy="16" r="1.6" fill="currentColor"/>
+        <circle cx="12" cy="12" r="1.6" fill="currentColor"/>
+      </svg>
+      Calcolatore D6
+    </h1>
+    <p>Probabilità esatte, nessun tiro casuale</p>
+  </header>
+
+  <nav class="tabbar" role="tablist">
+    <button class="tab-btn active" id="tab-stats-btn" role="tab" aria-selected="true">Statistiche</button>
+    <button class="tab-btn" id="tab-combat-btn" role="tab" aria-selected="false">Combattimento</button>
+  </nav>
+
+  <!-- ============ STATISTICHE ============ -->
+  <section class="panel active" id="panel-stats">
+    <div class="card">
+      <h2 class="card-title">Dadi</h2>
+      <div class="field-row">
+        <span class="field-label">D6</span>
+        <div class="stepper">
+          <button class="step-btn" id="s-dice-m5">−5</button>
+          <button class="step-btn" id="s-dice-m1">−1</button>
+          <div class="step-value" id="s-dice-val">10</div>
+          <button class="step-btn" id="s-dice-p1">+1</button>
+          <button class="step-btn" id="s-dice-p5">+5</button>
+        </div>
+      </div>
+      <div class="field-row">
+        <span class="field-label">Soglia di successo</span>
+        <div class="threshold-group" id="s-threshold" data-selected="4"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2 class="card-title">Opzioni</h2>
+      <div class="toggle-row">
+        <div>
+          <div class="toggle-label">Ritira gli insuccessi</div>
+          <div class="toggle-desc">Un solo reroll sui dadi falliti</div>
+        </div>
+        <input type="checkbox" class="switch" id="s-reroll">
+      </div>
+      <div class="toggle-row">
+        <div>
+          <div class="toggle-label">Lethal</div>
+          <div class="toggle-desc">I 6 naturali diventano critici</div>
+        </div>
+        <input type="checkbox" class="switch" id="s-lethal">
+      </div>
+    </div>
+
+    <div class="card">
+      <h2 class="card-title">Risultato</h2>
+      <div class="stat-results">
+        <div class="result-tile ok"><span class="rt-label">Successi</span><span class="rt-value" id="s-out-success">0</span></div>
+        <div class="result-tile crit" id="s-crit-tile" style="display:none"><span class="rt-label">Critici</span><span class="rt-value" id="s-out-crit">0</span></div>
+        <div class="result-tile fail"><span class="rt-label">Insuccessi</span><span class="rt-value" id="s-out-fail">0</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ COMBATTIMENTO ============ -->
+  <section class="panel" id="panel-combat">
+    <div class="combat-sides">
+
+      <!-- ATTACCANTE -->
+      <div class="card side-card attacker">
+        <h2 class="card-title">Attaccante</h2>
+
+        <div class="field-row">
+          <span class="field-label">ATT — numero attacchi</span>
+          <div class="stepper">
+            <button class="step-btn" id="c-att-m5">−5</button>
+            <button class="step-btn" id="c-att-m1">−1</button>
+            <div class="step-value" id="c-att-val">10</div>
+            <button class="step-btn" id="c-att-p1">+1</button>
+            <button class="step-btn" id="c-att-p5">+5</button>
+          </div>
+        </div>
+
+        <div class="field-row">
+          <span class="field-label">XCOL — soglia per colpire</span>
+          <div class="threshold-group" id="c-xcol" data-selected="4"></div>
+        </div>
+
+        <div class="field-row">
+          <span class="field-label">FOR — forza</span>
+          <input type="number" inputmode="numeric" class="num-input" id="c-for" min="1" value="4">
+        </div>
+        <div class="field-row">
+          <span class="field-label">AP — penetrazione armatura</span>
+          <input type="number" inputmode="numeric" class="num-input" id="c-ap" min="0" value="1">
+        </div>
+        <div class="field-row">
+          <span class="field-label">DANNI — per attacco riuscito</span>
+          <input type="number" inputmode="numeric" class="num-input" id="c-danni" min="1" value="1">
+        </div>
+
+        <div class="field-row" style="margin-bottom:0">
+          <span class="field-label">Regole speciali</span>
+        </div>
+        <div class="toggle-row">
+          <div class="toggle-label">Lethal</div>
+          <input type="checkbox" class="switch" id="c-lethal">
+        </div>
+        <div class="toggle-row">
+          <div>
+            <div class="toggle-label">Ripeti falliti</div>
+            <div class="toggle-desc">Reroll dei falliti per colpire</div>
+          </div>
+          <input type="checkbox" class="switch" id="c-repeat">
+        </div>
+        <div class="toggle-row">
+          <div class="toggle-label">Twinlink</div>
+          <input type="checkbox" class="switch" id="c-twinlink">
+        </div>
+        <div class="toggle-row">
+          <div class="toggle-label">Lancia</div>
+          <input type="checkbox" class="switch" id="c-lancia">
+        </div>
+        <div class="toggle-row">
+          <div>
+            <div class="toggle-label">Dev</div>
+            <div class="toggle-desc">I critici bypassano il salvezza</div>
+          </div>
+          <input type="checkbox" class="switch" id="c-dev">
+        </div>
+
+        <div class="field-row" style="margin-top:16px; margin-bottom:0">
+          <span class="field-label">Sustained</span>
+          <div class="choice-group" id="c-sustained" data-selected="0">
+            <button class="choice-btn selected" data-value="0">Nessuno</button>
+            <button class="choice-btn" data-value="1">Sust1</button>
+            <button class="choice-btn" data-value="2">Sust2</button>
+            <button class="choice-btn" data-value="3">Sust3</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- DIFENSORE -->
+      <div class="card side-card defender">
+        <h2 class="card-title">Difensore</h2>
+
+        <div class="field-row">
+          <span class="field-label">RES — resistenza</span>
+          <input type="number" inputmode="numeric" class="num-input" id="d-res" min="1" value="4">
+        </div>
+
+        <div class="field-row">
+          <span class="field-label">SAVE — tiro salvezza</span>
+          <div class="threshold-group" id="d-save" data-selected="4"></div>
+        </div>
+
+        <div class="field-row">
+          <span class="field-label">W — ferite per modello</span>
+          <input type="number" inputmode="numeric" class="num-input" id="d-w" min="1" value="1">
+        </div>
+
+        <div class="toggle-row">
+          <div class="toggle-label">Invulnerabile</div>
+          <input type="checkbox" class="switch" id="d-invul">
+        </div>
+        <div class="sub-threshold" id="d-invul-sub" style="display:none">
+          <span class="field-label">Soglia invulnerabile</span>
+          <div class="threshold-group" id="d-invul-threshold" data-selected="4" style="margin-top:8px"></div>
+        </div>
+
+        <div class="toggle-row">
+          <div class="toggle-label">Feel No Pain</div>
+          <input type="checkbox" class="switch" id="d-fnp">
+        </div>
+        <div class="sub-threshold" id="d-fnp-sub" style="display:none">
+          <span class="field-label">Soglia FNP</span>
+          <div class="threshold-group" id="d-fnp-threshold" data-selected="4" style="margin-top:8px"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RISULTATI -->
+    <div class="pipeline-card" style="margin-top:14px">
+      <h2 class="card-title">Sequenza di risoluzione</h2>
+      <div class="pipeline">
+        <div class="pl-step hit">
+          <span class="rt-label">Att OK</span>
+          <span class="rt-value" id="r-att-ok">0</span>
+          <span class="rt-sub" id="r-att-ok-sub"></span>
+          <span class="pl-arrow">→</span>
+        </div>
+        <div class="pl-step wound pl-last-in-row">
+          <span class="rt-label">Per ferire</span>
+          <span class="rt-value" id="r-per-ferire">4+</span>
+          <span class="rt-sub" id="r-fer-ok-sub"></span>
+          <span class="pl-arrow">→</span>
+        </div>
+        <div class="pl-step save">
+          <span class="rt-label">Per i danni</span>
+          <span class="rt-value" id="r-per-danni">5+</span>
+          <span class="rt-sub" id="r-non-salvati-sub"></span>
+          <span class="pl-arrow">→</span>
+        </div>
+        <div class="pl-step fnp pl-last-in-row">
+          <span class="rt-label" id="r-danni-label">Danni totali</span>
+          <span class="rt-value" id="r-danni-totali">0</span>
+          <span class="rt-sub" id="r-danni-sub"></span>
+        </div>
+      </div>
+      <div class="pipeline-final">
+        <div class="pl-final morti">
+          <span class="rt-label">Morti</span>
+          <span class="rt-value" id="r-morti">0</span>
+        </div>
+        <div class="pl-final ferite">
+          <span class="rt-label">Ferite residue</span>
+          <span class="rt-value" id="r-ferite">0</span>
+        </div>
+      </div>
+      <p class="footnote">Fer OK: <span id="r-fer-ok">0</span> · Non salvati: <span id="r-non-salvati">0</span><span id="r-fnp-line"></span></p>
+    </div>
+  </section>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  function successProb(t){ return (7-t)/6; }
+  function failProb(t){ return t>=7 ? 1 : (t-1)/6; }
+  function round(n){ return Math.round(n); }
+
+  function makeThresholdGroup(container, defaultVal, onChange){
+    container.innerHTML = "";
+    [2,3,4,5,6].forEach(function(v){
+      var btn = document.createElement("button");
+      btn.className = "pill-btn" + (v===defaultVal ? " selected" : "");
+      btn.textContent = v + "+";
+      btn.dataset.value = v;
+      btn.addEventListener("click", function(){
+        container.dataset.selected = v;
+        Array.prototype.forEach.call(container.children, function(c){ c.classList.remove("selected"); });
+        btn.classList.add("selected");
+        onChange(v);
+      });
+      container.appendChild(btn);
+    });
+    container.dataset.selected = defaultVal;
+  }
+
+  // ---------------- STATISTICHE ----------------
+  var stat = { dice: 10, threshold: 4, reroll: false, lethal: false };
+
+  var elDiceVal = document.getElementById("s-dice-val");
+  function setDice(v){
+    stat.dice = Math.max(1, Math.min(100, v));
+    elDiceVal.textContent = stat.dice;
+    renderStats();
+  }
+  document.getElementById("s-dice-m5").addEventListener("click", function(){ setDice(stat.dice-5); });
+  document.getElementById("s-dice-m1").addEventListener("click", function(){ setDice(stat.dice-1); });
+  document.getElementById("s-dice-p1").addEventListener("click", function(){ setDice(stat.dice+1); });
+  document.getElementById("s-dice-p5").addEventListener("click", function(){ setDice(stat.dice+5); });
+
+  makeThresholdGroup(document.getElementById("s-threshold"), 4, function(v){ stat.threshold = v; renderStats(); });
+
+  document.getElementById("s-reroll").addEventListener("change", function(e){ stat.reroll = e.target.checked; renderStats(); });
+  document.getElementById("s-lethal").addEventListener("change", function(e){ stat.lethal = e.target.checked; renderStats(); });
+
+  function hitPhase(n, threshold, lethal, sustLevel){
+    if(n<=0) return {crit:0, normalSuccess:0, fail:0, sustBonus:0, sixCount:0};
+    var sixCount = round(n/6);
+    var crit=0, normalSuccess;
+    if(lethal){
+      crit = sixCount;
+      var succProb = successProb(threshold) - (1/6);
+      if(succProb<0) succProb = 0;
+      normalSuccess = round(n*succProb);
+    } else {
+      normalSuccess = round(n*successProb(threshold));
+    }
+    var fail = Math.max(0, n - crit - normalSuccess);
+    var sustBonus = sustLevel>0 ? sixCount*sustLevel : 0;
+    return {crit:crit, normalSuccess:normalSuccess, fail:fail, sustBonus:sustBonus, sixCount:sixCount};
+  }
+
+  function renderStats(){
+    var initial = hitPhase(stat.dice, stat.threshold, stat.lethal, 0);
+    var success = initial.normalSuccess, crit = initial.crit, fail = initial.fail;
+    if(stat.reroll){
+      var r = hitPhase(fail, stat.threshold, stat.lethal, 0);
+      success += r.normalSuccess;
+      crit += r.crit;
+      fail = r.fail;
+    }
+    document.getElementById("s-out-success").textContent = success;
+    document.getElementById("s-out-fail").textContent = fail;
+    var critTile = document.getElementById("s-crit-tile");
+    if(stat.lethal){
+      critTile.style.display = "";
+      document.getElementById("s-out-crit").textContent = crit;
+    } else {
+      critTile.style.display = "none";
+    }
+  }
+
+  // ---------------- COMBATTIMENTO ----------------
+  var combat = {
+    att: 10, xcol: 4, for_: 4, ap: 1, danni: 1,
+    lethal: false, repeat: false, sustained: 0,
+    twinlink: false, lancia: false, dev: false,
+    res: 4, save: 4, w: 1,
+    invul: false, invulThreshold: 4,
+    fnp: false, fnpThreshold: 4
+  };
+
+  var elAttVal = document.getElementById("c-att-val");
+  function setAtt(v){
+    combat.att = Math.max(1, Math.min(100, v));
+    elAttVal.textContent = combat.att;
+    renderCombat();
+  }
+  document.getElementById("c-att-m5").addEventListener("click", function(){ setAtt(combat.att-5); });
+  document.getElementById("c-att-m1").addEventListener("click", function(){ setAtt(combat.att-1); });
+  document.getElementById("c-att-p1").addEventListener("click", function(){ setAtt(combat.att+1); });
+  document.getElementById("c-att-p5").addEventListener("click", function(){ setAtt(combat.att+5); });
+
+  makeThresholdGroup(document.getElementById("c-xcol"), 4, function(v){ combat.xcol = v; renderCombat(); });
+  makeThresholdGroup(document.getElementById("d-save"), 4, function(v){ combat.save = v; renderCombat(); });
+  makeThresholdGroup(document.getElementById("d-invul-threshold"), 4, function(v){ combat.invulThreshold = v; renderCombat(); });
+  makeThresholdGroup(document.getElementById("d-fnp-threshold"), 4, function(v){ combat.fnpThreshold = v; renderCombat(); });
+
+  function bindNumber(id, key, min){
+    var el = document.getElementById(id);
+    el.addEventListener("input", function(){
+      var v = parseInt(el.value, 10);
+      if(isNaN(v)) v = min;
+      v = Math.max(min, v);
+      combat[key] = v;
+      renderCombat();
+    });
+  }
+  bindNumber("c-for","for_",1);
+  bindNumber("c-ap","ap",0);
+  bindNumber("c-danni","danni",1);
+  bindNumber("d-res","res",1);
+  bindNumber("d-w","w",1);
+
+  document.getElementById("c-lethal").addEventListener("change", function(e){ combat.lethal = e.target.checked; renderCombat(); });
+  document.getElementById("c-repeat").addEventListener("change", function(e){ combat.repeat = e.target.checked; renderCombat(); });
+  document.getElementById("c-twinlink").addEventListener("change", function(e){ combat.twinlink = e.target.checked; renderCombat(); });
+  document.getElementById("c-lancia").addEventListener("change", function(e){ combat.lancia = e.target.checked; renderCombat(); });
+  document.getElementById("c-dev").addEventListener("change", function(e){ combat.dev = e.target.checked; renderCombat(); });
+
+  var sustGroup = document.getElementById("c-sustained");
+  Array.prototype.forEach.call(sustGroup.children, function(btn){
+    btn.addEventListener("click", function(){
+      Array.prototype.forEach.call(sustGroup.children, function(c){ c.classList.remove("selected"); });
+      btn.classList.add("selected");
+      combat.sustained = parseInt(btn.dataset.value, 10);
+      renderCombat();
+    });
+  });
+
+  var invulSub = document.getElementById("d-invul-sub");
+  document.getElementById("d-invul").addEventListener("change", function(e){
+    combat.invul = e.target.checked;
+    invulSub.style.display = combat.invul ? "" : "none";
+    renderCombat();
+  });
+  var fnpSub = document.getElementById("d-fnp-sub");
+  document.getElementById("d-fnp").addEventListener("change", function(e){
+    combat.fnp = e.target.checked;
+    fnpSub.style.display = combat.fnp ? "" : "none";
+    renderCombat();
+  });
+
+  function woundThreshold(for_, res){
+    if(for_ >= res*2) return 2;
+    if(for_ > res) return 3;
+    if(for_ === res) return 4;
+    if(for_ <= res/2) return 6;
+    return 5;
+  }
+
+  function passPhase(n, threshold){
+    var succ = round(n*successProb(threshold));
+    var fail = Math.max(0, n - succ);
+    return {succ:succ, fail:fail};
+  }
+
+  function renderCombat(){
+    // FASE 1 - PER COLPIRE
+    var initial = hitPhase(combat.att, combat.xcol, combat.lethal, combat.sustained);
+    var critTotal = initial.crit;
+    var normalSuccessTotal = initial.normalSuccess + initial.sustBonus;
+    var failTotal = initial.fail;
+    if(combat.repeat){
+      var reroll = hitPhase(initial.fail, combat.xcol, combat.lethal, combat.sustained);
+      critTotal += reroll.crit;
+      normalSuccessTotal += reroll.normalSuccess + reroll.sustBonus;
+      failTotal = reroll.fail;
+    }
+    var attOk = normalSuccessTotal + critTotal;
+
+    // FASE 2 - PER FERIRE
+    var woundT = woundThreshold(combat.for_, combat.res);
+    if(combat.lancia) woundT = Math.max(2, woundT - 1);
+    var initialWound = passPhase(normalSuccessTotal, woundT);
+    var woundSuccessTotal, woundFailTotal;
+    if(combat.twinlink){
+      var woundReroll = passPhase(initialWound.fail, woundT);
+      woundSuccessTotal = initialWound.succ + woundReroll.succ;
+      woundFailTotal = woundReroll.fail;
+    } else {
+      woundSuccessTotal = initialWound.succ;
+      woundFailTotal = initialWound.fail;
+    }
+    var ferOk = woundSuccessTotal + critTotal;
+
+    // FASE 3 - SALVEZZA
+    var perDanniRaw = combat.ap + combat.save;
+    var perDanniEffective = combat.invul ? Math.min(perDanniRaw, combat.invulThreshold) : perDanniRaw;
+    var calcThreshold = Math.min(perDanniEffective, 7);
+    var devBypassCount = combat.dev ? critTotal : 0;
+    var normalDamageCount = woundSuccessTotal + (combat.dev ? 0 : critTotal);
+    var nonSalvatiFromNormal = round(normalDamageCount * failProb(calcThreshold));
+    var nonSalvati = nonSalvatiFromNormal + devBypassCount;
+
+    // FASE 4 - FNP
+    var feriteDopoFnp;
+    if(combat.fnp){
+      feriteDopoFnp = round(nonSalvati * failProb(combat.fnpThreshold));
+    } else {
+      feriteDopoFnp = nonSalvati;
+    }
+
+    // FASE 5 - DANNI
+    var effectiveAttacks = Math.max(0, Math.round(feriteDopoFnp));
+    var danniTotali = effectiveAttacks * combat.danni;
+    var wCurrent = 0, morti = 0;
+    for(var i=0;i<effectiveAttacks;i++){
+      wCurrent += combat.danni;
+      if(wCurrent > combat.w){ morti++; wCurrent = 0; }
+    }
+    var feriteResidue = (wCurrent === combat.w) ? 0 : wCurrent;
+
+    // render
+    document.getElementById("r-att-ok").textContent = attOk;
+    document.getElementById("r-att-ok-sub").textContent = combat.lethal ? (critTotal + " critici bypassano") : "";
+    document.getElementById("r-per-ferire").textContent = woundT + "+";
+    document.getElementById("r-fer-ok-sub").textContent = "Fer OK " + ferOk;
+    document.getElementById("r-per-danni").textContent = calcThreshold >= 7 ? "7+" : (calcThreshold + "+");
+    document.getElementById("r-non-salvati-sub").textContent = "Non salvati " + nonSalvati;
+    document.getElementById("r-fer-ok").textContent = ferOk;
+    document.getElementById("r-non-salvati").textContent = nonSalvati;
+
+    var fnpLine = document.getElementById("r-fnp-line");
+    var lastLabel = document.getElementById("r-danni-label");
+    var lastSub = document.getElementById("r-danni-sub");
+    if(combat.fnp){
+      fnpLine.textContent = " · Ferite dopo FNP: " + feriteDopoFnp;
+      lastSub.textContent = feriteDopoFnp + " attacchi effettivi dopo FNP";
+    } else {
+      fnpLine.textContent = "";
+      lastSub.textContent = effectiveAttacks + " attacchi effettivi";
+    }
+    lastLabel.textContent = "Danni totali";
+    document.getElementById("r-danni-totali").textContent = danniTotali;
+
+    document.getElementById("r-morti").textContent = morti;
+    document.getElementById("r-ferite").textContent = feriteResidue;
+  }
+
+  // ---------------- TABS ----------------
+  var tabStats = document.getElementById("tab-stats-btn");
+  var tabCombat = document.getElementById("tab-combat-btn");
+  var panelStats = document.getElementById("panel-stats");
+  var panelCombat = document.getElementById("panel-combat");
+  tabStats.addEventListener("click", function(){
+    tabStats.classList.add("active"); tabStats.setAttribute("aria-selected","true");
+    tabCombat.classList.remove("active"); tabCombat.setAttribute("aria-selected","false");
+    panelStats.classList.add("active");
+    panelCombat.classList.remove("active");
+  });
+  tabCombat.addEventListener("click", function(){
+    tabCombat.classList.add("active"); tabCombat.setAttribute("aria-selected","true");
+    tabStats.classList.remove("active"); tabStats.setAttribute("aria-selected","false");
+    panelCombat.classList.add("active");
+    panelStats.classList.remove("active");
+  });
+
+  renderStats();
+  renderCombat();
+})();
+</script>
