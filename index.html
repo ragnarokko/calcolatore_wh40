@@ -351,6 +351,10 @@ body{
   margin-top:10px;
   padding-top:10px;
 }
+.field-dimmed{
+  opacity:.4;
+  transition:opacity .15s ease;
+}
 
 /* ---------- statistiche results ---------- */
 .stat-results{
@@ -591,7 +595,7 @@ body{
           <div class="threshold-group" id="c-xcol" data-selected="4"></div>
         </div>
 
-        <div class="field-row">
+        <div class="field-row" id="c-for-row">
           <span class="field-label">FOR — forza</span>
           <input type="number" inputmode="numeric" class="num-input" id="c-for" min="1" value="4">
         </div>
@@ -628,6 +632,17 @@ body{
         </div>
         <div class="toggle-row">
           <div>
+            <div class="toggle-label">Anti-X</div>
+            <div class="toggle-desc">Soglia per ferire fissa, ignora FOR/RES</div>
+          </div>
+          <input type="checkbox" class="switch" id="c-antix">
+        </div>
+        <div class="sub-threshold" id="c-antix-sub" style="display:none">
+          <span class="field-label">Soglia Anti-X</span>
+          <div class="threshold-group" id="c-antix-threshold" data-selected="4" style="margin-top:8px"></div>
+        </div>
+        <div class="toggle-row">
+          <div>
             <div class="toggle-label">Dev</div>
             <div class="toggle-desc">I critici bypassano il salvezza</div>
           </div>
@@ -649,7 +664,7 @@ body{
       <div class="card side-card defender">
         <h2 class="card-title">Difensore</h2>
 
-        <div class="field-row">
+        <div class="field-row" id="d-res-row">
           <span class="field-label">RES — resistenza</span>
           <input type="number" inputmode="numeric" class="num-input" id="d-res" min="1" value="4">
         </div>
@@ -718,7 +733,7 @@ body{
           <span class="rt-value" id="r-morti">0</span>
         </div>
         <div class="pl-final ferite">
-          <span class="rt-label">Ferite residue</span>
+          <span class="rt-label">Ferite fatte</span>
           <span class="rt-value" id="r-ferite">0</span>
         </div>
       </div>
@@ -814,6 +829,7 @@ body{
     att: 10, xcol: 4, for_: 4, ap: 1, danni: 1,
     lethal: false, repeat: false, sustained: 0,
     twinlink: false, lancia: false, dev: false,
+    antiX: false, antiXThreshold: 4,
     res: 4, save: 4, w: 1,
     invul: false, invulThreshold: 4,
     fnp: false, fnpThreshold: 4
@@ -834,6 +850,7 @@ body{
   makeThresholdGroup(document.getElementById("d-save"), 4, function(v){ combat.save = v; renderCombat(); });
   makeThresholdGroup(document.getElementById("d-invul-threshold"), 4, function(v){ combat.invulThreshold = v; renderCombat(); });
   makeThresholdGroup(document.getElementById("d-fnp-threshold"), 4, function(v){ combat.fnpThreshold = v; renderCombat(); });
+  makeThresholdGroup(document.getElementById("c-antix-threshold"), 4, function(v){ combat.antiXThreshold = v; renderCombat(); });
 
   function bindNumber(id, key, min){
     var el = document.getElementById(id);
@@ -880,6 +897,17 @@ body{
     renderCombat();
   });
 
+  var antiXSub = document.getElementById("c-antix-sub");
+  var forRow = document.getElementById("c-for-row");
+  var resRow = document.getElementById("d-res-row");
+  document.getElementById("c-antix").addEventListener("change", function(e){
+    combat.antiX = e.target.checked;
+    antiXSub.style.display = combat.antiX ? "" : "none";
+    forRow.classList.toggle("field-dimmed", combat.antiX);
+    resRow.classList.toggle("field-dimmed", combat.antiX);
+    renderCombat();
+  });
+
   function woundThreshold(for_, res){
     if(for_ >= res*2) return 2;
     if(for_ > res) return 3;
@@ -909,7 +937,7 @@ body{
     var attOk = normalSuccessTotal + critTotal;
 
     // FASE 2 - PER FERIRE
-    var woundT = woundThreshold(combat.for_, combat.res);
+    var woundT = combat.antiX ? combat.antiXThreshold : woundThreshold(combat.for_, combat.res);
     if(combat.lancia) woundT = Math.max(2, woundT - 1);
     var initialWound = passPhase(normalSuccessTotal, woundT);
     var woundSuccessTotal, woundFailTotal;
