@@ -644,7 +644,7 @@ body{
         <div class="toggle-row">
           <div>
             <div class="toggle-label">Dev</div>
-            <div class="toggle-desc">I critici bypassano il salvezza</div>
+            <div class="toggle-desc">I 6 per ferire saltano AP/salvezza (solo FNP)</div>
           </div>
           <input type="checkbox" class="switch" id="c-dev">
         </div>
@@ -941,10 +941,13 @@ body{
     if(combat.lancia) woundT = Math.max(2, woundT - 1);
     var initialWound = passPhase(normalSuccessTotal, woundT);
     var woundSuccessTotal, woundFailTotal;
+    // 6 naturali per ferire (1 ogni 6 dadi tirati): critici per Dev
+    var woundSixes = Math.min(initialWound.succ, round(normalSuccessTotal/6));
     if(combat.twinlink){
       var woundReroll = passPhase(initialWound.fail, woundT);
       woundSuccessTotal = initialWound.succ + woundReroll.succ;
       woundFailTotal = woundReroll.fail;
+      woundSixes += Math.min(woundReroll.succ, round(initialWound.fail/6));
     } else {
       woundSuccessTotal = initialWound.succ;
       woundFailTotal = initialWound.fail;
@@ -955,8 +958,8 @@ body{
     var perDanniRaw = combat.ap + combat.save;
     var perDanniEffective = combat.invul ? Math.min(perDanniRaw, combat.invulThreshold) : perDanniRaw;
     var calcThreshold = Math.min(perDanniEffective, 7);
-    var devBypassCount = combat.dev ? critTotal : 0;
-    var normalDamageCount = woundSuccessTotal + (combat.dev ? 0 : critTotal);
+    var devBypassCount = combat.dev ? woundSixes : 0;
+    var normalDamageCount = woundSuccessTotal - devBypassCount + critTotal;
     var nonSalvatiFromNormal = round(normalDamageCount * failProb(calcThreshold));
     var nonSalvati = nonSalvatiFromNormal + devBypassCount;
 
@@ -980,11 +983,11 @@ body{
 
     // render
     document.getElementById("r-att-ok").textContent = attOk;
-    document.getElementById("r-att-ok-sub").textContent = combat.lethal ? (critTotal + " critici bypassano") : "";
+    document.getElementById("r-att-ok-sub").textContent = combat.lethal ? (critTotal + " critici auto-feriscono") : "";
     document.getElementById("r-per-ferire").textContent = woundT + "+";
     document.getElementById("r-fer-ok-sub").textContent = "Fer OK " + ferOk;
     document.getElementById("r-per-danni").textContent = calcThreshold >= 7 ? "7+" : (calcThreshold + "+");
-    document.getElementById("r-non-salvati-sub").textContent = "Non salvati " + nonSalvati;
+    document.getElementById("r-non-salvati-sub").textContent = "Non salvati " + nonSalvati + (combat.dev ? " (di cui " + devBypassCount + " Dev)" : "");
     document.getElementById("r-fer-ok").textContent = ferOk;
     document.getElementById("r-non-salvati").textContent = nonSalvati;
 
