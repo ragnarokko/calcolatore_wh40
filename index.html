@@ -664,6 +664,13 @@ body{
       <div class="card side-card defender">
         <h2 class="card-title">Difensore</h2>
 
+        <div class="field-row" id="d-unita-row" style="display:none">
+          <span class="field-label">Unità (da Tavolo da Gioco)</span>
+          <select class="num-input" id="d-unita-select">
+            <option value="">— Manuale —</option>
+          </select>
+        </div>
+
         <div class="field-row" id="d-res-row">
           <span class="field-label">RES — resistenza</span>
           <input type="number" inputmode="numeric" class="num-input" id="d-res" min="1" value="4">
@@ -1025,6 +1032,98 @@ body{
     panelCombat.classList.add("active");
     panelStats.classList.remove("active");
   });
+
+  // Apertura diretta sulla scheda Combattimento tramite #combat nell'URL (usato dal tasto
+  // "Botte!" dell'app Tavolo da Gioco, che apre questa pagina in una finestra separata).
+  if(location.hash === "#combat"){
+    tabCombat.click();
+  }
+
+  // ---------------- INTEGRAZIONE TAVOLO DA GIOCO ----------------
+  // Riceve via postMessage le unità delle armate Blu/Rosso dall'app "Tavolo da Gioco"
+  // (la finestra che ha aperto questa come popup, window.opener), per pre-compilare il
+  // Difensore scegliendo un'unità invece di ricopiarne a mano le statistiche. Se la pagina
+  // è aperta da sola (link diretto/bookmark, nessun opener) il selettore resta nascosto e
+  // il calcolatore funziona come sempre, in modalità manuale.
+  var unitaRicevute = {};
+  var selUnita = document.getElementById("d-unita-select");
+  var rowUnita = document.getElementById("d-unita-row");
+
+  function selezionaSogliaGruppo(container, valore){
+    container.dataset.selected = valore;
+    Array.prototype.forEach.call(container.children, function(c){
+      c.classList.toggle("selected", parseInt(c.dataset.value, 10) === valore);
+    });
+  }
+
+  function popolaSelectUnita(payload){
+    unitaRicevute = {};
+    selUnita.innerHTML = '<option value="">— Manuale —</option>';
+    [["blu","Esercito Blu"], ["rosso","Esercito Rosso"]].forEach(function(coppia){
+      var lato = coppia[0], etichetta = coppia[1];
+      var elenco = payload[lato] || [];
+      if(!elenco.length) return;
+      var gruppo = document.createElement("optgroup");
+      gruppo.label = etichetta;
+      elenco.forEach(function(u){
+        var chiave = lato + ":" + u.nome;
+        unitaRicevute[chiave] = u;
+        var opt = document.createElement("option");
+        opt.value = chiave;
+        opt.textContent = u.nome;
+        gruppo.appendChild(opt);
+      });
+      selUnita.appendChild(gruppo);
+    });
+    rowUnita.style.display = "";
+  }
+
+  // W/RES si chiamano allo stesso modo nelle due app; SAVE del calcolatore è il campo TS
+  // del Tavolo da Gioco; "Invulnerabile" va attivato e valorizzato solo se l'unità ha un
+  // TS+ impostato (altrimenti resta spento, come per un'unità senza invulnerabile).
+  function applicaUnita(u){
+    var res = parseInt(u.res, 10);
+    if(!isNaN(res) && res > 0){
+      document.getElementById("d-res").value = res;
+      combat.res = res;
+    }
+    var save = parseInt(u.ts, 10);
+    if(!isNaN(save) && save >= 2 && save <= 6){
+      combat.save = save;
+      selezionaSogliaGruppo(document.getElementById("d-save"), save);
+    }
+    var w = parseInt(u.w, 10);
+    if(!isNaN(w) && w > 0){
+      document.getElementById("d-w").value = w;
+      combat.w = w;
+    }
+    var invulValore = parseInt(u.tsPiu, 10);
+    var haInvul = !isNaN(invulValore) && invulValore >= 2 && invulValore <= 6;
+    combat.invul = haInvul;
+    document.getElementById("d-invul").checked = haInvul;
+    invulSub.style.display = haInvul ? "" : "none";
+    if(haInvul){
+      combat.invulThreshold = invulValore;
+      selezionaSogliaGruppo(document.getElementById("d-invul-threshold"), invulValore);
+    }
+    renderCombat();
+  }
+
+  selUnita.addEventListener("change", function(){
+    var u = unitaRicevute[selUnita.value];
+    if(u) applicaUnita(u);
+  });
+
+  window.addEventListener("message", function(e){
+    if(window.opener && e.source !== window.opener) return;
+    var dati = e.data;
+    if(!dati || dati.type !== "wh40-eserciti") return;
+    popolaSelectUnita(dati);
+  });
+
+  if(window.opener){
+    try { window.opener.postMessage({ type: "wh40-ready" }, "*"); } catch(err) {}
+  }
 
   renderStats();
   renderCombat();
