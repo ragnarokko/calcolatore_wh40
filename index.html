@@ -661,8 +661,22 @@ body{
           <input type="checkbox" class="switch" id="c-repeat">
         </div>
         <div class="toggle-row">
+          <div>
+            <div class="toggle-label">Ripeti 1 per colpire</div>
+            <div class="toggle-desc">Reroll dei soli 1 naturali per colpire (ignorato se "Ripeti falliti" è attivo)</div>
+          </div>
+          <input type="checkbox" class="switch" id="c-repeat-ones-hit">
+        </div>
+        <div class="toggle-row">
           <div class="toggle-label">Twinlink</div>
           <input type="checkbox" class="switch" id="c-twinlink">
+        </div>
+        <div class="toggle-row">
+          <div>
+            <div class="toggle-label">Ripeti 1 per ferire</div>
+            <div class="toggle-desc">Reroll dei soli 1 naturali per ferire (ignorato se "Twinlink" è attivo)</div>
+          </div>
+          <input type="checkbox" class="switch" id="c-repeat-ones-wound">
         </div>
         <div class="toggle-row">
           <div class="toggle-label">Lancia</div>
@@ -846,7 +860,10 @@ body{
     }
     var fail = Math.max(0, n - crit - normalSuccess);
     var sustBonus = sustLevel>0 ? sixCount*sustLevel : 0;
-    return {crit:crit, normalSuccess:normalSuccess, fail:fail, sustBonus:sustBonus, sixCount:sixCount};
+    // Stima dei dadi con 1 naturale (falliscono sempre, tranne Lethal che li rende comunque non
+    // critici): 1 ogni 6 dadi tirati, usata da "Ripeti 1 per colpire" per rilanciare solo quelli.
+    var ones = Math.min(fail, round(n/6));
+    return {crit:crit, normalSuccess:normalSuccess, fail:fail, sustBonus:sustBonus, sixCount:sixCount, ones:ones};
   }
 
   function renderStats(){
@@ -872,8 +889,8 @@ body{
   // ---------------- COMBATTIMENTO ----------------
   var combat = {
     att: 10, attBase: 10, numeroModelli: 1, xcol: 4, for_: 4, ap: 1, danni: 1,
-    lethal: false, repeat: false, sustained: 0,
-    twinlink: false, lancia: false, dev: false,
+    lethal: false, repeat: false, repeatOnesHit: false, sustained: 0,
+    twinlink: false, repeatOnesWound: false, lancia: false, dev: false,
     antiX: false, antiXThreshold: 4,
     res: 4, save: 4, w: 1,
     invul: false, invulThreshold: 4,
@@ -942,7 +959,9 @@ body{
 
   document.getElementById("c-lethal").addEventListener("change", function(e){ combat.lethal = e.target.checked; renderCombat(); });
   document.getElementById("c-repeat").addEventListener("change", function(e){ combat.repeat = e.target.checked; renderCombat(); });
+  document.getElementById("c-repeat-ones-hit").addEventListener("change", function(e){ combat.repeatOnesHit = e.target.checked; renderCombat(); });
   document.getElementById("c-twinlink").addEventListener("change", function(e){ combat.twinlink = e.target.checked; renderCombat(); });
+  document.getElementById("c-repeat-ones-wound").addEventListener("change", function(e){ combat.repeatOnesWound = e.target.checked; renderCombat(); });
   document.getElementById("c-lancia").addEventListener("change", function(e){ combat.lancia = e.target.checked; renderCombat(); });
   document.getElementById("c-dev").addEventListener("change", function(e){ combat.dev = e.target.checked; renderCombat(); });
 
@@ -991,7 +1010,10 @@ body{
   function passPhase(n, threshold){
     var succ = round(n*successProb(threshold));
     var fail = Math.max(0, n - succ);
-    return {succ:succ, fail:fail};
+    // Stima dei dadi con 1 naturale (falliscono sempre): 1 ogni 6 dadi tirati in questa fase,
+    // usata da "Ripeti 1 per ferire" per rilanciare solo quelli invece di tutti i falliti.
+    var ones = Math.min(fail, round(n/6));
+    return {succ:succ, fail:fail, ones:ones};
   }
 
   function renderCombat(){
@@ -1001,10 +1023,18 @@ body{
     var normalSuccessTotal = initial.normalSuccess + initial.sustBonus;
     var failTotal = initial.fail;
     if(combat.repeat){
+      // Reroll di tutti i falliti: include già gli 1 naturali, "Ripeti 1 per colpire" (se
+      // attivo insieme) non farebbe che rilanciare dadi già rilanciati, quindi va ignorato.
       var reroll = hitPhase(initial.fail, combat.xcol, combat.lethal, combat.sustained);
       critTotal += reroll.crit;
       normalSuccessTotal += reroll.normalSuccess + reroll.sustBonus;
       failTotal = reroll.fail;
+    } else if(combat.repeatOnesHit){
+      var onesToRerollHit = initial.ones;
+      var rerollOnesHit = hitPhase(onesToRerollHit, combat.xcol, combat.lethal, combat.sustained);
+      critTotal += rerollOnesHit.crit;
+      normalSuccessTotal += rerollOnesHit.normalSuccess + rerollOnesHit.sustBonus;
+      failTotal = initial.fail - onesToRerollHit + rerollOnesHit.fail;
     }
     var attOk = normalSuccessTotal + critTotal;
 
@@ -1016,10 +1046,18 @@ body{
     // 6 naturali per ferire (1 ogni 6 dadi tirati): critici per Dev
     var woundSixes = Math.min(initialWound.succ, round(normalSuccessTotal/6));
     if(combat.twinlink){
+      // Reroll di tutti i falliti: include già gli 1 naturali, "Ripeti 1 per ferire" (se
+      // attivo insieme) andrebbe a rilanciare dadi già rilanciati, quindi va ignorato.
       var woundReroll = passPhase(initialWound.fail, woundT);
       woundSuccessTotal = initialWound.succ + woundReroll.succ;
       woundFailTotal = woundReroll.fail;
       woundSixes += Math.min(woundReroll.succ, round(initialWound.fail/6));
+    } else if(combat.repeatOnesWound){
+      var onesToRerollWound = initialWound.ones;
+      var rerollOnesWound = passPhase(onesToRerollWound, woundT);
+      woundSuccessTotal = initialWound.succ + rerollOnesWound.succ;
+      woundFailTotal = initialWound.fail - onesToRerollWound + rerollOnesWound.fail;
+      woundSixes += Math.min(rerollOnesWound.succ, round(onesToRerollWound/6));
     } else {
       woundSuccessTotal = initialWound.succ;
       woundFailTotal = initialWound.fail;
@@ -1173,6 +1211,36 @@ body{
     }
   }
 
+  // Cambiando arma o unità le regole speciali/il numero modelli impostati per l'arma precedente
+  // non hanno più senso: azzera tutti i flag lato Attaccante (regole speciali + Sustained) e
+  // riporta il numero modelli a 1, prima di applicare eventualmente la nuova arma.
+  function resetFlagsAttaccante(){
+    combat.lethal = false;
+    document.getElementById("c-lethal").checked = false;
+    combat.repeat = false;
+    document.getElementById("c-repeat").checked = false;
+    combat.repeatOnesHit = false;
+    document.getElementById("c-repeat-ones-hit").checked = false;
+    combat.twinlink = false;
+    document.getElementById("c-twinlink").checked = false;
+    combat.repeatOnesWound = false;
+    document.getElementById("c-repeat-ones-wound").checked = false;
+    combat.lancia = false;
+    document.getElementById("c-lancia").checked = false;
+    combat.dev = false;
+    document.getElementById("c-dev").checked = false;
+    combat.antiX = false;
+    document.getElementById("c-antix").checked = false;
+    antiXSub.style.display = "none";
+    forRow.classList.remove("field-dimmed");
+    resRow.classList.remove("field-dimmed");
+    combat.sustained = 0;
+    Array.prototype.forEach.call(sustGroup.children, function(c){
+      c.classList.toggle("selected", c.dataset.value === "0");
+    });
+    setModelli(1);
+  }
+
   // ATT/XCOL/FOR/AP/DANNI dall'arma scelta; XCOL resta quello già impostato se l'arma non ha
   // una soglia per colpire valida (es. armi ad area con BS_WS "-").
   function applicaArma(arma){
@@ -1232,11 +1300,13 @@ body{
   selUnitaAtt.addEventListener("change", function(){
     var u = unitaRicevute[selUnitaAtt.value];
     popolaSelectArmi((u && u.armi) || []);
+    resetFlagsAttaccante();
   });
 
   selArma.addEventListener("change", function(){
     var u = unitaRicevute[selUnitaAtt.value];
     var armi = (u && u.armi) || [];
+    resetFlagsAttaccante();
     applicaArma(armi[parseInt(selArma.value, 10)]);
   });
 
