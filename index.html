@@ -606,7 +606,18 @@ body{
         </div>
 
         <div class="field-row">
-          <span class="field-label">ATT — numero attacchi</span>
+          <span class="field-label">NUMERO MODELLI</span>
+          <div class="stepper">
+            <button class="step-btn" id="c-modelli-m5">−5</button>
+            <button class="step-btn" id="c-modelli-m1">−1</button>
+            <div class="step-value" id="c-modelli-val">1</div>
+            <button class="step-btn" id="c-modelli-p1">+1</button>
+            <button class="step-btn" id="c-modelli-p5">+5</button>
+          </div>
+        </div>
+
+        <div class="field-row">
+          <span class="field-label">ATT — numero attacchi (per modello)</span>
           <div class="stepper">
             <button class="step-btn" id="c-att-m5">−5</button>
             <button class="step-btn" id="c-att-m1">−1</button>
@@ -614,6 +625,7 @@ body{
             <button class="step-btn" id="c-att-p1">+1</button>
             <button class="step-btn" id="c-att-p5">+5</button>
           </div>
+          <span class="field-hint" id="c-att-hint" style="display:none; margin-top:4px"></span>
         </div>
 
         <div class="field-row">
@@ -859,7 +871,7 @@ body{
 
   // ---------------- COMBATTIMENTO ----------------
   var combat = {
-    att: 10, xcol: 4, for_: 4, ap: 1, danni: 1,
+    att: 10, attBase: 10, numeroModelli: 1, xcol: 4, for_: 4, ap: 1, danni: 1,
     lethal: false, repeat: false, sustained: 0,
     twinlink: false, lancia: false, dev: false,
     antiX: false, antiXThreshold: 4,
@@ -869,15 +881,42 @@ body{
   };
 
   var elAttVal = document.getElementById("c-att-val");
-  function setAtt(v){
-    combat.att = Math.max(1, Math.min(100, v));
-    elAttVal.textContent = combat.att;
+  var elModelliVal = document.getElementById("c-modelli-val");
+  var elAttHint = document.getElementById("c-att-hint");
+
+  // ATT finale = ATT base (per modello) × numero modelli, mostrato come suggerimento solo
+  // quando i modelli sono più di uno (con un solo modello coincide col valore base).
+  function aggiornaAttFinale(){
+    combat.att = combat.attBase * combat.numeroModelli;
+    if(combat.numeroModelli > 1){
+      elAttHint.style.display = "";
+      elAttHint.textContent = "Totale: " + combat.att + " (" + combat.attBase + " × " + combat.numeroModelli + " modelli)";
+    } else {
+      elAttHint.style.display = "none";
+    }
+  }
+
+  function setAttBase(v){
+    combat.attBase = Math.max(1, Math.min(100, v));
+    elAttVal.textContent = combat.attBase;
+    aggiornaAttFinale();
     renderCombat();
   }
-  document.getElementById("c-att-m5").addEventListener("click", function(){ setAtt(combat.att-5); });
-  document.getElementById("c-att-m1").addEventListener("click", function(){ setAtt(combat.att-1); });
-  document.getElementById("c-att-p1").addEventListener("click", function(){ setAtt(combat.att+1); });
-  document.getElementById("c-att-p5").addEventListener("click", function(){ setAtt(combat.att+5); });
+  document.getElementById("c-att-m5").addEventListener("click", function(){ setAttBase(combat.attBase-5); });
+  document.getElementById("c-att-m1").addEventListener("click", function(){ setAttBase(combat.attBase-1); });
+  document.getElementById("c-att-p1").addEventListener("click", function(){ setAttBase(combat.attBase+1); });
+  document.getElementById("c-att-p5").addEventListener("click", function(){ setAttBase(combat.attBase+5); });
+
+  function setModelli(v){
+    combat.numeroModelli = Math.max(1, Math.min(100, v));
+    elModelliVal.textContent = combat.numeroModelli;
+    aggiornaAttFinale();
+    renderCombat();
+  }
+  document.getElementById("c-modelli-m5").addEventListener("click", function(){ setModelli(combat.numeroModelli-5); });
+  document.getElementById("c-modelli-m1").addEventListener("click", function(){ setModelli(combat.numeroModelli-1); });
+  document.getElementById("c-modelli-p1").addEventListener("click", function(){ setModelli(combat.numeroModelli+1); });
+  document.getElementById("c-modelli-p5").addEventListener("click", function(){ setModelli(combat.numeroModelli+5); });
 
   makeThresholdGroup(document.getElementById("c-xcol"), 4, function(v){ combat.xcol = v; renderCombat(); });
   makeThresholdGroup(document.getElementById("d-save"), 4, function(v){ combat.save = v; renderCombat(); });
@@ -1138,7 +1177,7 @@ body{
   // una soglia per colpire valida (es. armi ad area con BS_WS "-").
   function applicaArma(arma){
     if(!arma) return;
-    setAtt(arma.att);
+    setAttBase(arma.att);
     if(arma.xcol){
       combat.xcol = arma.xcol;
       selezionaSogliaGruppo(document.getElementById("c-xcol"), arma.xcol);
@@ -1212,6 +1251,7 @@ body{
     try { window.opener.postMessage({ type: "wh40-ready" }, "*"); } catch(err) {}
   }
 
+  aggiornaAttFinale();
   renderStats();
   renderCombat();
 })();
