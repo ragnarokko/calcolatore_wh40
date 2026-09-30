@@ -253,6 +253,15 @@ body{
   padding:0 14px;
 }
 .num-input:focus-visible{outline:2px solid var(--accent, var(--att)); outline-offset:1px;}
+.text-desc{
+  min-height:auto;
+  padding:10px 14px;
+  font-family:inherit;
+  font-weight:400;
+  font-size:.85rem;
+  line-height:1.35;
+  resize:vertical;
+}
 
 /* ---------- threshold pills ---------- */
 .threshold-group{
@@ -578,6 +587,23 @@ body{
       <!-- ATTACCANTE -->
       <div class="card side-card attacker">
         <h2 class="card-title">Attaccante</h2>
+
+        <div class="field-row" id="a-unita-row" style="display:none">
+          <span class="field-label">Unità (da Tavolo da Gioco)</span>
+          <select class="num-input" id="a-unita-select">
+            <option value="">— Manuale —</option>
+          </select>
+        </div>
+        <div class="field-row" id="a-arma-row" style="display:none">
+          <span class="field-label">Arma</span>
+          <select class="num-input" id="a-arma-select">
+            <option value="">— Nessuna —</option>
+          </select>
+        </div>
+        <div class="field-row" id="a-descrizione-row" style="display:none">
+          <span class="field-label">Descrizione arma</span>
+          <textarea class="num-input text-desc" id="a-descrizione" rows="3" readonly></textarea>
+        </div>
 
         <div class="field-row">
           <span class="field-label">ATT — numero attacchi</span>
@@ -1048,6 +1074,12 @@ body{
   var unitaRicevute = {};
   var selUnita = document.getElementById("d-unita-select");
   var rowUnita = document.getElementById("d-unita-row");
+  var selUnitaAtt = document.getElementById("a-unita-select");
+  var rowUnitaAtt = document.getElementById("a-unita-row");
+  var selArma = document.getElementById("a-arma-select");
+  var rowArma = document.getElementById("a-arma-row");
+  var rowDescrizione = document.getElementById("a-descrizione-row");
+  var taDescrizione = document.getElementById("a-descrizione");
 
   function selezionaSogliaGruppo(container, valore){
     container.dataset.selected = valore;
@@ -1056,9 +1088,8 @@ body{
     });
   }
 
-  function popolaSelectUnita(payload){
-    unitaRicevute = {};
-    selUnita.innerHTML = '<option value="">— Manuale —</option>';
+  function riempiSelectUnita(select, payload){
+    select.innerHTML = '<option value="">— Manuale —</option>';
     [["blu","Esercito Blu"], ["rosso","Esercito Rosso"]].forEach(function(coppia){
       var lato = coppia[0], etichetta = coppia[1];
       var elenco = payload[lato] || [];
@@ -1073,9 +1104,54 @@ body{
         opt.textContent = u.nome;
         gruppo.appendChild(opt);
       });
-      selUnita.appendChild(gruppo);
+      select.appendChild(gruppo);
     });
+  }
+
+  function popolaSelectUnita(payload){
+    unitaRicevute = {};
+    riempiSelectUnita(selUnita, payload);
+    riempiSelectUnita(selUnitaAtt, payload);
     rowUnita.style.display = "";
+    rowUnitaAtt.style.display = "";
+  }
+
+  // Popola il menu "Arma" con le armi dell'unità Attaccante scelta (già normalizzate dal
+  // Tavolo da Gioco, vedi PulsanteCalcolatore.jsx/csvArmiImport.js); senza armi disponibili
+  // (unità non trovata nel CSV) il menu resta nascosto e i campi restano compilabili a mano.
+  function popolaSelectArmi(armi){
+    selArma.innerHTML = '<option value="">— Nessuna —</option>';
+    armi.forEach(function(arma, i){
+      var opt = document.createElement("option");
+      opt.value = String(i);
+      opt.textContent = arma.nome;
+      selArma.appendChild(opt);
+    });
+    rowArma.style.display = armi.length ? "" : "none";
+    if(!armi.length){
+      rowDescrizione.style.display = "none";
+      taDescrizione.value = "";
+    }
+  }
+
+  // ATT/XCOL/FOR/AP/DANNI dall'arma scelta; XCOL resta quello già impostato se l'arma non ha
+  // una soglia per colpire valida (es. armi ad area con BS_WS "-").
+  function applicaArma(arma){
+    if(!arma) return;
+    setAtt(arma.att);
+    if(arma.xcol){
+      combat.xcol = arma.xcol;
+      selezionaSogliaGruppo(document.getElementById("c-xcol"), arma.xcol);
+    }
+    document.getElementById("c-for").value = arma.forza;
+    combat.for_ = arma.forza;
+    document.getElementById("c-ap").value = arma.ap;
+    combat.ap = arma.ap;
+    document.getElementById("c-danni").value = arma.danni;
+    combat.danni = arma.danni;
+    taDescrizione.value = arma.descrizione || "";
+    rowDescrizione.style.display = "";
+    renderCombat();
   }
 
   // W/RES si chiamano allo stesso modo nelle due app; SAVE del calcolatore è il campo TS
@@ -1112,6 +1188,17 @@ body{
   selUnita.addEventListener("change", function(){
     var u = unitaRicevute[selUnita.value];
     if(u) applicaUnita(u);
+  });
+
+  selUnitaAtt.addEventListener("change", function(){
+    var u = unitaRicevute[selUnitaAtt.value];
+    popolaSelectArmi((u && u.armi) || []);
+  });
+
+  selArma.addEventListener("change", function(){
+    var u = unitaRicevute[selUnitaAtt.value];
+    var armi = (u && u.armi) || [];
+    applicaArma(armi[parseInt(selArma.value, 10)]);
   });
 
   window.addEventListener("message", function(e){
