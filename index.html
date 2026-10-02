@@ -1,3 +1,4 @@
+<meta charset="utf-8">
 <title>Calcolatore D6</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600;700&display=swap">
 <style>
@@ -118,7 +119,7 @@ body{
 /* ---------- tab bar ---------- */
 .tabbar{
   display:grid;
-  grid-template-columns:1fr 1fr;
+  grid-template-columns:1fr 1fr 1fr;
   gap:8px;
   background:var(--surface-2);
   border:1px solid var(--border);
@@ -150,6 +151,7 @@ body{
   box-shadow:0 1px 3px rgba(0,0,0,.15);
 }
 .tab-btn:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
+@media (max-width:480px){.tab-btn{font-size:.82rem; padding:12px 4px; letter-spacing:.02em;}}
 
 .panel{display:none;}
 .panel.active{display:block; animation:fadein .18s ease;}
@@ -530,6 +532,7 @@ body{
   <nav class="tabbar" role="tablist">
     <button class="tab-btn active" id="tab-stats-btn" role="tab" aria-selected="true">Statistiche</button>
     <button class="tab-btn" id="tab-combat-btn" role="tab" aria-selected="false">Combattimento</button>
+    <button class="tab-btn" id="tab-vs-btn" role="tab" aria-selected="false">VSunità</button>
   </nav>
 
   <!-- ============ STATISTICHE ============ -->
@@ -805,6 +808,40 @@ body{
 (function(){
   "use strict";
 
+  // ---------------- CLONAZIONE DEL PANNELLO PER VSunità ----------------
+  // Il tab VSunità riusa il markup del tab Combattimento: va clonato prima di qualsiasi
+  // inizializzazione, con tutti gli id prefissati da "v-" (coerente con creaCombattimento("v-")).
+  // Le righe "Unità (da Tavolo da Gioco)" clonate vengono sostituite dai selettori Fazione → Unità;
+  // campi, flag e risultati restano identici a Combattimento.
+  var panelCombat = document.getElementById("panel-combat");
+  var panelVs = panelCombat.cloneNode(true);
+  Array.prototype.forEach.call(panelVs.querySelectorAll("[id]"), function(n){ n.id = "v-" + n.id; });
+  panelVs.id = "panel-vs";
+  panelVs.classList.remove("active");
+  panelCombat.parentNode.insertBefore(panelVs, panelCombat.nextSibling);
+
+  function righeFazioneUnita(prefisso){
+    return '<div class="field-row"><span class="field-label">Fazione</span>' +
+             '<select class="num-input" id="' + prefisso + '-fazione-select"></select></div>' +
+           '<div class="field-row"><span class="field-label">Unità</span>' +
+             '<select class="num-input" id="' + prefisso + '-unita-select"></select></div>';
+  }
+  panelVs.querySelector("#v-a-unita-row").outerHTML = righeFazioneUnita("v-a");
+  panelVs.querySelector("#v-d-unita-row").outerHTML = righeFazioneUnita("v-d");
+
+  panelVs.querySelector(".combat-sides").insertAdjacentHTML("beforebegin",
+    '<div class="card" style="margin-bottom:14px">' +
+      '<h2 class="card-title">Dati unità</h2>' +
+      '<div class="field-hint" id="v-dati-stato" style="margin-top:0">Caricamento dati…</div>' +
+      '<div class="toggle-row" id="v-filtro-row" style="display:none">' +
+        '<div><div class="toggle-label">Solo unità in gioco</div>' +
+        '<div class="toggle-desc">Mostra solo le unità presenti negli eserciti del Tavolo da Gioco</div></div>' +
+        '<input type="checkbox" class="switch" id="v-filtro" checked>' +
+      '</div>' +
+      '<button class="step-btn" id="v-ricarica" style="margin-top:10px; padding:0 14px">⟳ Ricarica dati</button>' +
+    '</div>');
+
+
   function successProb(t){ return (7-t)/6; }
   function failProb(t){ return t>=7 ? 1 : (t-1)/6; }
   function round(n){ return Math.round(n); }
@@ -886,263 +923,394 @@ body{
     }
   }
 
-  // ---------------- COMBATTIMENTO ----------------
-  var combat = {
-    att: 10, attBase: 10, numeroModelli: 1, xcol: 4, for_: 4, ap: 1, danni: 1,
-    lethal: false, repeat: false, repeatOnesHit: false, sustained: 0,
-    twinlink: false, repeatOnesWound: false, lancia: false, dev: false,
-    antiX: false, antiXThreshold: 4,
-    res: 4, save: 4, w: 1,
-    invul: false, invulThreshold: 4,
-    fnp: false, fnpThreshold: 4
-  };
+  // Il pannello Combattimento è costruito da una "fattoria": la stessa logica serve sia al tab
+  // Combattimento (prefisso id "") sia al tab VSunità (prefisso "v-", pannello clonato dal primo),
+  // ognuno con il proprio stato, i propri campi e i propri risultati.
+  function creaCombattimento(P){
+    function E(id){ return document.getElementById(P + id); }
 
-  var elAttVal = document.getElementById("c-att-val");
-  var elModelliVal = document.getElementById("c-modelli-val");
-  var elAttHint = document.getElementById("c-att-hint");
+    // ---------------- COMBATTIMENTO ----------------
+    var combat = {
+      att: 10, attBase: 10, numeroModelli: 1, xcol: 4, for_: 4, ap: 1, danni: 1,
+      lethal: false, repeat: false, repeatOnesHit: false, sustained: 0,
+      twinlink: false, repeatOnesWound: false, lancia: false, dev: false,
+      antiX: false, antiXThreshold: 4,
+      res: 4, save: 4, w: 1,
+      invul: false, invulThreshold: 4,
+      fnp: false, fnpThreshold: 4
+    };
 
-  // ATT finale = ATT base (per modello) × numero modelli, mostrato come suggerimento solo
-  // quando i modelli sono più di uno (con un solo modello coincide col valore base).
-  function aggiornaAttFinale(){
-    combat.att = combat.attBase * combat.numeroModelli;
-    if(combat.numeroModelli > 1){
-      elAttHint.style.display = "";
-      elAttHint.textContent = "Totale: " + combat.att + " (" + combat.attBase + " × " + combat.numeroModelli + " modelli)";
-    } else {
-      elAttHint.style.display = "none";
+    var elAttVal = E("c-att-val");
+    var elModelliVal = E("c-modelli-val");
+    var elAttHint = E("c-att-hint");
+
+    // ATT finale = ATT base (per modello) × numero modelli, mostrato come suggerimento solo
+    // quando i modelli sono più di uno (con un solo modello coincide col valore base).
+    function aggiornaAttFinale(){
+      combat.att = combat.attBase * combat.numeroModelli;
+      if(combat.numeroModelli > 1){
+        elAttHint.style.display = "";
+        elAttHint.textContent = "Totale: " + combat.att + " (" + combat.attBase + " × " + combat.numeroModelli + " modelli)";
+      } else {
+        elAttHint.style.display = "none";
+      }
     }
-  }
 
-  function setAttBase(v){
-    combat.attBase = Math.max(1, Math.min(100, v));
-    elAttVal.textContent = combat.attBase;
-    aggiornaAttFinale();
-    renderCombat();
-  }
-  document.getElementById("c-att-m5").addEventListener("click", function(){ setAttBase(combat.attBase-5); });
-  document.getElementById("c-att-m1").addEventListener("click", function(){ setAttBase(combat.attBase-1); });
-  document.getElementById("c-att-p1").addEventListener("click", function(){ setAttBase(combat.attBase+1); });
-  document.getElementById("c-att-p5").addEventListener("click", function(){ setAttBase(combat.attBase+5); });
+    function setAttBase(v){
+      combat.attBase = Math.max(1, Math.min(100, v));
+      elAttVal.textContent = combat.attBase;
+      aggiornaAttFinale();
+      renderCombat();
+    }
+    E("c-att-m5").addEventListener("click", function(){ setAttBase(combat.attBase-5); });
+    E("c-att-m1").addEventListener("click", function(){ setAttBase(combat.attBase-1); });
+    E("c-att-p1").addEventListener("click", function(){ setAttBase(combat.attBase+1); });
+    E("c-att-p5").addEventListener("click", function(){ setAttBase(combat.attBase+5); });
 
-  function setModelli(v){
-    combat.numeroModelli = Math.max(1, Math.min(100, v));
-    elModelliVal.textContent = combat.numeroModelli;
-    aggiornaAttFinale();
-    renderCombat();
-  }
-  document.getElementById("c-modelli-m5").addEventListener("click", function(){ setModelli(combat.numeroModelli-5); });
-  document.getElementById("c-modelli-m1").addEventListener("click", function(){ setModelli(combat.numeroModelli-1); });
-  document.getElementById("c-modelli-p1").addEventListener("click", function(){ setModelli(combat.numeroModelli+1); });
-  document.getElementById("c-modelli-p5").addEventListener("click", function(){ setModelli(combat.numeroModelli+5); });
+    function setModelli(v){
+      combat.numeroModelli = Math.max(1, Math.min(100, v));
+      elModelliVal.textContent = combat.numeroModelli;
+      aggiornaAttFinale();
+      renderCombat();
+    }
+    E("c-modelli-m5").addEventListener("click", function(){ setModelli(combat.numeroModelli-5); });
+    E("c-modelli-m1").addEventListener("click", function(){ setModelli(combat.numeroModelli-1); });
+    E("c-modelli-p1").addEventListener("click", function(){ setModelli(combat.numeroModelli+1); });
+    E("c-modelli-p5").addEventListener("click", function(){ setModelli(combat.numeroModelli+5); });
 
-  makeThresholdGroup(document.getElementById("c-xcol"), 4, function(v){ combat.xcol = v; renderCombat(); });
-  makeThresholdGroup(document.getElementById("d-save"), 4, function(v){ combat.save = v; renderCombat(); });
-  makeThresholdGroup(document.getElementById("d-invul-threshold"), 4, function(v){ combat.invulThreshold = v; renderCombat(); });
-  makeThresholdGroup(document.getElementById("d-fnp-threshold"), 4, function(v){ combat.fnpThreshold = v; renderCombat(); });
-  makeThresholdGroup(document.getElementById("c-antix-threshold"), 4, function(v){ combat.antiXThreshold = v; renderCombat(); });
+    makeThresholdGroup(E("c-xcol"), 4, function(v){ combat.xcol = v; renderCombat(); });
+    makeThresholdGroup(E("d-save"), 4, function(v){ combat.save = v; renderCombat(); });
+    makeThresholdGroup(E("d-invul-threshold"), 4, function(v){ combat.invulThreshold = v; renderCombat(); });
+    makeThresholdGroup(E("d-fnp-threshold"), 4, function(v){ combat.fnpThreshold = v; renderCombat(); });
+    makeThresholdGroup(E("c-antix-threshold"), 4, function(v){ combat.antiXThreshold = v; renderCombat(); });
 
-  function bindNumber(id, key, min){
-    var el = document.getElementById(id);
-    el.addEventListener("input", function(){
-      var v = parseInt(el.value, 10);
-      if(isNaN(v)) v = min;
-      v = Math.max(min, v);
-      combat[key] = v;
+    function bindNumber(id, key, min){
+      var el = E(id);
+      el.addEventListener("input", function(){
+        var v = parseInt(el.value, 10);
+        if(isNaN(v)) v = min;
+        v = Math.max(min, v);
+        combat[key] = v;
+        renderCombat();
+      });
+    }
+    bindNumber("c-for","for_",1);
+    bindNumber("c-ap","ap",0);
+    bindNumber("c-danni","danni",1);
+    bindNumber("d-res","res",1);
+    bindNumber("d-w","w",1);
+
+    E("c-lethal").addEventListener("change", function(e){ combat.lethal = e.target.checked; renderCombat(); });
+    E("c-repeat").addEventListener("change", function(e){ combat.repeat = e.target.checked; renderCombat(); });
+    E("c-repeat-ones-hit").addEventListener("change", function(e){ combat.repeatOnesHit = e.target.checked; renderCombat(); });
+    E("c-twinlink").addEventListener("change", function(e){ combat.twinlink = e.target.checked; renderCombat(); });
+    E("c-repeat-ones-wound").addEventListener("change", function(e){ combat.repeatOnesWound = e.target.checked; renderCombat(); });
+    E("c-lancia").addEventListener("change", function(e){ combat.lancia = e.target.checked; renderCombat(); });
+    E("c-dev").addEventListener("change", function(e){ combat.dev = e.target.checked; renderCombat(); });
+
+    var sustGroup = E("c-sustained");
+    Array.prototype.forEach.call(sustGroup.children, function(btn){
+      btn.addEventListener("click", function(){
+        Array.prototype.forEach.call(sustGroup.children, function(c){ c.classList.remove("selected"); });
+        btn.classList.add("selected");
+        combat.sustained = parseInt(btn.dataset.value, 10);
+        renderCombat();
+      });
+    });
+
+    var invulSub = E("d-invul-sub");
+    E("d-invul").addEventListener("change", function(e){
+      combat.invul = e.target.checked;
+      invulSub.style.display = combat.invul ? "" : "none";
       renderCombat();
     });
-  }
-  bindNumber("c-for","for_",1);
-  bindNumber("c-ap","ap",0);
-  bindNumber("c-danni","danni",1);
-  bindNumber("d-res","res",1);
-  bindNumber("d-w","w",1);
-
-  document.getElementById("c-lethal").addEventListener("change", function(e){ combat.lethal = e.target.checked; renderCombat(); });
-  document.getElementById("c-repeat").addEventListener("change", function(e){ combat.repeat = e.target.checked; renderCombat(); });
-  document.getElementById("c-repeat-ones-hit").addEventListener("change", function(e){ combat.repeatOnesHit = e.target.checked; renderCombat(); });
-  document.getElementById("c-twinlink").addEventListener("change", function(e){ combat.twinlink = e.target.checked; renderCombat(); });
-  document.getElementById("c-repeat-ones-wound").addEventListener("change", function(e){ combat.repeatOnesWound = e.target.checked; renderCombat(); });
-  document.getElementById("c-lancia").addEventListener("change", function(e){ combat.lancia = e.target.checked; renderCombat(); });
-  document.getElementById("c-dev").addEventListener("change", function(e){ combat.dev = e.target.checked; renderCombat(); });
-
-  var sustGroup = document.getElementById("c-sustained");
-  Array.prototype.forEach.call(sustGroup.children, function(btn){
-    btn.addEventListener("click", function(){
-      Array.prototype.forEach.call(sustGroup.children, function(c){ c.classList.remove("selected"); });
-      btn.classList.add("selected");
-      combat.sustained = parseInt(btn.dataset.value, 10);
+    var fnpSub = E("d-fnp-sub");
+    E("d-fnp").addEventListener("change", function(e){
+      combat.fnp = e.target.checked;
+      fnpSub.style.display = combat.fnp ? "" : "none";
       renderCombat();
     });
-  });
 
-  var invulSub = document.getElementById("d-invul-sub");
-  document.getElementById("d-invul").addEventListener("change", function(e){
-    combat.invul = e.target.checked;
-    invulSub.style.display = combat.invul ? "" : "none";
-    renderCombat();
-  });
-  var fnpSub = document.getElementById("d-fnp-sub");
-  document.getElementById("d-fnp").addEventListener("change", function(e){
-    combat.fnp = e.target.checked;
-    fnpSub.style.display = combat.fnp ? "" : "none";
-    renderCombat();
-  });
+    var antiXSub = E("c-antix-sub");
+    var forRow = E("c-for-row");
+    var resRow = E("d-res-row");
+    E("c-antix").addEventListener("change", function(e){
+      combat.antiX = e.target.checked;
+      antiXSub.style.display = combat.antiX ? "" : "none";
+      forRow.classList.toggle("field-dimmed", combat.antiX);
+      resRow.classList.toggle("field-dimmed", combat.antiX);
+      renderCombat();
+    });
 
-  var antiXSub = document.getElementById("c-antix-sub");
-  var forRow = document.getElementById("c-for-row");
-  var resRow = document.getElementById("d-res-row");
-  document.getElementById("c-antix").addEventListener("change", function(e){
-    combat.antiX = e.target.checked;
-    antiXSub.style.display = combat.antiX ? "" : "none";
-    forRow.classList.toggle("field-dimmed", combat.antiX);
-    resRow.classList.toggle("field-dimmed", combat.antiX);
-    renderCombat();
-  });
+    function woundThreshold(for_, res){
+      if(for_ >= res*2) return 2;
+      if(for_ > res) return 3;
+      if(for_ === res) return 4;
+      if(for_ <= res/2) return 6;
+      return 5;
+    }
 
-  function woundThreshold(for_, res){
-    if(for_ >= res*2) return 2;
-    if(for_ > res) return 3;
-    if(for_ === res) return 4;
-    if(for_ <= res/2) return 6;
-    return 5;
+    function passPhase(n, threshold){
+      var succ = round(n*successProb(threshold));
+      var fail = Math.max(0, n - succ);
+      // Stima dei dadi con 1 naturale (falliscono sempre): 1 ogni 6 dadi tirati in questa fase,
+      // usata da "Ripeti 1 per ferire" per rilanciare solo quelli invece di tutti i falliti.
+      var ones = Math.min(fail, round(n/6));
+      return {succ:succ, fail:fail, ones:ones};
+    }
+
+    function renderCombat(){
+      // FASE 1 - PER COLPIRE
+      var initial = hitPhase(combat.att, combat.xcol, combat.lethal, combat.sustained);
+      var critTotal = initial.crit;
+      var normalSuccessTotal = initial.normalSuccess + initial.sustBonus;
+      var failTotal = initial.fail;
+      if(combat.repeat){
+        // Reroll di tutti i falliti: include già gli 1 naturali, "Ripeti 1 per colpire" (se
+        // attivo insieme) non farebbe che rilanciare dadi già rilanciati, quindi va ignorato.
+        var reroll = hitPhase(initial.fail, combat.xcol, combat.lethal, combat.sustained);
+        critTotal += reroll.crit;
+        normalSuccessTotal += reroll.normalSuccess + reroll.sustBonus;
+        failTotal = reroll.fail;
+      } else if(combat.repeatOnesHit){
+        var onesToRerollHit = initial.ones;
+        var rerollOnesHit = hitPhase(onesToRerollHit, combat.xcol, combat.lethal, combat.sustained);
+        critTotal += rerollOnesHit.crit;
+        normalSuccessTotal += rerollOnesHit.normalSuccess + rerollOnesHit.sustBonus;
+        failTotal = initial.fail - onesToRerollHit + rerollOnesHit.fail;
+      }
+      var attOk = normalSuccessTotal + critTotal;
+
+      // FASE 2 - PER FERIRE
+      var woundT = combat.antiX ? combat.antiXThreshold : woundThreshold(combat.for_, combat.res);
+      if(combat.lancia) woundT = Math.max(2, woundT - 1);
+      var initialWound = passPhase(normalSuccessTotal, woundT);
+      var woundSuccessTotal, woundFailTotal;
+      // 6 naturali per ferire (1 ogni 6 dadi tirati): critici per Dev
+      var woundSixes = Math.min(initialWound.succ, round(normalSuccessTotal/6));
+      if(combat.twinlink){
+        // Reroll di tutti i falliti: include già gli 1 naturali, "Ripeti 1 per ferire" (se
+        // attivo insieme) andrebbe a rilanciare dadi già rilanciati, quindi va ignorato.
+        var woundReroll = passPhase(initialWound.fail, woundT);
+        woundSuccessTotal = initialWound.succ + woundReroll.succ;
+        woundFailTotal = woundReroll.fail;
+        woundSixes += Math.min(woundReroll.succ, round(initialWound.fail/6));
+      } else if(combat.repeatOnesWound){
+        var onesToRerollWound = initialWound.ones;
+        var rerollOnesWound = passPhase(onesToRerollWound, woundT);
+        woundSuccessTotal = initialWound.succ + rerollOnesWound.succ;
+        woundFailTotal = initialWound.fail - onesToRerollWound + rerollOnesWound.fail;
+        woundSixes += Math.min(rerollOnesWound.succ, round(onesToRerollWound/6));
+      } else {
+        woundSuccessTotal = initialWound.succ;
+        woundFailTotal = initialWound.fail;
+      }
+      var ferOk = woundSuccessTotal + critTotal;
+
+      // FASE 3 - SALVEZZA
+      var perDanniRaw = combat.ap + combat.save;
+      var perDanniEffective = combat.invul ? Math.min(perDanniRaw, combat.invulThreshold) : perDanniRaw;
+      var calcThreshold = Math.min(perDanniEffective, 7);
+      var devBypassCount = combat.dev ? woundSixes : 0;
+      var normalDamageCount = woundSuccessTotal - devBypassCount + critTotal;
+      var nonSalvatiFromNormal = round(normalDamageCount * failProb(calcThreshold));
+      var nonSalvati = nonSalvatiFromNormal + devBypassCount;
+
+      // FASE 4 - FNP
+      var feriteDopoFnp;
+      if(combat.fnp){
+        feriteDopoFnp = round(nonSalvati * failProb(combat.fnpThreshold));
+      } else {
+        feriteDopoFnp = nonSalvati;
+      }
+
+      // FASE 5 - DANNI
+      var effectiveAttacks = Math.max(0, Math.round(feriteDopoFnp));
+      var danniTotali = effectiveAttacks * combat.danni;
+      var wCurrent = 0, morti = 0;
+      for(var i=0;i<effectiveAttacks;i++){
+        wCurrent += combat.danni;
+        if(wCurrent >= combat.w){ morti++; wCurrent = 0; }
+      }
+      var feriteResidue = wCurrent;
+
+      // render
+      E("r-att-ok").textContent = attOk;
+      E("r-att-ok-sub").textContent = combat.lethal ? (critTotal + " critici auto-feriscono") : "";
+      E("r-per-ferire").textContent = woundT + "+";
+      E("r-fer-ok-sub").textContent = "Fer OK " + ferOk;
+      E("r-per-danni").textContent = calcThreshold >= 7 ? "7+" : (calcThreshold + "+");
+      E("r-non-salvati-sub").textContent = "Non salvati " + nonSalvati + (combat.dev ? " (di cui " + devBypassCount + " Dev)" : "");
+      E("r-fer-ok").textContent = ferOk;
+      E("r-non-salvati").textContent = nonSalvati;
+
+      var fnpLine = E("r-fnp-line");
+      var lastLabel = E("r-danni-label");
+      var lastSub = E("r-danni-sub");
+      if(combat.fnp){
+        fnpLine.textContent = " · Ferite dopo FNP: " + feriteDopoFnp;
+        lastSub.textContent = feriteDopoFnp + " attacchi effettivi dopo FNP";
+      } else {
+        fnpLine.textContent = "";
+        lastSub.textContent = effectiveAttacks + " attacchi effettivi";
+      }
+      lastLabel.textContent = "Danni totali";
+      E("r-danni-totali").textContent = danniTotali;
+
+      E("r-morti").textContent = morti;
+      E("r-ferite").textContent = feriteResidue;
+    }
+
+    var selArma = E("a-arma-select");
+    var rowArma = E("a-arma-row");
+    var rowDescrizione = E("a-descrizione-row");
+    var taDescrizione = E("a-descrizione");
+
+    function selezionaSogliaGruppo(container, valore){
+      container.dataset.selected = valore;
+      Array.prototype.forEach.call(container.children, function(c){
+        c.classList.toggle("selected", parseInt(c.dataset.value, 10) === valore);
+      });
+    }
+
+    // Popola il menu "Arma" con le armi dell'unità Attaccante scelta (già normalizzate dal
+    // Tavolo da Gioco, vedi PulsanteCalcolatore.jsx/csvArmiImport.js); senza armi disponibili
+    // (unità non trovata nel CSV) il menu resta nascosto e i campi restano compilabili a mano.
+    function popolaSelectArmi(armi){
+      selArma.innerHTML = '<option value="">— Nessuna —</option>';
+      armi.forEach(function(arma, i){
+        var opt = document.createElement("option");
+        opt.value = String(i);
+        opt.textContent = arma.nome;
+        selArma.appendChild(opt);
+      });
+      rowArma.style.display = armi.length ? "" : "none";
+      if(!armi.length){
+        rowDescrizione.style.display = "none";
+        taDescrizione.value = "";
+      }
+    }
+
+    // Cambiando arma o unità le regole speciali/il numero modelli impostati per l'arma precedente
+    // non hanno più senso: azzera tutti i flag lato Attaccante (regole speciali + Sustained) e
+    // riporta il numero modelli a 1, prima di applicare eventualmente la nuova arma.
+    function resetFlagsAttaccante(){
+      combat.lethal = false;
+      E("c-lethal").checked = false;
+      combat.repeat = false;
+      E("c-repeat").checked = false;
+      combat.repeatOnesHit = false;
+      E("c-repeat-ones-hit").checked = false;
+      combat.twinlink = false;
+      E("c-twinlink").checked = false;
+      combat.repeatOnesWound = false;
+      E("c-repeat-ones-wound").checked = false;
+      combat.lancia = false;
+      E("c-lancia").checked = false;
+      combat.dev = false;
+      E("c-dev").checked = false;
+      combat.antiX = false;
+      E("c-antix").checked = false;
+      antiXSub.style.display = "none";
+      forRow.classList.remove("field-dimmed");
+      resRow.classList.remove("field-dimmed");
+      combat.sustained = 0;
+      Array.prototype.forEach.call(sustGroup.children, function(c){
+        c.classList.toggle("selected", c.dataset.value === "0");
+      });
+      setModelli(1);
+    }
+
+    // ATT/XCOL/FOR/AP/DANNI dall'arma scelta; XCOL resta quello già impostato se l'arma non ha
+    // una soglia per colpire valida (es. armi ad area con BS_WS "-").
+    function applicaArma(arma){
+      if(!arma) return;
+      setAttBase(arma.att);
+      if(arma.xcol){
+        combat.xcol = arma.xcol;
+        selezionaSogliaGruppo(E("c-xcol"), arma.xcol);
+      }
+      E("c-for").value = arma.forza;
+      combat.for_ = arma.forza;
+      E("c-ap").value = arma.ap;
+      combat.ap = arma.ap;
+      E("c-danni").value = arma.danni;
+      combat.danni = arma.danni;
+      taDescrizione.value = arma.descrizione || "";
+      rowDescrizione.style.display = "";
+      renderCombat();
+    }
+
+    // W/RES si chiamano allo stesso modo nelle due app; SAVE del calcolatore è il campo TS
+    // del Tavolo da Gioco; "Invulnerabile" va attivato e valorizzato solo se l'unità ha un
+    // TS+ impostato (altrimenti resta spento, come per un'unità senza invulnerabile).
+    function applicaUnita(u){
+      var res = parseInt(u.res, 10);
+      if(!isNaN(res) && res > 0){
+        E("d-res").value = res;
+        combat.res = res;
+      }
+      var save = parseInt(u.ts, 10);
+      if(!isNaN(save) && save >= 2 && save <= 6){
+        combat.save = save;
+        selezionaSogliaGruppo(E("d-save"), save);
+      }
+      var w = parseInt(u.w, 10);
+      if(!isNaN(w) && w > 0){
+        E("d-w").value = w;
+        combat.w = w;
+      }
+      var invulValore = parseInt(u.tsPiu, 10);
+      var haInvul = !isNaN(invulValore) && invulValore >= 2 && invulValore <= 6;
+      combat.invul = haInvul;
+      E("d-invul").checked = haInvul;
+      invulSub.style.display = haInvul ? "" : "none";
+      if(haInvul){
+        combat.invulThreshold = invulValore;
+        selezionaSogliaGruppo(E("d-invul-threshold"), invulValore);
+      }
+      renderCombat();
+    }
+
+    aggiornaAttFinale();
+    renderCombat();
+
+    return {
+      E: E, combat: combat, renderCombat: renderCombat,
+      resetFlagsAttaccante: resetFlagsAttaccante, applicaArma: applicaArma,
+      applicaUnita: applicaUnita, popolaSelectArmi: popolaSelectArmi
+    };
   }
 
-  function passPhase(n, threshold){
-    var succ = round(n*successProb(threshold));
-    var fail = Math.max(0, n - succ);
-    // Stima dei dadi con 1 naturale (falliscono sempre): 1 ogni 6 dadi tirati in questa fase,
-    // usata da "Ripeti 1 per ferire" per rilanciare solo quelli invece di tutti i falliti.
-    var ones = Math.min(fail, round(n/6));
-    return {succ:succ, fail:fail, ones:ones};
-  }
-
-  function renderCombat(){
-    // FASE 1 - PER COLPIRE
-    var initial = hitPhase(combat.att, combat.xcol, combat.lethal, combat.sustained);
-    var critTotal = initial.crit;
-    var normalSuccessTotal = initial.normalSuccess + initial.sustBonus;
-    var failTotal = initial.fail;
-    if(combat.repeat){
-      // Reroll di tutti i falliti: include già gli 1 naturali, "Ripeti 1 per colpire" (se
-      // attivo insieme) non farebbe che rilanciare dadi già rilanciati, quindi va ignorato.
-      var reroll = hitPhase(initial.fail, combat.xcol, combat.lethal, combat.sustained);
-      critTotal += reroll.crit;
-      normalSuccessTotal += reroll.normalSuccess + reroll.sustBonus;
-      failTotal = reroll.fail;
-    } else if(combat.repeatOnesHit){
-      var onesToRerollHit = initial.ones;
-      var rerollOnesHit = hitPhase(onesToRerollHit, combat.xcol, combat.lethal, combat.sustained);
-      critTotal += rerollOnesHit.crit;
-      normalSuccessTotal += rerollOnesHit.normalSuccess + rerollOnesHit.sustBonus;
-      failTotal = initial.fail - onesToRerollHit + rerollOnesHit.fail;
-    }
-    var attOk = normalSuccessTotal + critTotal;
-
-    // FASE 2 - PER FERIRE
-    var woundT = combat.antiX ? combat.antiXThreshold : woundThreshold(combat.for_, combat.res);
-    if(combat.lancia) woundT = Math.max(2, woundT - 1);
-    var initialWound = passPhase(normalSuccessTotal, woundT);
-    var woundSuccessTotal, woundFailTotal;
-    // 6 naturali per ferire (1 ogni 6 dadi tirati): critici per Dev
-    var woundSixes = Math.min(initialWound.succ, round(normalSuccessTotal/6));
-    if(combat.twinlink){
-      // Reroll di tutti i falliti: include già gli 1 naturali, "Ripeti 1 per ferire" (se
-      // attivo insieme) andrebbe a rilanciare dadi già rilanciati, quindi va ignorato.
-      var woundReroll = passPhase(initialWound.fail, woundT);
-      woundSuccessTotal = initialWound.succ + woundReroll.succ;
-      woundFailTotal = woundReroll.fail;
-      woundSixes += Math.min(woundReroll.succ, round(initialWound.fail/6));
-    } else if(combat.repeatOnesWound){
-      var onesToRerollWound = initialWound.ones;
-      var rerollOnesWound = passPhase(onesToRerollWound, woundT);
-      woundSuccessTotal = initialWound.succ + rerollOnesWound.succ;
-      woundFailTotal = initialWound.fail - onesToRerollWound + rerollOnesWound.fail;
-      woundSixes += Math.min(rerollOnesWound.succ, round(onesToRerollWound/6));
-    } else {
-      woundSuccessTotal = initialWound.succ;
-      woundFailTotal = initialWound.fail;
-    }
-    var ferOk = woundSuccessTotal + critTotal;
-
-    // FASE 3 - SALVEZZA
-    var perDanniRaw = combat.ap + combat.save;
-    var perDanniEffective = combat.invul ? Math.min(perDanniRaw, combat.invulThreshold) : perDanniRaw;
-    var calcThreshold = Math.min(perDanniEffective, 7);
-    var devBypassCount = combat.dev ? woundSixes : 0;
-    var normalDamageCount = woundSuccessTotal - devBypassCount + critTotal;
-    var nonSalvatiFromNormal = round(normalDamageCount * failProb(calcThreshold));
-    var nonSalvati = nonSalvatiFromNormal + devBypassCount;
-
-    // FASE 4 - FNP
-    var feriteDopoFnp;
-    if(combat.fnp){
-      feriteDopoFnp = round(nonSalvati * failProb(combat.fnpThreshold));
-    } else {
-      feriteDopoFnp = nonSalvati;
-    }
-
-    // FASE 5 - DANNI
-    var effectiveAttacks = Math.max(0, Math.round(feriteDopoFnp));
-    var danniTotali = effectiveAttacks * combat.danni;
-    var wCurrent = 0, morti = 0;
-    for(var i=0;i<effectiveAttacks;i++){
-      wCurrent += combat.danni;
-      if(wCurrent >= combat.w){ morti++; wCurrent = 0; }
-    }
-    var feriteResidue = wCurrent;
-
-    // render
-    document.getElementById("r-att-ok").textContent = attOk;
-    document.getElementById("r-att-ok-sub").textContent = combat.lethal ? (critTotal + " critici auto-feriscono") : "";
-    document.getElementById("r-per-ferire").textContent = woundT + "+";
-    document.getElementById("r-fer-ok-sub").textContent = "Fer OK " + ferOk;
-    document.getElementById("r-per-danni").textContent = calcThreshold >= 7 ? "7+" : (calcThreshold + "+");
-    document.getElementById("r-non-salvati-sub").textContent = "Non salvati " + nonSalvati + (combat.dev ? " (di cui " + devBypassCount + " Dev)" : "");
-    document.getElementById("r-fer-ok").textContent = ferOk;
-    document.getElementById("r-non-salvati").textContent = nonSalvati;
-
-    var fnpLine = document.getElementById("r-fnp-line");
-    var lastLabel = document.getElementById("r-danni-label");
-    var lastSub = document.getElementById("r-danni-sub");
-    if(combat.fnp){
-      fnpLine.textContent = " · Ferite dopo FNP: " + feriteDopoFnp;
-      lastSub.textContent = feriteDopoFnp + " attacchi effettivi dopo FNP";
-    } else {
-      fnpLine.textContent = "";
-      lastSub.textContent = effectiveAttacks + " attacchi effettivi";
-    }
-    lastLabel.textContent = "Danni totali";
-    document.getElementById("r-danni-totali").textContent = danniTotali;
-
-    document.getElementById("r-morti").textContent = morti;
-    document.getElementById("r-ferite").textContent = feriteResidue;
-  }
+  var C = creaCombattimento("");
+  var V = creaCombattimento("v-");
 
   // ---------------- TABS ----------------
-  var tabStats = document.getElementById("tab-stats-btn");
-  var tabCombat = document.getElementById("tab-combat-btn");
-  var panelStats = document.getElementById("panel-stats");
-  var panelCombat = document.getElementById("panel-combat");
-  tabStats.addEventListener("click", function(){
-    tabStats.classList.add("active"); tabStats.setAttribute("aria-selected","true");
-    tabCombat.classList.remove("active"); tabCombat.setAttribute("aria-selected","false");
-    panelStats.classList.add("active");
-    panelCombat.classList.remove("active");
-  });
-  tabCombat.addEventListener("click", function(){
-    tabCombat.classList.add("active"); tabCombat.setAttribute("aria-selected","true");
-    tabStats.classList.remove("active"); tabStats.setAttribute("aria-selected","false");
-    panelCombat.classList.add("active");
-    panelStats.classList.remove("active");
+  var tabs = [
+    { btn: document.getElementById("tab-stats-btn"), panel: document.getElementById("panel-stats") },
+    { btn: document.getElementById("tab-combat-btn"), panel: panelCombat },
+    { btn: document.getElementById("tab-vs-btn"), panel: panelVs }
+  ];
+  tabs.forEach(function(t){
+    t.btn.addEventListener("click", function(){
+      tabs.forEach(function(x){
+        var attivo = x === t;
+        x.btn.classList.toggle("active", attivo);
+        x.btn.setAttribute("aria-selected", attivo ? "true" : "false");
+        x.panel.classList.toggle("active", attivo);
+      });
+    });
   });
 
-  // Apertura diretta sulla scheda Combattimento tramite #combat nell'URL (usato dal tasto
-  // "Botte!" dell'app Tavolo da Gioco, che apre questa pagina in una finestra separata).
+  // Apertura diretta su una scheda tramite l'hash dell'URL: #combat è usato dal tasto "Botte!"
+  // dell'app Tavolo da Gioco (che apre questa pagina in una finestra separata), #vs apre VSunità.
   if(location.hash === "#combat"){
-    tabCombat.click();
+    tabs[1].btn.click();
+  } else if(location.hash === "#vs"){
+    tabs[2].btn.click();
   }
 
-  // ---------------- INTEGRAZIONE TAVOLO DA GIOCO ----------------
+  // ---------------- INTEGRAZIONE TAVOLO DA GIOCO (tab Combattimento) ----------------
   // Riceve via postMessage le unità delle armate Blu/Rosso dall'app "Tavolo da Gioco"
   // (la finestra che ha aperto questa come popup, window.opener), per pre-compilare il
   // Difensore scegliendo un'unità invece di ricopiarne a mano le statistiche. Se la pagina
@@ -1154,16 +1322,6 @@ body{
   var selUnitaAtt = document.getElementById("a-unita-select");
   var rowUnitaAtt = document.getElementById("a-unita-row");
   var selArma = document.getElementById("a-arma-select");
-  var rowArma = document.getElementById("a-arma-row");
-  var rowDescrizione = document.getElementById("a-descrizione-row");
-  var taDescrizione = document.getElementById("a-descrizione");
-
-  function selezionaSogliaGruppo(container, valore){
-    container.dataset.selected = valore;
-    Array.prototype.forEach.call(container.children, function(c){
-      c.classList.toggle("selected", parseInt(c.dataset.value, 10) === valore);
-    });
-  }
 
   function riempiSelectUnita(select, payload){
     select.innerHTML = '<option value="">— Manuale —</option>';
@@ -1193,121 +1351,258 @@ body{
     rowUnitaAtt.style.display = "";
   }
 
-  // Popola il menu "Arma" con le armi dell'unità Attaccante scelta (già normalizzate dal
-  // Tavolo da Gioco, vedi PulsanteCalcolatore.jsx/csvArmiImport.js); senza armi disponibili
-  // (unità non trovata nel CSV) il menu resta nascosto e i campi restano compilabili a mano.
-  function popolaSelectArmi(armi){
-    selArma.innerHTML = '<option value="">— Nessuna —</option>';
-    armi.forEach(function(arma, i){
-      var opt = document.createElement("option");
-      opt.value = String(i);
-      opt.textContent = arma.nome;
-      selArma.appendChild(opt);
-    });
-    rowArma.style.display = armi.length ? "" : "none";
-    if(!armi.length){
-      rowDescrizione.style.display = "none";
-      taDescrizione.value = "";
-    }
-  }
-
-  // Cambiando arma o unità le regole speciali/il numero modelli impostati per l'arma precedente
-  // non hanno più senso: azzera tutti i flag lato Attaccante (regole speciali + Sustained) e
-  // riporta il numero modelli a 1, prima di applicare eventualmente la nuova arma.
-  function resetFlagsAttaccante(){
-    combat.lethal = false;
-    document.getElementById("c-lethal").checked = false;
-    combat.repeat = false;
-    document.getElementById("c-repeat").checked = false;
-    combat.repeatOnesHit = false;
-    document.getElementById("c-repeat-ones-hit").checked = false;
-    combat.twinlink = false;
-    document.getElementById("c-twinlink").checked = false;
-    combat.repeatOnesWound = false;
-    document.getElementById("c-repeat-ones-wound").checked = false;
-    combat.lancia = false;
-    document.getElementById("c-lancia").checked = false;
-    combat.dev = false;
-    document.getElementById("c-dev").checked = false;
-    combat.antiX = false;
-    document.getElementById("c-antix").checked = false;
-    antiXSub.style.display = "none";
-    forRow.classList.remove("field-dimmed");
-    resRow.classList.remove("field-dimmed");
-    combat.sustained = 0;
-    Array.prototype.forEach.call(sustGroup.children, function(c){
-      c.classList.toggle("selected", c.dataset.value === "0");
-    });
-    setModelli(1);
-  }
-
-  // ATT/XCOL/FOR/AP/DANNI dall'arma scelta; XCOL resta quello già impostato se l'arma non ha
-  // una soglia per colpire valida (es. armi ad area con BS_WS "-").
-  function applicaArma(arma){
-    if(!arma) return;
-    setAttBase(arma.att);
-    if(arma.xcol){
-      combat.xcol = arma.xcol;
-      selezionaSogliaGruppo(document.getElementById("c-xcol"), arma.xcol);
-    }
-    document.getElementById("c-for").value = arma.forza;
-    combat.for_ = arma.forza;
-    document.getElementById("c-ap").value = arma.ap;
-    combat.ap = arma.ap;
-    document.getElementById("c-danni").value = arma.danni;
-    combat.danni = arma.danni;
-    taDescrizione.value = arma.descrizione || "";
-    rowDescrizione.style.display = "";
-    renderCombat();
-  }
-
-  // W/RES si chiamano allo stesso modo nelle due app; SAVE del calcolatore è il campo TS
-  // del Tavolo da Gioco; "Invulnerabile" va attivato e valorizzato solo se l'unità ha un
-  // TS+ impostato (altrimenti resta spento, come per un'unità senza invulnerabile).
-  function applicaUnita(u){
-    var res = parseInt(u.res, 10);
-    if(!isNaN(res) && res > 0){
-      document.getElementById("d-res").value = res;
-      combat.res = res;
-    }
-    var save = parseInt(u.ts, 10);
-    if(!isNaN(save) && save >= 2 && save <= 6){
-      combat.save = save;
-      selezionaSogliaGruppo(document.getElementById("d-save"), save);
-    }
-    var w = parseInt(u.w, 10);
-    if(!isNaN(w) && w > 0){
-      document.getElementById("d-w").value = w;
-      combat.w = w;
-    }
-    var invulValore = parseInt(u.tsPiu, 10);
-    var haInvul = !isNaN(invulValore) && invulValore >= 2 && invulValore <= 6;
-    combat.invul = haInvul;
-    document.getElementById("d-invul").checked = haInvul;
-    invulSub.style.display = haInvul ? "" : "none";
-    if(haInvul){
-      combat.invulThreshold = invulValore;
-      selezionaSogliaGruppo(document.getElementById("d-invul-threshold"), invulValore);
-    }
-    renderCombat();
-  }
-
   selUnita.addEventListener("change", function(){
     var u = unitaRicevute[selUnita.value];
-    if(u) applicaUnita(u);
+    if(u) C.applicaUnita(u);
   });
 
   selUnitaAtt.addEventListener("change", function(){
     var u = unitaRicevute[selUnitaAtt.value];
-    popolaSelectArmi((u && u.armi) || []);
-    resetFlagsAttaccante();
+    C.popolaSelectArmi((u && u.armi) || []);
+    C.resetFlagsAttaccante();
   });
 
   selArma.addEventListener("change", function(){
     var u = unitaRicevute[selUnitaAtt.value];
     var armi = (u && u.armi) || [];
-    resetFlagsAttaccante();
-    applicaArma(armi[parseInt(selArma.value, 10)]);
+    C.resetFlagsAttaccante();
+    C.applicaArma(armi[parseInt(selArma.value, 10)]);
+  });
+
+  // ---------------- VSunità: DATI DA CSV ----------------
+  // Le unità e le armi arrivano dai due CSV pubblicati accanto a questa pagina (info.csv e
+  // Datasheets_wargear.csv, separatore "|"): qui vengono letti a runtime, come fa l'app Tavolo da
+  // Gioco, e le conversioni sono le stesse (media dei dadi, soglia X+, AP con segno invertito).
+  var SEP = "|";
+  var datiCsv = { unita: [], armiPerId: {}, righeArmi: 0 };
+
+  function pulisciCampo(grezzo){
+    var v = (grezzo || "").trim();
+    if(v.length >= 2 && v.charAt(0) === '"' && v.charAt(v.length - 1) === '"'){
+      return v.slice(1, -1).replace(/""/g, '"');
+    }
+    return v;
+  }
+
+  function righeCsv(testo){
+    return testo.replace(/^﻿/, "").split(/\r?\n/).filter(function(r){ return r.trim() !== ""; });
+  }
+
+  function parseUnita(testo){
+    var righe = righeCsv(testo);
+    var colonne = righe[0].split(SEP).map(function(c){ return c.trim(); });
+    return righe.slice(1).map(function(riga){
+      var valori = riga.split(SEP).map(pulisciCampo);
+      var r = {};
+      colonne.forEach(function(c, i){ r[c] = valori[i] === undefined ? "" : valori[i]; });
+      return {
+        chiave: r.datasheet_id + "-" + r.line,
+        datasheetId: r.datasheet_id,
+        fazione: r.faction,
+        nome: r.name,
+        res: r.RES, ts: r.TS, tsPiu: r["TS+"], w: r.W
+      };
+    }).filter(function(u){ return u.fazione && u.nome; });
+  }
+
+  // L'intestazione di Datasheets_wargear.csv ha DUE colonne "name" (unità e arma): si legge per
+  // posizione: datasheet_id|name|line|line_in_wargear|dice|name|description|range|type|A|BS_WS|S|AP|D
+  function parseArmi(testo){
+    var righe = righeCsv(testo).slice(1);
+    return righe.map(function(riga){
+      var v = riga.split(SEP).map(function(c){ return c.trim(); });
+      return {
+        datasheetId: v[0] || "", arma: v[5] || "", descrizione: v[6] || "",
+        att: v[9] || "", bsWs: v[10] || "", forza: v[11] || "", ap: v[12] || "", danni: v[13] || ""
+      };
+    }).filter(function(a){ return a.datasheetId && a.arma; });
+  }
+
+  // "NdM+K" (es. "2D6+3", "D3") → media arrotondata; un numero semplice passa invariato.
+  function valoreMedioDado(grezzo, minimo){
+    var testo = (grezzo || "").trim();
+    if(!testo || testo === "-") return minimo;
+    var intero = Number(testo);
+    if(!isNaN(intero)) return Math.max(minimo, Math.round(intero));
+    var m = testo.match(/^(\d*)d(\d+)(?:\+(\d+))?$/i);
+    if(!m) return minimo;
+    var numDadi = m[1] ? Number(m[1]) : 1;
+    var facce = Number(m[2]);
+    var bonus = m[3] ? Number(m[3]) : 0;
+    return Math.max(minimo, Math.round(numDadi * (facce + 1) / 2 + bonus));
+  }
+
+  // BS_WS è già la soglia "X+" come numero (2-6); "-" o "N/A" = nessun tiro per colpire.
+  function sogliaDaTesto(grezzo){
+    var n = Number((grezzo || "").trim());
+    return (n % 1 === 0 && n >= 2 && n <= 6) ? n : null;
+  }
+
+  // L'AP nel CSV è negativo o zero (es. "-2"): il calcolatore vuole il valore assoluto.
+  function apDaTesto(grezzo){
+    var n = Number((grezzo || "").trim());
+    return isNaN(n) ? 0 : Math.max(0, -n);
+  }
+
+  function normalizzaArma(a){
+    return {
+      nome: a.arma, descrizione: a.descrizione,
+      att: valoreMedioDado(a.att, 1), xcol: sogliaDaTesto(a.bsWs),
+      forza: Number(a.forza) || 1, ap: apDaTesto(a.ap), danni: valoreMedioDado(a.danni, 1)
+    };
+  }
+
+  function armiDi(unita){
+    return unita ? (datiCsv.armiPerId[unita.datasheetId] || []).map(normalizzaArma) : [];
+  }
+
+  function scaricaCsv(nome){
+    // Query string sempre diversa: GitHub Pages serve i file con max-age=600.
+    return fetch(nome + "?t=" + Date.now(), { cache: "no-store" }).then(function(r){
+      return r.text().then(function(t){
+        if(!r.ok || t.replace(/^\s+/, "").charAt(0) === "<"){
+          throw new Error("Impossibile leggere " + nome + " (HTTP " + r.status + ")");
+        }
+        return t;
+      });
+    });
+  }
+
+  var elStato = document.getElementById("v-dati-stato");
+  function mostraStato(testo, errore){
+    elStato.textContent = testo;
+    elStato.style.color = errore ? "var(--att, #c0392b)" : "";
+  }
+
+  function caricaDati(){
+    mostraStato("Caricamento dati…");
+    return Promise.all([scaricaCsv("info.csv"), scaricaCsv("Datasheets_wargear.csv")]).then(function(testi){
+      var unita = parseUnita(testi[0]);
+      var armi = parseArmi(testi[1]);
+      var perId = {};
+      armi.forEach(function(a){ (perId[a.datasheetId] = perId[a.datasheetId] || []).push(a); });
+      datiCsv = { unita: unita, armiPerId: perId, righeArmi: armi.length };
+      aggiornaStato();
+      vsRipopola();
+    }).catch(function(err){
+      var aggiunta = location.protocol === "file:" ? " (aprendo il file da disco il browser blocca la lettura dei CSV: serve un server web)" : "";
+      mostraStato("⚠ " + err.message + aggiunta, true);
+    });
+  }
+
+  // ---------------- VSunità: FILTRO "IN GIOCO" ----------------
+  // Aperto da Tavolo da Gioco, il calcolatore riceve (messaggio wh40-eserciti) le unità presenti
+  // negli eserciti Blu/Rosso. Le unità create con il CSV portano il datasheetId; per quelle senza
+  // si ricade sul nome (anche senza il suffisso numerico di deduplicazione, es. "Scout2").
+  var filtro = null;
+  var elFiltroRow = document.getElementById("v-filtro-row");
+  var elFiltro = document.getElementById("v-filtro");
+
+  function vsImpostaFiltro(payload){
+    var ids = {}, nomi = {}, totale = 0;
+    ["blu", "rosso"].forEach(function(lato){
+      (payload[lato] || []).forEach(function(u){
+        totale++;
+        if(u.datasheetId){
+          ids[String(u.datasheetId)] = true;
+        } else {
+          var n = (u.nome || "").trim().toLowerCase();
+          if(n){ nomi[n] = true; nomi[n.replace(/\d+$/, "")] = true; }
+        }
+      });
+    });
+    filtro = { ids: ids, nomi: nomi, totale: totale };
+    elFiltroRow.style.display = "";
+    aggiornaStato();
+    vsRipopola();
+  }
+
+  function inGioco(u){
+    return !!(filtro.ids[u.datasheetId] || filtro.nomi[u.nome.trim().toLowerCase()]);
+  }
+
+  function unitaVisibili(){
+    var solo = filtro && elFiltro.checked;
+    return datiCsv.unita.filter(function(u){ return !solo || inGioco(u); });
+  }
+
+  function aggiornaStato(){
+    if(!datiCsv.unita.length) return;
+    var base = datiCsv.unita.length + " unità, " + datiCsv.righeArmi + " armi caricate";
+    if(filtro && elFiltro.checked){
+      base += " · in gioco: " + unitaVisibili().length + " (" + filtro.totale + " negli eserciti)";
+    }
+    mostraStato(base);
+  }
+
+  elFiltro.addEventListener("change", function(){ aggiornaStato(); vsRipopola(); });
+  document.getElementById("v-ricarica").addEventListener("click", caricaDati);
+
+  // ---------------- VSunità: SELETTORI FAZIONE → UNITÀ ----------------
+  var unitaPerChiave = {};
+  var vsAttF = V.E("a-fazione-select"), vsAttU = V.E("a-unita-select");
+  var vsDifF = V.E("d-fazione-select"), vsDifU = V.E("d-unita-select");
+  var vsArma = V.E("a-arma-select");
+
+  function riempiSelect(select, voci, segnaposto, valoreCorrente){
+    select.innerHTML = "";
+    var vuota = document.createElement("option");
+    vuota.value = "";
+    vuota.textContent = segnaposto;
+    select.appendChild(vuota);
+    voci.forEach(function(v){
+      var opt = document.createElement("option");
+      opt.value = v.valore;
+      opt.textContent = v.testo;
+      select.appendChild(opt);
+    });
+    var presente = voci.some(function(v){ return v.valore === valoreCorrente; });
+    select.value = presente ? valoreCorrente : "";
+  }
+
+  function riempiUnita(selF, selU){
+    var fazione = selF.value;
+    var voci = unitaVisibili().filter(function(u){ return u.fazione === fazione; }).map(function(u){
+      unitaPerChiave[u.chiave] = u;
+      return { valore: u.chiave, testo: u.nome };
+    });
+    riempiSelect(selU, voci, fazione ? "— Seleziona unità —" : "— Prima la fazione —", selU.value);
+  }
+
+  function riempiLato(selF, selU){
+    var fazioni = [];
+    unitaVisibili().forEach(function(u){ if(fazioni.indexOf(u.fazione) < 0) fazioni.push(u.fazione); });
+    fazioni.sort(function(a, b){ return a.localeCompare(b); });
+    riempiSelect(selF, fazioni.map(function(f){ return { valore: f, testo: f }; }), "— Seleziona fazione —", selF.value);
+    riempiUnita(selF, selU);
+  }
+
+  function vsRipopola(){
+    riempiLato(vsAttF, vsAttU);
+    riempiLato(vsDifF, vsDifU);
+    var uAtt = unitaPerChiave[vsAttU.value];
+    V.popolaSelectArmi(armiDi(uAtt));
+  }
+
+  vsAttF.addEventListener("change", function(){
+    riempiUnita(vsAttF, vsAttU);
+    V.popolaSelectArmi([]);
+    V.resetFlagsAttaccante();
+  });
+  vsAttU.addEventListener("change", function(){
+    V.popolaSelectArmi(armiDi(unitaPerChiave[vsAttU.value]));
+    V.resetFlagsAttaccante();
+  });
+  vsArma.addEventListener("change", function(){
+    var armi = armiDi(unitaPerChiave[vsAttU.value]);
+    V.resetFlagsAttaccante();
+    V.applicaArma(armi[parseInt(vsArma.value, 10)]);
+  });
+
+  vsDifF.addEventListener("change", function(){ riempiUnita(vsDifF, vsDifU); });
+  vsDifU.addEventListener("change", function(){
+    var u = unitaPerChiave[vsDifU.value];
+    if(u) V.applicaUnita(u);
   });
 
   window.addEventListener("message", function(e){
@@ -1315,14 +1610,15 @@ body{
     var dati = e.data;
     if(!dati || dati.type !== "wh40-eserciti") return;
     popolaSelectUnita(dati);
+    vsImpostaFiltro(dati);
   });
 
   if(window.opener){
     try { window.opener.postMessage({ type: "wh40-ready" }, "*"); } catch(err) {}
   }
 
-  aggiornaAttFinale();
   renderStats();
-  renderCombat();
+  caricaDati();
+
 })();
 </script>
