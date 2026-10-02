@@ -656,6 +656,10 @@ body{
           <div class="toggle-label">Lethal</div>
           <input type="checkbox" class="switch" id="c-lethal">
         </div>
+        <div class="sub-threshold" id="c-lethal-sub" style="display:none">
+          <span class="field-label">Critico per colpire con</span>
+          <div class="threshold-group" id="c-lethal-threshold" data-selected="6" style="margin-top:8px"></div>
+        </div>
         <div class="toggle-row">
           <div>
             <div class="toggle-label">Ripeti falliti</div>
@@ -670,6 +674,12 @@ body{
           </div>
           <input type="checkbox" class="switch" id="c-repeat-ones-hit">
         </div>
+        <div class="sub-threshold" id="c-repeat-ones-hit-sub" style="display:none">
+          <div class="choice-group" id="c-repeat-ones-hit-mode" data-selected="tutti" style="grid-template-columns:1fr 1fr">
+            <button class="choice-btn selected" data-value="tutti">Tutti gli 1</button>
+            <button class="choice-btn" data-value="uno">Un solo 1</button>
+          </div>
+        </div>
         <div class="toggle-row">
           <div class="toggle-label">Twinlink</div>
           <input type="checkbox" class="switch" id="c-twinlink">
@@ -680,6 +690,12 @@ body{
             <div class="toggle-desc">Reroll dei soli 1 naturali per ferire (ignorato se "Twinlink" è attivo)</div>
           </div>
           <input type="checkbox" class="switch" id="c-repeat-ones-wound">
+        </div>
+        <div class="sub-threshold" id="c-repeat-ones-wound-sub" style="display:none">
+          <div class="choice-group" id="c-repeat-ones-wound-mode" data-selected="tutti" style="grid-template-columns:1fr 1fr">
+            <button class="choice-btn selected" data-value="tutti">Tutti gli 1</button>
+            <button class="choice-btn" data-value="uno">Un solo 1</button>
+          </div>
         </div>
         <div class="toggle-row">
           <div class="toggle-label">Lancia</div>
@@ -699,9 +715,13 @@ body{
         <div class="toggle-row">
           <div>
             <div class="toggle-label">Dev</div>
-            <div class="toggle-desc">I 6 per ferire saltano AP/salvezza (solo FNP)</div>
+            <div class="toggle-desc">I ferimenti critici (6 di default) saltano AP/salvezza (solo FNP)</div>
           </div>
           <input type="checkbox" class="switch" id="c-dev">
+        </div>
+        <div class="sub-threshold" id="c-dev-sub" style="display:none">
+          <span class="field-label">Critico per ferire con</span>
+          <div class="threshold-group" id="c-dev-threshold" data-selected="6" style="margin-top:8px"></div>
         </div>
 
         <div class="field-row" style="margin-top:16px; margin-bottom:0">
@@ -712,6 +732,10 @@ body{
             <button class="choice-btn" data-value="2">Sust2</button>
             <button class="choice-btn" data-value="3">Sust3</button>
           </div>
+        </div>
+        <div class="sub-threshold" id="c-sustained-sub" style="display:none">
+          <span class="field-label">Critico per Sustained con</span>
+          <div class="threshold-group" id="c-sustained-threshold" data-selected="6" style="margin-top:8px"></div>
         </div>
       </div>
 
@@ -823,6 +847,8 @@ body{
   function righeFazioneUnita(prefisso){
     return '<div class="field-row"><span class="field-label">Fazione</span>' +
              '<select class="num-input" id="' + prefisso + '-fazione-select"></select></div>' +
+           '<div class="field-row"><span class="field-label">Cerca unità</span>' +
+             '<input type="text" class="num-input" id="' + prefisso + '-cerca" placeholder="Scrivi parte del nome…" autocomplete="off"></div>' +
            '<div class="field-row"><span class="field-label">Unità</span>' +
              '<select class="num-input" id="' + prefisso + '-unita-select"></select></div>';
   }
@@ -883,20 +909,25 @@ body{
   document.getElementById("s-reroll").addEventListener("change", function(e){ stat.reroll = e.target.checked; renderStats(); });
   document.getElementById("s-lethal").addEventListener("change", function(e){ stat.lethal = e.target.checked; renderStats(); });
 
-  function hitPhase(n, threshold, lethal, sustLevel){
+  // critThreshold / sustThreshold (opzionali, default 6): valore minimo del dado che conta come
+  // colpo critico per Lethal e per Sustained (possono essere diversi). Un critico colpisce
+  // sempre, quindi se è più facile della soglia per colpire comanda lui.
+  function hitPhase(n, threshold, lethal, sustLevel, critThreshold, sustThreshold){
     if(n<=0) return {crit:0, normalSuccess:0, fail:0, sustBonus:0, sixCount:0};
     var sixCount = round(n/6);
     var crit=0, normalSuccess;
+    var sustFacce = 7-(sustThreshold||6);
+    var hitProb = Math.max(successProb(threshold), sustLevel>0 ? sustFacce/6 : 0);
     if(lethal){
-      crit = sixCount;
-      var succProb = successProb(threshold) - (1/6);
-      if(succProb<0) succProb = 0;
+      var critProb = (7-(critThreshold||6))/6;
+      crit = round(n*(7-(critThreshold||6))/6);
+      var succProb = Math.max(hitProb, critProb) - critProb;
       normalSuccess = round(n*succProb);
     } else {
-      normalSuccess = round(n*successProb(threshold));
+      normalSuccess = round(n*hitProb);
     }
     var fail = Math.max(0, n - crit - normalSuccess);
-    var sustBonus = sustLevel>0 ? sixCount*sustLevel : 0;
+    var sustBonus = sustLevel>0 ? round(n*sustFacce/6)*sustLevel : 0;
     // Stima dei dadi con 1 naturale (falliscono sempre, tranne Lethal che li rende comunque non
     // critici): 1 ogni 6 dadi tirati, usata da "Ripeti 1 per colpire" per rilanciare solo quelli.
     var ones = Math.min(fail, round(n/6));
@@ -932,8 +963,10 @@ body{
     // ---------------- COMBATTIMENTO ----------------
     var combat = {
       att: 10, attBase: 10, numeroModelli: 1, xcol: 4, for_: 4, ap: 1, danni: 1,
-      lethal: false, repeat: false, repeatOnesHit: false, sustained: 0,
-      twinlink: false, repeatOnesWound: false, lancia: false, dev: false,
+      lethal: false, lethalThreshold: 6, repeat: false, repeatOnesHit: false, repeatOnesHitMode: "tutti",
+      sustained: 0, sustainedThreshold: 6,
+      twinlink: false, repeatOnesWound: false, repeatOnesWoundMode: "tutti", lancia: false,
+      dev: false, devThreshold: 6,
       antiX: false, antiXThreshold: 4,
       res: 4, save: 4, w: 1,
       invul: false, invulThreshold: 4,
@@ -983,6 +1016,29 @@ body{
     makeThresholdGroup(E("d-invul-threshold"), 4, function(v){ combat.invulThreshold = v; renderCombat(); });
     makeThresholdGroup(E("d-fnp-threshold"), 4, function(v){ combat.fnpThreshold = v; renderCombat(); });
     makeThresholdGroup(E("c-antix-threshold"), 4, function(v){ combat.antiXThreshold = v; renderCombat(); });
+    makeThresholdGroup(E("c-lethal-threshold"), 6, function(v){ combat.lethalThreshold = v; renderCombat(); });
+    makeThresholdGroup(E("c-dev-threshold"), 6, function(v){ combat.devThreshold = v; renderCombat(); });
+    makeThresholdGroup(E("c-sustained-threshold"), 6, function(v){ combat.sustainedThreshold = v; renderCombat(); });
+
+    // Scelta "Tutti gli 1" / "Un solo 1" sotto i due "Ripeti 1": onChange riceve "tutti" o "uno".
+    function makeChoiceGroup(container, onChange){
+      Array.prototype.forEach.call(container.children, function(btn){
+        btn.addEventListener("click", function(){
+          Array.prototype.forEach.call(container.children, function(c){ c.classList.remove("selected"); });
+          btn.classList.add("selected");
+          container.dataset.selected = btn.dataset.value;
+          onChange(btn.dataset.value);
+        });
+      });
+    }
+    function selezionaScelta(container, valore){
+      container.dataset.selected = valore;
+      Array.prototype.forEach.call(container.children, function(c){
+        c.classList.toggle("selected", c.dataset.value === valore);
+      });
+    }
+    makeChoiceGroup(E("c-repeat-ones-hit-mode"), function(v){ combat.repeatOnesHitMode = v; renderCombat(); });
+    makeChoiceGroup(E("c-repeat-ones-wound-mode"), function(v){ combat.repeatOnesWoundMode = v; renderCombat(); });
 
     function bindNumber(id, key, min){
       var el = E(id);
@@ -1000,13 +1056,29 @@ body{
     bindNumber("d-res","res",1);
     bindNumber("d-w","w",1);
 
-    E("c-lethal").addEventListener("change", function(e){ combat.lethal = e.target.checked; renderCombat(); });
+    E("c-lethal").addEventListener("change", function(e){
+      combat.lethal = e.target.checked;
+      E("c-lethal-sub").style.display = combat.lethal ? "" : "none";
+      renderCombat();
+    });
     E("c-repeat").addEventListener("change", function(e){ combat.repeat = e.target.checked; renderCombat(); });
-    E("c-repeat-ones-hit").addEventListener("change", function(e){ combat.repeatOnesHit = e.target.checked; renderCombat(); });
+    E("c-repeat-ones-hit").addEventListener("change", function(e){
+      combat.repeatOnesHit = e.target.checked;
+      E("c-repeat-ones-hit-sub").style.display = combat.repeatOnesHit ? "" : "none";
+      renderCombat();
+    });
     E("c-twinlink").addEventListener("change", function(e){ combat.twinlink = e.target.checked; renderCombat(); });
-    E("c-repeat-ones-wound").addEventListener("change", function(e){ combat.repeatOnesWound = e.target.checked; renderCombat(); });
+    E("c-repeat-ones-wound").addEventListener("change", function(e){
+      combat.repeatOnesWound = e.target.checked;
+      E("c-repeat-ones-wound-sub").style.display = combat.repeatOnesWound ? "" : "none";
+      renderCombat();
+    });
     E("c-lancia").addEventListener("change", function(e){ combat.lancia = e.target.checked; renderCombat(); });
-    E("c-dev").addEventListener("change", function(e){ combat.dev = e.target.checked; renderCombat(); });
+    E("c-dev").addEventListener("change", function(e){
+      combat.dev = e.target.checked;
+      E("c-dev-sub").style.display = combat.dev ? "" : "none";
+      renderCombat();
+    });
 
     var sustGroup = E("c-sustained");
     Array.prototype.forEach.call(sustGroup.children, function(btn){
@@ -1014,6 +1086,7 @@ body{
         Array.prototype.forEach.call(sustGroup.children, function(c){ c.classList.remove("selected"); });
         btn.classList.add("selected");
         combat.sustained = parseInt(btn.dataset.value, 10);
+        E("c-sustained-sub").style.display = combat.sustained > 0 ? "" : "none";
         renderCombat();
       });
     });
@@ -1061,20 +1134,21 @@ body{
 
     function renderCombat(){
       // FASE 1 - PER COLPIRE
-      var initial = hitPhase(combat.att, combat.xcol, combat.lethal, combat.sustained);
+      var initial = hitPhase(combat.att, combat.xcol, combat.lethal, combat.sustained, combat.lethalThreshold, combat.sustainedThreshold);
       var critTotal = initial.crit;
       var normalSuccessTotal = initial.normalSuccess + initial.sustBonus;
       var failTotal = initial.fail;
       if(combat.repeat){
         // Reroll di tutti i falliti: include già gli 1 naturali, "Ripeti 1 per colpire" (se
         // attivo insieme) non farebbe che rilanciare dadi già rilanciati, quindi va ignorato.
-        var reroll = hitPhase(initial.fail, combat.xcol, combat.lethal, combat.sustained);
+        var reroll = hitPhase(initial.fail, combat.xcol, combat.lethal, combat.sustained, combat.lethalThreshold, combat.sustainedThreshold);
         critTotal += reroll.crit;
         normalSuccessTotal += reroll.normalSuccess + reroll.sustBonus;
         failTotal = reroll.fail;
       } else if(combat.repeatOnesHit){
-        var onesToRerollHit = initial.ones;
-        var rerollOnesHit = hitPhase(onesToRerollHit, combat.xcol, combat.lethal, combat.sustained);
+        // "Un solo 1": si rilancia un solo dado tra quelli con 1 naturale, non tutti.
+        var onesToRerollHit = combat.repeatOnesHitMode === "uno" ? Math.min(1, initial.ones) : initial.ones;
+        var rerollOnesHit = hitPhase(onesToRerollHit, combat.xcol, combat.lethal, combat.sustained, combat.lethalThreshold, combat.sustainedThreshold);
         critTotal += rerollOnesHit.crit;
         normalSuccessTotal += rerollOnesHit.normalSuccess + rerollOnesHit.sustBonus;
         failTotal = initial.fail - onesToRerollHit + rerollOnesHit.fail;
@@ -1084,23 +1158,28 @@ body{
       // FASE 2 - PER FERIRE
       var woundT = combat.antiX ? combat.antiXThreshold : woundThreshold(combat.for_, combat.res);
       if(combat.lancia) woundT = Math.max(2, woundT - 1);
+      // Dev: un ferimento critico (dado >= soglia Dev) ferisce sempre, quindi se la soglia Dev è
+      // più facile di quella per ferire è lei a decidere quali dadi feriscono.
+      var devFacce = 7 - combat.devThreshold;
+      if(combat.dev) woundT = Math.min(woundT, combat.devThreshold);
       var initialWound = passPhase(normalSuccessTotal, woundT);
       var woundSuccessTotal, woundFailTotal;
-      // 6 naturali per ferire (1 ogni 6 dadi tirati): critici per Dev
-      var woundSixes = Math.min(initialWound.succ, round(normalSuccessTotal/6));
+      // Dadi con ferimento critico per Dev (con soglia 6: 1 ogni 6 dadi tirati)
+      var woundSixes = Math.min(initialWound.succ, round(normalSuccessTotal*devFacce/6));
       if(combat.twinlink){
         // Reroll di tutti i falliti: include già gli 1 naturali, "Ripeti 1 per ferire" (se
         // attivo insieme) andrebbe a rilanciare dadi già rilanciati, quindi va ignorato.
         var woundReroll = passPhase(initialWound.fail, woundT);
         woundSuccessTotal = initialWound.succ + woundReroll.succ;
         woundFailTotal = woundReroll.fail;
-        woundSixes += Math.min(woundReroll.succ, round(initialWound.fail/6));
+        woundSixes += Math.min(woundReroll.succ, round(initialWound.fail*devFacce/6));
       } else if(combat.repeatOnesWound){
-        var onesToRerollWound = initialWound.ones;
+        // "Un solo 1": si rilancia un solo dado tra quelli con 1 naturale, non tutti.
+        var onesToRerollWound = combat.repeatOnesWoundMode === "uno" ? Math.min(1, initialWound.ones) : initialWound.ones;
         var rerollOnesWound = passPhase(onesToRerollWound, woundT);
         woundSuccessTotal = initialWound.succ + rerollOnesWound.succ;
         woundFailTotal = initialWound.fail - onesToRerollWound + rerollOnesWound.fail;
-        woundSixes += Math.min(rerollOnesWound.succ, round(onesToRerollWound/6));
+        woundSixes += Math.min(rerollOnesWound.succ, round(onesToRerollWound*devFacce/6));
       } else {
         woundSuccessTotal = initialWound.succ;
         woundFailTotal = initialWound.fail;
@@ -1197,18 +1276,30 @@ body{
     function resetFlagsAttaccante(){
       combat.lethal = false;
       E("c-lethal").checked = false;
+      E("c-lethal-sub").style.display = "none";
+      combat.lethalThreshold = 6;
+      selezionaSogliaGruppo(E("c-lethal-threshold"), 6);
       combat.repeat = false;
       E("c-repeat").checked = false;
       combat.repeatOnesHit = false;
       E("c-repeat-ones-hit").checked = false;
+      E("c-repeat-ones-hit-sub").style.display = "none";
+      combat.repeatOnesHitMode = "tutti";
+      selezionaScelta(E("c-repeat-ones-hit-mode"), "tutti");
       combat.twinlink = false;
       E("c-twinlink").checked = false;
       combat.repeatOnesWound = false;
       E("c-repeat-ones-wound").checked = false;
+      E("c-repeat-ones-wound-sub").style.display = "none";
+      combat.repeatOnesWoundMode = "tutti";
+      selezionaScelta(E("c-repeat-ones-wound-mode"), "tutti");
       combat.lancia = false;
       E("c-lancia").checked = false;
       combat.dev = false;
       E("c-dev").checked = false;
+      E("c-dev-sub").style.display = "none";
+      combat.devThreshold = 6;
+      selezionaSogliaGruppo(E("c-dev-threshold"), 6);
       combat.antiX = false;
       E("c-antix").checked = false;
       antiXSub.style.display = "none";
@@ -1218,6 +1309,9 @@ body{
       Array.prototype.forEach.call(sustGroup.children, function(c){
         c.classList.toggle("selected", c.dataset.value === "0");
       });
+      E("c-sustained-sub").style.display = "none";
+      combat.sustainedThreshold = 6;
+      selezionaSogliaGruppo(E("c-sustained-threshold"), 6);
       setModelli(1);
     }
 
@@ -1542,6 +1636,7 @@ body{
   var unitaPerChiave = {};
   var vsAttF = V.E("a-fazione-select"), vsAttU = V.E("a-unita-select");
   var vsDifF = V.E("d-fazione-select"), vsDifU = V.E("d-unita-select");
+  var vsAttC = V.E("a-cerca"), vsDifC = V.E("d-cerca");
   var vsArma = V.E("a-arma-select");
 
   function riempiSelect(select, voci, segnaposto, valoreCorrente){
@@ -1560,35 +1655,60 @@ body{
     select.value = presente ? valoreCorrente : "";
   }
 
-  function riempiUnita(selF, selU){
+  // Per la ricerca: minuscolo e senza accenti, così "orki" trova anche "Orkì" e viceversa.
+  function normalizzaTesto(s){
+    return String(s).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").trim();
+  }
+
+  function riempiUnita(selF, selU, inCerca){
     var fazione = selF.value;
-    var voci = unitaVisibili().filter(function(u){ return u.fazione === fazione; }).map(function(u){
+    var q = normalizzaTesto(inCerca.value);
+    var voci = unitaVisibili().filter(function(u){
+      return u.fazione === fazione && (!q || normalizzaTesto(u.nome).indexOf(q) >= 0);
+    }).map(function(u){
       unitaPerChiave[u.chiave] = u;
       return { valore: u.chiave, testo: u.nome };
     });
-    riempiSelect(selU, voci, fazione ? "— Seleziona unità —" : "— Prima la fazione —", selU.value);
+    var segnaposto = !fazione ? "— Prima la fazione —"
+      : !q ? "— Seleziona unità —"
+      : voci.length ? "— Seleziona unità (" + voci.length + " trovate) —"
+      : "— Nessuna unità trovata —";
+    riempiSelect(selU, voci, segnaposto, selU.value);
   }
 
-  function riempiLato(selF, selU){
+  function riempiLato(selF, selU, inCerca){
     var fazioni = [];
     unitaVisibili().forEach(function(u){ if(fazioni.indexOf(u.fazione) < 0) fazioni.push(u.fazione); });
     fazioni.sort(function(a, b){ return a.localeCompare(b); });
     riempiSelect(selF, fazioni.map(function(f){ return { valore: f, testo: f }; }), "— Seleziona fazione —", selF.value);
-    riempiUnita(selF, selU);
+    riempiUnita(selF, selU, inCerca);
   }
 
   function vsRipopola(){
-    riempiLato(vsAttF, vsAttU);
-    riempiLato(vsDifF, vsDifU);
+    riempiLato(vsAttF, vsAttU, vsAttC);
+    riempiLato(vsDifF, vsDifU, vsDifC);
     var uAtt = unitaPerChiave[vsAttU.value];
     V.popolaSelectArmi(armiDi(uAtt));
   }
 
+  // Cambiando fazione la ricerca riparte da zero.
   vsAttF.addEventListener("change", function(){
-    riempiUnita(vsAttF, vsAttU);
+    vsAttC.value = "";
+    riempiUnita(vsAttF, vsAttU, vsAttC);
     V.popolaSelectArmi([]);
     V.resetFlagsAttaccante();
   });
+  // Scrivendo nella ricerca la lista si restringe in tempo reale; se l'unità scelta esce dalla
+  // lista (select tornato vuoto) armi e flag vengono azzerati come per un cambio unità.
+  vsAttC.addEventListener("input", function(){
+    var prima = vsAttU.value;
+    riempiUnita(vsAttF, vsAttU, vsAttC);
+    if(vsAttU.value !== prima){
+      V.popolaSelectArmi([]);
+      V.resetFlagsAttaccante();
+    }
+  });
+  vsDifC.addEventListener("input", function(){ riempiUnita(vsDifF, vsDifU, vsDifC); });
   vsAttU.addEventListener("change", function(){
     V.popolaSelectArmi(armiDi(unitaPerChiave[vsAttU.value]));
     V.resetFlagsAttaccante();
@@ -1599,7 +1719,10 @@ body{
     V.applicaArma(armi[parseInt(vsArma.value, 10)]);
   });
 
-  vsDifF.addEventListener("change", function(){ riempiUnita(vsDifF, vsDifU); });
+  vsDifF.addEventListener("change", function(){
+    vsDifC.value = "";
+    riempiUnita(vsDifF, vsDifU, vsDifC);
+  });
   vsDifU.addEventListener("change", function(){
     var u = unitaPerChiave[vsDifU.value];
     if(u) V.applicaUnita(u);
