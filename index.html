@@ -1608,6 +1608,8 @@ body{
   window.addEventListener("message", function(e){
     if(window.opener && e.source !== window.opener) return;
     var dati = e.data;
+    // "Aggiorna dati" del Tavolo da Gioco: ricarica i CSV anche qui, senza chiudere e riaprire la finestra.
+    if(dati && dati.type === "wh40-ricarica"){ caricaDati(); return; }
     if(!dati || dati.type !== "wh40-eserciti") return;
     popolaSelectUnita(dati);
     vsImpostaFiltro(dati);
