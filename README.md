@@ -2,11 +2,9 @@ Statistiche Wh40k
 
 Come aggiornare i dati:
 
-1 
-Modifica il file (o i file) nella cartella del repo e salva.
+1 Modifica il file (o i file) nella cartella del repo e salva.
 
-2
-Dal terminale, nella cartella del repo, pubblica la modifica:
+2 Dal terminale, nella cartella del repo, pubblica la modifica:
 
 git add info.csv Datasheets_wargear.csv
 git commit -m "Aggiorna dati"
