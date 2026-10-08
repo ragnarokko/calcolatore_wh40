@@ -22,6 +22,8 @@ Ci sono due coppie di file: info_11e.csv + Datasheets_wargear_11e.csv (usati di 
 
 node tools/bsdata-to-csv.mjs --refresh
 
-poi git add info_11e.csv Datasheets_wargear_11e.csv tools/bsdata-ids.json, commit e push. Le dimensioni delle basette mancanti si correggono a mano in info_11e.csv: vengono mantenute alle rigenerazioni successive. node tools/confronta-csv.mjs scrive in bsdata/confronto.md le differenze rispetto agli originali.
+Se BSData sposta la repo: node tools/bsdata-to-csv.mjs --refresh --repo https://github.com/nuovo/indirizzo (l'indirizzo viene ricordato in tools/bsdata-sorgente.json: da committare insieme ai file; il Tavolo da Gioco, in Impostazioni, mostra il comando già pronto).
+
+poi git add info_11e.csv Datasheets_wargear_11e.csv tools/bsdata-ids.json tools/bsdata-sorgente.json, commit e push. Le dimensioni delle basette mancanti si correggono a mano in info_11e.csv: vengono mantenute alle rigenerazioni successive. node tools/confronta-csv.mjs scrive in bsdata/confronto.md le differenze rispetto agli originali.
 
 Per tornare ai file originali: in index.html imposta SET_PREDEFINITO = "originale" (o apri la pagina con ?dati=originale) e fai lo stesso nel Tavolo da Gioco (src/config/datiCsv.js).

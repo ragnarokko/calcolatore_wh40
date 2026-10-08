@@ -5,6 +5,8 @@
 //   node tools/bsdata-to-csv.mjs                 # scrive i due file _11e nella radice del repo
 //   node tools/bsdata-to-csv.mjs --refresh       # riscarica i JSON invece di usare bsdata/cache/
 //   node tools/bsdata-to-csv.mjs --out cartella  # scrive altrove (per un confronto)
+//   node tools/bsdata-to-csv.mjs --refresh --repo https://github.com/utente/repo
+//                                                # usa un'altra repo e la ricorda (vedi sotto)
 //
 // I file prodotti hanno lo stesso formato degli originali (separatore `|`, stesse colonne);
 // info.csv e Datasheets_wargear.csv NON vengono toccati. Le dimensioni delle basette non esistono
@@ -17,14 +19,41 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const RADICE = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const REPO = 'BSData/wh40k-11e';
-const BRANCH = 'main';
 
 const args = process.argv.slice(2);
 const ricarica = args.includes('--refresh');
+
+// Repo GitHub da cui scaricare i cataloghi. Si cambia con `--repo <indirizzo>` (es. se BSData la
+// sposta): l'indirizzo viene ricordato in tools/bsdata-sorgente.json (da committare), così le
+// esecuzioni successive non hanno bisogno di ripeterlo. Il Tavolo da Gioco mostra il comando già
+// pronto (⚙ Impostazioni). Accetta https://github.com/utente/repo, anche con /tree/ramo, o utente/repo.
+const FILE_SORGENTE = path.join(RADICE, 'tools', 'bsdata-sorgente.json');
+const SORGENTE_PREDEFINITA = { repo: 'BSData/wh40k-11e', branch: null };
+
+function analizzaRepo(testo) {
+  const m = String(testo)
+    .trim()
+    .match(/^(?:https?:\/\/(?:www\.)?github\.com\/)?([\w.-]+)\/([\w.-]+?)(?:\.git)?(?:\/tree\/([^?#]+?))?\/?$/);
+  if (!m) throw new Error(`Indirizzo GitHub non valido: ${testo}`);
+  return { repo: `${m[1]}/${m[2]}`, branch: m[3] || null };
+}
+
+const iRepo = args.indexOf('--repo');
+let sorgente;
+if (iRepo >= 0) {
+  if (!args[iRepo + 1]) throw new Error('--repo richiede un indirizzo');
+  sorgente = analizzaRepo(args[iRepo + 1]);
+} else if (fs.existsSync(FILE_SORGENTE)) {
+  sorgente = JSON.parse(fs.readFileSync(FILE_SORGENTE, 'utf8'));
+} else {
+  sorgente = SORGENTE_PREDEFINITA;
+}
+const REPO = sorgente.repo;
+let BRANCH = sorgente.branch; // se null si usa il ramo predefinito della repo
+console.log(`Sorgente dati: https://github.com/${REPO}`);
 const iOut = args.indexOf('--out');
 const cartellaOut = path.resolve(RADICE, iOut >= 0 ? args[iOut + 1] : '.');
-const cartellaCache = path.join(RADICE, 'bsdata', 'cache');
+const cartellaCache = path.join(RADICE, 'bsdata', 'cache', REPO.replace('/', '__'));
 // File nuovi, accanto agli originali (info.csv e Datasheets_wargear.csv, che questo script non
 // tocca mai): se il set BSData non funziona basta puntare le app di nuovo agli originali.
 const nomeInfo = 'info_11e.csv';
@@ -63,10 +92,14 @@ const CATALOGHI_ESCLUSI = new Set(['Warhammer 40,000']);
 // ---------------------------------------------------------------- download
 
 async function elencoFile() {
-  const r = await fetch(`https://api.github.com/repos/${REPO}/git/trees/${BRANCH}`, {
-    headers: { 'User-Agent': 'bsdata-to-csv' },
-  });
-  if (!r.ok) throw new Error(`Elenco file BSData non leggibile (HTTP ${r.status})`);
+  const intestazioni = { 'User-Agent': 'bsdata-to-csv' };
+  if (!BRANCH) {
+    const rr = await fetch(`https://api.github.com/repos/${REPO}`, { headers: intestazioni });
+    if (!rr.ok) throw new Error(`Repo ${REPO} non raggiungibile (HTTP ${rr.status}): controlla l'indirizzo`);
+    BRANCH = (await rr.json()).default_branch;
+  }
+  const r = await fetch(`https://api.github.com/repos/${REPO}/git/trees/${BRANCH}`, { headers: intestazioni });
+  if (!r.ok) throw new Error(`Elenco file di ${REPO} non leggibile (HTTP ${r.status})`);
   const albero = await r.json();
   return albero.tree.filter((e) => e.type === 'blob' && e.path.endsWith('.json')).map((e) => e.path);
 }
@@ -198,6 +231,11 @@ function leggiCsvEsistente() {
 // ---------------------------------------------------------------- principale
 
 const nomiFile = await elencoFile();
+// L'indirizzo si ricorda solo dopo che la repo ha risposto, così un errore di battitura non lo rovina.
+if (iRepo >= 0) {
+  fs.writeFileSync(FILE_SORGENTE, JSON.stringify({ repo: REPO, branch: sorgente.branch }, null, 1) + '\n');
+  console.log('Sorgente salvata in tools/bsdata-sorgente.json (da committare)');
+}
 const cataloghi = [];
 for (const nomeFile of nomiFile) {
   const json = await leggiCatalogo(nomeFile);
