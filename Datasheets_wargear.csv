@@ -307,7 +307,7 @@
 70|Tactical Squad|11|1||Missile launcher – frag|BLAST, HEAVY|48|Ranged|D6|4|4|0|1
 70|Tactical Squad|12|2||Missile launcher – krak|HEAVY|48|Ranged|1|4|9|-2|D6
 70|Tactical Squad|13|1||Multi-melta|HEAVY, MELTA 2|18|Ranged|2|4|9|-4|D6
-70|Tactical Squad|14|1||Plasma cannon – standard |BLAST, HEAVY|36|Ranged|D3|4|7|-2|1
+70|Tactical Squad|14|1||Plasma cannon – standard|BLAST, HEAVY|36|Ranged|D3|4|7|-2|1
 70|Tactical Squad|15|2||Plasma cannon – supercharge|BLAST, HEAVY, HAZARDOUS|36|Ranged|D3|4|8|-3|2
 70|Tactical Squad|16|1||Plasma gun – standard|rapid fire 1|24|Ranged|1|3|7|-2|1
 70|Tactical Squad|17|2||Plasma gun – supercharge|hazardous, rapid fire 1|24|Ranged|1|3|8|-3|2
@@ -329,13 +329,13 @@
 72|Caestus Assault Ram|2|1||Twin magna-melta|melta 4, twin-linked|18|Ranged|2|3|12|-4|D6
 72|Caestus Assault Ram|3|1||Armoured hull|lance|Melee|Melee|6|4|8|0|1
 73|Captain|1|1||Bolt pistol|pistol|12|Ranged|1|2|4|0|1
-73|Captain|2|1||Heavy bolt pistol |Pistol|18|Ranged|1|2|4|-1|1
+73|Captain|2|1||Heavy bolt pistol|Pistol|18|Ranged|1|2|4|-1|1
 73|Captain|3|1||Master-crafted bolter||24|Ranged|2|2|4|-1|2
 73|Captain|4|1||Neo-volkite pistol|DEVASTATING WOUNDS,PISTOl|12|Ranged|1|2|5|0|2
 73|Captain|5|1||Plasma pistol – standard|pistol|12|Ranged|1|2|7|-2|1
-73|Captain|6|2||Plasma pistol - supercharge |HAZARDOUS,PISTOL|12|Ranged|1|2|8|-3|2
+73|Captain|6|2||Plasma pistol - supercharge|HAZARDOUS,PISTOL|12|Ranged|1|2|8|-3|2
 73|Captain|7|1||Close combat weapon||Melee|Melee|6|2|4|0|1
-73|Captain|8|1||Master-crafted power weapon ||Melee|Melee|6|2|5|-2|2
+73|Captain|8|1||Master-crafted power weapon||Melee|Melee|6|2|5|-2|2
 73|Captain|9|1||Power fist||Melee|Melee|5|2|8|-2|2
 76|Lieutenant With Combi-weapon|1|1||Combi-weapon|anti-infantry 4+, devastating wounds, rapid fire 1|24|Ranged|1|3|4|0|1
 76|Lieutenant With Combi-weapon|2|1||Paired combat blades|anti-infantry 4+, sustained hits 1|Melee|Melee|5|2|4|-1|1
@@ -1792,7 +1792,7 @@
 631|Phantom Titan|6|1||Phantom feet||Melee|Melee|4|3|12|-2|4
 631|Phantom Titan|7|1||Wraith glaive – strike||Melee|Melee|6|3|18|-4|12
 631|Phantom Titan|8|2||Wraith glaive – sweep||Melee|Melee|12|3|8|-3|4
-632|Corsair Reaver Band|1|1||Aeldari missile launcher – starshot ||48|Ranged|1|3|10|-2|D6
+632|Corsair Reaver Band|1|1||Aeldari missile launcher – starshot||48|Ranged|1|3|10|-2|D6
 632|Corsair Reaver Band|2|2||Aeldari missile launcher – sunburst|BLAST|48|Ranged|D6|3|4|-1|1
 632|Corsair Reaver Band|3|1||Blaster|assault|18|Ranged|1|3|8|-4|D6+1
 632|Corsair Reaver Band|4|1||Brace of pistols|assault, pistol|12|Ranged|2|3|3|0|1
@@ -2620,7 +2620,7 @@
 903|Battle Sisters Squad|4|1||Combi-weapon|ANTI-INFANTRY 4+, DEVASTATING WOUNDS, RAPID FIRE 1|24|Ranged|1|4|4|0|1
 903|Battle Sisters Squad|5|1||Condemnor boltgun|ANTI-PSYKER 2+, DEVASTATING WOUNDS, PRECISION, RAPID FIRE 1|24|Ranged|1|3|4|0|1
 903|Battle Sisters Squad|6|1||Heavy bolter|heavy, sustained hits 1|36|Ranged|3|4|5|-1|2
-903|Battle Sisters Squad|7|1||Inferno pistol |MELTA 2, PISTOL|6|Ranged|1|3|8|-4|D3
+903|Battle Sisters Squad|7|1||Inferno pistol|MELTA 2, PISTOL|6|Ranged|1|3|8|-4|D3
 903|Battle Sisters Squad|8|1||Meltagun|melta 2|12|Ranged|1|3|9|-4|D6
 903|Battle Sisters Squad|9|1||Ministorum flamer|ignores cover, torrent|12|Ranged|D6|N/A|5|0|1
 903|Battle Sisters Squad|10|1||Ministorum hand flamer|IGNORES COVER, PISTOL, TORRENT|12|Ranged|D6|N/A|4|0|1
@@ -2647,7 +2647,7 @@
 908|Retributor Squad|3|1||Combi-weapon|ANTI-INFANTRY 4+, DEVASTATING WOUNDS, RAPID FIRE 1|24|Ranged|1|4|4|0|1
 908|Retributor Squad|4|1||Condemnor boltgun|ANTI-PSYKER 2+, DEVASTATING WOUNDS, PRECISION, RAPID FIRE 1|24|Ranged|1|3|4|0|1
 908|Retributor Squad|5|1||Heavy bolter|heavy, sustained hits 1|36|Ranged|3|4|5|-1|2
-908|Retributor Squad|6|1||Inferno pistol |MELTA 2, PISTOL|6|Ranged|1|3|8|-4|D3
+908|Retributor Squad|6|1||Inferno pistol|MELTA 2, PISTOL|6|Ranged|1|3|8|-4|D3
 908|Retributor Squad|7|1||Ministorum hand flamer|IGNORES COVER, PISTOL, TORRENT|12|Ranged|D6|N/A|4|0|1
 908|Retributor Squad|8|1||Ministorum heavy flamer|ignores cover, torrent|12|Ranged|D6|N/A|6|-1|1
 908|Retributor Squad|9|1||Multi-melta|heavy, melta 2|18|Ranged|2|4|9|-4|D6
@@ -2661,7 +2661,7 @@
 909|Dominion Squad|3|1||Boltgun|assault, rapid fire 1|24|Ranged|1|3|4|0|1
 909|Dominion Squad|4|1||Combi-weapon|anti-infantry 4+, devastating wounds, rapid fire 1|24|Ranged|1|4|4|0|1
 909|Dominion Squad|5|1||Condemnor boltgun|anti-psyker 2+, devastating wounds, precision, rapid fire 1|24|Ranged|1|3|4|0|1
-909|Dominion Squad|6|1||Inferno pistol |MELTA 2, PISTOL|6|Ranged|1|3|8|-4|D3
+909|Dominion Squad|6|1||Inferno pistol|MELTA 2, PISTOL|6|Ranged|1|3|8|-4|D3
 909|Dominion Squad|7|1||Meltagun|assault, melta 2|12|Ranged|1|3|9|-4|D6
 909|Dominion Squad|8|1||Ministorum flamer|assault, ignores cover, torrent|12|Ranged|D6|N/A|5|0|1
 909|Dominion Squad|9|1||Ministorum hand flamer|ignores cover, pistol, torrent|12|Ranged|D6|N/A|4|0|1
@@ -2928,7 +2928,7 @@
 966|Havocs|9|1||Meltagun|MELTA 2|12|Ranged|1|3|9|-4|D6
 966|Havocs|10|1||Plasma gun – standard|RAPID FIRE 1|24|Ranged|1|3|7|-2|1
 966|Havocs|11|2||Plasma gun – supercharge|HAZARDOUS, RAPID FIRE 1|24|Ranged|1|3|8|-3|2
-966|Havocs|12|1||Plasma pistol – standard |PISTOL|12|Ranged|1|3|7|-2|1
+966|Havocs|12|1||Plasma pistol – standard|PISTOL|12|Ranged|1|3|7|-2|1
 966|Havocs|13|2||Plasma pistol – supercharge|HAZARDOUS, PISTOL|12|Ranged|1|3|8|-3|2
 966|Havocs|14|1||Accursed weapon||Melee|Melee|4|3|5|-2|1
 966|Havocs|15|1||Astartes chainsword||Melee|Melee|5|3|4|-1|1
@@ -4940,7 +4940,7 @@
 2604|Hekaton Land Fortress|3|1||Hekaton warhead|blast, one shot|36|Ranged|D6+3|4|7|-2|2
 2604|Hekaton Land Fortress|4|1||MATR autocannon|assault, sustained hits 1|24|Ranged|6|4|7|-1|2
 2604|Hekaton Land Fortress|5|1||SP heavy conversion beamer|conversion, lethal hits|24|Ranged|4|4|10|-2|4
-2604|Hekaton Land Fortress|6|1||Twin bolt cannon |SUSTAINED HITS 2, TWIN-LINKED|36|Ranged|3|4|6|-1|2
+2604|Hekaton Land Fortress|6|1||Twin bolt cannon|SUSTAINED HITS 2, TWIN-LINKED|36|Ranged|3|4|6|-1|2
 2604|Hekaton Land Fortress|7|1||Twin ion beamer|blast, twin-linked|18|Ranged|D3+1|4|8|-2|1
 2604|Hekaton Land Fortress|8|1||Armoured wheels||Melee|Melee|6|4|8|0|1
 2605|Lord Solar Leontus|1|1||Sol’s Righteous Gaze|pistol|12|Ranged|2|2|8|-2|2
@@ -5224,7 +5224,7 @@
 2704|Fellblade|2|1||Demolisher cannon|blast|24|Ranged|D6+3|3|14|-3|D6
 2704|Fellblade|3|1||Fellblade accelerator cannon – AP shells||72|Ranged|2|3|14|-3|6
 2704|Fellblade|4|2||Fellblade accelerator cannon – HE shells|blast|72|Ranged|2D6|3|8|-1|2
-2704|Fellblade|5|1||Havoc launcher |blast|48|Ranged|D6|3|5|0|1
+2704|Fellblade|5|1||Havoc launcher|blast|48|Ranged|D6|3|5|0|1
 2704|Fellblade|6|1||Heavy bolter|sustained hits 1|36|Ranged|3|3|5|-1|2
 2704|Fellblade|7|1||Heavy flamer|ignores cover, torrent|12|Ranged|D6|N/A|5|-1|1
 2704|Fellblade|8|1||Laser destroyer|heavy|36|Ranged|3|3|14|-4|D6+1
@@ -6286,7 +6286,7 @@
 3651|Fellblade||1||Demolisher cannon|blast|24|Ranged|D6+3|3|14|-3|D6
 3651|Fellblade||1||Laser destroyer|heavy|36|Ranged|3|3|14|-4|D6+1
 3651|Fellblade||1||Multi-melta|melta 2|18|Ranged|2|3|9|-4|D6
-3651|Fellblade||1||Havoc launcher |blast|48|Ranged|D6|3|5|0|1
+3651|Fellblade||1||Havoc launcher|blast|48|Ranged|D6|3|5|0|1
 3651|Fellblade||1||Armoured tracks||Melee|Melee|6|4|8|0|1
 3651|Fellblade||1||Twin heavy flamer|ignores cover, torrent, twin-linked|12|Ranged|D6|N/A|5|-1|1
 3651|Fellblade||1||Heavy flamer|ignores cover, torrent|12|Ranged|D6|N/A|5|-1|1
@@ -6296,7 +6296,7 @@
 3651|Fellblade||1||Fellblade accelerator cannon – AP shells||72|Ranged|2|3|14|-3|6
 3651|Fellblade|1|1||Combi-weapon|anti-infantry 4+, devastating wounds, rapid fire 1|24|Ranged|1|4|4|0|1
 3652|Fellblade||1||Quad lascannon||48|Ranged|4|3|12|-3|D6+1
-3652|Fellblade||1||Havoc launcher |blast|48|Ranged|D6|3|5|0|1
+3652|Fellblade||1||Havoc launcher|blast|48|Ranged|D6|3|5|0|1
 3652|Fellblade||1||Demolisher cannon|blast|24|Ranged|D6+3|3|14|-3|D6
 3652|Fellblade||1||Fellblade accelerator cannon – AP shells||72|Ranged|2|3|14|-3|6
 3652|Fellblade||2||Fellblade accelerator cannon – HE shells|blast|72|Ranged|2D6|3|8|-1|2
@@ -6314,7 +6314,7 @@
 3653|Fellblade||1||Heavy bolter|sustained hits 1|36|Ranged|3|3|5|-1|2
 3653|Fellblade||1||Laser destroyer|heavy|36|Ranged|3|3|14|-4|D6+1
 3653|Fellblade||1||Heavy flamer|ignores cover, torrent|12|Ranged|D6|N/A|5|-1|1
-3653|Fellblade||1||Havoc launcher |blast|48|Ranged|D6|3|5|0|1
+3653|Fellblade||1||Havoc launcher|blast|48|Ranged|D6|3|5|0|1
 3653|Fellblade||1||Multi-melta|melta 2|18|Ranged|2|3|9|-4|D6
 3653|Fellblade||1||Fellblade accelerator cannon – HE shells|blast|72|Ranged|2D6|3|8|-1|2
 3653|Fellblade||1||Quad lascannon||48|Ranged|4|3|12|-3|D6+1
@@ -6338,7 +6338,7 @@
 3654|Fellblade||1||Demolisher cannon|blast|24|Ranged|D6+3|3|14|-3|D6
 3654|Fellblade||1||Fellblade accelerator cannon – AP shells||72|Ranged|2|3|14|-3|6
 3654|Fellblade||2||Fellblade accelerator cannon – HE shells|blast|72|Ranged|2D6|3|8|-1|2
-3654|Fellblade||1||Havoc launcher |blast|48|Ranged|D6|3|5|0|1
+3654|Fellblade||1||Havoc launcher|blast|48|Ranged|D6|3|5|0|1
 3654|Fellblade|1|1||Combi-weapon|anti-infantry 4+, devastating wounds, rapid fire 1|24|Ranged|1|4|4|0|1
 3655|Relic Contemptor Dreadnought||1||Plasma blaster – standard||18|Ranged|2|3|7|-2|1
 3655|Relic Contemptor Dreadnought||1||Conversion beam cannon|conversion, sustained hits d3|24|Ranged|1|3|7|-1|3
@@ -6659,8 +6659,8 @@
 3707|Big Mek|2|1||Traktor Blasta|Anti-Fly 2+|24|Ranged|3|4|6|-2|D3+3
 3707|Big Mek|3|1||Drilla||Melee|Melee|3|3|12|-3|3
 3707|Big Mek|4|1||Power Klaw||Melee|Melee|5|3|10|-2|2
-3708||1|1||Bolt pistol|pistol|12|Ranged|1|3|4|0|1
-3708||2|1||Astartes chainsword||Melee|Melee|4|3|4|-1|1
+3708|Example Wargear|1|1||Bolt pistol|pistol|12|Ranged|1|3|4|0|1
+3708|Example Wargear|2|1||Astartes chainsword||Melee|Melee|4|3|4|-1|1
 3710|Hernkyn Yaegirs|1|1||APM launcher|anti-monster 3+, anti-vehicle 3+|24|Ranged|1|4|6|-2|D6
 3710|Hernkyn Yaegirs|2|1||Bolt revolver|pistol|12|Ranged|1|4|5|0|1
 3710|Hernkyn Yaegirs|3|1||Bolt shotgun|assault|18|Ranged|2|4|5|0|1
@@ -6856,18 +6856,18 @@
 3830|Imperial Rhino|1|1||Hunter-killer missile|one shot|48|Ranged|1|2|14|-3|D6
 3830|Imperial Rhino|2|1||Storm bolter|rapid fire 2|24|Ranged|2|3|4|0|1
 3830|Imperial Rhino|3|1||Armoured tracks||Melee|Melee|3|4|6|0|1
-3831|Captain|1|1||Heavy bolt pistol |Pistol|18|Ranged|1|2|4|-1|1
+3831|Captain|1|1||Heavy bolt pistol|Pistol|18|Ranged|1|2|4|-1|1
 3831|Captain|2|1||Inferno pistol|melta 2, pistol|6|Ranged|1|2|8|-4|D3
 3831|Captain|3|1||Master-crafted chainsword||Melee|Melee|7|2|4|-1|2
 3831|Captain|4|1||Power fist||Melee|Melee|5|2|8|-2|2
 3831|Captain|5|1||Relic weapon||Melee|Melee|6|2|5|-2|2
-3832|Death Company Captain|1|1||Heavy bolt pistol |Pistol|18|Ranged|1|2|4|-1|1
+3832|Death Company Captain|1|1||Heavy bolt pistol|Pistol|18|Ranged|1|2|4|-1|1
 3832|Death Company Captain|2|1||Inferno pistol|melta 2, pistol|6|Ranged|1|2|8|-4|D3
 3832|Death Company Captain|3|1||Master-crafted chainsword||Melee|Melee|7|2|4|-1|2
 3832|Death Company Captain|4|1||Power fist||Melee|Melee|5|2|8|-2|2
 3832|Death Company Captain|5|1||Relic weapon||Melee|Melee|6|2|5|-2|2
 3833|Death Company Captain|1|1||Hand flamer|ignores cover, pistol, torrent|12|Ranged|D6|N/A|3|0|1
-3833|Death Company Captain|2|1||Heavy bolt pistol |Pistol|18|Ranged|1|2|4|-1|1
+3833|Death Company Captain|2|1||Heavy bolt pistol|Pistol|18|Ranged|1|2|4|-1|1
 3833|Death Company Captain|3|1||Plasma pistol - standard|Pistol|12|Ranged|1|2|7|-2|1
 3833|Death Company Captain|4|2||Plasma pistol - supercharge|hazardous, pistol|12|Ranged|1|2|8|-3|2
 3833|Death Company Captain|5|1||Astartes chainsword||Melee|Melee|7|2|4|-1|1
@@ -8102,7 +8102,7 @@
 4063|Havocs||1||Boltgun||24|Ranged|2|3|4|0|1
 4063|Havocs||1||Plasma gun – supercharge|HAZARDOUS, RAPID FIRE 1|24|Ranged|1|3|8|-3|2
 4063|Havocs||1||Havoc autocannon||48|Ranged|2|3|9|-1|3
-4063|Havocs||1||Plasma pistol – standard |PISTOL|12|Ranged|1|3|7|-2|1
+4063|Havocs||1||Plasma pistol – standard|PISTOL|12|Ranged|1|3|7|-2|1
 4063|Havocs||1||Power fist||Melee|Melee|3|3|8|-2|2
 4064|Legionaries||1||Missile launcher – frag|BLAST, HEAVY|48|Ranged|D6|4|4|0|1
 4064|Legionaries||1||Havoc autocannon||48|Ranged|2|4|9|-1|3
@@ -8582,7 +8582,7 @@
 4171|Corsair Reaver Band||1||Close combat weapon||Melee|Melee|2|3|3|0|1
 4171|Corsair Reaver Band||1||Spar-glaive||Melee|Melee|4|3|3|0|1
 4171|Corsair Reaver Band||1||Void sabre||Melee|Melee|3|3|4|-2|1
-4171|Corsair Reaver Band||1||Aeldari missile launcher – starshot ||48|Ranged|1|3|10|-2|D6
+4171|Corsair Reaver Band||1||Aeldari missile launcher – starshot||48|Ranged|1|3|10|-2|D6
 4171|Corsair Reaver Band||1||Brace of pistols|assault, pistol|12|Ranged|2|3|3|0|1
 4171|Corsair Reaver Band||1||Shuriken cannon|sustained hits 1|24|Ranged|3|3|6|-1|2
 4171|Corsair Reaver Band||1||Blaster|assault|18|Ranged|1|3|8|-4|D6+1
@@ -8754,7 +8754,7 @@
 4203|The Twin Lance|7|1||Fusion eliminator|extra attacks|Melee|Melee|1|4|10|-4|D6+2
 4203|The Twin Lance|8|1||Ion scattercannon|extra attacks|Melee|Melee|3|4|7|-2|2
 4203|The Twin Lance|9|1||XV pulse pistol||Melee|Melee|4|3|6|-1|2
-4204|Ferren Areios|1|1||Heavy bolt pistol |Pistol|18|Ranged|1|2|4|-1|1
+4204|Ferren Areios|1|1||Heavy bolt pistol|Pistol|18|Ranged|1|2|4|-1|1
 4204|Ferren Areios|2|1||Relic thunder hammer|devastating wounds|Melee|Melee|5|2|8|-2|3
 4205|Kravek Morne|1|1||Baleflamer|ignores cover, torrent|12|Ranged|D6+3|N/A|6|-1|2
 4205|Kravek Morne|2|1||Combi-bolter|rapid fire 2|24|Ranged|2|2|4|0|1

@@ -1,0 +1,3462 @@
+﻿datasheet_id|name|scaglione|tipo|modelli|punti|descrizione
+1|Warboss|unica|unita|1|100|1 model
+2|Warboss In Mega Armour|1-2|unita|1|125|1 model
+2|Warboss In Mega Armour|3+|unita|1|140|1 model
+3|Warboss on Warbike|unica|unita|1|75|1 model
+4|Weirdboy|unica|unita|1|65|1 model
+6|Big Mek In Mega Armour|unica|unita|1|90|1 model
+8|Ghazghkull Thraka|unica|unita|1|300|1 model
+9|Kaptin Badrukk|unica|unita|1|80|1 model
+10|Boss Zagstruk|unica|unita|1|90|1 model
+11|Boss Snikrot|unica|unita|1|80|1 model
+12|Mek|unica|unita|1|45|1 model
+13|Painboy|unica|unita|1|45|1 model
+15|Mad Dok Grotsnik|unica|unita|1|65|1 model
+16|Boyz|1-3|unita|10|90|10 models
+16|Boyz|1-3|unita|20|180|20 models
+16|Boyz|4+|unita|10|100|10 models
+16|Boyz|4+|unita|20|190|20 models
+17|Gretchin|unica|unita|10|45|10 Gretchin
+17|Gretchin|unica|unita|20|80|20 Gretchin
+19|Burna Boyz|unica|unita|5|60|5 models
+19|Burna Boyz|unica|unita|10|120|10 models
+20|Tankbustas|1-2|unita|6|145|6 models
+20|Tankbustas|3+|unita|6|155|6 models
+21|Nobz|1-2|unita|5|125|5 models
+21|Nobz|1-2|unita|10|250|10 models
+21|Nobz|3+|unita|5|155|5 models
+21|Nobz|3+|unita|10|280|10 models
+21|Nobz|3+|opzione||5|per Paired Krumpas
+24|Meganobz|1-2|unita|2|75|2 models
+24|Meganobz|1-2|unita|3|110|3 models
+24|Meganobz|1-2|unita|5|185|5 models
+24|Meganobz|1-2|unita|6|225|6 models
+24|Meganobz|3+|unita|2|115|2 models
+24|Meganobz|3+|unita|3|150|3 models
+24|Meganobz|3+|unita|5|225|5 models
+24|Meganobz|3+|unita|6|265|6 models
+24|Meganobz|3+|opzione||5|per Twin Killsaws
+24|Meganobz|3+|opzione||5|per Killsaw
+25|Kommandos|unica|unita|10|125|10 models
+26|Trukk|1-3|unita|1|60|1 model
+26|Trukk|4+|unita|1|70|1 model
+27|Stormboyz|unica|unita|5|70|5 models
+27|Stormboyz|unica|unita|10|140|10 models
+28|Deffkoptas|1-2|unita|3|80|3 models
+28|Deffkoptas|1-2|unita|6|160|6 models
+28|Deffkoptas|3+|unita|3|90|3 models
+28|Deffkoptas|3+|unita|6|170|6 models
+29|Dakkajet|unica|unita|1|125|1 model
+30|Burna-bommer|unica|unita|1|125|1 model
+31|Blitza-bommer|unica|unita|1|115|1 model
+32|Wazbom Blastajet|1-2|unita|1|215|1 model
+32|Wazbom Blastajet|3+|unita|1|235|1 model
+33|Warbikers|unica|unita|3|75|3 models
+33|Warbikers|unica|unita|6|140|6 models
+36|Warbuggies|unica|unita|1|70|1 model
+36|Warbuggies|unica|unita|2|130|2 models
+38|Mek Gunz|1-2|unita|1|55|1 model
+38|Mek Gunz|1-2|unita|2|110|2 models
+38|Mek Gunz|1-2|unita|3|165|3 models
+38|Mek Gunz|3+|unita|1|65|1 model
+38|Mek Gunz|3+|unita|2|120|2 models
+38|Mek Gunz|3+|unita|3|175|3 models
+39|Battlewagon|1-2|unita|1|150|1 model
+39|Battlewagon|3+|unita|1|160|1 model
+40|Deff Dread|1-2|unita|1|130|1 model
+40|Deff Dread|3+|unita|1|140|1 model
+41|Killa Kans|1-2|unita|3|130|3 models
+41|Killa Kans|1-2|unita|6|260|6 models
+41|Killa Kans|3+|unita|3|150|3 models
+41|Killa Kans|3+|unita|6|280|6 models
+42|Morkanaut|1-2|unita|1|345|1 model
+42|Morkanaut|3+|unita|1|375|1 model
+43|Gorkanaut|1-2|unita|1|325|1 model
+43|Gorkanaut|3+|unita|1|355|1 model
+44|Lootas|1-2|unita|5|50|5 models
+44|Lootas|1-2|unita|10|100|10 models
+44|Lootas|3+|unita|5|60|5 models
+44|Lootas|3+|unita|10|110|10 models
+45|Flash Gitz|1-2|unita|5|105|5 models
+45|Flash Gitz|1-2|unita|10|210|10 models
+45|Flash Gitz|3+|unita|5|135|5 models
+45|Flash Gitz|3+|unita|10|240|10 models
+46|Stompa|1|unita|1|700|1 model
+46|Stompa|2+|unita|1|800|1 model
+49|Grot Tanks|unica|unita|4|155|4 models
+49|Grot Tanks|unica|unita|8|310|8 models
+50|Grot Mega-tank|unica|unita|1|110|1 model
+53|Lifta Wagon|unica|unita|1|135|1 model
+54|Big Trakk|unica|unita|1|90|1 model
+56|Kill Tank|unica|unita|1|300|1 model
+59|Gargantuan Squiggoth|1|unita|1|500|1 model
+59|Gargantuan Squiggoth|1|unita|1|440|1 model
+59|Gargantuan Squiggoth|2+|unita|1|550|1 model
+59|Gargantuan Squiggoth|2+|unita|1|490|1 model
+60|Apothecary Biologis|unica|unita|1|70|1 model
+60|Apothecary Biologis|unica|unita|1|70|1 model
+60|Apothecary Biologis|unica|unita|1|70|1 model
+61|Assault Squad|unica|unita|5|95|5 models
+61|Assault Squad|unica|unita|5|95|5 models
+61|Assault Squad|unica|unita|10|190|10 models
+61|Assault Squad|unica|unita|10|190|10 models
+61|Assault Squad|unica|unita|5|95|5 models
+61|Assault Squad|unica|unita|10|190|10 models
+63|Apothecary on Bike|unica|unita|1|65|1 model
+63|Apothecary on Bike|unica|unita|1|65|1 model
+63|Apothecary on Bike|unica|unita|1|65|1 model
+64|Assault Squad with Jump Packs|unica|unita|5|115|5 models
+64|Assault Squad with Jump Packs|unica|unita|5|115|5 models
+64|Assault Squad with Jump Packs|unica|unita|10|230|10 models
+64|Assault Squad with Jump Packs|unica|unita|10|230|10 models
+64|Assault Squad with Jump Packs|unica|unita|5|115|5 models
+64|Assault Squad with Jump Packs|unica|unita|10|230|10 models
+65|Land Raider|1-2|unita|1|220|1 model
+65|Land Raider|1-2|unita|1|220|1 model
+65|Land Raider|3+|unita|1|240|1 model
+65|Land Raider|3+|unita|1|240|1 model
+65|Land Raider|1-2|unita|1|220|1 model
+65|Land Raider|3+|unita|1|240|1 model
+66|Land Raider Crusader|1-2|unita|1|220|1 model
+66|Land Raider Crusader|1-2|unita|1|220|1 model
+66|Land Raider Crusader|3+|unita|1|240|1 model
+66|Land Raider Crusader|3+|unita|1|240|1 model
+66|Land Raider Crusader|1-2|unita|1|220|1 model
+66|Land Raider Crusader|3+|unita|1|240|1 model
+67|Land Raider Excelsior|unica|unita|1|250|1 model
+67|Land Raider Excelsior|unica|unita|1|250|1 model
+67|Land Raider Excelsior|unica|unita|1|250|1 model
+68|Suppressor Squad|unica|unita|3|85|3 models
+68|Suppressor Squad|unica|unita|3|85|3 models
+68|Suppressor Squad|unica|unita|3|85|3 models
+70|Tactical Squad|unica|unita|10|140|10 models
+70|Tactical Squad|unica|unita|10|140|10 models
+70|Tactical Squad|unica|unita|10|140|10 models
+71|Bladeguard Veteran Squad|1-2|unita|3|80|3 models
+71|Bladeguard Veteran Squad|1-2|unita|3|80|3 models
+71|Bladeguard Veteran Squad|1-2|unita|6|160|6 models
+71|Bladeguard Veteran Squad|1-2|unita|6|160|6 models
+71|Bladeguard Veteran Squad|3+|unita|3|90|3 models
+71|Bladeguard Veteran Squad|3+|unita|3|90|3 models
+71|Bladeguard Veteran Squad|3+|unita|6|170|6 models
+71|Bladeguard Veteran Squad|3+|unita|6|170|6 models
+71|Bladeguard Veteran Squad|1-2|unita|3|85|3 models
+71|Bladeguard Veteran Squad|1-2|unita|6|170|6 models
+71|Bladeguard Veteran Squad|3+|unita|3|95|3 models
+71|Bladeguard Veteran Squad|3+|unita|6|180|6 models
+71|Bladeguard Veteran Squad|1-2|unita|3|80|3 models
+71|Bladeguard Veteran Squad|1-2|unita|6|160|6 models
+71|Bladeguard Veteran Squad|3+|unita|3|90|3 models
+71|Bladeguard Veteran Squad|3+|unita|6|170|6 models
+72|Caestus Assault Ram|unica|unita|1|215|1 model
+72|Caestus Assault Ram|unica|unita|1|215|1 model
+72|Caestus Assault Ram|unica|unita|1|215|1 model
+73|Captain|unica|unita|1|80|1 model
+73|Captain|unica|unita|1|80|1 model
+73|Captain|unica|unita|1|80|1 model
+76|Lieutenant with Combi-weapon|unica|unita|1|95|1 model
+76|Lieutenant with Combi-weapon|unica|unita|1|95|1 model
+76|Lieutenant with Combi-weapon|unica|unita|1|95|1 model
+79|Librarian In Terminator Armour|unica|unita|1|85|1 model
+79|Librarian In Terminator Armour|unica|unita|1|85|1 model
+79|Librarian In Terminator Armour|unica|unita|1|85|1 model
+83|Captain With Jump Pack|unica|unita|1|75|1 model
+83|Captain With Jump Pack|unica|unita|1|75|1 model
+83|Captain With Jump Pack|unica|unita|1|80|1 model
+83|Captain With Jump Pack|unica|unita|1|75|1 model
+84|Stormhawk Interceptor|unica|unita|1|155|1 model
+84|Stormhawk Interceptor|unica|unita|1|155|1 model
+84|Stormhawk Interceptor|unica|unita|1|155|1 model
+85|Rhino Primaris|unica|unita|1|95|1 model
+85|Rhino Primaris|unica|unita|1|95|1 model
+85|Rhino Primaris|unica|unita|1|95|1 model
+86|Firestrike Servo-turrets|unica|unita|1|75|1 model
+86|Firestrike Servo-turrets|unica|unita|1|75|1 model
+86|Firestrike Servo-turrets|unica|unita|2|150|2 models
+86|Firestrike Servo-turrets|unica|unita|2|150|2 models
+86|Firestrike Servo-turrets|unica|unita|1|75|1 model
+86|Firestrike Servo-turrets|unica|unita|2|150|2 models
+87|Drop Pod|1-3|unita|1|60|1 model
+87|Drop Pod|1-3|unita|1|60|1 model
+87|Drop Pod|4+|unita|1|70|1 model
+87|Drop Pod|4+|unita|1|70|1 model
+87|Drop Pod|1-3|unita|1|60|1 model
+87|Drop Pod|4+|unita|1|70|1 model
+91|Ballistus Dreadnought|1-2|unita|1|150|1 model
+91|Ballistus Dreadnought|1-2|unita|1|150|1 model
+91|Ballistus Dreadnought|3+|unita|1|160|1 model
+91|Ballistus Dreadnought|3+|unita|1|160|1 model
+91|Ballistus Dreadnought|1-2|unita|1|150|1 model
+91|Ballistus Dreadnought|3+|unita|1|160|1 model
+92|Sicaran Venator|unica|unita|1|180|1 model
+92|Sicaran Venator|unica|unita|1|180|1 model
+92|Sicaran Venator|unica|unita|1|180|1 model
+93|Typhon|unica|unita|1|320|1 model
+93|Typhon|unica|unita|1|320|1 model
+93|Typhon|unica|unita|1|320|1 model
+94|Chaplain On Bike|unica|unita|1|70|1 model
+94|Chaplain On Bike|unica|unita|1|70|1 model
+94|Chaplain On Bike|unica|unita|1|70|1 model
+96|Carab Culln The Risen|unica|unita|1|250|1 model
+96|Carab Culln The Risen|unica|unita|1|250|1 model
+96|Carab Culln The Risen|unica|unita|1|250|1 model
+97|Hammerfall Bunker|unica|unita|1|175|1 model
+97|Hammerfall Bunker|unica|unita|1|175|1 model
+97|Hammerfall Bunker|unica|unita|1|175|1 model
+98|Tarantula Sentry Battery|unica|unita|1|30|1 model
+98|Tarantula Sentry Battery|unica|unita|1|30|1 model
+98|Tarantula Sentry Battery|unica|unita|2|60|2 models
+98|Tarantula Sentry Battery|unica|unita|2|60|2 models
+98|Tarantula Sentry Battery|unica|unita|3|90|3 models
+98|Tarantula Sentry Battery|unica|unita|3|90|3 models
+98|Tarantula Sentry Battery|unica|unita|1|30|1 model
+98|Tarantula Sentry Battery|unica|unita|2|60|2 models
+98|Tarantula Sentry Battery|unica|unita|3|90|3 models
+99|Tarantula Air Defence Battery|unica|unita|1|70|1 model
+99|Tarantula Air Defence Battery|unica|unita|1|70|1 model
+99|Tarantula Air Defence Battery|unica|unita|1|70|1 model
+103|Eradicator Squad|1-2|unita|3|90|3 models
+103|Eradicator Squad|1-2|unita|3|90|3 models
+103|Eradicator Squad|1-2|unita|6|180|6 models
+103|Eradicator Squad|1-2|unita|6|180|6 models
+103|Eradicator Squad|3+|unita|3|100|3 models
+103|Eradicator Squad|3+|unita|3|100|3 models
+103|Eradicator Squad|3+|unita|6|190|6 models
+103|Eradicator Squad|3+|unita|6|190|6 models
+103|Eradicator Squad|1-2|unita|3|90|3 models
+103|Eradicator Squad|1-2|unita|6|180|6 models
+103|Eradicator Squad|3+|unita|3|100|3 models
+103|Eradicator Squad|3+|unita|6|190|6 models
+104|Relic Terminator Squad|unica|unita|5|200|5 models
+104|Relic Terminator Squad|unica|unita|5|200|5 models
+104|Relic Terminator Squad|unica|unita|10|400|10 models
+104|Relic Terminator Squad|unica|unita|10|400|10 models
+104|Relic Terminator Squad|unica|unita|5|200|5 models
+104|Relic Terminator Squad|unica|unita|10|400|10 models
+107|Javelin Attack Speeder|unica|unita|1|110|1 model
+107|Javelin Attack Speeder|unica|unita|1|110|1 model
+107|Javelin Attack Speeder|unica|unita|1|110|1 model
+110|Rapier Carrier|unica|unita|1|90|1 model
+110|Rapier Carrier|unica|unita|1|90|1 model
+110|Rapier Carrier|unica|unita|1|90|1 model
+111|Mortis Dreadnought|unica|unita|1|130|1 model
+111|Mortis Dreadnought|unica|unita|1|130|1 model
+111|Mortis Dreadnought|unica|unita|1|130|1 model
+112|Chaplain With Jump Pack|unica|unita|1|75|1 model
+112|Chaplain With Jump Pack|unica|unita|1|75|1 model
+112|Chaplain With Jump Pack|unica|unita|1|80|1 model
+112|Chaplain With Jump Pack|unica|unita|1|75|1 model
+113|Storm Eagle Gunship|unica|unita|1|250|1 model
+113|Storm Eagle Gunship|unica|unita|1|250|1 model
+113|Storm Eagle Gunship|unica|unita|1|250|1 model
+114|Storm Speeder Hammerstrike|1-2|unita|1|140|1 model
+114|Storm Speeder Hammerstrike|1-2|unita|1|140|1 model
+114|Storm Speeder Hammerstrike|3+|unita|1|150|1 model
+114|Storm Speeder Hammerstrike|3+|unita|1|150|1 model
+114|Storm Speeder Hammerstrike|1-2|unita|1|140|1 model
+114|Storm Speeder Hammerstrike|3+|unita|1|150|1 model
+115|Chaplain In Terminator Armour|unica|unita|1|75|1 model
+115|Chaplain In Terminator Armour|unica|unita|1|75|1 model
+115|Chaplain In Terminator Armour|unica|unita|1|75|1 model
+116|Bike Squad|unica|unita|1|55|1 model
+116|Bike Squad|unica|unita|1|55|1 model
+116|Bike Squad|unica|unita|3|80|3 models
+116|Bike Squad|unica|unita|3|80|3 models
+116|Bike Squad|unica|unita|6|160|6 models
+116|Bike Squad|unica|unita|6|160|6 models
+116|Bike Squad|unica|unita|1|55|1 model
+116|Bike Squad|unica|unita|3|80|3 models
+116|Bike Squad|unica|unita|6|160|6 models
+117|Dreadnought|unica|unita|1|135|1 model
+117|Dreadnought|unica|unita|1|135|1 model
+117|Dreadnought|unica|unita|1|135|1 model
+118|Terminator Assault Squad|unica|unita|5|155|5 models
+118|Terminator Assault Squad|unica|unita|5|155|5 models
+118|Terminator Assault Squad|unica|unita|10|310|10 models
+118|Terminator Assault Squad|unica|unita|10|310|10 models
+118|Terminator Assault Squad|unica|opzione||5|per Thunder Hammer
+118|Terminator Assault Squad|unica|opzione||5|per Thunder Hammer
+118|Terminator Assault Squad|unica|unita|5|155|5 models
+118|Terminator Assault Squad|unica|unita|10|310|10 models
+118|Terminator Assault Squad|unica|opzione||5|per Thunder Hammer
+119|Librarian In Phobos Armour|unica|unita|1|70|1 model
+119|Librarian In Phobos Armour|unica|unita|1|70|1 model
+119|Librarian In Phobos Armour|unica|unita|1|70|1 model
+120|Venerable Dreadnought|unica|unita|1|165|1 model
+120|Venerable Dreadnought|unica|unita|1|165|1 model
+120|Venerable Dreadnought|unica|unita|1|165|1 model
+121|Uriel Ventris|unica|unita|1|105|1 model
+122|Dreadnought Drop Pod|unica|unita|1|75|1 model
+122|Dreadnought Drop Pod|unica|unita|1|75|1 model
+122|Dreadnought Drop Pod|unica|unita|1|75|1 model
+123|Sicaran Punisher|unica|unita|1|160|1 model
+123|Sicaran Punisher|unica|unita|1|160|1 model
+123|Sicaran Punisher|unica|unita|1|160|1 model
+124|Storm Speeder Hailstrike|1-2|unita|1|105|1 model
+124|Storm Speeder Hailstrike|1-2|unita|1|105|1 model
+124|Storm Speeder Hailstrike|3+|unita|1|115|1 model
+124|Storm Speeder Hailstrike|3+|unita|1|115|1 model
+124|Storm Speeder Hailstrike|1-2|unita|1|105|1 model
+124|Storm Speeder Hailstrike|3+|unita|1|115|1 model
+125|Inceptor Squad|1-2|unita|3|125|3 models
+125|Inceptor Squad|1-2|unita|3|125|3 models
+125|Inceptor Squad|1-2|unita|6|250|6 models
+125|Inceptor Squad|1-2|unita|6|250|6 models
+125|Inceptor Squad|3+|unita|3|140|3 models
+125|Inceptor Squad|3+|unita|3|140|3 models
+125|Inceptor Squad|3+|unita|6|265|6 models
+125|Inceptor Squad|3+|unita|6|265|6 models
+125|Inceptor Squad|1-2|unita|3|125|3 models
+125|Inceptor Squad|1-2|unita|6|250|6 models
+125|Inceptor Squad|3+|unita|3|140|3 models
+125|Inceptor Squad|3+|unita|6|265|6 models
+126|Infernus Squad|unica|unita|5|85|5 models
+126|Infernus Squad|unica|unita|5|85|5 models
+126|Infernus Squad|unica|unita|10|180|10 models
+126|Infernus Squad|unica|unita|10|180|10 models
+126|Infernus Squad|unica|unita|5|85|5 models
+126|Infernus Squad|unica|unita|10|180|10 models
+127|Iron Father Feirros|unica|unita|1|85|1 model
+128|Infiltrator Squad|1-2|unita|5|110|5 models
+128|Infiltrator Squad|1-2|unita|5|110|5 models
+128|Infiltrator Squad|1-2|unita|10|180|10 models
+128|Infiltrator Squad|1-2|unita|10|180|10 models
+128|Infiltrator Squad|3+|unita|5|120|5 models
+128|Infiltrator Squad|3+|unita|5|120|5 models
+128|Infiltrator Squad|3+|unita|10|190|10 models
+128|Infiltrator Squad|3+|unita|10|190|10 models
+128|Infiltrator Squad|1-2|unita|5|110|5 models
+128|Infiltrator Squad|1-2|unita|10|180|10 models
+128|Infiltrator Squad|3+|unita|5|120|5 models
+128|Infiltrator Squad|3+|unita|10|190|10 models
+129|Razorback|1-3|unita|1|85|1 model
+129|Razorback|1-3|unita|1|85|1 model
+129|Razorback|4+|unita|1|95|1 model
+129|Razorback|4+|unita|1|95|1 model
+129|Razorback|1-3|unita|1|85|1 model
+129|Razorback|4+|unita|1|95|1 model
+131|Leviathan Dreadnought|unica|unita|1|160|1 model
+131|Leviathan Dreadnought|unica|unita|1|160|1 model
+131|Leviathan Dreadnought|unica|unita|1|160|1 model
+132|Land Speeder Storm|unica|unita|1|70|1 model
+132|Land Speeder Storm|unica|unita|1|70|1 model
+132|Land Speeder Storm|unica|unita|1|70|1 model
+134|Astartes Servitors|unica|unita|4|55|4 models
+134|Astartes Servitors|unica|unita|4|55|4 models
+134|Astartes Servitors|unica|unita|4|55|4 models
+135|Captain In Terminator Armour|unica|unita|1|85|1 model
+135|Captain In Terminator Armour|unica|unita|1|85|1 model
+135|Captain In Terminator Armour|unica|unita|1|85|1 model
+136|Brutalis Dreadnought|1-2|unita|1|150|1 model
+136|Brutalis Dreadnought|1-2|unita|1|150|1 model
+136|Brutalis Dreadnought|3+|unita|1|160|1 model
+136|Brutalis Dreadnought|3+|unita|1|160|1 model
+136|Brutalis Dreadnought|1-2|unita|1|150|1 model
+136|Brutalis Dreadnought|3+|unita|1|160|1 model
+137|Scout Bike Squad|unica|unita|3|75|3 models
+137|Scout Bike Squad|unica|unita|3|75|3 models
+137|Scout Bike Squad|unica|unita|6|150|6 models
+137|Scout Bike Squad|unica|unita|6|150|6 models
+137|Scout Bike Squad|unica|unita|3|75|3 models
+137|Scout Bike Squad|unica|unita|6|150|6 models
+138|Roboute Guilliman|unica|unita|1|355|1 model
+139|Thunderhawk Gunship|unica|unita|1|840|1 model
+139|Thunderhawk Gunship|unica|unita|1|840|1 model
+139|Thunderhawk Gunship|unica|unita|1|840|1 model
+140|Techmarine|unica|unita|1|55|1 model
+140|Techmarine|unica|unita|1|55|1 model
+140|Techmarine|unica|unita|1|55|1 model
+146|Hunter|unica|unita|1|100|1 model
+146|Hunter|unica|unita|1|100|1 model
+146|Hunter|unica|unita|1|100|1 model
+147|Vanguard Veteran Squad With Jump Packs|1-2|unita|5|105|5 models
+147|Vanguard Veteran Squad With Jump Packs|1-2|unita|5|105|5 models
+147|Vanguard Veteran Squad With Jump Packs|1-2|unita|10|210|10 models
+147|Vanguard Veteran Squad With Jump Packs|1-2|unita|10|210|10 models
+147|Vanguard Veteran Squad With Jump Packs|3+|unita|5|115|5 models
+147|Vanguard Veteran Squad With Jump Packs|3+|unita|5|115|5 models
+147|Vanguard Veteran Squad With Jump Packs|3+|unita|10|220|10 models
+147|Vanguard Veteran Squad With Jump Packs|3+|unita|10|220|10 models
+147|Vanguard Veteran Squad With Jump Packs|1-2|unita|5|110|5 models
+147|Vanguard Veteran Squad With Jump Packs|1-2|unita|10|220|10 models
+147|Vanguard Veteran Squad With Jump Packs|3+|unita|5|120|5 models
+147|Vanguard Veteran Squad With Jump Packs|3+|unita|10|230|10 models
+147|Vanguard Veteran Squad With Jump Packs|1-2|unita|5|105|5 models
+147|Vanguard Veteran Squad With Jump Packs|1-2|unita|10|210|10 models
+147|Vanguard Veteran Squad With Jump Packs|3+|unita|5|115|5 models
+147|Vanguard Veteran Squad With Jump Packs|3+|unita|10|220|10 models
+148|Imperial Space Marine|unica|unita|1|40|1 model
+148|Imperial Space Marine|unica|unita|1|40|1 model
+148|Imperial Space Marine|unica|unita|1|40|1 model
+151|Commander Dante|unica|unita|1|125|1 model
+152|Captain Tycho|unica|unita|1|75|1 model
+153|Tycho The Lost|unica|unita|1|90|1 model
+154|Librarian Dreadnought|unica|unita|1|170|1 model
+155|Chief Librarian Mephiston|unica|unita|1|110|1 model
+156|The Sanguinor|unica|unita|1|120|1 model
+157|Astorath|unica|unita|1|85|1 model
+158|Sanguinary Priest|1-2|unita|1|75|1 model
+158|Sanguinary Priest|3+|unita|1|85|1 model
+160|Brother Corbulo|unica|unita|1|75|1 model
+164|Lemartes|unica|unita|1|100|1 model
+165|Sanguinary Guard|1-2|unita|3|120|3 models
+165|Sanguinary Guard|1-2|unita|6|260|6 models
+165|Sanguinary Guard|3+|unita|3|140|3 models
+165|Sanguinary Guard|3+|unita|6|280|6 models
+166|Death Company Dreadnought|1-2|unita|1|150|1 model
+166|Death Company Dreadnought|3+|unita|1|160|1 model
+167|Furioso Dreadnought|unica|unita|1|150|1 model
+168|Baal Predator|1-2|unita|1|125|1 model
+168|Baal Predator|3+|unita|1|135|1 model
+169|Gabriel Seth|unica|unita|1|90|1 model
+218|Azrael|unica|unita|1|140|1 model
+219|Belial|unica|unita|1|75|1 model
+225|Asmodai|unica|unita|1|70|1 model
+226|Ezekiel|unica|unita|1|75|1 model
+230|Deathwing Terminator Squad|unica|unita|5|165|5 models
+230|Deathwing Terminator Squad|unica|unita|10|330|10 models
+231|Deathwing Knights|1-2|unita|5|240|5 models
+231|Deathwing Knights|3+|unita|5|260|5 models
+238|Ravenwing Darkshroud|unica|unita|1|70|1 model
+239|Nephilim Jetfighter|unica|unita|1|180|1 model
+240|Ravenwing Dark Talon|unica|unita|1|200|1 model
+241|Ravenwing Black Knights|1-2|unita|3|75|3 models
+241|Ravenwing Black Knights|1-2|unita|6|150|6 models
+241|Ravenwing Black Knights|3+|unita|3|85|3 models
+241|Ravenwing Black Knights|3+|unita|6|160|6 models
+242|Land Speeder Vengeance|1-2|unita|1|130|1 model
+242|Land Speeder Vengeance|3+|unita|1|140|1 model
+282|Logan Grimnar|unica|unita|1|100|1 model
+283|Logan Grimnar On Stormrider|unica|unita|1|180|1 model
+284|Wolf Lord on Thunderwolf|unica|unita|1|100|1 model
+285|Ragnar Blackmane|unica|unita|1|90|1 model
+286|Krom Dragongaze|unica|unita|1|65|1 model
+287|Harald Deathwolf|unica|unita|1|85|1 model
+288|Canis Wolfborn|unica|unita|1|75|1 model
+292|Njal Stormcaller|unica|unita|1|75|1 model
+297|Ulrik The Slayer|unica|unita|1|70|1 model
+302|Bjorn The Fell-handed|unica|unita|1|160|1 model
+303|Blood Claws|unica|unita|10|135|10 models
+303|Blood Claws|unica|unita|20|270|20 models
+304|Lukas The Trickster|unica|unita|1|50|1 model
+305|Grey Hunters|unica|unita|10|165|10 models
+306|Iron Priest|unica|unita|1|50|1 model
+311|Wulfen|1-2|unita|5|85|5 models
+311|Wulfen|1-2|unita|10|170|10 models
+311|Wulfen|3+|unita|5|95|5 models
+311|Wulfen|3+|unita|10|180|10 models
+314|Murderfang|unica|unita|1|150|1 model
+315|Wolf Guard|unica|unita|5|85|5 models
+315|Wolf Guard|unica|unita|10|170|10 models
+317|Arjac Rockfist|unica|unita|1|95|1 model
+318|Wolf Guard Terminators|1-2|unita|5|155|5 models
+318|Wolf Guard Terminators|1-2|unita|10|310|10 models
+318|Wolf Guard Terminators|3+|unita|5|195|5 models
+318|Wolf Guard Terminators|3+|unita|10|350|10 models
+318|Wolf Guard Terminators|3+|opzione||5|per Storm Shield
+321|Stormwolf|unica|unita|1|250|1 model
+322|Thunderwolf Cavalry|1-2|unita|3|100|3 models
+322|Thunderwolf Cavalry|1-2|unita|6|200|6 models
+322|Thunderwolf Cavalry|3+|unita|3|130|3 models
+322|Thunderwolf Cavalry|3+|unita|6|230|6 models
+322|Thunderwolf Cavalry|3+|opzione||5|per Storm Shield
+323|Fenrisian Wolves|1-2|unita|5|45|5 models
+323|Fenrisian Wolves|1-2|unita|10|75|10 models
+323|Fenrisian Wolves|3+|unita|5|50|5 models
+323|Fenrisian Wolves|3+|unita|10|80|10 models
+324|Skyclaws|unica|unita|5|90|5 models
+324|Skyclaws|unica|unita|10|165|10 models
+324|Skyclaws|unica|unita|15|240|15 models
+325|Stormfang Gunship|unica|unita|1|300|1 model
+326|Long Fangs|unica|unita|5|120|5 models
+326|Long Fangs|unica|unita|6|145|6 models
+358|Corvus Blackstar|unica|unita|1|180|1 model
+373|Kaldor Draigo|unica|unita|1|125|1 model
+374|Grand Master Voldus|unica|unita|1|125|1 model
+375|Grand Master|unica|unita|1|95|1 model
+376|Brother-captain|unica|unita|1|95|1 model
+377|Brother-captain Stern|unica|unita|1|90|1 model
+379|Brotherhood Champion|unica|unita|1|70|1 model
+380|Castellan Crowe|unica|unita|1|100|1 model
+381|Strike Squad|unica|unita|5|115|5 models
+381|Strike Squad|unica|unita|10|230|10 models
+382|Brotherhood Terminator Squad|unica|unita|4|140|4 models
+382|Brotherhood Terminator Squad|unica|unita|5|175|5 models
+382|Brotherhood Terminator Squad|unica|unita|8|300|8 models
+382|Brotherhood Terminator Squad|unica|unita|10|360|10 models
+382|Brotherhood Terminator Squad|unica|opzione||5|per Psycannon
+383|Purifier Squad|1-2|unita|5|130|5 models
+383|Purifier Squad|1-2|unita|10|260|10 models
+383|Purifier Squad|3+|unita|5|140|5 models
+383|Purifier Squad|3+|unita|10|270|10 models
+384|Paladin Squad|1-2|unita|4|170|4 models
+384|Paladin Squad|1-2|unita|5|215|5 models
+384|Paladin Squad|1-2|unita|8|360|8 models
+384|Paladin Squad|1-2|unita|10|460|10 models
+384|Paladin Squad|3+|unita|4|210|4 models
+384|Paladin Squad|3+|unita|5|255|5 models
+384|Paladin Squad|3+|unita|8|400|8 models
+384|Paladin Squad|3+|unita|10|500|10 models
+384|Paladin Squad|3+|opzione||5|per Psycannon
+387|Interceptor Squad|1-2|unita|5|125|5 models
+387|Interceptor Squad|1-2|unita|10|250|10 models
+387|Interceptor Squad|3+|unita|5|135|5 models
+387|Interceptor Squad|3+|unita|10|260|10 models
+388|Purgation Squad|1-2|unita|5|105|5 models
+388|Purgation Squad|1-2|unita|10|210|10 models
+388|Purgation Squad|3+|unita|5|115|5 models
+388|Purgation Squad|3+|unita|10|220|10 models
+388|Purgation Squad|3+|opzione||5|per Psycannon
+389|Nemesis Dreadknight|1-2|unita|1|195|1 model
+389|Nemesis Dreadknight|3+|unita|1|210|1 model
+389|Nemesis Dreadknight|3+|opzione||15|per Heavy psycannon
+390|Grey Knights Dreadnought|unica|unita|1|160|1 model
+391|Land Raider|1-2|unita|1|220|1 model
+391|Land Raider|3+|unita|1|240|1 model
+392|Land Raider Crusader|1-2|unita|1|220|1 model
+392|Land Raider Crusader|3+|unita|1|240|1 model
+393|Land Raider Redeemer|1-2|unita|1|260|1 model
+393|Land Raider Redeemer|3+|unita|1|280|1 model
+395|Razorback|1-3|unita|1|75|1 model
+395|Razorback|4+|unita|1|85|1 model
+396|Rhino|1-3|unita|1|70|1 model
+396|Rhino|4+|unita|1|80|1 model
+397|Servitors|unica|unita|4|60|4 models
+398|Stormraven Gunship|1|unita|1|280|1 model
+398|Stormraven Gunship|2+|unita|1|300|1 model
+399|Brotherhood Techmarine|unica|unita|1|70|1 model
+400|Venerable Dreadnought|1-2|unita|1|130|1 model
+400|Venerable Dreadnought|3+|unita|1|140|1 model
+402|Commander In Coldstar Battlesuit|unica|unita|1|95|1 model
+404|Ethereal|unica|unita|1|50|1 model
+405|Cadre Fireblade|unica|unita|1|50|1 model
+406|Commander Farsight|unica|unita|1|70|1 model
+407|Commander Shadowsun|unica|unita|1|100|1 model
+408|Aun’shi|unica|unita|1|50|1 model
+409|Aun’va|unica|unita|3|65|3 models
+410|Darkstrider|unica|unita|1|60|1 model
+411|Strike Team|unica|unita|10|70|10 models
+412|Breacher Team|unica|unita|10|90|10 models
+413|Kroot Carnivores|unica|unita|10|65|10 models
+413|Kroot Carnivores|unica|unita|20|130|20 models
+414|Krootox Riders|unica|unita|1|45|1 model
+414|Krootox Riders|unica|unita|2|60|2 models
+414|Krootox Riders|unica|unita|3|90|3 models
+415|Kroot Hounds|unica|unita|5|45|5 models
+415|Kroot Hounds|unica|unita|10|65|10 models
+417|Stealth Battlesuits|1-2|unita|5|100|5 models
+417|Stealth Battlesuits|3+|unita|5|110|5 models
+418|Crisis Battlesuits|unica|unita|3|200|3 models
+418|Crisis Battlesuits|unica|unita|6|400|6 models
+420|Ghostkeel Battlesuit|1-2|unita|1|150|1 model
+420|Ghostkeel Battlesuit|3+|unita|1|165|1 model
+420|Ghostkeel Battlesuit|3+|opzione||15|per Cyclic Ion Raker
+421|Riptide Battlesuit|1-2|unita|1|190|1 model
+421|Riptide Battlesuit|3+|unita|1|220|1 model
+421|Riptide Battlesuit|3+|opzione||25|per Ion accelerator
+422|Pathfinder Team|1-2|unita|10|85|10 models
+422|Pathfinder Team|3+|unita|10|100|10 models
+422|Pathfinder Team|3+|opzione||5|per Ion rifle
+423|Piranhas|1-2|unita|1|65|1 model
+423|Piranhas|1-2|unita|2|110|2 models
+423|Piranhas|1-2|unita|3|165|3 models
+423|Piranhas|3+|unita|1|75|1 model
+423|Piranhas|3+|unita|2|120|2 models
+423|Piranhas|3+|unita|3|175|3 models
+424|Devilfish|1-3|unita|1|75|1 model
+424|Devilfish|4+|unita|1|85|1 model
+425|Razorshark Strike Fighter|unica|unita|1|160|1 model
+426|Sun Shark Bomber|unica|unita|1|150|1 model
+427|Vespid Stingwings|unica|unita|5|70|5 models
+427|Vespid Stingwings|unica|unita|10|115|10 models
+428|Firesight Team|unica|unita|1|55|1 model
+430|Sky Ray Gunship|unica|unita|1|140|1 model
+431|Longstrike|unica|unita|1|140|1 model
+432|Hammerhead Gunship|1-2|unita|1|150|1 model
+432|Hammerhead Gunship|3+|unita|1|160|1 model
+433|Broadside Battlesuits|1-2|unita|1|75|1 model
+433|Broadside Battlesuits|1-2|unita|2|150|2 models
+433|Broadside Battlesuits|1-2|unita|3|255|3 models
+433|Broadside Battlesuits|3+|unita|1|95|1 model
+433|Broadside Battlesuits|3+|unita|2|170|2 models
+433|Broadside Battlesuits|3+|unita|3|275|3 models
+433|Broadside Battlesuits|3+|opzione||5|per High-yield missile pods
+434|Stormsurge|1|unita|1|375|1 model
+434|Stormsurge|2+|unita|1|400|1 model
+435|Tidewall Droneport|unica|unita|1|85|1 model
+436|Tidewall Shieldline|unica|unita|1|85|1 model
+436|Tidewall Shieldline|unica|opzione||20|+ 1 Tidewall Defence Platform
+437|Tidewall Gunrig|unica|unita|1|90|1 model
+439|Shas’o R’alai|unica|unita|1|80|1 model
+443|Xv9 Hazard Battlesuits|unica|unita|1|55|1 model
+443|Xv9 Hazard Battlesuits|unica|unita|2|110|2 models
+444|Y’vahra Battlesuit|unica|unita|1|210|1 model
+445|R’varna Battlesuit|unica|unita|1|200|1 model
+446|Ta’unar Supremacy Armour|1|unita|1|790|1 model
+446|Ta’unar Supremacy Armour|2+|unita|1|890|1 model
+447|Tetras|unica|unita|2|80|2 models
+447|Tetras|unica|unita|4|160|4 models
+448|Tx42 Piranha|unica|unita|1|60|1 model
+449|Heavy Gun Drones|unica|unita|2|45|2 models
+452|Remora Stealth Drones|unica|unita|2|160|2 models
+453|Barracuda|unica|unita|1|220|1 model
+454|Tiger Shark|1|unita|1|395|1 model
+454|Tiger Shark|2+|unita|1|445|1 model
+455|AX-1-0 Tiger Shark|1|unita|1|315|1 model
+455|AX-1-0 Tiger Shark|2+|unita|1|375|1 model
+456|Orca Dropship|unica|unita|1|275|1 model
+457|Manta|unica|unita|1|2100|1 model
+458|Remote Sensor Tower|unica|unita|1|50|1 model
+459|Drone Sentry Turret|unica|unita|1|50|1 model
+460|Hive Tyrant|unica|unita|1|195|1 model
+461|The Swarmlord|unica|unita|1|210|1 model
+462|Old One Eye|unica|unita|1|140|1 model
+463|Broodlord|unica|unita|1|80|1 model
+465|Tervigon|unica|unita|1|160|1 model
+467|Genestealers|1-2|unita|5|75|5 models
+467|Genestealers|1-2|unita|10|140|10 models
+467|Genestealers|3+|unita|5|85|5 models
+467|Genestealers|3+|unita|10|150|10 models
+468|Termagants|unica|unita|10|60|10 models
+468|Termagants|unica|unita|20|110|20 models
+469|Hormagaunts|unica|unita|10|70|10 models
+469|Hormagaunts|unica|unita|20|120|20 models
+470|Ripper Swarms|unica|unita|1|30|1 model
+470|Ripper Swarms|unica|unita|2|40|2 models
+470|Ripper Swarms|unica|unita|3|50|3 models
+471|Tyrant Guard|unica|unita|3|80|3 models
+471|Tyrant Guard|unica|unita|6|170|6 models
+472|Hive Guard|1-2|unita|3|80|3 models
+472|Hive Guard|1-2|unita|6|160|6 models
+472|Hive Guard|3+|unita|3|90|3 models
+472|Hive Guard|3+|unita|6|170|6 models
+473|Lictor|unica|unita|1|60|1 model
+474|Maleceptor|1-2|unita|1|180|1 model
+474|Maleceptor|3+|unita|1|190|1 model
+475|Zoanthropes|unica|unita|3|90|3 models
+475|Zoanthropes|unica|unita|6|190|6 models
+476|Venomthropes|unica|unita|3|55|3 models
+476|Venomthropes|unica|unita|6|110|6 models
+477|Pyrovores|1-2|unita|1|40|1 model
+477|Pyrovores|1-2|unita|2|70|2 models
+477|Pyrovores|1-2|unita|3|100|3 models
+477|Pyrovores|3+|unita|1|50|1 model
+477|Pyrovores|3+|unita|2|80|2 models
+477|Pyrovores|3+|unita|3|110|3 models
+478|Haruspex|1-2|unita|1|125|1 model
+478|Haruspex|3+|unita|1|135|1 model
+479|Deathleaper|unica|unita|1|80|1 model
+482|Raveners|1-2|unita|5|125|5 models
+482|Raveners|3+|unita|5|135|5 models
+483|Sky-slasher Swarms|unica|unita|3|60|3 models
+484|Gargoyles|unica|unita|10|80|10 models
+484|Gargoyles|unica|unita|20|155|20 models
+485|Harpy|unica|unita|1|185|1 model
+486|Hive Crone|unica|unita|1|170|1 model
+487|Mucolid Spores|unica|unita|1|30|1 model
+487|Mucolid Spores|unica|unita|2|60|2 models
+488|Spore Mines|unica|unita|3|55|3 models
+488|Spore Mines|unica|unita|6|110|6 models
+489|Tyrannocyte|1-3|unita|1|80|1 model
+489|Tyrannocyte|4+|unita|1|90|1 model
+490|Carnifexes|unica|unita|1|90|1 model
+490|Carnifexes|unica|unita|2|180|2 models
+491|Biovores|unica|unita|1|60|1 model
+491|Biovores|unica|unita|2|100|2 models
+491|Biovores|unica|unita|3|140|3 models
+493|Trygon|unica|unita|1|140|1 model
+494|Mawloc|unica|unita|1|135|1 model
+495|Exocrine|1-2|unita|1|135|1 model
+495|Exocrine|3+|unita|1|145|1 model
+496|Tyrannofex|1-2|unita|1|170|1 model
+496|Tyrannofex|3+|unita|1|180|1 model
+496|Tyrannofex|3+|opzione||10|per Acid spray
+496|Tyrannofex|3+|opzione||20|per Rupture cannon
+497|Toxicrene|unica|unita|1|120|1 model
+498|Sporocyst|unica|unita|1|145|1 model
+499|Malanthrope|unica|unita|1|75|1 model
+500|Dimachaeron|unica|unita|1|200|1 model
+503|Barbed Hierodule|unica|unita|1|340|1 model
+504|Harridan|1|unita|1|610|1 model
+504|Harridan|2+|unita|1|660|1 model
+505|Hierophant|1|unita|1|810|1 model
+505|Hierophant|2+|unita|1|910|1 model
+506|Scythed Hierodule|unica|unita|1|330|1 model
+507|Patriarch|unica|unita|1|80|1 model
+508|Magus|unica|unita|1|50|1 model
+509|Primus|unica|unita|1|70|1 model
+510|Acolyte Iconward|unica|unita|1|50|1 model
+511|Acolyte Hybrids With Autopistols|unica|unita|5|70|5 models
+511|Acolyte Hybrids With Autopistols|unica|unita|10|130|10 models
+512|Neophyte Hybrids|unica|unita|10|70|10 models
+512|Neophyte Hybrids|unica|unita|20|135|20 models
+513|Hybrid Metamorphs|1-2|unita|5|75|5 models
+513|Hybrid Metamorphs|1-2|unita|10|140|10 models
+513|Hybrid Metamorphs|3+|unita|5|85|5 models
+513|Hybrid Metamorphs|3+|unita|10|150|10 models
+514|Aberrants|1-2|unita|5|140|5 models
+514|Aberrants|1-2|unita|10|280|10 models
+514|Aberrants|3+|unita|5|150|5 models
+514|Aberrants|3+|unita|10|290|10 models
+515|Purestrain Genestealers|1-2|unita|5|75|5 models
+515|Purestrain Genestealers|1-2|unita|10|140|10 models
+515|Purestrain Genestealers|3+|unita|5|85|5 models
+515|Purestrain Genestealers|3+|unita|10|150|10 models
+516|Goliath Truck|1-3|unita|1|75|1 model
+516|Goliath Truck|4+|unita|1|85|1 model
+521|Goliath Rockgrinder|1-2|unita|1|120|1 model
+521|Goliath Rockgrinder|3+|unita|1|130|1 model
+522|Imotekh The Stormlord|unica|unita|1|100|1 model
+523|Overlord|unica|unita|1|90|1 model
+524|Lord|unica|unita|1|65|1 model
+527|Nemesor Zahndrekh|unica|unita|1|85|1 model
+528|Vargard Obyron|unica|unita|1|85|1 model
+530|Orikan The Diviner|unica|unita|1|90|1 model
+531|Anrakyr The Traveller|unica|unita|1|95|1 model
+532|Trazyn The Infinite|unica|unita|1|65|1 model
+533|Catacomb Command Barge|unica|unita|1|120|1 model
+534|Necron Warriors|unica|unita|10|85|10 models
+534|Necron Warriors|unica|unita|20|190|20 models
+535|Immortals|unica|unita|5|70|5 models
+535|Immortals|unica|unita|10|140|10 models
+536|Lychguard|unica|unita|5|80|5 models
+536|Lychguard|unica|unita|10|160|10 models
+537|Deathmarks|1-2|unita|5|60|5 models
+537|Deathmarks|1-2|unita|10|120|10 models
+537|Deathmarks|3+|unita|5|70|5 models
+537|Deathmarks|3+|unita|10|130|10 models
+538|Flayed Ones|unica|unita|5|55|5 models
+538|Flayed Ones|unica|unita|10|100|10 models
+539|Triarch Praetorians|unica|unita|5|80|5 models
+539|Triarch Praetorians|unica|unita|10|160|10 models
+540|Triarch Stalker|1-2|unita|1|110|1 model
+540|Triarch Stalker|3+|unita|1|120|1 model
+541|C’tan Shard of the Nightbringer|unica|unita|1|360|1 model
+542|C’tan Shard of the Deceiver|unica|unita|1|330|1 model
+543|Ghost Ark|unica|unita|1|100|1 model
+544|Night Scythe|unica|unita|1|125|1 model
+545|Doom Scythe|unica|unita|1|200|1 model
+546|Canoptek Wraiths|1|unita|3|95|3 models
+546|Canoptek Wraiths|1|unita|6|220|6 models
+546|Canoptek Wraiths|2+|unita|3|115|3 models
+546|Canoptek Wraiths|2+|unita|6|240|6 models
+548|Tomb Blades|1-2|unita|3|70|3 models
+548|Tomb Blades|1-2|unita|6|140|6 models
+548|Tomb Blades|3+|unita|3|80|3 models
+548|Tomb Blades|3+|unita|6|150|6 models
+551|Canoptek Spyders|unica|unita|1|65|1 model
+551|Canoptek Spyders|unica|unita|2|110|2 models
+552|Monolith|1|unita|1|420|1 model
+552|Monolith|2+|unita|1|440|1 model
+553|Annihilation Barge|unica|unita|1|95|1 model
+554|Doomsday Ark|1-2|unita|1|210|1 model
+554|Doomsday Ark|3+|unita|1|230|1 model
+555|Transcendent C’tan|1|unita|1|340|1 model
+555|Transcendent C’tan|2+|unita|1|360|1 model
+556|Tesseract Vault|1|unita|1|465|1 model
+556|Tesseract Vault|2+|unita|1|485|1 model
+557|Obelisk|1|unita|1|280|1 model
+557|Obelisk|2+|unita|1|310|1 model
+558|Canoptek Tomb Stalker|unica|unita|1|130|1 model
+559|Canoptek Acanthrites|unica|unita|3|85|3 models
+559|Canoptek Acanthrites|unica|unita|6|170|6 models
+560|Canoptek Tomb Sentinel|unica|unita|1|115|1 model
+561|Night Shroud|unica|unita|1|140|1 model
+562|Sentry Pylon|unica|unita|1|120|1 model
+564|Tesseract Ark|unica|unita|1|130|1 model
+567|Gauss Pylon|unica|unita|1|210|1 model
+568|Eldrad Ulthran|unica|unita|1|120|1 model
+570|Illic Nightspear|unica|unita|1|70|1 model
+571|Asurmen|unica|unita|1|135|1 model
+572|Jain Zar|unica|unita|1|105|1 model
+573|Karandras|unica|unita|1|90|1 model
+574|Fuegan|unica|unita|1|130|1 model
+575|Baharroth|unica|unita|1|125|1 model
+576|Maugan Ra|unica|unita|1|100|1 model
+577|Autarch|unica|unita|1|75|1 model
+580|Autarch Skyrunner|unica|unita|1|90|1 model
+581|Avatar of Khaine|unica|unita|1|250|1 model
+582|Farseer|unica|unita|1|65|1 model
+583|Farseer Skyrunner|unica|unita|1|60|1 model
+584|Warlock Conclave|unica|unita|2|55|2 models
+584|Warlock Conclave|unica|unita|4|120|4 models
+585|Warlock|unica|unita|1|40|1 model
+587|Warlock Skyrunners|unica|unita|1|45|1 model
+587|Warlock Skyrunners|unica|unita|2|90|2 models
+588|Spiritseer|unica|unita|1|50|1 model
+589|Guardian Defenders|unica|unita|11|90|11 models
+590|Storm Guardians|unica|unita|11|100|11 models
+591|Windriders|unica|unita|3|80|3 models
+591|Windriders|unica|unita|6|170|6 models
+592|Rangers|unica|unita|5|60|5 models
+592|Rangers|unica|unita|10|110|10 models
+593|Dire Avengers|unica|unita|5|70|5 models
+593|Dire Avengers|unica|unita|10|140|10 models
+594|Howling Banshees|unica|unita|5|85|5 models
+594|Howling Banshees|unica|unita|10|165|10 models
+595|Striking Scorpions|unica|unita|5|75|5 models
+595|Striking Scorpions|unica|unita|10|145|10 models
+596|Fire Dragons|1-2|unita|5|120|5 models
+596|Fire Dragons|1-2|unita|10|240|10 models
+596|Fire Dragons|3+|unita|5|130|5 models
+596|Fire Dragons|3+|unita|10|250|10 models
+597|Wraithguard|unica|unita|5|145|5 models
+598|Wraithblades|unica|unita|5|140|5 models
+599|Wave Serpent|1-3|unita|1|115|1 model
+599|Wave Serpent|4+|unita|1|125|1 model
+600|Swooping Hawks|1-2|unita|5|95|5 models
+600|Swooping Hawks|1-2|unita|10|190|10 models
+600|Swooping Hawks|3+|unita|5|110|5 models
+600|Swooping Hawks|3+|unita|10|205|10 models
+601|Warp Spiders|1-2|unita|5|105|5 models
+601|Warp Spiders|1-2|unita|10|200|10 models
+601|Warp Spiders|3+|unita|5|125|5 models
+601|Warp Spiders|3+|unita|10|220|10 models
+602|Shining Spears|unica|unita|3|100|3 models
+602|Shining Spears|unica|unita|6|200|6 models
+603|Crimson Hunter|unica|unita|1|160|1 model
+605|Vypers|unica|unita|1|75|1 model
+605|Vypers|unica|unita|2|140|2 models
+606|Hemlock Wraithfighter|unica|unita|1|155|1 model
+607|Dark Reapers|unica|unita|5|95|5 models
+607|Dark Reapers|unica|unita|10|200|10 models
+609|Falcon|unica|unita|1|130|1 model
+610|Fire Prism|unica|unita|1|150|1 model
+611|Night Spinner|1|unita|1|170|1 model
+611|Night Spinner|2+|unita|1|190|1 model
+612|War Walkers|unica|unita|1|80|1 model
+612|War Walkers|unica|unita|2|160|2 models
+613|Wraithlord|unica|unita|1|125|1 model
+614|Wraithknight|1|unita|1|385|1 model
+614|Wraithknight|2+|unita|1|405|1 model
+614|Wraithknight|2+|opzione||10|per Heavy wraithcannon
+615|Shadow Spectres|unica|unita|1|30|1 model
+615|Shadow Spectres|unica|unita|5|115|5 models
+615|Shadow Spectres|unica|unita|10|230|10 models
+616|Wasp Assault Walker|unica|unita|1|95|1 model
+617|Wraithseer|unica|unita|1|160|1 model
+618|Hornet|unica|unita|1|100|1 model
+619|Warp Hunter|unica|unita|1|145|1 model
+620|Lynx|unica|unita|1|180|1 model
+621|Scorpion|unica|unita|1|410|1 model
+622|Cobra|unica|unita|1|415|1 model
+623|Nightwing|unica|unita|1|150|1 model
+624|Phoenix|unica|unita|1|175|1 model
+625|Vampire Raider|unica|unita|1|430|1 model
+626|Vampire Hunter|unica|unita|1|460|1 model
+627|Skathach Wraithknight|unica|unita|1|490|1 model
+628|Revenant Titan|unica|unita|1|1100|1 model
+629|Corsair Cloud Dancer Band|unica|unita|3|125|3 models
+629|Corsair Cloud Dancer Band|unica|unita|4|150|4 models
+629|Corsair Cloud Dancer Band|unica|unita|6|210|6 models
+629|Corsair Cloud Dancer Band|unica|unita|7|245|7 models
+630|Irillyth|unica|unita|1|105|1 model
+631|Phantom Titan|unica|unita|1|2100|1 model
+632|Corsair Reaver Band|unica|unita|5|125|5 models
+632|Corsair Reaver Band|unica|unita|6|150|6 models
+632|Corsair Reaver Band|unica|unita|10|250|10 models
+632|Corsair Reaver Band|unica|unita|11|275|11 models
+634|Archon|unica|unita|1|80|1 model
+639|Succubus|unica|unita|1|50|1 model
+640|Lelith Hesperax|unica|unita|1|80|1 model
+641|Haemonculus|unica|unita|1|50|1 model
+642|Urien Rakarth|unica|unita|1|80|1 model
+643|Drazhar|unica|unita|1|85|1 model
+644|Kabalite Warriors|unica|unita|10|110|10 models
+646|Wyches|unica|unita|10|90|10 models
+648|Incubi|1-2|unita|5|90|5 models
+648|Incubi|1-2|unita|10|180|10 models
+648|Incubi|3+|unita|5|100|5 models
+648|Incubi|3+|unita|10|190|10 models
+649|Mandrakes|1-2|unita|5|80|5 models
+649|Mandrakes|1-2|unita|10|160|10 models
+649|Mandrakes|3+|unita|5|90|5 models
+649|Mandrakes|3+|unita|10|170|10 models
+650|Wracks|unica|unita|5|60|5 models
+650|Wracks|unica|unita|8|100|8 models
+650|Wracks|unica|unita|10|120|10 models
+651|Grotesques|unica|unita|3|80|3 models
+651|Grotesques|unica|unita|6|170|6 models
+652|Beastmaster|unica|unita|7|135|7 models
+656|Raider|1-3|unita|1|75|1 model
+656|Raider|4+|unita|1|85|1 model
+657|Venom|1-3|unita|1|65|1 model
+657|Venom|4+|unita|1|75|1 model
+658|Reavers|1-2|unita|3|75|3 models
+658|Reavers|1-2|unita|6|150|6 models
+658|Reavers|3+|unita|3|85|3 models
+658|Reavers|3+|unita|6|160|6 models
+659|Hellions|1-2|unita|5|90|5 models
+659|Hellions|1-2|unita|10|180|10 models
+659|Hellions|3+|unita|5|100|5 models
+659|Hellions|3+|unita|10|190|10 models
+660|Razorwing Jetfighter|unica|unita|1|170|1 model
+661|Voidraven Bomber|unica|unita|1|245|1 model
+662|Scourges with Heavy Weapons|1-2|unita|5|110|5 models
+662|Scourges with Heavy Weapons|3+|unita|5|120|5 models
+662|Scourges with Heavy Weapons|3+|opzione||5|per Haywire blaster
+662|Scourges with Heavy Weapons|3+|opzione||5|per Dark lance
+663|Talos|1-2|unita|1|75|1 model
+663|Talos|1-2|unita|2|150|2 models
+663|Talos|3+|unita|1|85|1 model
+663|Talos|3+|unita|2|160|2 models
+663|Talos|3+|opzione||5|per Twin haywire blaster
+664|Cronos|unica|unita|1|55|1 model
+664|Cronos|unica|unita|2|100|2 models
+665|Ravager|unica|unita|1|110|1 model
+665|Ravager|unica|opzione||5|per Dark lance
+666|Reaper|unica|unita|1|115|1 model
+667|Tantalus|unica|unita|1|230|1 model
+680|Leman Russ Commander|1-2|unita|1|195|1 model
+680|Leman Russ Commander|3+|unita|1|210|1 model
+680|Leman Russ Commander|3+|opzione||15|per Demolisher battle cannon
+680|Leman Russ Commander|3+|opzione||5|per Multi-melta
+680|Leman Russ Commander|3+|opzione||5|per Lascannon
+680|Leman Russ Commander|3+|opzione||5|per Plasma cannon
+686|Cadian Heavy Weapons Squad|unica|unita|3|65|3 models
+690|Scout Sentinels|unica|unita|1|55|1 model
+690|Scout Sentinels|unica|unita|2|100|2 models
+691|Armoured Sentinels|unica|unita|1|65|1 model
+691|Armoured Sentinels|unica|unita|2|120|2 models
+692|Chimera|1-3|unita|1|75|1 model
+692|Chimera|4+|unita|1|85|1 model
+693|Taurox|1-3|unita|1|65|1 model
+693|Taurox|4+|unita|1|75|1 model
+694|Hellhound|1-2|unita|1|125|1 model
+694|Hellhound|3+|unita|1|135|1 model
+695|Basilisk|1|unita|1|115|1 model
+695|Basilisk|2+|unita|1|135|1 model
+696|Hydra|unica|unita|1|90|1 model
+697|Wyvern|1|unita|1|95|1 model
+697|Wyvern|2+|unita|1|115|1 model
+698|Manticore|1|unita|1|150|1 model
+698|Manticore|2+|unita|1|170|1 model
+699|Deathstrike|1|unita|1|125|1 model
+699|Deathstrike|2+|unita|1|135|1 model
+700|Leman Russ Battle Tank|1-2|unita|1|160|1 model
+700|Leman Russ Battle Tank|3+|unita|1|175|1 model
+700|Leman Russ Battle Tank|3+|opzione||5|per Multi-melta
+700|Leman Russ Battle Tank|3+|opzione||5|per Lascannon
+700|Leman Russ Battle Tank|3+|opzione||5|per Plasma cannon
+701|Leman Russ Demolisher|1-2|unita|1|160|1 model
+701|Leman Russ Demolisher|3+|unita|1|175|1 model
+701|Leman Russ Demolisher|3+|opzione||5|per Multi-melta
+701|Leman Russ Demolisher|3+|opzione||5|per Lascannon
+701|Leman Russ Demolisher|3+|opzione||5|per Plasma cannon
+702|Baneblade|1|unita|1|415|1 model
+702|Baneblade|2+|unita|1|450|1 model
+703|Banehammer|1|unita|1|385|1 model
+703|Banehammer|2+|unita|1|420|1 model
+704|Banesword|1|unita|1|415|1 model
+704|Banesword|2+|unita|1|450|1 model
+705|Doomhammer|1|unita|1|380|1 model
+705|Doomhammer|2+|unita|1|410|1 model
+706|Hellhammer|1|unita|1|385|1 model
+706|Hellhammer|2+|unita|1|415|1 model
+707|Shadowsword|1|unita|1|375|1 model
+707|Shadowsword|2+|unita|1|405|1 model
+708|Stormlord|1|unita|1|395|1 model
+708|Stormlord|2+|unita|1|430|1 model
+709|Stormsword|1|unita|1|430|1 model
+709|Stormsword|2+|unita|1|465|1 model
+713|‘Iron Hand’ Straken|unica|unita|1|55|1 model
+714|Sergeant Harker|unica|unita|1|40|1 model
+716|Commissar|unica|unita|1|30|1 model
+719|Militarum Tempestus Command Squad|1-2|unita|5|85|5 models
+719|Militarum Tempestus Command Squad|3+|unita|5|95|5 models
+721|Taurox Prime|1-3|unita|1|75|1 model
+721|Taurox Prime|4+|unita|1|85|1 model
+722|Ogryn Squad|unica|unita|3|60|3 models
+722|Ogryn Squad|unica|unita|6|120|6 models
+723|Bullgryn Squad|1|unita|3|90|3 models
+723|Bullgryn Squad|1|unita|6|200|6 models
+723|Bullgryn Squad|2+|unita|3|105|3 models
+723|Bullgryn Squad|2+|unita|6|215|6 models
+724|Ratlings|unica|unita|5|60|5 models
+724|Ratlings|unica|unita|10|100|10 models
+725|Nork Deddog|unica|unita|1|60|1 model
+727|Valkyrie|1-2|unita|1|170|1 model
+727|Valkyrie|3+|unita|1|180|1 model
+728|Atlas Recovery Vehicle|unica|unita|1|80|1 model
+729|Salamander Command Vehicle|unica|unita|1|80|1 model
+730|Hades Breaching Drill|unica|unita|1|110|1 model
+731|Centaur Light Carrier|unica|unita|1|40|1 model
+733|Trojan Support Vehicle|unica|unita|1|80|1 model
+735|Salamander Scout Vehicle|unica|unita|1|95|1 model
+736|Tauros Assault Vehicle|unica|unita|1|50|1 model
+737|Tauros Venator|unica|unita|1|50|1 model
+739|Armageddon-pattern Medusa|unica|unita|1|105|1 model
+740|Colossus|unica|unita|1|160|1 model
+741|Cyclops Demolition Vehicle|1-2|unita|1|40|1 model
+741|Cyclops Demolition Vehicle|3+|unita|1|45|1 model
+743|Earthshaker Carriage Battery|unica|unita|1|120|1 model
+744|Griffon Mortar Carrier|unica|unita|1|115|1 model
+745|Heavy Mortar Team|unica|unita|1|50|1 model
+746|Heavy Quad Launcher Team|unica|unita|1|50|1 model
+747|Hydra Platform|unica|unita|1|95|1 model
+751|Malcador Annihilator|unica|unita|1|270|1 model
+752|Malcador Defender|unica|unita|1|310|1 model
+753|Malcador|unica|unita|1|250|1 model
+754|Malcador Infernus|unica|unita|1|235|1 model
+755|Manticore Platform|unica|unita|1|95|1 model
+756|Medusa Carriage Battery|unica|unita|1|125|1 model
+757|Rapier Laser Destroyer Battery|unica|unita|1|35|1 model
+757|Rapier Laser Destroyer Battery|unica|unita|2|70|2 models
+757|Rapier Laser Destroyer Battery|unica|unita|3|105|3 models
+758|Sabre Weapons Battery|unica|unita|1|45|1 model
+758|Sabre Weapons Battery|unica|unita|2|90|2 models
+759|Sentinel Powerlifter|unica|unita|1|55|1 model
+760|Stygies Destroyer Tank Hunter|unica|unita|1|180|1 model
+762|Tarantula Battery|unica|unita|1|40|1 model
+762|Tarantula Battery|unica|unita|2|80|2 models
+762|Tarantula Battery|unica|unita|3|120|3 models
+763|Stormblade|unica|unita|1|415|1 model
+764|Arkurian Stormhammer|unica|unita|1|480|1 model
+766|Crassus|unica|unita|1|180|1 model
+767|Dominus Armoured Siege Bombard|unica|unita|1|325|1 model
+768|Gorgon Heavy Transport|unica|unita|1|275|1 model
+769|Macharius|unica|unita|1|310|1 model
+770|Macharius Omega|unica|unita|1|310|1 model
+771|Macharius Vanquisher|unica|unita|1|285|1 model
+772|Macharius Vulcan|unica|unita|1|310|1 model
+773|Marauder Bomber|unica|unita|1|345|1 model
+774|Marauder Destroyer|unica|unita|1|375|1 model
+775|Minotaur|unica|unita|1|225|1 model
+776|Praetor|unica|unita|1|275|1 model
+777|Valdor|unica|unita|1|285|1 model
+778|Aquila Lander|unica|unita|1|120|1 model
+779|Arvus Lighter|unica|unita|1|95|1 model
+780|Avenger Strike Fighter|unica|unita|1|130|1 model
+781|Voss-pattern Lightning|unica|unita|1|130|1 model
+783|Vendetta Gunship|unica|unita|1|255|1 model
+784|Vulture Gunship|unica|unita|1|225|1 model
+838|Belisarius Cawl|unica|unita|1|220|1 model
+839|Tech-priest Dominus|unica|unita|1|60|1 model
+840|Tech-priest Enginseer|unica|unita|1|55|1 model
+841|Kataphron Breachers|unica|unita|3|150|3 models
+841|Kataphron Breachers|unica|unita|6|310|6 models
+842|Kataphron Destroyers|unica|unita|3|100|3 models
+842|Kataphron Destroyers|unica|unita|6|200|6 models
+843|Fulgurite Electro-priests|unica|unita|5|70|5 models
+843|Fulgurite Electro-priests|unica|unita|10|140|10 models
+844|Corpuscarii Electro-priests|unica|unita|5|65|5 models
+844|Corpuscarii Electro-priests|unica|unita|10|130|10 models
+845|Kastelan Robots|1|unita|2|150|2 models
+845|Kastelan Robots|1|unita|4|300|4 models
+845|Kastelan Robots|2+|unita|2|180|2 models
+845|Kastelan Robots|2+|unita|4|330|4 models
+846|Cybernetica Datasmith|unica|unita|1|25|1 model
+848|Skitarii Rangers|unica|unita|10|85|10 models
+849|Skitarii Vanguard|unica|unita|10|85|10 models
+850|Sicarian Infiltrators|1-2|unita|5|75|5 models
+850|Sicarian Infiltrators|1-2|unita|10|155|10 models
+850|Sicarian Infiltrators|3+|unita|5|85|5 models
+850|Sicarian Infiltrators|3+|unita|10|165|10 models
+851|Sicarian Ruststalkers|1-2|unita|5|75|5 models
+851|Sicarian Ruststalkers|1-2|unita|10|160|10 models
+851|Sicarian Ruststalkers|3+|unita|5|85|5 models
+851|Sicarian Ruststalkers|3+|unita|10|170|10 models
+852|Ironstrider Ballistarii|1-2|unita|1|80|1 model
+852|Ironstrider Ballistarii|1-2|unita|2|160|2 models
+852|Ironstrider Ballistarii|1-2|unita|3|250|3 models
+852|Ironstrider Ballistarii|3+|unita|1|95|1 model
+852|Ironstrider Ballistarii|3+|unita|2|175|2 models
+852|Ironstrider Ballistarii|3+|unita|3|265|3 models
+852|Ironstrider Ballistarii|3+|opzione||10|per Twin cognis lascannon
+853|Sydonian Dragoons With Taser Lances|unica|unita|1|60|1 model
+853|Sydonian Dragoons With Taser Lances|unica|unita|2|120|2 models
+853|Sydonian Dragoons With Taser Lances|unica|unita|3|170|3 models
+854|Onager Dunecrawler|unica|unita|1|155|1 model
+855|Knight Paladin|1-2|unita|1|375|1 model
+855|Knight Paladin|3+|unita|1|390|1 model
+856|Knight Errant|1-2|unita|1|355|1 model
+856|Knight Errant|3+|unita|1|370|1 model
+857|Knight Warden|1-2|unita|1|375|1 model
+857|Knight Warden|3+|unita|1|390|1 model
+858|Knight Gallant|1-2|unita|1|355|1 model
+858|Knight Gallant|3+|unita|1|370|1 model
+859|Knight Crusader|1|unita|1|395|1 model
+859|Knight Crusader|2+|unita|1|415|1 model
+859|Knight Crusader|2+|opzione||15|per Rapid-fire battle cannon
+860|Acastus Knight Porphyrion|1|unita|1|725|1 model
+860|Acastus Knight Porphyrion|2+|unita|1|800|1 model
+861|Cerastus Knight Acheron|1|unita|1|380|1 model
+861|Cerastus Knight Acheron|2+|unita|1|395|1 model
+862|Cerastus Knight Atrapos|1|unita|1|405|1 model
+862|Cerastus Knight Atrapos|2+|unita|1|425|1 model
+863|Cerastus Knight Castigator|1|unita|1|380|1 model
+863|Cerastus Knight Castigator|2+|unita|1|395|1 model
+864|Cerastus Knight Lancer|1|unita|1|415|1 model
+864|Cerastus Knight Lancer|2+|unita|1|435|1 model
+865|Questoris Knight Magaera|1|unita|1|385|1 model
+865|Questoris Knight Magaera|2+|unita|1|400|1 model
+866|Questoris Knight Styrix|1|unita|1|375|1 model
+866|Questoris Knight Styrix|2+|unita|1|390|1 model
+867|Warhound Titan|unica|unita|1|1100|1 model
+868|Reaver Titan|unica|unita|1|2200|1 model
+869|Warlord Titan|unica|unita|1|3500|1 model
+870|Vindicare Assassin|unica|unita|1|110|1 model
+870|Vindicare Assassin|unica|unita|1|125|1 model
+871|Callidus Assassin|unica|unita|1|100|1 model
+872|Eversor Assassin|unica|unita|1|100|1 model
+872|Eversor Assassin|unica|unita|1|110|1 model
+873|Culexus Assassin|unica|unita|1|85|1 model
+874|Inquisitor Greyfax|unica|unita|1|65|1 model
+875|Inquisitor Karamazov|unica|unita|1|140|1 model
+876|Inquisitor Coteaz|unica|unita|1|75|1 model
+876|Inquisitor Coteaz|unica|unita|1|95|1 model
+877|Inquisitor|unica|unita|1|55|1 model
+877|Inquisitor|unica|unita|1|65|1 model
+882|Custodian Guard|1-3|unita|4|170|4 models
+882|Custodian Guard|1-3|unita|5|215|5 models
+882|Custodian Guard|4+|unita|4|180|4 models
+882|Custodian Guard|4+|unita|5|225|5 models
+883|Venerable Contemptor Dreadnought|1-2|unita|1|170|1 model
+883|Venerable Contemptor Dreadnought|3+|unita|1|185|1 model
+884|Venerable Land Raider|1|unita|1|220|1 model
+884|Venerable Land Raider|2+|unita|1|240|1 model
+889|Primaris Psyker|unica|unita|1|60|1 model
+894|Crusaders|unica|unita|2|40|2 models
+894|Crusaders|unica|unita|4|80|4 models
+895|Death Cult Assassins|unica|unita|2|55|2 models
+895|Death Cult Assassins|unica|unita|4|110|4 models
+896|Arco-flagellants|unica|unita|3|50|3 models
+896|Arco-flagellants|unica|unita|10|140|10 models
+897|Penitent Engines|unica|unita|1|70|1 model
+897|Penitent Engines|unica|unita|2|140|2 models
+898|Saint Celestine|unica|unita|3|150|3 models
+899|Canoness|unica|unita|1|60|1 model
+900|Imagifier|unica|unita|1|55|1 model
+901|Hospitaller|1|unita|1|65|1 model
+901|Hospitaller|2+|unita|1|75|1 model
+902|Dialogus|unica|unita|1|40|1 model
+903|Battle Sisters Squad|unica|unita|10|100|10 models
+904|Seraphim Squad|1-2|unita|5|75|5 models
+904|Seraphim Squad|1-2|unita|10|150|10 models
+904|Seraphim Squad|3+|unita|5|85|5 models
+904|Seraphim Squad|3+|unita|10|160|10 models
+907|Repentia Squad|unica|unita|5|70|5 models
+907|Repentia Squad|unica|unita|10|140|10 models
+908|Retributor Squad|1-2|unita|5|105|5 models
+908|Retributor Squad|3+|unita|5|115|5 models
+908|Retributor Squad|3+|opzione||5|per Multi-melta
+909|Dominion Squad|1-2|unita|10|90|10 models
+909|Dominion Squad|3+|unita|10|100|10 models
+909|Dominion Squad|3+|opzione||5|per Meltagun
+910|Sororitas Rhino|1-3|unita|1|65|1 model
+910|Sororitas Rhino|4+|unita|1|75|1 model
+911|Immolator|1-3|unita|1|100|1 model
+911|Immolator|4+|unita|1|115|1 model
+911|Immolator|4+|opzione||15|per Twin multi-melta
+912|Exorcist|1|unita|1|180|1 model
+912|Exorcist|2+|unita|1|220|1 model
+924|Abaddon The Despoiler|unica|unita|1|295|1 model
+925|Huron Blackheart|unica|unita|1|130|1 model
+926|Cypher|unica|unita|1|90|1 model
+928|Fabius Bile|unica|unita|2|100|2 models
+929|Chaos Lord|unica|unita|1|90|1 model
+930|Chaos Lord In Terminator Armour|unica|unita|1|85|1 model
+931|Chaos Lord On Bike|unica|unita|1|95|1 model
+932|Chaos Lord On Juggernaut|unica|unita|1|115|1 model
+933|Chaos Lord On Disc Of Tzeentch|unica|unita|1|100|1 model
+934|Chaos Lord On Palanquin Of Nurgle|unica|unita|1|90|1 model
+935|Chaos Lord On Steed Of Slaanesh|unica|unita|1|100|1 model
+936|Dark Apostle|unica|unita|3|65|3 models
+937|Heretic Astartes Daemon Prince|unica|unita|1|165|1 model
+938|Sorcerer|unica|unita|1|60|1 model
+939|Sorcerer In Terminator Armour|unica|unita|1|80|1 model
+940|Sorcerer On Bike|unica|unita|1|75|1 model
+941|Sorcerer On Disc Of Tzeentch|unica|unita|1|80|1 model
+942|Sorcerer On Palanquin Of Nurgle|unica|unita|1|80|1 model
+943|Sorcerer On Steed Of Slaanesh|unica|unita|1|85|1 model
+944|Warpsmith|unica|unita|1|60|1 model
+946|Cultist Mob|unica|unita|10|50|10 models
+946|Cultist Mob|unica|unita|20|90|20 models
+947|Chaos Terminator Squad|unica|unita|5|175|5 models
+947|Chaos Terminator Squad|unica|unita|10|350|10 models
+952|Chosen|1-2|unita|5|135|5 models
+952|Chosen|1-2|unita|10|270|10 models
+952|Chosen|3+|unita|5|145|5 models
+952|Chosen|3+|unita|10|280|10 models
+953|Possessed|1-2|unita|5|120|5 models
+953|Possessed|1-2|unita|10|250|10 models
+953|Possessed|3+|unita|5|130|5 models
+953|Possessed|3+|unita|10|260|10 models
+954|Helbrute|unica|unita|1|130|1 model
+956|Chaos Rhino|1-3|unita|1|65|1 model
+956|Chaos Rhino|4+|unita|1|75|1 model
+957|Chaos Bikers|unica|unita|3|70|3 models
+957|Chaos Bikers|unica|unita|6|130|6 models
+958|Raptors|1-2|unita|5|110|5 models
+958|Raptors|1-2|unita|10|210|10 models
+958|Raptors|3+|unita|5|120|5 models
+958|Raptors|3+|unita|10|220|10 models
+959|Warp Talons|1-2|unita|5|125|5 models
+959|Warp Talons|1-2|unita|10|280|10 models
+959|Warp Talons|3+|unita|5|135|5 models
+959|Warp Talons|3+|unita|10|290|10 models
+960|Chaos Spawn|unica|unita|2|60|2 models
+961|Heldrake|unica|unita|1|175|1 model
+962|Chaos Land Raider|1-2|unita|1|220|1 model
+962|Chaos Land Raider|3+|unita|1|240|1 model
+963|Chaos Predator Destructor|1-2|unita|1|150|1 model
+963|Chaos Predator Destructor|3+|unita|1|160|1 model
+964|Chaos Vindicator|1-2|unita|1|185|1 model
+964|Chaos Vindicator|3+|unita|1|195|1 model
+965|Obliterators|1-2|unita|2|160|2 models
+965|Obliterators|3+|unita|2|170|2 models
+966|Havocs|1-2|unita|5|125|5 models
+966|Havocs|3+|unita|5|135|5 models
+967|Forgefiend|1-2|unita|1|160|1 model
+967|Forgefiend|3+|unita|1|170|1 model
+967|Forgefiend|3+|opzione||5|per Ectoplasma cannon
+968|Maulerfiend|unica|unita|1|130|1 model
+969|Defiler|1|unita|1|300|1 model
+969|Defiler|2+|unita|1|350|1 model
+969|Defiler|2+|opzione||15|per Heavy reaper autocannon
+969|Defiler|2+|opzione||15|per Hades lascannon
+970|Khorne Lord Of Skulls|1|unita|1|450|1 model
+970|Khorne Lord Of Skulls|2+|unita|1|475|1 model
+1016|Sorcerer|1-2|unita|1|95|1 model
+1016|Sorcerer|3+|unita|1|105|1 model
+1017|Sorcerer In Terminator Armour|1-2|unita|1|100|1 model
+1017|Sorcerer In Terminator Armour|3+|unita|1|110|1 model
+1020|Rubric Marines|1-3|unita|5|100|5 models
+1020|Rubric Marines|1-3|unita|10|190|10 models
+1020|Rubric Marines|4+|unita|5|110|5 models
+1020|Rubric Marines|4+|unita|10|200|10 models
+1021|Helbrute|unica|unita|1|110|1 model
+1022|Chaos Rhino|1-3|unita|1|80|1 model
+1022|Chaos Rhino|4+|unita|1|90|1 model
+1023|Chaos Spawn|unica|unita|2|65|2 models
+1024|Heldrake|unica|unita|1|175|1 model
+1025|Chaos Land Raider|1-2|unita|1|220|1 model
+1025|Chaos Land Raider|3+|unita|1|240|1 model
+1026|Chaos Predator Destructor|1-2|unita|1|140|1 model
+1026|Chaos Predator Destructor|3+|unita|1|150|1 model
+1027|Chaos Vindicator|1-2|unita|1|185|1 model
+1027|Chaos Vindicator|3+|unita|1|195|1 model
+1028|Forgefiend|1-2|unita|1|135|1 model
+1028|Forgefiend|3+|unita|1|145|1 model
+1028|Forgefiend|3+|opzione||5|per Ectoplasma cannon
+1029|Maulerfiend|1-2|unita|1|120|1 model
+1029|Maulerfiend|3+|unita|1|130|1 model
+1030|Defiler|1|unita|1|300|1 model
+1030|Defiler|2+|unita|1|350|1 model
+1030|Defiler|2+|opzione||15|per Hades lascannon
+1030|Defiler|2+|opzione||15|per Heavy reaper autocannon
+1031|Magnus The Red|unica|unita|1|455|1 model
+1032|Ahriman|unica|unita|1|100|1 model
+1033|Exalted Sorcerer|unica|unita|1|95|1 model
+1034|Tzaangors|unica|unita|10|75|10 models
+1034|Tzaangors|unica|unita|20|145|20 models
+1035|Scarab Occult Terminators|1-2|unita|5|180|5 models
+1035|Scarab Occult Terminators|1-2|unita|10|385|10 models
+1035|Scarab Occult Terminators|3+|unita|5|195|5 models
+1035|Scarab Occult Terminators|3+|unita|10|400|10 models
+1036|Daemon Prince of Tzeentch|unica|unita|1|170|1 model
+1037|Death Guard Chaos Lord|unica|unita|1|65|1 model
+1038|Death Guard Chaos Lord In Terminator Armour|unica|unita|1|85|1 model
+1041|Death Guard Sorcerer In Terminator Armour|unica|unita|1|70|1 model
+1043|Death Guard Cultists|unica|unita|10|50|10 models
+1043|Death Guard Cultists|unica|unita|20|100|20 models
+1044|Plague Marines|unica|unita|5|90|5 models
+1044|Plague Marines|unica|unita|7|125|7 models
+1044|Plague Marines|unica|unita|10|180|10 models
+1045|Death Guard Possessed|unica|unita|5|155|5 models
+1045|Death Guard Possessed|unica|unita|10|310|10 models
+1046|Helbrute|unica|unita|1|110|1 model
+1047|Chaos Rhino|1-3|unita|1|75|1 model
+1047|Chaos Rhino|4+|unita|1|85|1 model
+1048|Chaos Spawn|unica|unita|2|80|2 models
+1049|Chaos Land Raider|1-2|unita|1|220|1 model
+1049|Chaos Land Raider|3+|unita|1|240|1 model
+1050|Chaos Predator Annihilator|1-2|unita|1|135|1 model
+1050|Chaos Predator Annihilator|3+|unita|1|145|1 model
+1052|Daemon Prince of Nurgle|unica|unita|1|195|1 model
+1053|Typhus|unica|unita|1|100|1 model
+1054|Lord of Contagion|unica|unita|1|120|1 model
+1055|Malignant Plaguecaster|unica|unita|1|60|1 model
+1056|Poxwalkers|unica|unita|10|65|10 models
+1056|Poxwalkers|unica|unita|20|130|20 models
+1057|Foetid Bloat-drone|1-2|unita|1|100|1 model
+1057|Foetid Bloat-drone|3+|unita|1|110|1 model
+1058|Noxious Blightbringer|unica|unita|1|50|1 model
+1094|Chaos Cerastus Knight Acheron|1|unita|1|370|1 model
+1094|Chaos Cerastus Knight Acheron|2+|unita|1|385|1 model
+1095|Chaos Cerastus Knight Lancer|1|unita|1|385|1 model
+1095|Chaos Cerastus Knight Lancer|2+|unita|1|415|1 model
+1096|Chaos Cerastus Knight Castigator|1|unita|1|370|1 model
+1096|Chaos Cerastus Knight Castigator|2+|unita|1|385|1 model
+1097|Chaos Cerastus Knight Atrapos|1|unita|1|385|1 model
+1097|Chaos Cerastus Knight Atrapos|2+|unita|1|415|1 model
+1098|Chaos Questoris Knight Magaera|1|unita|1|375|1 model
+1098|Chaos Questoris Knight Magaera|2+|unita|1|390|1 model
+1099|Chaos Acastus Knight Porphyrion|1|unita|1|725|1 model
+1099|Chaos Acastus Knight Porphyrion|2+|unita|1|800|1 model
+1100|Chaos Questoris Knight Styrix|1|unita|1|365|1 model
+1100|Chaos Questoris Knight Styrix|2+|unita|1|380|1 model
+1104|Karanak|unica|unita|1|70|1 model
+1105|Skarbrand|unica|unita|1|315|1 model
+1106|Skulltaker|unica|unita|1|85|1 model
+1111|Rendmaster On Blood Throne|1-2|unita|1|160|1 model
+1111|Rendmaster On Blood Throne|3+|unita|1|180|1 model
+1112|Flesh Hounds|unica|unita|5|75|5 models
+1112|Flesh Hounds|unica|unita|10|150|10 models
+1114|Bloodletters|unica|unita|10|110|10 models
+1115|Bloodcrushers|1-2|unita|3|95|3 models
+1115|Bloodcrushers|1-2|unita|6|200|6 models
+1115|Bloodcrushers|3+|unita|3|135|3 models
+1115|Bloodcrushers|3+|unita|6|240|6 models
+1116|Skull Cannon|unica|unita|1|100|1 model
+1117|Kairos Fateweaver|unica|unita|1|305|1 model
+1118|The Changeling|unica|unita|1|105|1 model
+1119|The Blue Scribes|unica|unita|1|75|1 model
+1120|Lord of Change|1-2|unita|1|320|1 model
+1120|Lord of Change|3+|unita|1|340|1 model
+1125|Flamers|unica|unita|3|65|3 models
+1125|Flamers|unica|unita|6|130|6 models
+1126|Exalted Flamer|unica|unita|1|65|1 model
+1127|Screamers|unica|unita|3|80|3 models
+1127|Screamers|unica|unita|6|160|6 models
+1128|Burning Chariot|unica|unita|1|115|1 model
+1129|Epidemius|unica|unita|1|80|1 model
+1130|Great Unclean One|1-2|unita|1|265|1 model
+1130|Great Unclean One|3+|unita|1|280|1 model
+1132|Plaguebearers|unica|unita|10|115|10 models
+1133|Nurglings|unica|unita|3|45|3 models
+1133|Nurglings|unica|unita|6|90|6 models
+1134|Beasts Of Nurgle|unica|unita|1|80|1 model
+1134|Beasts Of Nurgle|unica|unita|2|150|2 models
+1135|Plague Drones|unica|unita|3|110|3 models
+1135|Plague Drones|unica|unita|6|220|6 models
+1136|The Masque Of Slaanesh|unica|unita|1|95|1 model
+1137|Keeper Of Secrets|1-2|unita|1|265|1 model
+1137|Keeper Of Secrets|3+|unita|1|280|1 model
+1138|Tranceweaver|unica|unita|1|60|1 model
+1139|Herald Of Slaanesh On Steed Of Slaanesh|unica|unita|1|70|1 model
+1142|Daemonettes|unica|unita|10|100|10 models
+1143|Fiends|1-2|unita|3|90|3 models
+1143|Fiends|1-2|unita|6|190|6 models
+1143|Fiends|3+|unita|3|105|3 models
+1143|Fiends|3+|unita|6|205|6 models
+1144|Hellflayers|unica|unita|1|80|1 model
+1144|Hellflayers|unica|unita|2|160|2 models
+1145|Seekers|unica|unita|5|85|5 models
+1145|Seekers|unica|unita|10|155|10 models
+1148|Be’lakor|unica|unita|1|390|1 model
+1149|Daemon Prince of Chaos|unica|unita|1|165|1 model
+1150|Furies|unica|unita|5|40|5 models
+1150|Furies|unica|unita|10|80|10 models
+1151|Soul Grinder|1-2|unita|1|180|1 model
+1151|Soul Grinder|3+|unita|1|195|1 model
+1153|Cerberus|unica|unita|1|270|1 model
+1153|Cerberus|unica|unita|1|270|1 model
+1153|Cerberus|unica|unita|1|270|1 model
+1154|Vanguard Veteran Squad|unica|unita|5|120|5 models
+1154|Vanguard Veteran Squad|unica|unita|5|120|5 models
+1154|Vanguard Veteran Squad|unica|unita|10|240|10 models
+1154|Vanguard Veteran Squad|unica|unita|10|240|10 models
+1154|Vanguard Veteran Squad|unica|unita|5|120|5 models
+1154|Vanguard Veteran Squad|unica|unita|10|240|10 models
+1156|Invictor Tactical Warsuit|unica|unita|1|125|1 model
+1156|Invictor Tactical Warsuit|unica|unita|1|125|1 model
+1156|Invictor Tactical Warsuit|unica|unita|1|125|1 model
+1157|Intercessor Squad|unica|unita|5|80|5 models
+1157|Intercessor Squad|unica|unita|5|80|5 models
+1157|Intercessor Squad|unica|unita|10|150|10 models
+1157|Intercessor Squad|unica|unita|10|150|10 models
+1157|Intercessor Squad|unica|unita|5|80|5 models
+1157|Intercessor Squad|unica|unita|10|150|10 models
+1158|Invader ATV|unica|unita|1|60|1 model
+1158|Invader ATV|unica|unita|1|60|1 model
+1158|Invader ATV|unica|unita|1|60|1 model
+1159|Incursor Squad|1-2|unita|5|85|5 models
+1159|Incursor Squad|1-2|unita|5|85|5 models
+1159|Incursor Squad|1-2|unita|10|150|10 models
+1159|Incursor Squad|1-2|unita|10|150|10 models
+1159|Incursor Squad|3+|unita|5|95|5 models
+1159|Incursor Squad|3+|unita|5|95|5 models
+1159|Incursor Squad|3+|unita|10|160|10 models
+1159|Incursor Squad|3+|unita|10|160|10 models
+1159|Incursor Squad|1-2|unita|5|85|5 models
+1159|Incursor Squad|1-2|unita|10|150|10 models
+1159|Incursor Squad|3+|unita|5|95|5 models
+1159|Incursor Squad|3+|unita|10|160|10 models
+1160|Scout Squad|1-2|unita|5|65|5 models
+1160|Scout Squad|1-2|unita|5|65|5 models
+1160|Scout Squad|1-2|unita|10|120|10 models
+1160|Scout Squad|1-2|unita|10|120|10 models
+1160|Scout Squad|3+|unita|5|75|5 models
+1160|Scout Squad|3+|unita|5|75|5 models
+1160|Scout Squad|3+|unita|10|130|10 models
+1160|Scout Squad|3+|unita|10|130|10 models
+1160|Scout Squad|1-2|unita|5|65|5 models
+1160|Scout Squad|1-2|unita|10|120|10 models
+1160|Scout Squad|3+|unita|5|75|5 models
+1160|Scout Squad|3+|unita|10|130|10 models
+1161|Sicaran Arcus|unica|unita|1|160|1 model
+1161|Sicaran Arcus|unica|unita|1|160|1 model
+1161|Sicaran Arcus|unica|unita|1|160|1 model
+1162|Sergeant Telion|unica|unita|1|70|1 model
+1163|Sicaran Omega|unica|unita|1|180|1 model
+1163|Sicaran Omega|unica|unita|1|180|1 model
+1163|Sicaran Omega|unica|unita|1|180|1 model
+1164|Thunderfire Cannon|unica|unita|2|90|2 models
+1164|Thunderfire Cannon|unica|unita|2|90|2 models
+1164|Thunderfire Cannon|unica|unita|2|90|2 models
+1165|Bladeguard Ancient|unica|unita|1|40|1 model
+1165|Bladeguard Ancient|unica|unita|1|40|1 model
+1165|Bladeguard Ancient|unica|unita|1|40|1 model
+1166|Company Veterans On Bikes|unica|unita|2|110|2 models
+1166|Company Veterans On Bikes|unica|unita|2|110|2 models
+1166|Company Veterans On Bikes|unica|unita|5|275|5 models
+1166|Company Veterans On Bikes|unica|unita|5|275|5 models
+1166|Company Veterans On Bikes|unica|unita|2|110|2 models
+1166|Company Veterans On Bikes|unica|unita|5|275|5 models
+1168|Land Speeder Tempest|unica|unita|1|95|1 model
+1168|Land Speeder Tempest|unica|unita|1|95|1 model
+1168|Land Speeder Tempest|unica|unita|1|95|1 model
+1169|Land Speeder Tornado|unica|unita|1|95|1 model
+1169|Land Speeder Tornado|unica|unita|1|95|1 model
+1169|Land Speeder Tornado|unica|unita|1|95|1 model
+1172|Captain In Gravis Armour|unica|unita|1|80|1 model
+1172|Captain In Gravis Armour|unica|unita|1|80|1 model
+1172|Captain In Gravis Armour|unica|unita|1|80|1 model
+1174|Chaplain|unica|unita|1|60|1 model
+1174|Chaplain|unica|unita|1|60|1 model
+1174|Chaplain|unica|unita|1|60|1 model
+1175|Kratos|unica|unita|1|240|1 model
+1175|Kratos|unica|unita|1|240|1 model
+1175|Kratos|unica|unita|1|240|1 model
+1177|Heavy Intercessor Squad|unica|unita|5|100|5 models
+1177|Heavy Intercessor Squad|unica|unita|5|100|5 models
+1177|Heavy Intercessor Squad|unica|unita|10|200|10 models
+1177|Heavy Intercessor Squad|unica|unita|10|200|10 models
+1177|Heavy Intercessor Squad|unica|unita|5|100|5 models
+1177|Heavy Intercessor Squad|unica|unita|10|200|10 models
+1178|Vindicator Laser Destroyer|unica|unita|1|175|1 model
+1178|Vindicator Laser Destroyer|unica|unita|1|175|1 model
+1178|Vindicator Laser Destroyer|unica|unita|1|175|1 model
+1179|Sokar-pattern Stormbird|unica|unita|1|900|1 model
+1179|Sokar-pattern Stormbird|unica|unita|1|900|1 model
+1179|Sokar-pattern Stormbird|unica|unita|1|900|1 model
+1182|Ancient on Bike|unica|unita|1|90|1 model
+1182|Ancient on Bike|unica|unita|1|90|1 model
+1182|Ancient on Bike|unica|unita|1|90|1 model
+1183|Terminator Squad|unica|unita|5|160|5 models
+1183|Terminator Squad|unica|unita|5|160|5 models
+1183|Terminator Squad|unica|unita|10|320|10 models
+1183|Terminator Squad|unica|unita|10|320|10 models
+1183|Terminator Squad|unica|unita|5|160|5 models
+1183|Terminator Squad|unica|unita|10|320|10 models
+1184|Terminus Ultra|unica|unita|1|285|1 model
+1184|Terminus Ultra|unica|unita|1|285|1 model
+1184|Terminus Ultra|unica|unita|1|285|1 model
+1185|Sicaran Battle Tank|unica|unita|1|160|1 model
+1185|Sicaran Battle Tank|unica|unita|1|160|1 model
+1185|Sicaran Battle Tank|unica|unita|1|160|1 model
+1188|Vindicator|1-2|unita|1|185|1 model
+1188|Vindicator|1-2|unita|1|185|1 model
+1188|Vindicator|3+|unita|1|200|1 model
+1188|Vindicator|3+|unita|1|200|1 model
+1188|Vindicator|1-2|unita|1|185|1 model
+1188|Vindicator|3+|unita|1|200|1 model
+1189|Mastodon|unica|unita|1|540|1 model
+1189|Mastodon|unica|unita|1|540|1 model
+1189|Mastodon|unica|unita|1|540|1 model
+1190|Stormtalon Gunship|unica|unita|1|165|1 model
+1190|Stormtalon Gunship|unica|unita|1|165|1 model
+1190|Stormtalon Gunship|unica|unita|1|165|1 model
+1191|Stormraven Gunship|1|unita|1|280|1 model
+1191|Stormraven Gunship|1|unita|1|280|1 model
+1191|Stormraven Gunship|2+|unita|1|300|1 model
+1191|Stormraven Gunship|2+|unita|1|300|1 model
+1191|Stormraven Gunship|1|unita|1|280|1 model
+1191|Stormraven Gunship|2+|unita|1|300|1 model
+1192|Chaplain Venerable Dreadnought|unica|unita|1|150|1 model
+1192|Chaplain Venerable Dreadnought|unica|unita|1|150|1 model
+1192|Chaplain Venerable Dreadnought|unica|unita|1|150|1 model
+1193|Centurion Devastator Squad|unica|unita|3|175|3 models
+1193|Centurion Devastator Squad|unica|unita|3|175|3 models
+1193|Centurion Devastator Squad|unica|unita|6|365|6 models
+1193|Centurion Devastator Squad|unica|unita|6|365|6 models
+1193|Centurion Devastator Squad|unica|opzione||5|per Twin lascannon
+1193|Centurion Devastator Squad|unica|opzione||5|per Twin lascannon
+1193|Centurion Devastator Squad|unica|unita|3|175|3 models
+1193|Centurion Devastator Squad|unica|unita|6|350|6 models
+1193|Centurion Devastator Squad|unica|opzione||5|per Twin lascannon
+1193|Centurion Devastator Squad|unica|unita|3|175|3 models
+1193|Centurion Devastator Squad|unica|unita|6|350|6 models
+1193|Centurion Devastator Squad|unica|opzione||5|per Twin lascannon
+1193|Centurion Devastator Squad|unica|unita|3|175|3 models
+1193|Centurion Devastator Squad|unica|unita|6|350|6 models
+1193|Centurion Devastator Squad|unica|opzione||5|per Twin lascannon
+1193|Centurion Devastator Squad|unica|unita|3|175|3 models
+1193|Centurion Devastator Squad|unica|unita|6|350|6 models
+1193|Centurion Devastator Squad|unica|opzione||5|per Twin lascannon
+1193|Centurion Devastator Squad|unica|unita|3|175|3 models
+1193|Centurion Devastator Squad|unica|unita|6|365|6 models
+1193|Centurion Devastator Squad|unica|opzione||5|per Twin lascannon
+1197|Grey Knights Thunderhawk Gunship|1|unita|1|805|1 model
+1197|Grey Knights Thunderhawk Gunship|2+|unita|1|855|1 model
+1199|Repressor|unica|unita|1|130|1 model
+1237|Valkyrie Sky Talon|unica|unita|1|185|1 model
+1293|Blood Slaughterer|unica|unita|1|160|1 model
+1294|Greater Blight Drone|unica|unita|1|150|1 model
+1295|Decimator|unica|unita|1|165|1 model
+1297|Kytan Ravager|unica|unita|1|400|1 model
+1298|Greater Brass Scorpion|unica|unita|1|500|1 model
+1302|Chaos Deimos Predator|unica|unita|1|115|1 model
+1310|Dreadclaw Drop Pod|unica|unita|1|115|1 model
+1311|Kharybdis Assault Claw|unica|unita|1|300|1 model
+1317|Hell Blade|unica|unita|1|115|1 model
+1318|Hell Talon|unica|unita|1|140|1 model
+1321|Chaos Thunderhawk|unica|unita|1|840|1 model
+1329|An’ggrath the Unbound|unica|unita|1|415|1 model
+1332|Zarakynel|unica|unita|1|320|1 model
+1333|Aetaos’rau’keres|unica|unita|1|315|1 model
+1336|Plague Toads|unica|unita|3|120|3 models
+1337|Pox Riders|unica|unita|3|160|3 models
+1338|Spined Chaos Beast|unica|unita|1|145|1 model
+1339|Giant Chaos Spawn|unica|unita|1|130|1 model
+1340|Scabeiathrax The Bloated|unica|unita|1|275|1 model
+1344|Librarian with Jump Pack|unica|unita|1|75|1 model
+1344|Librarian with Jump Pack|unica|unita|1|75|1 model
+1344|Librarian with Jump Pack|unica|unita|1|75|1 model
+1345|Lieutenant In Reiver Armour|unica|unita|1|45|1 model
+1345|Lieutenant In Reiver Armour|unica|unita|1|45|1 model
+1345|Lieutenant In Reiver Armour|unica|unita|1|45|1 model
+1346|Lieutenant|unica|unita|1|45|1 model
+1346|Lieutenant|unica|unita|1|45|1 model
+1346|Lieutenant|unica|unita|1|45|1 model
+1347|Land Raider Prometheus|unica|unita|1|250|1 model
+1347|Land Raider Prometheus|unica|unita|1|250|1 model
+1347|Land Raider Prometheus|unica|unita|1|250|1 model
+1348|Librarian on Bike|unica|unita|1|80|1 model
+1348|Librarian on Bike|unica|unita|1|80|1 model
+1348|Librarian on Bike|unica|unita|1|80|1 model
+1355|Exalted Champion|unica|unita|1|70|1 model
+1360|Grand Master In Nemesis Dreadknight|1-2|unita|1|200|1 model
+1360|Grand Master In Nemesis Dreadknight|3+|unita|1|215|1 model
+1360|Grand Master In Nemesis Dreadknight|3+|opzione||15|per Sublimator
+1360|Grand Master In Nemesis Dreadknight|3+|opzione||15|per Heavy psycannon
+1361|Brotherhood Librarian|1|unita|1|90|1 model
+1361|Brotherhood Librarian|2+|unita|1|100|1 model
+1362|Brotherhood Chaplain|unica|unita|1|65|1 model
+1363|Stormhawk Interceptor|unica|unita|1|160|1 model
+1364|Stormtalon Gunship|unica|unita|1|170|1 model
+1367|Foul Blightspawn|unica|unita|1|60|1 model
+1368|Biologus Putrifier|unica|unita|1|60|1 model
+1369|Plague Surgeon|unica|unita|1|50|1 model
+1370|Tallyman|unica|unita|1|60|1 model
+1371|Deathshroud Terminators|1-2|unita|3|160|3 models
+1371|Deathshroud Terminators|1-2|unita|6|305|6 models
+1371|Deathshroud Terminators|3+|unita|3|170|3 models
+1371|Deathshroud Terminators|3+|unita|6|315|6 models
+1372|Blightlord Terminators|unica|unita|3|115|3 models
+1372|Blightlord Terminators|unica|unita|5|180|5 models
+1372|Blightlord Terminators|unica|unita|10|360|10 models
+1374|Myphitic Blight-hauler|unica|unita|1|95|1 model
+1374|Myphitic Blight-hauler|unica|unita|2|190|2 models
+1376|Plagueburst Crawler|1|unita|1|170|1 model
+1376|Plagueburst Crawler|2+|unita|1|200|1 model
+1377|Mortarion|unica|unita|1|375|1 model
+1383|Mukaali Riders|unica|unita|3|110|3 models
+1390|Raven Strike Fighter|unica|unita|1|170|1 model
+1391|Knarloc Riders|unica|unita|3|110|3 models
+1392|Great Knarloc|unica|unita|1|100|1 model
+1393|Firestorm|unica|unita|1|115|1 model
+1394|Ministorum Priest|unica|unita|1|35|1 model
+1396|Tech-Priest Enginseer|unica|unita|1|45|1 model
+1397|Munitorum Servitors|unica|unita|4|35|4 models
+1398|Ogryn Bodyguard|unica|unita|1|40|1 model
+1400|Bonesinger|unica|unita|1|45|1 model
+1406|Sly Marbo|unica|unita|1|55|1 model
+1423|Ravenwing Talonmaster|unica|unita|1|105|1 model
+1446|Trajann Valoris|unica|unita|1|135|1 model
+1447|Shield-captain|unica|unita|1|110|1 model
+1448|Shield-captain In Allarus Terminator Armour|unica|unita|1|130|1 model
+1449|Shield-captain On Dawneagle Jetbike|unica|unita|1|140|1 model
+1450|Custodian Wardens|1|unita|4|200|4 models
+1450|Custodian Wardens|1|unita|5|250|5 models
+1450|Custodian Wardens|2+|unita|4|220|4 models
+1450|Custodian Wardens|2+|unita|5|270|5 models
+1453|Allarus Custodians|1-2|unita|2|110|2 models
+1453|Allarus Custodians|1-2|unita|3|165|3 models
+1453|Allarus Custodians|1-2|unita|5|280|5 models
+1453|Allarus Custodians|1-2|unita|6|340|6 models
+1453|Allarus Custodians|3+|unita|2|140|2 models
+1453|Allarus Custodians|3+|unita|3|195|3 models
+1453|Allarus Custodians|3+|unita|5|310|5 models
+1453|Allarus Custodians|3+|unita|6|370|6 models
+1454|Vertus Praetors|1-2|unita|2|145|2 models
+1454|Vertus Praetors|1-2|unita|3|215|3 models
+1454|Vertus Praetors|3+|unita|2|170|2 models
+1454|Vertus Praetors|3+|unita|3|240|3 models
+1455|Bloodmaster|unica|unita|1|65|1 model
+1456|Skullmaster|unica|unita|1|85|1 model
+1458|Contemptor-achillus Dreadnought|1-2|unita|1|155|1 model
+1458|Contemptor-achillus Dreadnought|3+|unita|1|170|1 model
+1460|Caladius Grav-tank|1-2|unita|1|210|1 model
+1460|Caladius Grav-tank|3+|unita|1|225|1 model
+1460|Caladius Grav-tank|3+|opzione||15|per Twin arachnus heavy blaze cannon
+1461|Coronus Grav-carrier|1-2|unita|1|180|1 model
+1461|Coronus Grav-carrier|3+|unita|1|200|1 model
+1462|Changecaster|unica|unita|1|60|1 model
+1463|Fateskimmer|unica|unita|1|95|1 model
+1464|Fluxmaster|unica|unita|1|70|1 model
+1465|Rotigus|unica|unita|1|280|1 model
+1466|Horticulous Slimux|unica|unita|1|120|1 model
+1467|Poxbringer|1-2|unita|1|60|1 model
+1467|Poxbringer|3+|unita|1|70|1 model
+1468|Sloppity Bilepiper|unica|unita|1|55|1 model
+1469|Spoilpox Scrivener|unica|unita|1|60|1 model
+1470|Feculent Gnarlmaw|unica|unita|1|100|1 model
+1472|Tzaangor Shaman|unica|unita|1|65|1 model
+1474|Tzaangor Enlightened|unica|unita|3|50|3 models
+1474|Tzaangor Enlightened|unica|unita|6|90|6 models
+1476|Mutalith Vortex Beast|1-2|unita|1|170|1 model
+1476|Mutalith Vortex Beast|3+|unita|1|190|1 model
+1477|Commander In Crisis Battlesuit|unica|unita|1|80|1 model
+1478|Commander In Enforcer Battlesuit|unica|unita|1|80|1 model
+1479|Telemon Heavy Dreadnought|1|unita|1|225|1 model
+1479|Telemon Heavy Dreadnought|2+|unita|1|245|1 model
+1481|Armiger Helverin|unica|unita|1|140|1 model
+1482|Armiger Warglaive|unica|unita|1|140|1 model
+1483|Knight Preceptor|1-2|unita|1|365|1 model
+1483|Knight Preceptor|3+|unita|1|380|1 model
+1484|Canis Rex|unica|unita|1|415|1 model
+1485|Knight Castellan|1|unita|1|425|1 model
+1485|Knight Castellan|2+|unita|1|450|1 model
+1486|Knight Valiant|1-2|unita|1|400|1 model
+1486|Knight Valiant|3+|unita|1|415|1 model
+1523|Scout Sniper Squad|unica|unita|5|75|5 models
+1523|Scout Sniper Squad|unica|unita|5|75|5 models
+1523|Scout Sniper Squad|unica|unita|10|150|10 models
+1523|Scout Sniper Squad|unica|unita|10|150|10 models
+1523|Scout Sniper Squad|unica|unita|5|75|5 models
+1523|Scout Sniper Squad|unica|unita|10|150|10 models
+1524|Sergeant Chronus|unica|unita|1|75|1 model
+1525|Secutarii Hoplites|unica|unita|5|65|5 models
+1525|Secutarii Hoplites|unica|unita|10|130|10 models
+1526|Secutarii Peltasts|unica|unita|5|50|5 models
+1526|Secutarii Peltasts|unica|unita|10|100|10 models
+1527|Techmarine on Bike|unica|unita|1|110|1 model
+1527|Techmarine on Bike|unica|unita|1|110|1 model
+1527|Techmarine on Bike|unica|unita|1|110|1 model
+1533|Terrax-pattern Termite|unica|unita|1|200|1 model
+1536|Big Mek With Shokk Attack Gun|1|unita|1|95|1 model
+1536|Big Mek With Shokk Attack Gun|2+|unita|1|105|1 model
+1537|Deffkilla Wartrike|unica|unita|1|80|1 model
+1545|Mekboy Workshop|unica|unita|1|80|1 model
+1546|Abominant|1-2|unita|1|85|1 model
+1546|Abominant|3+|unita|1|95|1 model
+1553|Ministorum Priest|unica|unita|1|50|1 model
+1556|Haarken Worldclaimer|unica|unita|1|90|1 model
+1557|Contemptor-galatus Dreadnought|1-2|unita|1|165|1 model
+1557|Contemptor-galatus Dreadnought|3+|unita|1|180|1 model
+1558|Aquilon Custodians|unica|unita|3|195|3 models
+1558|Aquilon Custodians|unica|unita|6|390|6 models
+1559|Custodian Guard With Adrasite And Pyrithite Spears|1-3|unita|5|250|5 models
+1559|Custodian Guard With Adrasite And Pyrithite Spears|4+|unita|5|260|5 models
+1560|Agamatus Custodians|unica|unita|3|225|3 models
+1560|Agamatus Custodians|unica|unita|6|450|6 models
+1561|Venatari Custodians|1-2|unita|3|150|3 models
+1561|Venatari Custodians|1-2|unita|6|300|6 models
+1561|Venatari Custodians|3+|unita|3|160|3 models
+1561|Venatari Custodians|3+|unita|6|310|6 models
+1561|Venatari Custodians|3+|opzione||5|per Venatari lance
+1562|Pallas Grav-attack|unica|unita|1|100|1 model
+1563|Sagittarum Custodians|unica|unita|5|225|5 models
+1564|Orion Assault Dropship|1|unita|1|690|1 model
+1564|Orion Assault Dropship|2+|unita|1|740|1 model
+1565|Jackal Alphus|unica|unita|1|55|1 model
+1567|Clamavus|unica|unita|1|50|1 model
+1568|Locus|unica|unita|1|35|1 model
+1569|Sanctus|unica|unita|1|65|1 model
+1570|Kelermorph|unica|unita|1|60|1 model
+1571|Nexos|unica|unita|1|60|1 model
+1572|Biophagus|unica|unita|1|50|1 model
+1573|Achilles Ridgerunners|1-2|unita|1|95|1 model
+1573|Achilles Ridgerunners|1-2|unita|2|160|2 models
+1573|Achilles Ridgerunners|3+|unita|1|105|1 model
+1573|Achilles Ridgerunners|3+|unita|2|170|2 models
+1573|Achilles Ridgerunners|3+|opzione||10|per Heavy mining laser
+1574|Atalan Jackals|1-2|unita|5|85|5 models
+1574|Atalan Jackals|1-2|unita|10|150|10 models
+1574|Atalan Jackals|1-2|unita|9|160|9 models
+1574|Atalan Jackals|3+|unita|5|95|5 models
+1574|Atalan Jackals|3+|unita|10|160|10 models
+1574|Atalan Jackals|3+|unita|9|170|9 models
+1576|Tectonic Fragdrill|unica|unita|1|125|1 model
+1577|Seraptek Heavy Construct|1|unita|1|540|1 model
+1577|Seraptek Heavy Construct|2+|unita|1|570|1 model
+1579|Inquisitor Eisenhorn|unica|unita|1|65|1 model
+1580|Tech-priest Manipulus|unica|unita|1|60|1 model
+1581|Master Of Possession|unica|unita|1|60|1 model
+1583|Lord Discordant On Helstalker|unica|unita|1|160|1 model
+1584|Master Of Executions|unica|unita|1|70|1 model
+1586|Venomcrawler|1-2|unita|1|120|1 model
+1586|Venomcrawler|3+|unita|1|130|1 model
+1587|Noctilith Crown|unica|unita|1|125|1 model
+1588|Skull Altar|unica|unita|1|105|1 model
+1589|Infernal Enrapturess|unica|unita|1|60|1 model
+1596|Rein And Raus|unica|unita|2|50|2 models
+1598|Amallyn Shadowguide|unica|unita|1|75|1 model
+1600|Rogue Psyker|unica|unita|1|60|1 model
+1601|Negavolt Cultists|unica|unita|4|55|4 models
+1604|Fellgor Beastmen|unica|unita|10|60|10 models
+1606|Assault Intercessor Squad|unica|unita|5|75|5 models
+1606|Assault Intercessor Squad|unica|unita|5|75|5 models
+1606|Assault Intercessor Squad|unica|unita|10|150|10 models
+1606|Assault Intercessor Squad|unica|unita|10|150|10 models
+1606|Assault Intercessor Squad|unica|unita|5|80|5 models
+1606|Assault Intercessor Squad|unica|unita|10|150|10 models
+1606|Assault Intercessor Squad|unica|unita|5|75|5 models
+1606|Assault Intercessor Squad|unica|unita|10|150|10 models
+1607|Land Raider Achilles|unica|unita|1|230|1 model
+1607|Land Raider Achilles|unica|unita|1|230|1 model
+1607|Land Raider Achilles|unica|unita|1|230|1 model
+1608|Land Raider Proteus|unica|unita|1|220|1 model
+1608|Land Raider Proteus|unica|unita|1|220|1 model
+1608|Land Raider Proteus|unica|unita|1|220|1 model
+1609|Fire Raptor Gunship|unica|unita|1|290|1 model
+1609|Fire Raptor Gunship|unica|unita|1|290|1 model
+1609|Fire Raptor Gunship|unica|unita|1|290|1 model
+1610|Storm Speeder Thunderstrike|1-2|unita|1|135|1 model
+1610|Storm Speeder Thunderstrike|1-2|unita|1|135|1 model
+1610|Storm Speeder Thunderstrike|3+|unita|1|145|1 model
+1610|Storm Speeder Thunderstrike|3+|unita|1|145|1 model
+1610|Storm Speeder Thunderstrike|1-2|unita|1|135|1 model
+1610|Storm Speeder Thunderstrike|3+|unita|1|145|1 model
+1611|Chief Librarian Tigurius|unica|unita|1|85|1 model
+1647|Contorted Epitome|1-2|unita|1|115|1 model
+1647|Contorted Epitome|3+|unita|1|125|1 model
+1648|Shalaxi Helbane|unica|unita|1|315|1 model
+1649|Syll’esske|unica|unita|1|120|1 model
+1650|Skorpius Dunerider|1-3|unita|1|75|1 model
+1650|Skorpius Dunerider|4+|unita|1|85|1 model
+1651|Skorpius Disintegrator|unica|unita|1|160|1 model
+1651|Skorpius Disintegrator|unica|opzione||10|per Ferrumite cannon
+1658|Knight Despoiler|1|unita|1|360|1 model
+1658|Knight Despoiler|2+|unita|1|390|1 model
+1658|Knight Despoiler|2+|opzione||25|per Despoiler gatling cannon
+1658|Knight Despoiler|2+|opzione||10|per Despoiler battle cannon
+1659|Knight Tyrant|1|unita|1|400|1 model
+1659|Knight Tyrant|2+|unita|1|420|1 model
+1660|Knight Desecrator|1-2|unita|1|355|1 model
+1660|Knight Desecrator|3+|unita|1|370|1 model
+1661|Knight Rampager|1-2|unita|1|355|1 model
+1661|Knight Rampager|3+|unita|1|370|1 model
+1662|Chaos Acastus Knight Asterius|1|unita|1|785|1 model
+1662|Chaos Acastus Knight Asterius|2+|unita|1|860|1 model
+1663|War Dog Moirax|1-2|unita|1|150|1 model
+1663|War Dog Moirax|3+|unita|1|160|1 model
+1664|Acastus Knight Asterius|1|unita|1|785|1 model
+1664|Acastus Knight Asterius|2+|unita|1|860|1 model
+1666|Falchion|unica|unita|1|420|1 model
+1666|Falchion|unica|unita|1|420|1 model
+1666|Falchion|unica|unita|1|420|1 model
+1667|Gladiator Reaper|1-2|unita|1|160|1 model
+1667|Gladiator Reaper|1-2|unita|1|160|1 model
+1667|Gladiator Reaper|3+|unita|1|170|1 model
+1667|Gladiator Reaper|3+|unita|1|170|1 model
+1667|Gladiator Reaper|1-2|unita|1|160|1 model
+1667|Gladiator Reaper|3+|unita|1|170|1 model
+1668|Eliminator Squad|unica|unita|3|75|3 models
+1668|Eliminator Squad|unica|unita|3|75|3 models
+1668|Eliminator Squad|unica|unita|3|75|3 models
+1680|Ares Gunship|1|unita|1|580|1 model
+1680|Ares Gunship|2+|unita|1|610|1 model
+1822|X-101|unica|unita|1|40|1 model
+1825|Gladiator Valiant|1-2|unita|1|150|1 model
+1825|Gladiator Valiant|1-2|unita|1|150|1 model
+1825|Gladiator Valiant|3+|unita|1|160|1 model
+1825|Gladiator Valiant|3+|unita|1|160|1 model
+1825|Gladiator Valiant|1-2|unita|1|150|1 model
+1825|Gladiator Valiant|3+|unita|1|160|1 model
+1991|Terrax-pattern Termite|unica|unita|1|200|1 model
+1991|Terrax-pattern Termite|unica|unita|1|200|1 model
+1991|Terrax-pattern Termite|unica|unita|1|200|1 model
+1994|Carnodon|unica|unita|1|160|1 model
+1997|Death Company Marines|1-2|unita|5|85|5 models
+1997|Death Company Marines|1-2|unita|10|160|10 models
+1997|Death Company Marines|3+|unita|5|95|5 models
+1997|Death Company Marines|3+|unita|10|170|10 models
+2063|Triumph Of Saint Katherine|unica|unita|1|245|1 model
+2064|Junith Eruita|unica|unita|1|105|1 model
+2066|Zephyrim Squad|1-2|unita|5|75|5 models
+2066|Zephyrim Squad|1-2|unita|10|150|10 models
+2066|Zephyrim Squad|3+|unita|5|85|5 models
+2066|Zephyrim Squad|3+|unita|10|160|10 models
+2067|Mortifiers|unica|unita|1|70|1 model
+2067|Mortifiers|unica|unita|2|130|2 models
+2068|Battle Sanctum|unica|unita|1|170|1 model
+2076|Attack Bike Squad|unica|unita|1|55|1 model
+2076|Attack Bike Squad|unica|unita|1|55|1 model
+2076|Attack Bike Squad|unica|unita|2|110|2 models
+2076|Attack Bike Squad|unica|unita|2|110|2 models
+2076|Attack Bike Squad|unica|unita|3|165|3 models
+2076|Attack Bike Squad|unica|unita|3|165|3 models
+2076|Attack Bike Squad|unica|unita|1|55|1 model
+2076|Attack Bike Squad|unica|unita|2|110|2 models
+2076|Attack Bike Squad|unica|unita|3|165|3 models
+2077|Warbringer Nemesis Titan|unica|unita|1|2600|1 model
+2081|Serberys Sulphurhounds|unica|unita|3|55|3 models
+2081|Serberys Sulphurhounds|unica|unita|6|100|6 models
+2082|Serberys Raiders|unica|unita|3|60|3 models
+2082|Serberys Raiders|unica|unita|6|110|6 models
+2083|Pteraxii Sterylizors|1-2|unita|5|75|5 models
+2083|Pteraxii Sterylizors|1-2|unita|10|150|10 models
+2083|Pteraxii Sterylizors|3+|unita|5|85|5 models
+2083|Pteraxii Sterylizors|3+|unita|10|160|10 models
+2084|Pteraxii Skystalkers|1-2|unita|5|75|5 models
+2084|Pteraxii Skystalkers|1-2|unita|10|150|10 models
+2084|Pteraxii Skystalkers|3+|unita|5|85|5 models
+2084|Pteraxii Skystalkers|3+|unita|10|160|10 models
+2085|Archaeopter Transvector|unica|unita|1|145|1 model
+2086|Archaeopter Stratoraptor|unica|unita|1|185|1 model
+2087|Archaeopter Fusilave|unica|unita|1|160|1 model
+2088|Aleya|unica|unita|1|55|1 model
+2090|Inquisitor Draxus|unica|unita|1|75|1 model
+2090|Inquisitor Draxus|unica|unita|1|110|1 model
+2092|Illuminor Szeras|unica|unita|1|175|1 model
+2098|Hellblaster Squad|unica|unita|5|110|5 models
+2098|Hellblaster Squad|unica|unita|5|110|5 models
+2098|Hellblaster Squad|unica|unita|10|220|10 models
+2098|Hellblaster Squad|unica|unita|10|220|10 models
+2098|Hellblaster Squad|unica|unita|5|110|5 models
+2098|Hellblaster Squad|unica|unita|10|220|10 models
+2099|Aggressor Squad|1-2|unita|3|80|3 models
+2099|Aggressor Squad|1-2|unita|3|80|3 models
+2099|Aggressor Squad|1-2|unita|6|165|6 models
+2099|Aggressor Squad|1-2|unita|6|165|6 models
+2099|Aggressor Squad|3+|unita|3|90|3 models
+2099|Aggressor Squad|3+|unita|3|90|3 models
+2099|Aggressor Squad|3+|unita|6|175|6 models
+2099|Aggressor Squad|3+|unita|6|175|6 models
+2099|Aggressor Squad|1-2|unita|3|80|3 models
+2099|Aggressor Squad|1-2|unita|6|165|6 models
+2099|Aggressor Squad|3+|unita|3|90|3 models
+2099|Aggressor Squad|3+|unita|6|175|6 models
+2100|Adrax Agatone|unica|unita|1|80|1 model
+2102|Land Speeder Typhoon|unica|unita|1|100|1 model
+2102|Land Speeder Typhoon|unica|unita|1|100|1 model
+2102|Land Speeder Typhoon|unica|unita|1|100|1 model
+2103|Command Squad|unica|unita|5|165|5 models
+2103|Command Squad|unica|unita|5|165|5 models
+2103|Command Squad|unica|unita|5|165|5 models
+2105|Darnath Lysander|unica|unita|1|100|1 model
+2108|Plasmancer|unica|unita|1|60|1 model
+2109|Skorpekh Lord|1-2|unita|1|95|1 model
+2109|Skorpekh Lord|3+|unita|1|105|1 model
+2110|Skorpekh Destroyers|1-2|unita|3|85|3 models
+2110|Skorpekh Destroyers|1-2|unita|6|170|6 models
+2110|Skorpekh Destroyers|3+|unita|3|95|3 models
+2110|Skorpekh Destroyers|3+|unita|6|180|6 models
+2111|Cryptothralls|unica|unita|2|60|2 models
+2112|Canoptek Reanimator|unica|unita|1|75|1 model
+2114|Canoptek Scarab Swarms|unica|unita|3|40|3 models
+2114|Canoptek Scarab Swarms|unica|unita|6|80|6 models
+2115|Canoptek Doomstalker|unica|unita|1|140|1 model
+2116|Lokhust Heavy Destroyers|1-2|unita|1|50|1 model
+2116|Lokhust Heavy Destroyers|1-2|unita|2|100|2 models
+2116|Lokhust Heavy Destroyers|1-2|unita|3|165|3 models
+2116|Lokhust Heavy Destroyers|3+|unita|1|60|1 model
+2116|Lokhust Heavy Destroyers|3+|unita|2|110|2 models
+2116|Lokhust Heavy Destroyers|3+|unita|3|175|3 models
+2173|Land Raider Redeemer|1-2|unita|1|260|1 model
+2173|Land Raider Redeemer|1-2|unita|1|260|1 model
+2173|Land Raider Redeemer|3+|unita|1|280|1 model
+2173|Land Raider Redeemer|3+|unita|1|280|1 model
+2173|Land Raider Redeemer|1-2|unita|1|260|1 model
+2173|Land Raider Redeemer|3+|unita|1|280|1 model
+2202|Devastator Squad|unica|unita|5|120|5 models
+2202|Devastator Squad|unica|unita|5|120|5 models
+2202|Devastator Squad|unica|unita|10|200|10 models
+2202|Devastator Squad|unica|unita|10|200|10 models
+2202|Devastator Squad|unica|unita|5|120|5 models
+2202|Devastator Squad|unica|unita|10|200|10 models
+2234|Primaris Company Champion|unica|unita|1|55|1 model
+2234|Primaris Company Champion|unica|unita|1|55|1 model
+2234|Primaris Company Champion|unica|unita|1|55|1 model
+2252|Spartan|unica|unita|1|300|1 model
+2252|Spartan|unica|unita|1|300|1 model
+2252|Spartan|unica|unita|1|300|1 model
+2255|Sternguard Veteran Squad|unica|unita|5|100|5 models
+2255|Sternguard Veteran Squad|unica|unita|5|100|5 models
+2255|Sternguard Veteran Squad|unica|unita|10|200|10 models
+2255|Sternguard Veteran Squad|unica|unita|10|200|10 models
+2255|Sternguard Veteran Squad|unica|unita|5|100|5 models
+2255|Sternguard Veteran Squad|unica|unita|10|200|10 models
+2258|Stalker|unica|unita|1|140|1 model
+2258|Stalker|unica|unita|1|140|1 model
+2258|Stalker|unica|unita|1|140|1 model
+2266|Librarian|1-2|unita|1|70|1 model
+2266|Librarian|1-2|unita|1|70|1 model
+2266|Librarian|3+|unita|1|80|1 model
+2266|Librarian|3+|unita|1|80|1 model
+2266|Librarian|1-2|unita|1|70|1 model
+2266|Librarian|3+|unita|1|80|1 model
+2267|Deathstorm Drop Pod|unica|unita|1|95|1 model
+2267|Deathstorm Drop Pod|unica|unita|1|95|1 model
+2267|Deathstorm Drop Pod|unica|unita|1|95|1 model
+2268|Deimos Predator|unica|unita|1|115|1 model
+2268|Deimos Predator|unica|unita|1|115|1 model
+2268|Deimos Predator|unica|unita|1|115|1 model
+2269|Deredeo Dreadnought|unica|unita|1|160|1 model
+2269|Deredeo Dreadnought|unica|unita|1|160|1 model
+2269|Deredeo Dreadnought|unica|unita|1|160|1 model
+2270|Desolation Squad|1|unita|5|180|5 models
+2270|Desolation Squad|1|unita|5|180|5 models
+2270|Desolation Squad|2+|unita|5|210|5 models
+2270|Desolation Squad|2+|unita|5|210|5 models
+2270|Desolation Squad|1|unita|5|180|5 models
+2270|Desolation Squad|2+|unita|5|210|5 models
+2285|Death Company Marines with Bolt Rifles|1-2|unita|5|80|5 models
+2285|Death Company Marines with Bolt Rifles|1-2|unita|10|155|10 models
+2285|Death Company Marines with Bolt Rifles|3+|unita|5|90|5 models
+2285|Death Company Marines with Bolt Rifles|3+|unita|10|165|10 models
+2291|Sammael|unica|unita|1|105|1 model
+2296|Lazarus|unica|unita|1|70|1 model
+2302|Deathwing Command Squad|unica|unita|5|200|5 models
+2302|Deathwing Command Squad|unica|unita|10|400|10 models
+2350|Royal Warden|unica|unita|1|50|1 model
+2351|Lokhust Lord|unica|unita|1|80|1 model
+2352|Technomancer|1|unita|1|80|1 model
+2352|Technomancer|2+|unita|1|90|1 model
+2353|Psychomancer|unica|unita|1|55|1 model
+2354|Chronomancer|1|unita|1|70|1 model
+2354|Chronomancer|2+|unita|1|80|1 model
+2355|Hexmark Destroyer|unica|unita|1|75|1 model
+2357|C’tan Shard of the Void Dragon|unica|unita|1|345|1 model
+2358|Ophydian Destroyers|1-2|unita|3|80|3 models
+2358|Ophydian Destroyers|1-2|unita|6|150|6 models
+2358|Ophydian Destroyers|3+|unita|3|90|3 models
+2358|Ophydian Destroyers|3+|unita|6|160|6 models
+2359|Lokhust Destroyers|1-2|unita|1|40|1 model
+2359|Lokhust Destroyers|1-2|unita|2|55|2 models
+2359|Lokhust Destroyers|1-2|unita|3|80|3 models
+2359|Lokhust Destroyers|1-2|unita|6|175|6 models
+2359|Lokhust Destroyers|3+|unita|1|70|1 model
+2359|Lokhust Destroyers|3+|unita|2|85|2 models
+2359|Lokhust Destroyers|3+|unita|3|110|3 models
+2359|Lokhust Destroyers|3+|unita|6|205|6 models
+2360|The Silent King|unica|unita|3|420|3 models
+2361|Convergence Of Dominion|unica|unita|1|60|1 model
+2361|Convergence Of Dominion|unica|unita|2|120|2 models
+2361|Convergence Of Dominion|unica|unita|3|180|3 models
+2362|Tomb Citadel Walls|unica|unita|1|180|1 model
+2374|Death Korps Grenadier Squad|unica|unita|10|110|10 models
+2375|Quartermaster Cadre Squad|unica|unita|5|45|5 models
+2377|Elysian Sniper Squad|unica|unita|3|65|3 models
+2378|Death Rider Commissar|unica|unita|1|35|1 model
+2379|Storm Chimera|unica|unita|1|90|1 model
+2459|Webway Gate|unica|unita|2|105|2 models
+2460|Lord of Virulence|unica|unita|1|100|1 model
+2461|Chaos Predator Destructor|1-2|unita|1|145|1 model
+2461|Chaos Predator Destructor|3+|unita|1|155|1 model
+2462|Miasmic Malignifier|unica|unita|1|105|1 model
+2468|Deathwing Strikemaster|unica|unita|1|80|1 model
+2471|Court of the Archon|unica|unita|4|95|4 models
+2472|Palatine|unica|unita|1|50|1 model
+2473|Tor Garadon|unica|unita|1|80|1 model
+2477|Technoarcheologist|unica|unita|1|45|1 model
+2478|Skitarii Marshal|unica|unita|1|35|1 model
+2479|Morvenn Vahl|unica|unita|1|200|1 model
+2480|Aestred Thurga And Agathae Dolan|unica|unita|2|80|2 models
+2481|Celestian Sacresants|1-2|unita|5|75|5 models
+2481|Celestian Sacresants|1-2|unita|10|150|10 models
+2481|Celestian Sacresants|3+|unita|5|85|5 models
+2481|Celestian Sacresants|3+|unita|10|160|10 models
+2482|Dogmata|unica|unita|1|45|1 model
+2483|Paragon Warsuits|1-2|unita|3|180|3 models
+2483|Paragon Warsuits|3+|unita|3|190|3 models
+2483|Paragon Warsuits|3+|opzione||10|per Multi-melta
+2484|Castigator|1-2|unita|1|165|1 model
+2484|Castigator|3+|unita|1|175|1 model
+2485|Gaunt’s Ghosts|unica|unita|6|95|6 models
+2488|Zodgrod Wortsnagga|unica|unita|1|50|1 model
+2489|Beastboss|unica|unita|1|85|1 model
+2490|Beastboss on Squigosaur|1-2|unita|1|140|1 model
+2490|Beastboss on Squigosaur|3+|unita|1|155|1 model
+2491|Painboss|1-2|unita|1|60|1 model
+2491|Painboss|3+|unita|1|70|1 model
+2493|Mozrog Skragbad|unica|unita|1|170|1 model
+2494|Beast Snagga Boyz|1-3|unita|10|85|10 models
+2494|Beast Snagga Boyz|1-3|unita|20|170|20 models
+2494|Beast Snagga Boyz|4+|unita|10|95|10 models
+2494|Beast Snagga Boyz|4+|unita|20|180|20 models
+2496|Squighog Boyz|1-2|unita|4|140|4 models
+2496|Squighog Boyz|1-2|unita|8|280|8 models
+2496|Squighog Boyz|3+|unita|4|160|4 models
+2496|Squighog Boyz|3+|unita|8|300|8 models
+2497|Kill Rig|1-2|unita|1|175|1 model
+2497|Kill Rig|3+|unita|1|185|1 model
+2498|Hunta Rig|1-2|unita|1|165|1 model
+2498|Hunta Rig|3+|unita|1|175|1 model
+2499|Big’ed Bossbunka|unica|unita|1|135|1 model
+2500|Infernal Master|unica|unita|1|100|1 model
+2501|Chaos Predator Annihilator|1-2|unita|1|140|1 model
+2501|Chaos Predator Annihilator|3+|unita|1|150|1 model
+2507|Sisters Novitiate Squad|unica|unita|10|90|10 models
+2509|Voidsmen-at-arms|unica|unita|6|50|6 models
+2509|Voidsmen-at-arms|unica|unita|6|70|6 models
+2518|Blade Champion|1|unita|1|110|1 model
+2518|Blade Champion|2+|unita|1|125|1 model
+2519|Valerian|unica|unita|1|110|1 model
+2520|Knight-centura|unica|unita|1|55|1 model
+2521|Prosecutors|unica|unita|4|45|4 models
+2521|Prosecutors|unica|unita|5|50|5 models
+2521|Prosecutors|unica|unita|9|75|9 models
+2521|Prosecutors|unica|unita|10|85|10 models
+2522|Vigilators|unica|unita|4|50|4 models
+2522|Vigilators|unica|unita|5|55|5 models
+2522|Vigilators|unica|unita|9|90|9 models
+2522|Vigilators|unica|unita|10|100|10 models
+2523|Witchseekers|unica|unita|4|50|4 models
+2523|Witchseekers|unica|unita|5|55|5 models
+2523|Witchseekers|unica|unita|9|90|9 models
+2523|Witchseekers|unica|unita|10|100|10 models
+2524|Anathema Psykana Rhino|1-3|unita|1|65|1 model
+2524|Anathema Psykana Rhino|4+|unita|1|75|1 model
+2525|Reductus Saboteur|1-2|unita|1|70|1 model
+2525|Reductus Saboteur|3+|unita|1|80|1 model
+2528|Winged Hive Tyrant|unica|unita|1|185|1 model
+2529|Parasite Of Mortrex|unica|unita|1|70|1 model
+2530|Lieutenant In Phobos Armour|unica|unita|1|45|1 model
+2530|Lieutenant In Phobos Armour|unica|unita|1|45|1 model
+2530|Lieutenant In Phobos Armour|unica|unita|1|45|1 model
+2531|Corsair Voidreavers|unica|unita|5|65|5 models
+2531|Corsair Voidreavers|unica|unita|10|110|10 models
+2532|Corsair Voidscarred|unica|unita|5|70|5 models
+2532|Corsair Voidscarred|unica|unita|10|140|10 models
+2533|Shroud Runners|unica|unita|3|90|3 models
+2533|Shroud Runners|unica|unita|6|175|6 models
+2534|Troupe Master|unica|unita|1|75|1 model
+2535|Shadowseer|unica|unita|1|50|1 model
+2536|Troupe|unica|unita|5|85|5 models
+2536|Troupe|unica|unita|6|100|6 models
+2536|Troupe|unica|unita|11|190|11 models
+2536|Troupe|unica|unita|12|205|12 models
+2537|Death Jester|unica|unita|1|70|1 model
+2538|Solitaire|unica|unita|1|115|1 model
+2539|Skyweavers|unica|unita|2|95|2 models
+2539|Skyweavers|unica|unita|4|190|4 models
+2540|Voidweaver|unica|unita|1|115|1 model
+2541|Starweaver|1-3|unita|1|70|1 model
+2541|Starweaver|4+|unita|1|80|1 model
+2542|Yvraine|unica|unita|1|100|1 model
+2543|The Visarch|unica|unita|1|80|1 model
+2544|The Yncarne|unica|unita|1|245|1 model
+2562|War Dog Executioner|unica|unita|1|130|1 model
+2563|War Dog Stalker|unica|unita|1|135|1 model
+2564|War Dog Karnivore|unica|unita|1|145|1 model
+2565|War Dog Brigand|unica|unita|1|135|1 model
+2566|War Dog Huntsman|unica|unita|1|135|1 model
+2567|Knight Abominant|1-2|unita|1|355|1 model
+2567|Knight Abominant|3+|unita|1|370|1 model
+2568|Impulsor|1-3|unita|1|70|1 model
+2568|Impulsor|1-3|unita|1|70|1 model
+2568|Impulsor|4+|unita|1|80|1 model
+2568|Impulsor|4+|unita|1|80|1 model
+2568|Impulsor|1-3|unita|1|70|1 model
+2568|Impulsor|4+|unita|1|80|1 model
+2569|Dark Commune|1-2|unita|5|90|5 models
+2569|Dark Commune|3+|unita|5|100|5 models
+2570|Legionaries|unica|unita|5|90|5 models
+2570|Legionaries|unica|unita|10|170|10 models
+2571|Accursed Cultists|1-2|unita|8|90|8 models
+2571|Accursed Cultists|1-2|unita|16|195|16 models
+2571|Accursed Cultists|3+|unita|8|110|8 models
+2571|Accursed Cultists|3+|unita|16|215|16 models
+2572|Chaos Predator Annihilator|1-2|unita|1|145|1 model
+2572|Chaos Predator Annihilator|3+|unita|1|155|1 model
+2582|Bloodthirster|1-2|unita|1|320|1 model
+2582|Bloodthirster|3+|unita|1|335|1 model
+2583|Blue Horrors|unica|unita|10|125|10 models
+2584|Pink Horrors|unica|unita|10|150|10 models
+2587|Imperial Navy Breachers|unica|unita|10|90|10 models
+2588|Kroot Farstalkers|1-2|unita|12|75|12 models
+2588|Kroot Farstalkers|3+|unita|12|85|12 models
+2589|Traitor Enforcer|unica|unita|2|70|2 models
+2590|Traitor Guardsmen Squad|unica|unita|10|70|10 models
+2591|Mutoid Vermin|unica|unita|16|85|16 models
+2592|Gellerpox Infected|unica|unita|7|125|7 models
+2593|Ûthar the Destined|unica|unita|1|90|1 model
+2594|Kâhl|unica|unita|1|65|1 model
+2595|Einhyr Champion|unica|unita|1|65|1 model
+2596|Grimnyr|unica|unita|3|65|3 models
+2597|Brôkhyr Iron-master|unica|unita|5|70|5 models
+2598|Hearthkyn Warriors|unica|unita|10|90|10 models
+2599|Einhyr Hearthguard|1-2|unita|5|130|5 models
+2599|Einhyr Hearthguard|1-2|unita|10|270|10 models
+2599|Einhyr Hearthguard|3+|unita|5|140|5 models
+2599|Einhyr Hearthguard|3+|unita|10|280|10 models
+2600|Cthonian Beserks|unica|unita|5|95|5 models
+2600|Cthonian Beserks|unica|unita|10|190|10 models
+2601|Hernkyn Pioneers|1-2|unita|3|80|3 models
+2601|Hernkyn Pioneers|1-2|unita|6|160|6 models
+2601|Hernkyn Pioneers|3+|unita|3|90|3 models
+2601|Hernkyn Pioneers|3+|unita|6|170|6 models
+2602|Sagitaur|1-3|unita|1|85|1 model
+2602|Sagitaur|4+|unita|1|95|1 model
+2603|Brôkhyr Thunderkyn|1-2|unita|3|80|3 models
+2603|Brôkhyr Thunderkyn|1-2|unita|6|170|6 models
+2603|Brôkhyr Thunderkyn|3+|unita|3|90|3 models
+2603|Brôkhyr Thunderkyn|3+|unita|6|180|6 models
+2604|Hekaton Land Fortress|1|unita|1|250|1 model
+2604|Hekaton Land Fortress|2+|unita|1|265|1 model
+2605|Lord Solar Leontus|unica|unita|1|130|1 model
+2606|Ursula Creed|unica|unita|1|85|1 model
+2607|Cadian Castellan|unica|unita|1|55|1 model
+2609|Cadian Command Squad|unica|unita|5|60|5 models
+2610|Regimental Attachés|unica|unita|3|40|3 models
+2612|Cadian Shock Troops|unica|unita|10|70|10 models
+2612|Cadian Shock Troops|unica|unita|20|145|20 models
+2613|Death Korps Of Krieg|unica|unita|10|70|10 models
+2613|Death Korps Of Krieg|unica|unita|20|135|20 models
+2614|Catachan Jungle Fighters|unica|unita|10|70|10 models
+2614|Catachan Jungle Fighters|unica|unita|20|135|20 models
+2615|Kasrkin|1-2|unita|10|105|10 models
+2615|Kasrkin|3+|unita|10|120|10 models
+2616|Attilan Rough Riders|1-2|unita|5|60|5 models
+2616|Attilan Rough Riders|1-2|unita|10|120|10 models
+2616|Attilan Rough Riders|3+|unita|5|65|5 models
+2616|Attilan Rough Riders|3+|unita|10|125|10 models
+2617|Rogal Dorn Battle Tank|1|unita|1|260|1 model
+2617|Rogal Dorn Battle Tank|2+|unita|1|275|1 model
+2619|Aegis Defence Line|unica|unita|1|145|1 model
+2621|Angron|unica|unita|1|330|1 model
+2622|Khârn The Betrayer|unica|unita|1|115|1 model
+2623|Lord Invocatus|unica|unita|1|100|1 model
+2624|Daemon Prince of Khorne|unica|unita|1|200|1 model
+2625|Lord on Juggernaut|unica|unita|1|95|1 model
+2626|Master of Executions|unica|unita|1|60|1 model
+2627|Khorne Berzerkers|unica|unita|10|160|10 models
+2627|Khorne Berzerkers|unica|unita|20|320|20 models
+2628|Jakhals|unica|unita|10|65|10 models
+2628|Jakhals|unica|unita|20|130|20 models
+2629|Chaos Terminators|1-2|unita|5|165|5 models
+2629|Chaos Terminators|1-2|unita|10|330|10 models
+2629|Chaos Terminators|3+|unita|5|175|5 models
+2629|Chaos Terminators|3+|unita|10|340|10 models
+2630|Eightbound|1-2|unita|3|125|3 models
+2630|Eightbound|1-2|unita|6|255|6 models
+2630|Eightbound|3+|unita|3|140|3 models
+2630|Eightbound|3+|unita|6|270|6 models
+2631|Exalted Eightbound|1-2|unita|3|130|3 models
+2631|Exalted Eightbound|1-2|unita|6|265|6 models
+2631|Exalted Eightbound|3+|unita|3|145|3 models
+2631|Exalted Eightbound|3+|unita|6|280|6 models
+2632|Helbrute|unica|unita|1|120|1 model
+2633|Chaos Spawn|unica|unita|2|95|2 models
+2634|Chaos Land Raider|1-2|unita|1|220|1 model
+2634|Chaos Land Raider|3+|unita|1|240|1 model
+2636|Chaos Predator Destructor|1-2|unita|1|130|1 model
+2636|Chaos Predator Destructor|3+|unita|1|140|1 model
+2637|Chaos Predator Annihilator|1-2|unita|1|130|1 model
+2637|Chaos Predator Annihilator|3+|unita|1|140|1 model
+2638|Forgefiend|1-2|unita|1|140|1 model
+2638|Forgefiend|3+|unita|1|155|1 model
+2638|Forgefiend|3+|opzione||5|per Ectoplasma cannon
+2639|Maulerfiend|1-2|unita|1|140|1 model
+2639|Maulerfiend|3+|unita|1|150|1 model
+2640|Chaos Rhino|1-3|unita|1|75|1 model
+2640|Chaos Rhino|4+|unita|1|85|1 model
+2641|Heldrake|unica|unita|1|175|1 model
+2642|Khorne Lord of Skulls|1|unita|1|505|1 model
+2642|Khorne Lord of Skulls|2+|unita|1|535|1 model
+2677|Ancient In Terminator Armour|unica|unita|1|65|1 model
+2677|Ancient In Terminator Armour|unica|unita|1|65|1 model
+2677|Ancient In Terminator Armour|unica|unita|1|65|1 model
+2678|Chaplain Cassius|unica|unita|1|80|1 model
+2679|Vashtorr The Arkifane|unica|unita|1|220|1 model
+2682|Lion El’jonson|unica|unita|1|265|1 model
+2683|Vigilant Squad|unica|unita|11|85|11 models
+2684|Subductor Squad|unica|unita|11|85|11 models
+2684|Subductor Squad|unica|unita|11|100|11 models
+2685|Exaction Squad|unica|unita|11|90|11 models
+2685|Exaction Squad|unica|unita|11|85|11 models
+2686|Barbgaunts|unica|unita|5|55|5 models
+2686|Barbgaunts|unica|unita|10|110|10 models
+2687|Neurogaunts|unica|unita|11|45|11 models
+2687|Neurogaunts|unica|unita|22|90|22 models
+2688|Neurotyrant|unica|unita|1|130|1 model
+2689|Psychophage|unica|unita|1|110|1 model
+2690|Screamer-killer|1-2|unita|1|125|1 model
+2690|Screamer-killer|3+|unita|1|135|1 model
+2691|Tyranid Warriors With Melee Bio-weapons|unica|unita|3|75|3 models
+2691|Tyranid Warriors With Melee Bio-weapons|unica|unita|6|150|6 models
+2692|Tyranid Warriors With Ranged Bio-weapons|unica|unita|3|60|3 models
+2692|Tyranid Warriors With Ranged Bio-weapons|unica|unita|6|120|6 models
+2693|Von Ryan’s Leapers|unica|unita|3|55|3 models
+2693|Von Ryan’s Leapers|unica|unita|6|105|6 models
+2694|Winged Tyranid Prime|unica|unita|1|65|1 model
+2700|Astraeus|1|unita|1|525|1 model
+2700|Astraeus|1|unita|1|525|1 model
+2700|Astraeus|2+|unita|1|575|1 model
+2700|Astraeus|2+|unita|1|575|1 model
+2700|Astraeus|1|unita|1|525|1 model
+2700|Astraeus|2+|unita|1|575|1 model
+2701|Captain In Phobos Armour|unica|unita|1|70|1 model
+2701|Captain In Phobos Armour|unica|unita|1|70|1 model
+2701|Captain In Phobos Armour|unica|unita|1|70|1 model
+2702|Captain on Bike|unica|unita|1|95|1 model
+2702|Captain on Bike|unica|unita|1|95|1 model
+2702|Captain on Bike|unica|unita|1|95|1 model
+2703|Centurion Assault Squad|unica|unita|3|150|3 models
+2703|Centurion Assault Squad|unica|unita|3|150|3 models
+2703|Centurion Assault Squad|unica|unita|6|300|6 models
+2703|Centurion Assault Squad|unica|unita|6|300|6 models
+2703|Centurion Assault Squad|unica|unita|3|150|3 models
+2703|Centurion Assault Squad|unica|unita|6|300|6 models
+2704|Fellblade|unica|unita|1|480|1 model
+2704|Fellblade|unica|unita|1|480|1 model
+2704|Fellblade|unica|unita|1|480|1 model
+2705|Gladiator Lancer|1-2|unita|1|160|1 model
+2705|Gladiator Lancer|1-2|unita|1|160|1 model
+2705|Gladiator Lancer|3+|unita|1|170|1 model
+2705|Gladiator Lancer|3+|unita|1|170|1 model
+2705|Gladiator Lancer|1-2|unita|1|160|1 model
+2705|Gladiator Lancer|3+|unita|1|170|1 model
+2706|Ironclad Dreadnought|unica|unita|1|150|1 model
+2706|Ironclad Dreadnought|unica|unita|1|150|1 model
+2706|Ironclad Dreadnought|unica|unita|1|150|1 model
+2707|Judiciar|unica|unita|1|55|1 model
+2707|Judiciar|unica|unita|1|55|1 model
+2707|Judiciar|unica|unita|1|55|1 model
+2708|Kayvaan Shrike|unica|unita|1|100|1 model
+2709|Kor’sarro Khan|unica|unita|1|55|1 model
+2710|Land Raider Helios|unica|unita|1|220|1 model
+2710|Land Raider Helios|unica|unita|1|220|1 model
+2710|Land Raider Helios|unica|unita|1|220|1 model
+2711|Land Speeder|unica|unita|1|105|1 model
+2711|Land Speeder|unica|unita|1|105|1 model
+2711|Land Speeder|unica|unita|1|105|1 model
+2712|Outrider Squad|unica|unita|3|70|3 models
+2712|Outrider Squad|unica|unita|3|70|3 models
+2712|Outrider Squad|unica|unita|6|140|6 models
+2712|Outrider Squad|unica|unita|6|140|6 models
+2712|Outrider Squad|unica|opzione||60|+ 1 Invader ATV
+2712|Outrider Squad|unica|opzione||60|+ 1 Invader ATV
+2712|Outrider Squad|unica|unita|3|75|3 models
+2712|Outrider Squad|unica|unita|6|140|6 models
+2712|Outrider Squad|unica|opzione||60|+ 1 Invader ATV
+2712|Outrider Squad|unica|unita|3|70|3 models
+2712|Outrider Squad|unica|unita|6|140|6 models
+2712|Outrider Squad|unica|opzione||60|+ 1 Invader ATV
+2713|Pedro Kantor|unica|unita|1|80|1 model
+2714|Predator Annihilator|1-2|unita|1|135|1 model
+2714|Predator Annihilator|1-2|unita|1|135|1 model
+2714|Predator Annihilator|3+|unita|1|145|1 model
+2714|Predator Annihilator|3+|unita|1|145|1 model
+2714|Predator Annihilator|1-2|unita|1|135|1 model
+2714|Predator Annihilator|3+|unita|1|145|1 model
+2715|Predator Destructor|1-2|unita|1|140|1 model
+2715|Predator Destructor|1-2|unita|1|140|1 model
+2715|Predator Destructor|3+|unita|1|150|1 model
+2715|Predator Destructor|3+|unita|1|150|1 model
+2715|Predator Destructor|1-2|unita|1|140|1 model
+2715|Predator Destructor|3+|unita|1|150|1 model
+2717|Redemptor Dreadnought|1-2|unita|1|195|1 model
+2717|Redemptor Dreadnought|1-2|unita|1|195|1 model
+2717|Redemptor Dreadnought|3+|unita|1|210|1 model
+2717|Redemptor Dreadnought|3+|unita|1|210|1 model
+2717|Redemptor Dreadnought|3+|opzione||10|per Macro plasma incinerator
+2717|Redemptor Dreadnought|3+|opzione||10|per Macro plasma incinerator
+2717|Redemptor Dreadnought|1-2|unita|1|195|1 model
+2717|Redemptor Dreadnought|3+|unita|1|210|1 model
+2717|Redemptor Dreadnought|3+|opzione||10|per Macro plasma incinerator
+2718|Reiver Squad|unica|unita|5|75|5 models
+2718|Reiver Squad|unica|unita|5|75|5 models
+2718|Reiver Squad|unica|unita|10|150|10 models
+2718|Reiver Squad|unica|unita|10|150|10 models
+2718|Reiver Squad|unica|unita|5|75|5 models
+2718|Reiver Squad|unica|unita|10|150|10 models
+2719|Relic Contemptor Dreadnought|unica|unita|1|140|1 model
+2719|Relic Contemptor Dreadnought|unica|unita|1|140|1 model
+2719|Relic Contemptor Dreadnought|unica|unita|1|140|1 model
+2720|Relic Razorback|unica|unita|1|105|1 model
+2720|Relic Razorback|unica|unita|1|105|1 model
+2720|Relic Razorback|unica|unita|1|105|1 model
+2721|Repulsor|1-2|unita|1|170|1 model
+2721|Repulsor|1-2|unita|1|170|1 model
+2721|Repulsor|3+|unita|1|190|1 model
+2721|Repulsor|3+|unita|1|190|1 model
+2721|Repulsor|1-2|unita|1|170|1 model
+2721|Repulsor|3+|unita|1|190|1 model
+2722|Repulsor Executioner|1-2|unita|1|255|1 model
+2722|Repulsor Executioner|1-2|unita|1|255|1 model
+2722|Repulsor Executioner|3+|unita|1|275|1 model
+2722|Repulsor Executioner|3+|unita|1|275|1 model
+2722|Repulsor Executioner|3+|opzione||10|per Heavy laser destroyer
+2722|Repulsor Executioner|3+|opzione||10|per Heavy laser destroyer
+2722|Repulsor Executioner|1-2|unita|1|230|1 model
+2722|Repulsor Executioner|3+|unita|1|250|1 model
+2722|Repulsor Executioner|3+|opzione||10|per Heavy laser destroyer
+2722|Repulsor Executioner|1-2|unita|1|230|1 model
+2722|Repulsor Executioner|3+|unita|1|250|1 model
+2722|Repulsor Executioner|3+|opzione||10|per Heavy laser destroyer
+2722|Repulsor Executioner|1-2|unita|1|230|1 model
+2722|Repulsor Executioner|3+|unita|1|250|1 model
+2722|Repulsor Executioner|3+|opzione||10|per Heavy laser destroyer
+2722|Repulsor Executioner|1-2|unita|1|230|1 model
+2722|Repulsor Executioner|3+|unita|1|250|1 model
+2722|Repulsor Executioner|3+|opzione||10|per Heavy laser destroyer
+2722|Repulsor Executioner|1-2|unita|1|255|1 model
+2722|Repulsor Executioner|3+|unita|1|275|1 model
+2722|Repulsor Executioner|3+|opzione||10|per Heavy laser destroyer
+2723|Rhino|1-3|unita|1|65|1 model
+2723|Rhino|1-3|unita|1|65|1 model
+2723|Rhino|4+|unita|1|75|1 model
+2723|Rhino|4+|unita|1|75|1 model
+2723|Rhino|1-3|unita|1|65|1 model
+2723|Rhino|4+|unita|1|75|1 model
+2724|Thunderhawk Transporter|unica|unita|1|495|1 model
+2724|Thunderhawk Transporter|unica|unita|1|495|1 model
+2724|Thunderhawk Transporter|unica|unita|1|495|1 model
+2725|Tyrannic War Veterans|unica|unita|5|85|5 models
+2726|Vulkan He’stan|unica|unita|1|95|1 model
+2727|Whirlwind|1|unita|1|175|1 model
+2727|Whirlwind|1|unita|1|175|1 model
+2727|Whirlwind|2+|unita|1|195|1 model
+2727|Whirlwind|2+|unita|1|195|1 model
+2727|Whirlwind|1|unita|1|175|1 model
+2727|Whirlwind|2+|unita|1|195|1 model
+2728|Whirlwind Scorpius|unica|unita|1|115|1 model
+2728|Whirlwind Scorpius|unica|unita|1|115|1 model
+2728|Whirlwind Scorpius|unica|unita|1|115|1 model
+2729|Xiphon Interceptor|unica|unita|1|115|1 model
+2729|Xiphon Interceptor|unica|unita|1|115|1 model
+2729|Xiphon Interceptor|unica|unita|1|115|1 model
+2730|Heretic Astartes Daemon Prince With Wings|unica|unita|1|180|1 model
+2731|Renegade Enforcer|unica|unita|1|65|1 model
+2732|Renegade Heavy Weapons Squad|unica|unita|3|75|3 models
+2733|Renegade Ogryn Beast Handler|unica|unita|4|40|4 models
+2733|Renegade Ogryn Beast Handler|unica|unita|7|70|7 models
+2734|Renegade Ogryn Brutes|unica|unita|3|95|3 models
+2735|Renegade Plague Ogryns|unica|unita|3|95|3 models
+2737|Death Company Marines With Jump Packs|1-2|unita|5|115|5 models
+2737|Death Company Marines With Jump Packs|1-2|unita|10|230|10 models
+2737|Death Company Marines With Jump Packs|3+|unita|5|130|5 models
+2737|Death Company Marines With Jump Packs|3+|unita|10|245|10 models
+2738|Sanguinary Priest With Jump Pack|unica|unita|1|100|1 model
+2739|Earthshaker Platform|unica|unita|1|110|1 model
+2740|Elysian Drop Sentinel|unica|unita|1|85|1 model
+2741|Leman Russ Eradicator|1-2|unita|1|145|1 model
+2741|Leman Russ Eradicator|3+|unita|1|160|1 model
+2741|Leman Russ Eradicator|3+|opzione||5|per Multi-melta
+2741|Leman Russ Eradicator|3+|opzione||5|per Lascannon
+2741|Leman Russ Eradicator|3+|opzione||5|per Plasma cannon
+2742|Leman Russ Executioner|1-2|unita|1|145|1 model
+2742|Leman Russ Executioner|3+|unita|1|160|1 model
+2742|Leman Russ Executioner|3+|opzione||5|per Multi-melta
+2742|Leman Russ Executioner|3+|opzione||5|per Lascannon
+2742|Leman Russ Executioner|3+|opzione||5|per Plasma cannon
+2743|Leman Russ Exterminator|1-2|unita|1|160|1 model
+2743|Leman Russ Exterminator|3+|unita|1|175|1 model
+2743|Leman Russ Exterminator|3+|opzione||5|per Multi-melta
+2743|Leman Russ Exterminator|3+|opzione||5|per Lascannon
+2743|Leman Russ Exterminator|3+|opzione||5|per Plasma cannon
+2744|Leman Russ Punisher|1-2|unita|1|130|1 model
+2744|Leman Russ Punisher|3+|unita|1|145|1 model
+2744|Leman Russ Punisher|3+|opzione||5|per Multi-melta
+2744|Leman Russ Punisher|3+|opzione||5|per Lascannon
+2744|Leman Russ Punisher|3+|opzione||5|per Plasma cannon
+2745|Leman Russ Vanquisher|1-2|unita|1|130|1 model
+2745|Leman Russ Vanquisher|3+|unita|1|145|1 model
+2745|Leman Russ Vanquisher|3+|opzione||5|per Multi-melta
+2745|Leman Russ Vanquisher|3+|opzione||5|per Lascannon
+2745|Leman Russ Vanquisher|3+|opzione||5|per Plasma cannon
+2746|Tempestus Scions|1-2|unita|5|75|5 models
+2746|Tempestus Scions|1-2|unita|10|150|10 models
+2746|Tempestus Scions|3+|unita|5|85|5 models
+2746|Tempestus Scions|3+|unita|10|160|10 models
+2748|Ravenwing Command Squad|1-2|unita|3|105|3 models
+2748|Ravenwing Command Squad|3+|unita|3|115|3 models
+2749|Daemon Prince of Nurgle with Wings|unica|unita|1|170|1 model
+2750|Icon Bearer|unica|unita|1|45|1 model
+2751|Norn Emissary|1|unita|1|250|1 model
+2751|Norn Emissary|2+|unita|1|270|1 model
+2752|Norn Assimilator|1|unita|1|250|1 model
+2752|Norn Assimilator|2+|unita|1|270|1 model
+2753|Neurolictor|1-2|unita|1|80|1 model
+2753|Neurolictor|3+|unita|1|90|1 model
+2755|Exalted Sorcerer on Disc of Tzeentch|unica|unita|1|90|1 model
+2757|Daemon Prince of Khorne with Wings|unica|unita|1|170|1 model
+2758|Daemon Prince Of Chaos With Wings|unica|unita|1|190|1 model
+2759|Autarch Wayleaper|unica|unita|1|70|1 model
+2760|Inquisitor In Terminator Armour|unica|unita|1|70|1 model
+2761|Damned Legionnaires|unica|unita|5|90|5 models
+2761|Damned Legionnaires|unica|unita|10|180|10 models
+2762|Rogue Trader Entourage|unica|unita|4|75|4 models
+2762|Rogue Trader Entourage|unica|unita|4|105|4 models
+2763|Janus Draik|unica|unita|1|40|1 model
+2764|Neyam Shai Murad|unica|unita|1|40|1 model
+2765|Navigator|unica|unita|1|60|1 model
+2765|Navigator|unica|unita|1|75|1 model
+2766|UR-025|unica|unita|1|55|1 model
+2767|Inquisitorial Agents|unica|unita|6|50|6 models
+2767|Inquisitorial Agents|unica|unita|12|100|12 models
+2767|Inquisitorial Agents|unica|unita|6|60|6 models
+2767|Inquisitorial Agents|unica|unita|12|120|12 models
+2768|Grey Knights Relic Razorback|unica|unita|1|95|1 model
+2769|Armiger Moirax|1-2|unita|1|150|1 model
+2769|Armiger Moirax|3+|unita|1|160|1 model
+2771|Daemonifuge|unica|unita|2|85|2 models
+2772|Company Heroes|unica|unita|4|105|4 models
+2772|Company Heroes|unica|unita|4|105|4 models
+2772|Company Heroes|unica|unita|4|105|4 models
+2773|Apothecary|unica|unita|1|40|1 model
+2773|Apothecary|unica|unita|1|40|1 model
+2773|Apothecary|unica|unita|1|40|1 model
+2775|Ancient|unica|unita|1|40|1 model
+2775|Ancient|unica|unita|1|40|1 model
+2775|Ancient|unica|unita|1|40|1 model
+2776|Assault Intercessors With Jump Packs|1-2|unita|5|85|5 models
+2776|Assault Intercessors With Jump Packs|1-2|unita|5|85|5 models
+2776|Assault Intercessors With Jump Packs|1-2|unita|10|160|10 models
+2776|Assault Intercessors With Jump Packs|1-2|unita|10|160|10 models
+2776|Assault Intercessors With Jump Packs|3+|unita|5|95|5 models
+2776|Assault Intercessors With Jump Packs|3+|unita|5|95|5 models
+2776|Assault Intercessors With Jump Packs|3+|unita|10|170|10 models
+2776|Assault Intercessors With Jump Packs|3+|unita|10|170|10 models
+2776|Assault Intercessors With Jump Packs|1-2|unita|5|95|5 models
+2776|Assault Intercessors With Jump Packs|1-2|unita|10|180|10 models
+2776|Assault Intercessors With Jump Packs|3+|unita|5|105|5 models
+2776|Assault Intercessors With Jump Packs|3+|unita|10|190|10 models
+2776|Assault Intercessors With Jump Packs|1-2|unita|5|85|5 models
+2776|Assault Intercessors With Jump Packs|1-2|unita|10|160|10 models
+2776|Assault Intercessors With Jump Packs|3+|unita|5|95|5 models
+2776|Assault Intercessors With Jump Packs|3+|unita|10|170|10 models
+2779|Spectrus Kill Team|1-2|unita|10|170|10 models
+2779|Spectrus Kill Team|3+|unita|10|180|10 models
+2780|Fortis Kill Team|1-2|unita|10|195|10 models
+2780|Fortis Kill Team|3+|unita|10|210|10 models
+2781|Indomitor Kill Team|1-2|unita|10|275|10 models
+2781|Indomitor Kill Team|3+|unita|10|290|10 models
+2783|Deathwatch Veterans|unica|unita|5|100|5 models
+2783|Deathwatch Veterans|unica|unita|10|190|10 models
+2786|Impulsor|1-3|unita|1|75|1 model
+2786|Impulsor|4+|unita|1|85|1 model
+2787|Gladiator Lancer|1-2|unita|1|160|1 model
+2787|Gladiator Lancer|3+|unita|1|170|1 model
+2788|Gladiator Valiant|1-2|unita|1|150|1 model
+2788|Gladiator Valiant|3+|unita|1|160|1 model
+2789|Gladiator Reaper|1-2|unita|1|160|1 model
+2789|Gladiator Reaper|3+|unita|1|170|1 model
+2790|Repulsor Executioner|1-2|unita|1|255|1 model
+2790|Repulsor Executioner|3+|unita|1|275|1 model
+2790|Repulsor Executioner|3+|opzione||10|per Heavy laser destroyer
+2791|Repulsor|1-2|unita|1|170|1 model
+2791|Repulsor|3+|unita|1|190|1 model
+2792|Chaplain Grimaldus|unica|unita|4|100|4 models
+2793|Castellan|unica|unita|1|70|1 model
+2794|High Marshal Helbrecht|unica|unita|1|110|1 model
+2795|Emperor’s Champion|unica|unita|1|90|1 model
+2796|Marshal|1-2|unita|1|80|1 model
+2796|Marshal|3+|unita|1|90|1 model
+2798|Sword Brethren Squad|1-2|unita|4|100|4 models
+2798|Sword Brethren Squad|1-2|unita|5|125|5 models
+2798|Sword Brethren Squad|1-2|unita|9|225|9 models
+2798|Sword Brethren Squad|1-2|unita|10|250|10 models
+2798|Sword Brethren Squad|3+|unita|4|120|4 models
+2798|Sword Brethren Squad|3+|unita|5|145|5 models
+2798|Sword Brethren Squad|3+|unita|9|245|9 models
+2798|Sword Brethren Squad|3+|unita|10|270|10 models
+2799|Crusader Squad|unica|unita|10|150|1 Sword Brother, 4 Neophytes, 5 Initiates
+2799|Crusader Squad|unica|unita|20|290|1 Sword Brother, 8 Neophytes, 11 Initiates
+2801|Venerable Dreadnought|1-2|unita|1|125|1 model
+2801|Venerable Dreadnought|3+|unita|1|135|1 model
+2802|Wolf Guard Pack Leader With Jump Pack|unica|unita|1|35|1 model
+2803|Wolf Guard Pack Leader In Terminator Armour|unica|unita|1|40|1 model
+2804|Wolf Guard Pack Leader|unica|unita|1|30|1 model
+2805|Cyberwolf|unica|unita|1|20|1 model
+2806|Hounds Of Morkai|unica|unita|5|95|5 models
+2806|Hounds Of Morkai|unica|unita|10|190|10 models
+3582|Khorne Berzerkers|unica|unita|10|160|10 models
+3582|Khorne Berzerkers|unica|unita|20|320|20 models
+3583|Rubric Marines|1-3|unita|5|100|5 models
+3583|Rubric Marines|1-3|unita|10|190|10 models
+3583|Rubric Marines|4+|unita|5|110|5 models
+3583|Rubric Marines|4+|unita|10|200|10 models
+3584|Plague Marines|unica|unita|5|90|5 models
+3584|Plague Marines|unica|unita|7|125|7 models
+3584|Plague Marines|unica|unita|10|180|10 models
+3585|Chaos Thunderhawk|unica|unita|1|840|1 model
+3586|Greater Blight Drone|unica|unita|1|150|1 model
+3587|Blood Slaughterer|unica|unita|1|160|1 model
+3588|Chaos Thunderhawk|unica|unita|1|840|1 model
+3589|Greater Brass Scorpion|unica|unita|1|500|1 model
+3590|Kytan Ravager|unica|unita|1|400|1 model
+3591|Chaos Thunderhawk|unica|unita|1|840|1 model
+3592|Chaos Lord On Palanquin Of Nurgle|unica|unita|1|90|1 model
+3593|Gellerpox Infected|unica|unita|7|125|7 models
+3594|Hell Blade|unica|unita|1|115|1 model
+3595|Hell Talon|unica|unita|1|140|1 model
+3596|Mutoid Vermin|unica|unita|16|85|16 models
+3597|Chaos Lord On Disc Of Tzeentch|unica|unita|1|100|1 model
+3598|Hell Blade|unica|unita|1|115|1 model
+3599|Hell Talon|unica|unita|1|140|1 model
+3600|Sorcerer On Palanquin Of Nurgle|unica|unita|1|80|1 model
+3601|Hell Blade|unica|unita|1|115|1 model
+3602|Hell Talon|unica|unita|1|140|1 model
+3603|Terrax-pattern Termite|unica|unita|1|200|1 model
+3603|Terrax-pattern Termite|unica|unita|1|200|1 model
+3603|Terrax-pattern Termite|unica|unita|1|200|1 model
+3604|Terrax-pattern Termite|unica|unita|1|200|1 model
+3604|Terrax-pattern Termite|unica|unita|1|200|1 model
+3604|Terrax-pattern Termite|unica|unita|1|200|1 model
+3605|Terrax-pattern Termite|unica|unita|1|200|1 model
+3605|Terrax-pattern Termite|unica|unita|1|200|1 model
+3605|Terrax-pattern Termite|unica|unita|1|200|1 model
+3606|Terrax-pattern Termite|unica|unita|1|200|1 model
+3606|Terrax-pattern Termite|unica|unita|1|200|1 model
+3606|Terrax-pattern Termite|unica|unita|1|200|1 model
+3607|Land Raider Achilles|unica|unita|1|230|1 model
+3607|Land Raider Achilles|unica|unita|1|230|1 model
+3607|Land Raider Achilles|unica|unita|1|230|1 model
+3608|Land Raider Achilles|unica|unita|1|230|1 model
+3608|Land Raider Achilles|unica|unita|1|230|1 model
+3608|Land Raider Achilles|unica|unita|1|230|1 model
+3609|Land Raider Achilles|unica|unita|1|230|1 model
+3609|Land Raider Achilles|unica|unita|1|230|1 model
+3609|Land Raider Achilles|unica|unita|1|230|1 model
+3610|Land Raider Achilles|unica|unita|1|230|1 model
+3610|Land Raider Achilles|unica|unita|1|230|1 model
+3610|Land Raider Achilles|unica|unita|1|230|1 model
+3611|Land Raider Proteus|unica|unita|1|220|1 model
+3611|Land Raider Proteus|unica|unita|1|220|1 model
+3611|Land Raider Proteus|unica|unita|1|220|1 model
+3612|Land Raider Proteus|unica|unita|1|220|1 model
+3612|Land Raider Proteus|unica|unita|1|220|1 model
+3612|Land Raider Proteus|unica|unita|1|220|1 model
+3613|Land Raider Proteus|unica|unita|1|220|1 model
+3613|Land Raider Proteus|unica|unita|1|220|1 model
+3613|Land Raider Proteus|unica|unita|1|220|1 model
+3614|Land Raider Proteus|unica|unita|1|220|1 model
+3614|Land Raider Proteus|unica|unita|1|220|1 model
+3614|Land Raider Proteus|unica|unita|1|220|1 model
+3615|Fire Raptor Gunship|unica|unita|1|290|1 model
+3615|Fire Raptor Gunship|unica|unita|1|290|1 model
+3615|Fire Raptor Gunship|unica|unita|1|290|1 model
+3616|Fire Raptor Gunship|unica|unita|1|290|1 model
+3616|Fire Raptor Gunship|unica|unita|1|290|1 model
+3616|Fire Raptor Gunship|unica|unita|1|290|1 model
+3617|Fire Raptor Gunship|unica|unita|1|290|1 model
+3617|Fire Raptor Gunship|unica|unita|1|290|1 model
+3617|Fire Raptor Gunship|unica|unita|1|290|1 model
+3618|Fire Raptor Gunship|unica|unita|1|290|1 model
+3618|Fire Raptor Gunship|unica|unita|1|290|1 model
+3618|Fire Raptor Gunship|unica|unita|1|290|1 model
+3619|Spartan|unica|unita|1|300|1 model
+3619|Spartan|unica|unita|1|300|1 model
+3619|Spartan|unica|unita|1|300|1 model
+3620|Spartan|unica|unita|1|300|1 model
+3620|Spartan|unica|unita|1|300|1 model
+3620|Spartan|unica|unita|1|300|1 model
+3621|Spartan|unica|unita|1|300|1 model
+3621|Spartan|unica|unita|1|300|1 model
+3621|Spartan|unica|unita|1|300|1 model
+3622|Spartan|unica|unita|1|300|1 model
+3622|Spartan|unica|unita|1|300|1 model
+3622|Spartan|unica|unita|1|300|1 model
+3623|Deredeo Dreadnought|unica|unita|1|160|1 model
+3623|Deredeo Dreadnought|unica|unita|1|160|1 model
+3623|Deredeo Dreadnought|unica|unita|1|160|1 model
+3624|Deredeo Dreadnought|unica|unita|1|160|1 model
+3624|Deredeo Dreadnought|unica|unita|1|160|1 model
+3624|Deredeo Dreadnought|unica|unita|1|160|1 model
+3625|Deredeo Dreadnought|unica|unita|1|160|1 model
+3625|Deredeo Dreadnought|unica|unita|1|160|1 model
+3625|Deredeo Dreadnought|unica|unita|1|160|1 model
+3626|Deredeo Dreadnought|unica|unita|1|160|1 model
+3626|Deredeo Dreadnought|unica|unita|1|160|1 model
+3626|Deredeo Dreadnought|unica|unita|1|160|1 model
+3627|Cerberus|unica|unita|1|270|1 model
+3627|Cerberus|unica|unita|1|270|1 model
+3627|Cerberus|unica|unita|1|270|1 model
+3628|Cerberus|unica|unita|1|270|1 model
+3628|Cerberus|unica|unita|1|270|1 model
+3628|Cerberus|unica|unita|1|270|1 model
+3629|Cerberus|unica|unita|1|270|1 model
+3629|Cerberus|unica|unita|1|270|1 model
+3629|Cerberus|unica|unita|1|270|1 model
+3630|Cerberus|unica|unita|1|270|1 model
+3630|Cerberus|unica|unita|1|270|1 model
+3630|Cerberus|unica|unita|1|270|1 model
+3631|Kratos|unica|unita|1|240|1 model
+3631|Kratos|unica|unita|1|240|1 model
+3631|Kratos|unica|unita|1|240|1 model
+3632|Kratos|unica|unita|1|240|1 model
+3632|Kratos|unica|unita|1|240|1 model
+3632|Kratos|unica|unita|1|240|1 model
+3633|Kratos|unica|unita|1|240|1 model
+3633|Kratos|unica|unita|1|240|1 model
+3633|Kratos|unica|unita|1|240|1 model
+3634|Kratos|unica|unita|1|240|1 model
+3634|Kratos|unica|unita|1|240|1 model
+3634|Kratos|unica|unita|1|240|1 model
+3635|Sokar-pattern Stormbird|unica|unita|1|900|1 model
+3635|Sokar-pattern Stormbird|unica|unita|1|900|1 model
+3635|Sokar-pattern Stormbird|unica|unita|1|900|1 model
+3636|Sokar-pattern Stormbird|unica|unita|1|900|1 model
+3636|Sokar-pattern Stormbird|unica|unita|1|900|1 model
+3636|Sokar-pattern Stormbird|unica|unita|1|900|1 model
+3637|Sokar-pattern Stormbird|unica|unita|1|900|1 model
+3637|Sokar-pattern Stormbird|unica|unita|1|900|1 model
+3637|Sokar-pattern Stormbird|unica|unita|1|900|1 model
+3638|Sokar-pattern Stormbird|unica|unita|1|900|1 model
+3638|Sokar-pattern Stormbird|unica|unita|1|900|1 model
+3638|Sokar-pattern Stormbird|unica|unita|1|900|1 model
+3639|Sicaran Battle Tank|unica|unita|1|160|1 model
+3639|Sicaran Battle Tank|unica|unita|1|160|1 model
+3639|Sicaran Battle Tank|unica|unita|1|160|1 model
+3640|Sicaran Battle Tank|unica|unita|1|160|1 model
+3640|Sicaran Battle Tank|unica|unita|1|160|1 model
+3640|Sicaran Battle Tank|unica|unita|1|160|1 model
+3641|Sicaran Battle Tank|unica|unita|1|160|1 model
+3641|Sicaran Battle Tank|unica|unita|1|160|1 model
+3641|Sicaran Battle Tank|unica|unita|1|160|1 model
+3642|Sicaran Battle Tank|unica|unita|1|160|1 model
+3642|Sicaran Battle Tank|unica|unita|1|160|1 model
+3642|Sicaran Battle Tank|unica|unita|1|160|1 model
+3643|Mastodon|unica|unita|1|540|1 model
+3643|Mastodon|unica|unita|1|540|1 model
+3643|Mastodon|unica|unita|1|540|1 model
+3644|Mastodon|unica|unita|1|540|1 model
+3644|Mastodon|unica|unita|1|540|1 model
+3644|Mastodon|unica|unita|1|540|1 model
+3645|Mastodon|unica|unita|1|540|1 model
+3645|Mastodon|unica|unita|1|540|1 model
+3645|Mastodon|unica|unita|1|540|1 model
+3646|Mastodon|unica|unita|1|540|1 model
+3646|Mastodon|unica|unita|1|540|1 model
+3646|Mastodon|unica|unita|1|540|1 model
+3647|Leviathan Dreadnought|unica|unita|1|160|1 model
+3647|Leviathan Dreadnought|unica|unita|1|160|1 model
+3647|Leviathan Dreadnought|unica|unita|1|160|1 model
+3648|Leviathan Dreadnought|unica|unita|1|160|1 model
+3648|Leviathan Dreadnought|unica|unita|1|160|1 model
+3648|Leviathan Dreadnought|unica|unita|1|160|1 model
+3649|Leviathan Dreadnought|unica|unita|1|160|1 model
+3649|Leviathan Dreadnought|unica|unita|1|160|1 model
+3649|Leviathan Dreadnought|unica|unita|1|160|1 model
+3650|Leviathan Dreadnought|unica|unita|1|160|1 model
+3650|Leviathan Dreadnought|unica|unita|1|160|1 model
+3650|Leviathan Dreadnought|unica|unita|1|160|1 model
+3651|Fellblade|unica|unita|1|480|1 model
+3651|Fellblade|unica|unita|1|480|1 model
+3651|Fellblade|unica|unita|1|480|1 model
+3652|Fellblade|unica|unita|1|480|1 model
+3652|Fellblade|unica|unita|1|480|1 model
+3652|Fellblade|unica|unita|1|480|1 model
+3653|Fellblade|unica|unita|1|480|1 model
+3653|Fellblade|unica|unita|1|480|1 model
+3653|Fellblade|unica|unita|1|480|1 model
+3654|Fellblade|unica|unita|1|480|1 model
+3654|Fellblade|unica|unita|1|480|1 model
+3654|Fellblade|unica|unita|1|480|1 model
+3655|Relic Contemptor Dreadnought|unica|unita|1|140|1 model
+3655|Relic Contemptor Dreadnought|unica|unita|1|140|1 model
+3655|Relic Contemptor Dreadnought|unica|unita|1|140|1 model
+3656|Relic Contemptor Dreadnought|unica|unita|1|140|1 model
+3656|Relic Contemptor Dreadnought|unica|unita|1|140|1 model
+3656|Relic Contemptor Dreadnought|unica|unita|1|140|1 model
+3657|Relic Contemptor Dreadnought|unica|unita|1|140|1 model
+3657|Relic Contemptor Dreadnought|unica|unita|1|140|1 model
+3657|Relic Contemptor Dreadnought|unica|unita|1|140|1 model
+3658|Relic Contemptor Dreadnought|unica|unita|1|140|1 model
+3658|Relic Contemptor Dreadnought|unica|unita|1|140|1 model
+3658|Relic Contemptor Dreadnought|unica|unita|1|140|1 model
+3659|Whirlwind Scorpius|unica|unita|1|115|1 model
+3659|Whirlwind Scorpius|unica|unita|1|115|1 model
+3659|Whirlwind Scorpius|unica|unita|1|115|1 model
+3660|Whirlwind Scorpius|unica|unita|1|115|1 model
+3660|Whirlwind Scorpius|unica|unita|1|115|1 model
+3660|Whirlwind Scorpius|unica|unita|1|115|1 model
+3661|Whirlwind Scorpius|unica|unita|1|115|1 model
+3661|Whirlwind Scorpius|unica|unita|1|115|1 model
+3661|Whirlwind Scorpius|unica|unita|1|115|1 model
+3662|Whirlwind Scorpius|unica|unita|1|115|1 model
+3662|Whirlwind Scorpius|unica|unita|1|115|1 model
+3662|Whirlwind Scorpius|unica|unita|1|115|1 model
+3663|Xiphon Interceptor|unica|unita|1|115|1 model
+3663|Xiphon Interceptor|unica|unita|1|115|1 model
+3663|Xiphon Interceptor|unica|unita|1|115|1 model
+3664|Xiphon Interceptor|unica|unita|1|115|1 model
+3664|Xiphon Interceptor|unica|unita|1|115|1 model
+3664|Xiphon Interceptor|unica|unita|1|115|1 model
+3665|Xiphon Interceptor|unica|unita|1|115|1 model
+3665|Xiphon Interceptor|unica|unita|1|115|1 model
+3665|Xiphon Interceptor|unica|unita|1|115|1 model
+3666|Xiphon Interceptor|unica|unita|1|115|1 model
+3666|Xiphon Interceptor|unica|unita|1|115|1 model
+3666|Xiphon Interceptor|unica|unita|1|115|1 model
+3667|Rapier Carrier|unica|unita|1|90|1 model
+3667|Rapier Carrier|unica|unita|1|90|1 model
+3667|Rapier Carrier|unica|unita|1|90|1 model
+3668|Rapier Carrier|unica|unita|1|90|1 model
+3668|Rapier Carrier|unica|unita|1|90|1 model
+3668|Rapier Carrier|unica|unita|1|90|1 model
+3669|Rapier Carrier|unica|unita|1|90|1 model
+3669|Rapier Carrier|unica|unita|1|90|1 model
+3669|Rapier Carrier|unica|unita|1|90|1 model
+3670|Rapier Carrier|unica|unita|1|90|1 model
+3670|Rapier Carrier|unica|unita|1|90|1 model
+3670|Rapier Carrier|unica|unita|1|90|1 model
+3671|Storm Eagle Gunship|unica|unita|1|250|1 model
+3671|Storm Eagle Gunship|unica|unita|1|250|1 model
+3671|Storm Eagle Gunship|unica|unita|1|250|1 model
+3672|Storm Eagle Gunship|unica|unita|1|250|1 model
+3672|Storm Eagle Gunship|unica|unita|1|250|1 model
+3672|Storm Eagle Gunship|unica|unita|1|250|1 model
+3673|Storm Eagle Gunship|unica|unita|1|250|1 model
+3673|Storm Eagle Gunship|unica|unita|1|250|1 model
+3673|Storm Eagle Gunship|unica|unita|1|250|1 model
+3674|Storm Eagle Gunship|unica|unita|1|250|1 model
+3674|Storm Eagle Gunship|unica|unita|1|250|1 model
+3674|Storm Eagle Gunship|unica|unita|1|250|1 model
+3675|Sicaran Venator|unica|unita|1|180|1 model
+3675|Sicaran Venator|unica|unita|1|180|1 model
+3675|Sicaran Venator|unica|unita|1|180|1 model
+3676|Sicaran Venator|unica|unita|1|180|1 model
+3676|Sicaran Venator|unica|unita|1|180|1 model
+3676|Sicaran Venator|unica|unita|1|180|1 model
+3677|Sicaran Venator|unica|unita|1|180|1 model
+3677|Sicaran Venator|unica|unita|1|180|1 model
+3677|Sicaran Venator|unica|unita|1|180|1 model
+3678|Sicaran Venator|unica|unita|1|180|1 model
+3678|Sicaran Venator|unica|unita|1|180|1 model
+3678|Sicaran Venator|unica|unita|1|180|1 model
+3679|Typhon|unica|unita|1|320|1 model
+3679|Typhon|unica|unita|1|320|1 model
+3679|Typhon|unica|unita|1|320|1 model
+3680|Typhon|unica|unita|1|320|1 model
+3680|Typhon|unica|unita|1|320|1 model
+3680|Typhon|unica|unita|1|320|1 model
+3681|Typhon|unica|unita|1|320|1 model
+3681|Typhon|unica|unita|1|320|1 model
+3681|Typhon|unica|unita|1|320|1 model
+3682|Typhon|unica|unita|1|320|1 model
+3682|Typhon|unica|unita|1|320|1 model
+3682|Typhon|unica|unita|1|320|1 model
+3683|Sicaran Punisher|unica|unita|1|160|1 model
+3683|Sicaran Punisher|unica|unita|1|160|1 model
+3683|Sicaran Punisher|unica|unita|1|160|1 model
+3684|Sicaran Punisher|unica|unita|1|160|1 model
+3684|Sicaran Punisher|unica|unita|1|160|1 model
+3684|Sicaran Punisher|unica|unita|1|160|1 model
+3685|Sicaran Punisher|unica|unita|1|160|1 model
+3685|Sicaran Punisher|unica|unita|1|160|1 model
+3685|Sicaran Punisher|unica|unita|1|160|1 model
+3686|Sicaran Punisher|unica|unita|1|160|1 model
+3686|Sicaran Punisher|unica|unita|1|160|1 model
+3686|Sicaran Punisher|unica|unita|1|160|1 model
+3687|Falchion|unica|unita|1|420|1 model
+3687|Falchion|unica|unita|1|420|1 model
+3687|Falchion|unica|unita|1|420|1 model
+3688|Falchion|unica|unita|1|420|1 model
+3688|Falchion|unica|unita|1|420|1 model
+3688|Falchion|unica|unita|1|420|1 model
+3689|Falchion|unica|unita|1|420|1 model
+3689|Falchion|unica|unita|1|420|1 model
+3689|Falchion|unica|unita|1|420|1 model
+3690|Falchion|unica|unita|1|420|1 model
+3690|Falchion|unica|unita|1|420|1 model
+3690|Falchion|unica|unita|1|420|1 model
+3693|Overlord with translocation shroud|unica|unita|1|90|1 model
+3694|Sydonian Dragoons With Radium Jezzails|unica|unita|1|55|1 model
+3694|Sydonian Dragoons With Radium Jezzails|unica|unita|2|100|2 models
+3694|Sydonian Dragoons With Radium Jezzails|unica|unita|3|150|3 models
+3695|Sydonian Skatros|unica|unita|1|50|1 model
+3698|Inner Circle Companions|1-2|unita|3|80|3 models
+3698|Inner Circle Companions|1-2|unita|6|160|6 models
+3698|Inner Circle Companions|3+|unita|3|90|3 models
+3698|Inner Circle Companions|3+|unita|6|170|6 models
+3699|Crisis Sunforge Battlesuits|1-2|unita|3|125|3 models
+3699|Crisis Sunforge Battlesuits|3+|unita|3|135|3 models
+3700|Crisis Fireknife Battlesuits|1-2|unita|3|100|3 models
+3700|Crisis Fireknife Battlesuits|3+|unita|3|110|3 models
+3700|Crisis Fireknife Battlesuits|3+|opzione||5|per Missile pod
+3701|Crisis Starscythe Battlesuits|1-2|unita|3|100|3 models
+3701|Crisis Starscythe Battlesuits|3+|unita|3|110|3 models
+3701|Crisis Starscythe Battlesuits|3+|opzione||5|per T&#x27;au flamer
+3702|Kroot Trail Shaper|unica|unita|1|50|1 model
+3703|Kroot War Shaper|unica|unita|1|60|1 model
+3704|Kroot Flesh Shaper|unica|unita|1|45|1 model
+3705|Kroot Lone-Spear|unica|unita|1|80|1 model
+3706|Krootox Rampagers|1-2|unita|3|85|3 models
+3706|Krootox Rampagers|1-2|unita|6|170|6 models
+3706|Krootox Rampagers|3+|unita|3|95|3 models
+3706|Krootox Rampagers|3+|unita|6|180|6 models
+3707|Big Mek|1-2|unita|1|85|1 model
+3707|Big Mek|3+|unita|1|95|1 model
+3710|Hernkyn Yaegirs|unica|unita|10|90|10 models
+3711|Chaos Lord with Jump Pack|unica|unita|1|80|1 model
+3712|Cultist Firebrand|1-2|unita|1|45|1 model
+3712|Cultist Firebrand|3+|unita|1|50|1 model
+3713|Cultist Mob with Firearms|unica|unita|10|50|10 models
+3713|Cultist Mob with Firearms|unica|unita|20|100|20 models
+3714|Canoness with Jump Pack|unica|unita|1|75|1 model
+3715|Benefictus|unica|unita|1|75|1 model
+3716|Acolyte Hybrids With Hand Flamers|unica|unita|5|75|5 models
+3716|Acolyte Hybrids With Hand Flamers|unica|unita|10|140|10 models
+3811|Celestian Sacresant Aveline|unica|unita|1|45|1 model
+3812|Ministorum Priest|unica|unita|1|40|1 model
+3813|Grey Knights Terminator Squad|unica|unita|5|175|5 models
+3813|Grey Knights Terminator Squad|unica|opzione||5|per Psycannon
+3813|Grey Knights Terminator Squad|unica|unita|5|190|5 models
+3813|Grey Knights Terminator Squad|unica|opzione||5|per Psycannon
+3814|Watch Captain Artemis|unica|unita|1|65|1 model
+3815|Watch Master|unica|unita|1|95|1 model
+3816|Deathwatch Kill Team|unica|unita|5|100|5 models
+3816|Deathwatch Kill Team|unica|unita|10|190|10 models
+3817|Corvus Blackstar|unica|unita|1|180|1 model
+3818|Sisters of Battle Squad|unica|unita|10|100|10 models
+3818|Sisters of Battle Squad|unica|unita|10|110|10 models
+3819|Sisters of Battle Immolator|1-3|unita|1|90|1 model
+3819|Sisters of Battle Immolator|4+|unita|1|100|1 model
+3819|Sisters of Battle Immolator|4+|opzione||15|per Twin multi-melta
+3819|Sisters of Battle Immolator|1-3|unita|1|105|1 model
+3819|Sisters of Battle Immolator|4+|unita|1|115|1 model
+3819|Sisters of Battle Immolator|4+|opzione||15|per Twin multi-melta
+3820|Inquisitorial Chimera|1-3|unita|1|60|1 model
+3820|Inquisitorial Chimera|4+|unita|1|70|1 model
+3821|Kill Team Cassius|unica|unita|11|220|11 models
+3822|Deathwatch Terminator Squad|unica|unita|5|210|5 models
+3822|Deathwatch Terminator Squad|unica|unita|10|420|10 models
+3823|Veteran Bike Squad|unica|unita|3|70|3 models
+3823|Veteran Bike Squad|unica|unita|6|140|6 models
+3824|Proteus Kill Team|unica|unita|5|160|5 models
+3824|Proteus Kill Team|unica|unita|10|320|10 models
+3825|Fortis Kill Team|unica|unita|5|100|5 models
+3825|Fortis Kill Team|unica|unita|10|200|10 models
+3826|Indomitor Kill Team|unica|unita|5|120|5 models
+3826|Indomitor Kill Team|unica|unita|10|240|10 models
+3827|Spectrus Kill Team|unica|unita|5|90|5 models
+3827|Spectrus Kill Team|unica|unita|10|180|10 models
+3828|Daemonhost|unica|unita|1|40|1 model
+3828|Daemonhost|unica|unita|2|80|2 models
+3829|Jokaero Weaponsmith|unica|unita|1|30|1 model
+3830|Imperial Rhino|1-3|unita|1|65|1 model
+3830|Imperial Rhino|4+|unita|1|75|1 model
+3831|Blood Angels Captain|unica|unita|1|80|1 model
+3832|Death Company Captain|unica|unita|1|70|1 model
+3833|Death Company Captain with Jump Pack|unica|unita|1|75|1 model
+3834|Tempestus Aquilons|unica|unita|10|95|10 models
+3835|Death Company Dreadnought with Magna-grapple|unica|unita|1|145|1 model
+3836|Death Company Marines with Boltguns|unica|unita|5|125|5 models
+3836|Death Company Marines with Boltguns|unica|unita|10|250|10 models
+3837|Death Company Marines with Boltguns and Jump Packs|unica|unita|5|140|5 models
+3837|Death Company Marines with Boltguns and Jump Packs|unica|unita|10|280|10 models
+3839|Tech-priest Dominus|unica|unita|1|60|1 model
+3840|Tech-priest Manipulus|unica|unita|1|60|1 model
+3841|Skitarii Marshal|unica|unita|1|35|1 model
+3842|Skitarii Rangers|unica|unita|10|85|10 models
+3843|Skitarii Vanguard|unica|unita|10|85|10 models
+3844|Cultist Firebrand|1-2|unita|1|45|1 model
+3844|Cultist Firebrand|3+|unita|1|50|1 model
+3845|Dark Commune|1-2|unita|5|90|5 models
+3845|Dark Commune|3+|unita|5|100|5 models
+3846|Traitor Enforcer|unica|unita|2|70|2 models
+3847|Renegade Enforcer|unica|unita|1|65|1 model
+3848|Rogue Psyker|unica|unita|1|60|1 model
+3849|Cultist Mob|unica|unita|10|50|10 models
+3849|Cultist Mob|unica|unita|20|90|20 models
+3850|Cultist Mob with Firearms|unica|unita|10|50|10 models
+3850|Cultist Mob with Firearms|unica|unita|20|100|20 models
+3851|Accursed Cultists|1-2|unita|8|90|8 models
+3851|Accursed Cultists|1-2|unita|16|195|16 models
+3851|Accursed Cultists|3+|unita|8|110|8 models
+3851|Accursed Cultists|3+|unita|16|215|16 models
+3852|Fellgor Beastmen|unica|unita|10|60|10 models
+3853|Traitor Guardsmen Squad|unica|unita|10|70|10 models
+3854|Gellerpox Infected|unica|unita|7|125|7 models
+3855|Mutoid Vermin|unica|unita|16|85|16 models
+3856|Negavolt Cultists|unica|unita|4|55|4 models
+3857|Renegade Heavy Weapons Squad|unica|unita|3|75|3 models
+3858|Renegade Ogryn Beast Handler|unica|unita|4|40|4 models
+3858|Renegade Ogryn Beast Handler|unica|unita|7|70|7 models
+3859|Renegade Ogryn Brutes|unica|unita|3|95|3 models
+3860|Renegade Plague Ogryns|unica|unita|3|95|3 models
+3861|Breaka Boyz|1-2|unita|6|135|6 models
+3861|Breaka Boyz|3+|unita|6|145|6 models
+3871|Watch Master|unica|unita|1|95|1 model
+3872|Watch Captain Artemis|unica|unita|1|65|1 model
+3873|Deathwatch Terminator Squad|unica|unita|5|180|5 models
+3873|Deathwatch Terminator Squad|unica|unita|10|330|10 models
+3873|Deathwatch Terminator Squad|unica|opzione||5|per Thunder Hammer
+3874|Talonstrike Kill Team|1-2|unita|10|265|10 models
+3874|Talonstrike Kill Team|3+|unita|10|280|10 models
+3875|Kill Team Cassius|unica|unita|11|220|11 models
+3876|Nemesis Claw|unica|unita|5|100|5 models
+3876|Nemesis Claw|unica|unita|10|180|10 models
+3877|Deathleaper|unica|unita|1|80|1 model
+3878|Parasite Of Mortrex|unica|unita|1|70|1 model
+3879|Winged Hive Tyrant|unica|unita|1|185|1 model
+3880|Winged Tyranid Prime|unica|unita|1|65|1 model
+3881|Gargoyles|unica|unita|10|80|10 models
+3881|Gargoyles|unica|unita|20|155|20 models
+3882|Tyrannocyte|1-3|unita|1|80|1 model
+3882|Tyrannocyte|4+|unita|1|90|1 model
+3883|Lictor|unica|unita|1|60|1 model
+3884|Mawloc|unica|unita|1|135|1 model
+3885|Neurolictor|1-2|unita|1|80|1 model
+3885|Neurolictor|3+|unita|1|90|1 model
+3886|Raveners|1-2|unita|5|125|5 models
+3886|Raveners|3+|unita|5|135|5 models
+3887|Trygon|unica|unita|1|140|1 model
+3888|Von Ryan’s Leapers|unica|unita|3|55|3 models
+3888|Von Ryan’s Leapers|unica|unita|6|105|6 models
+3889|Krieg Command Squad|unica|unita|6|60|6 models
+3890|Lord Marshal Dreir|unica|unita|1|75|1 model
+3891|Catachan Command Squad|unica|unita|5|60|5 models
+3892|Rogal Dorn Commander|1|unita|1|290|1 model
+3892|Rogal Dorn Commander|2+|unita|1|305|1 model
+3893|Krieg Combat Engineers|1-2|unita|5|65|5 models
+3893|Krieg Combat Engineers|1-2|unita|10|95|10 models
+3893|Krieg Combat Engineers|3+|unita|5|75|5 models
+3893|Krieg Combat Engineers|3+|unita|10|105|10 models
+3894|Catachan Heavy Weapons Squad|unica|unita|3|70|3 models
+3895|Krieg Heavy Weapons Squad|unica|unita|4|70|4 models
+3895|Krieg Heavy Weapons Squad|unica|opzione||5|per Krieg heavy flamer
+3896|Artillery Team|unica|unita|1|95|1 model
+3897|Field Ordnance Battery|unica|unita|2|90|2 models
+3897|Field Ordnance Battery|unica|opzione||10|per Bombast field gun
+3898|Death Riders|unica|unita|5|60|5 models
+3898|Death Riders|unica|unita|10|110|10 models
+3909|Lhykhis|unica|unita|1|135|1 model
+3910|D-cannon Platform|1|unita|1|110|1 model
+3910|D-cannon Platform|2+|unita|1|125|1 model
+3911|Shadow Weaver Platform|unica|unita|1|60|1 model
+3912|Vibro Cannon Platform|unica|unita|1|60|1 model
+3913|Wraithknight with Ghostglaive|1|unita|1|380|1 model
+3913|Wraithknight with Ghostglaive|2+|unita|1|400|1 model
+3914|Ynnari Archon|unica|unita|1|85|1 model
+3915|Ynnari Succubus|unica|unita|1|45|1 model
+3916|Ynnari Kabalite Warriors|unica|unita|10|110|10 models
+3917|Ynnari Wyches|unica|unita|10|90|10 models
+3918|Ynnari Incubi|1-2|unita|5|80|5 models
+3918|Ynnari Incubi|1-2|unita|10|160|10 models
+3918|Ynnari Incubi|3+|unita|5|90|5 models
+3918|Ynnari Incubi|3+|unita|10|170|10 models
+3919|Ynnari Reavers|unica|unita|3|65|3 models
+3919|Ynnari Reavers|unica|unita|6|120|6 models
+3920|Ynnari Raider|1-3|unita|1|70|1 model
+3920|Ynnari Raider|4+|unita|1|80|1 model
+3921|Ynnari Venom|1-3|unita|1|65|1 model
+3921|Ynnari Venom|4+|unita|1|75|1 model
+3922|Hell’s Last|unica|unita|5|80|5 models
+3937|Provisionally Prepared|unica|unita|1|40|1 model
+3938|Cadian Castellan|unica|unita|1|55|1 model
+3939|Cadian Command Squad|unica|unita|5|60|5 models
+3940|Catachan Command Squad|unica|unita|5|60|5 models
+3941|Krieg Command Squad|unica|unita|6|60|6 models
+3942|Leman Russ Commander|1-2|unita|1|195|1 model
+3942|Leman Russ Commander|3+|unita|1|210|1 model
+3942|Leman Russ Commander|3+|opzione||15|per Demolisher battle cannon
+3942|Leman Russ Commander|3+|opzione||5|per Multi-melta
+3942|Leman Russ Commander|3+|opzione||5|per Lascannon
+3942|Leman Russ Commander|3+|opzione||5|per Plasma cannon
+3943|Primaris Psyker|unica|unita|1|60|1 model
+3944|Rogal Dorn Commander|1|unita|1|290|1 model
+3944|Rogal Dorn Commander|2+|unita|1|305|1 model
+3945|Death Rider Commissar|unica|unita|1|35|1 model
+3946|Quartermaster Cadre Squad|unica|unita|5|45|5 models
+3947|Hell’s Last|unica|unita|5|80|5 models
+3948|Cadian Shock Troops|unica|unita|10|70|10 models
+3948|Cadian Shock Troops|unica|unita|20|145|20 models
+3949|Catachan Jungle Fighters|unica|unita|10|70|10 models
+3949|Catachan Jungle Fighters|unica|unita|20|135|20 models
+3950|Death Korps Of Krieg|unica|unita|10|70|10 models
+3950|Death Korps Of Krieg|unica|unita|20|135|20 models
+3951|Chimera|1-3|unita|1|75|1 model
+3951|Chimera|4+|unita|1|85|1 model
+3952|Taurox|1-3|unita|1|65|1 model
+3952|Taurox|4+|unita|1|75|1 model
+3953|Taurox Prime|1-3|unita|1|75|1 model
+3953|Taurox Prime|4+|unita|1|85|1 model
+3954|Storm Chimera|unica|unita|1|90|1 model
+3955|Aegis Defence Line|unica|unita|1|145|1 model
+3956|Earthshaker Platform|unica|unita|1|110|1 model
+3957|Hydra Platform|unica|unita|1|95|1 model
+3958|Manticore Platform|unica|unita|1|95|1 model
+3959|Sabre Weapons Battery|unica|unita|1|45|1 model
+3959|Sabre Weapons Battery|unica|unita|2|90|2 models
+3960|Armoured Sentinels|unica|unita|1|65|1 model
+3960|Armoured Sentinels|unica|unita|2|120|2 models
+3961|Artillery Team|unica|unita|1|95|1 model
+3962|Attilan Rough Riders|1-2|unita|5|60|5 models
+3962|Attilan Rough Riders|1-2|unita|10|120|10 models
+3962|Attilan Rough Riders|3+|unita|5|65|5 models
+3962|Attilan Rough Riders|3+|unita|10|125|10 models
+3963|Baneblade|1|unita|1|415|1 model
+3963|Baneblade|2+|unita|1|450|1 model
+3964|Banehammer|1|unita|1|385|1 model
+3964|Banehammer|2+|unita|1|420|1 model
+3965|Banesword|1|unita|1|415|1 model
+3965|Banesword|2+|unita|1|450|1 model
+3966|Basilisk|1|unita|1|115|1 model
+3966|Basilisk|2+|unita|1|135|1 model
+3967|Cadian Heavy Weapons Squad|unica|unita|3|65|3 models
+3968|Catachan Heavy Weapons Squad|unica|unita|3|70|3 models
+3969|Death Riders|unica|unita|5|60|5 models
+3969|Death Riders|unica|unita|10|110|10 models
+3970|Deathstrike|1|unita|1|125|1 model
+3970|Deathstrike|2+|unita|1|135|1 model
+3971|Doomhammer|1|unita|1|380|1 model
+3971|Doomhammer|2+|unita|1|410|1 model
+3972|Field Ordnance Battery|unica|unita|2|90|2 models
+3972|Field Ordnance Battery|unica|opzione||10|per Bombast field gun
+3973|Hellhammer|1|unita|1|385|1 model
+3973|Hellhammer|2+|unita|1|415|1 model
+3974|Hellhound|1-2|unita|1|125|1 model
+3974|Hellhound|3+|unita|1|135|1 model
+3975|Hydra|unica|unita|1|90|1 model
+3976|Kasrkin|1-2|unita|10|105|10 models
+3976|Kasrkin|3+|unita|10|120|10 models
+3977|Krieg Combat Engineers|1-2|unita|5|65|5 models
+3977|Krieg Combat Engineers|1-2|unita|10|95|10 models
+3977|Krieg Combat Engineers|3+|unita|5|75|5 models
+3977|Krieg Combat Engineers|3+|unita|10|105|10 models
+3978|Krieg Heavy Weapons Squad|unica|unita|4|70|4 models
+3978|Krieg Heavy Weapons Squad|unica|opzione||5|per Krieg heavy flamer
+3979|Leman Russ Battle Tank|1-2|unita|1|160|1 model
+3979|Leman Russ Battle Tank|3+|unita|1|175|1 model
+3979|Leman Russ Battle Tank|3+|opzione||5|per Multi-melta
+3979|Leman Russ Battle Tank|3+|opzione||5|per Lascannon
+3979|Leman Russ Battle Tank|3+|opzione||5|per Plasma cannon
+3980|Leman Russ Demolisher|1-2|unita|1|160|1 model
+3980|Leman Russ Demolisher|3+|unita|1|175|1 model
+3980|Leman Russ Demolisher|3+|opzione||5|per Multi-melta
+3980|Leman Russ Demolisher|3+|opzione||5|per Lascannon
+3980|Leman Russ Demolisher|3+|opzione||5|per Plasma cannon
+3981|Leman Russ Eradicator|1-2|unita|1|145|1 model
+3981|Leman Russ Eradicator|3+|unita|1|160|1 model
+3981|Leman Russ Eradicator|3+|opzione||5|per Multi-melta
+3981|Leman Russ Eradicator|3+|opzione||5|per Lascannon
+3981|Leman Russ Eradicator|3+|opzione||5|per Plasma cannon
+3982|Leman Russ Executioner|1-2|unita|1|145|1 model
+3982|Leman Russ Executioner|3+|unita|1|160|1 model
+3982|Leman Russ Executioner|3+|opzione||5|per Multi-melta
+3982|Leman Russ Executioner|3+|opzione||5|per Lascannon
+3982|Leman Russ Executioner|3+|opzione||5|per Plasma cannon
+3983|Leman Russ Exterminator|1-2|unita|1|160|1 model
+3983|Leman Russ Exterminator|3+|unita|1|175|1 model
+3983|Leman Russ Exterminator|3+|opzione||5|per Multi-melta
+3983|Leman Russ Exterminator|3+|opzione||5|per Lascannon
+3983|Leman Russ Exterminator|3+|opzione||5|per Plasma cannon
+3984|Leman Russ Punisher|1-2|unita|1|130|1 model
+3984|Leman Russ Punisher|3+|unita|1|145|1 model
+3984|Leman Russ Punisher|3+|opzione||5|per Multi-melta
+3984|Leman Russ Punisher|3+|opzione||5|per Lascannon
+3984|Leman Russ Punisher|3+|opzione||5|per Plasma cannon
+3985|Leman Russ Vanquisher|1-2|unita|1|130|1 model
+3985|Leman Russ Vanquisher|3+|unita|1|145|1 model
+3985|Leman Russ Vanquisher|3+|opzione||5|per Multi-melta
+3985|Leman Russ Vanquisher|3+|opzione||5|per Lascannon
+3985|Leman Russ Vanquisher|3+|opzione||5|per Plasma cannon
+3986|Manticore|1|unita|1|150|1 model
+3986|Manticore|2+|unita|1|170|1 model
+3987|Rogal Dorn Battle Tank|1|unita|1|260|1 model
+3987|Rogal Dorn Battle Tank|2+|unita|1|275|1 model
+3988|Scout Sentinels|unica|unita|1|55|1 model
+3988|Scout Sentinels|unica|unita|2|100|2 models
+3989|Shadowsword|1|unita|1|375|1 model
+3989|Shadowsword|2+|unita|1|405|1 model
+3990|Stormlord|1|unita|1|395|1 model
+3990|Stormlord|2+|unita|1|430|1 model
+3991|Stormsword|1|unita|1|430|1 model
+3991|Stormsword|2+|unita|1|465|1 model
+3992|Wyvern|1|unita|1|95|1 model
+3992|Wyvern|2+|unita|1|115|1 model
+3993|Cyclops Demolition Vehicle|1-2|unita|1|40|1 model
+3993|Cyclops Demolition Vehicle|3+|unita|1|45|1 model
+3994|Arkurian Stormhammer|unica|unita|1|480|1 model
+3995|Armageddon-pattern Medusa|unica|unita|1|105|1 model
+3996|Atlas Recovery Vehicle|unica|unita|1|80|1 model
+3997|Carnodon|unica|unita|1|160|1 model
+3998|Centaur Light Carrier|unica|unita|1|40|1 model
+3999|Colossus|unica|unita|1|160|1 model
+4000|Crassus|unica|unita|1|180|1 model
+4001|Death Korps Grenadier Squad|unica|unita|10|110|10 models
+4002|Dominus Armoured Siege Bombard|unica|unita|1|325|1 model
+4003|Earthshaker Carriage Battery|unica|unita|1|120|1 model
+4004|Elysian Drop Sentinel|unica|unita|1|85|1 model
+4005|Elysian Sniper Squad|unica|unita|3|65|3 models
+4006|Gorgon Heavy Transport|unica|unita|1|275|1 model
+4007|Griffon Mortar Carrier|unica|unita|1|115|1 model
+4008|Hades Breaching Drill|unica|unita|1|110|1 model
+4009|Heavy Mortar Team|unica|unita|1|50|1 model
+4010|Heavy Quad Launcher Team|unica|unita|1|50|1 model
+4011|Macharius|unica|unita|1|310|1 model
+4012|Macharius Omega|unica|unita|1|310|1 model
+4013|Macharius Vanquisher|unica|unita|1|285|1 model
+4014|Macharius Vulcan|unica|unita|1|310|1 model
+4015|Malcador|unica|unita|1|250|1 model
+4016|Malcador Annihilator|unica|unita|1|270|1 model
+4017|Malcador Defender|unica|unita|1|310|1 model
+4018|Malcador Infernus|unica|unita|1|235|1 model
+4019|Medusa Carriage Battery|unica|unita|1|125|1 model
+4020|Minotaur|unica|unita|1|225|1 model
+4021|Mukaali Riders|unica|unita|3|110|3 models
+4022|Munitorum Servitors|unica|unita|4|35|4 models
+4023|Praetor|unica|unita|1|275|1 model
+4024|Rapier Laser Destroyer Battery|unica|unita|1|35|1 model
+4024|Rapier Laser Destroyer Battery|unica|unita|2|70|2 models
+4024|Rapier Laser Destroyer Battery|unica|unita|3|105|3 models
+4025|Regimental Attachés|unica|unita|3|40|3 models
+4026|Salamander Command Vehicle|unica|unita|1|80|1 model
+4027|Salamander Scout Vehicle|unica|unita|1|95|1 model
+4028|Sentinel Powerlifter|unica|unita|1|55|1 model
+4029|Stormblade|unica|unita|1|415|1 model
+4030|Stygies Destroyer Tank Hunter|unica|unita|1|180|1 model
+4031|Tarantula Battery|unica|unita|1|40|1 model
+4031|Tarantula Battery|unica|unita|2|80|2 models
+4031|Tarantula Battery|unica|unita|3|120|3 models
+4032|Tauros Assault Vehicle|unica|unita|1|50|1 model
+4033|Tauros Venator|unica|unita|1|50|1 model
+4034|Trojan Support Vehicle|unica|unita|1|80|1 model
+4035|Valdor|unica|unita|1|285|1 model
+4036|Chaos Lord|unica|unita|1|90|1 model
+4037|Chaos Lord In Terminator Armour|unica|unita|1|85|1 model
+4038|Chaos Lord with Jump Pack|unica|unita|1|80|1 model
+4039|Chaos Lord On Disc Of Tzeentch|unica|unita|1|100|1 model
+4040|Chaos Lord On Juggernaut|unica|unita|1|115|1 model
+4041|Chaos Lord On Palanquin Of Nurgle|unica|unita|1|90|1 model
+4042|Chaos Lord On Steed Of Slaanesh|unica|unita|1|100|1 model
+4043|Chaos Terminator Squad|unica|unita|5|175|5 models
+4043|Chaos Terminator Squad|unica|unita|10|350|10 models
+4044|Chosen|1-2|unita|5|135|5 models
+4044|Chosen|1-2|unita|10|270|10 models
+4044|Chosen|3+|unita|5|145|5 models
+4044|Chosen|3+|unita|10|280|10 models
+4045|Cultist Firebrand|1-2|unita|1|45|1 model
+4045|Cultist Firebrand|3+|unita|1|50|1 model
+4046|Dark Commune|1-2|unita|5|90|5 models
+4046|Dark Commune|3+|unita|5|100|5 models
+4047|Traitor Enforcer|unica|unita|2|70|2 models
+4048|Renegade Enforcer|unica|unita|1|65|1 model
+4049|Rogue Psyker|unica|unita|1|60|1 model
+4050|Cultist Mob|unica|unita|10|50|10 models
+4050|Cultist Mob|unica|unita|20|90|20 models
+4051|Cultist Mob with Firearms|unica|unita|10|50|10 models
+4051|Cultist Mob with Firearms|unica|unita|20|100|20 models
+4052|Accursed Cultists|1-2|unita|8|90|8 models
+4052|Accursed Cultists|1-2|unita|16|195|16 models
+4052|Accursed Cultists|3+|unita|8|110|8 models
+4052|Accursed Cultists|3+|unita|16|215|16 models
+4053|Fellgor Beastmen|unica|unita|10|60|10 models
+4054|Traitor Guardsmen Squad|unica|unita|10|70|10 models
+4055|Gellerpox Infected|unica|unita|7|125|7 models
+4056|Mutoid Vermin|unica|unita|16|85|16 models
+4057|Negavolt Cultists|unica|unita|4|55|4 models
+4058|Renegade Heavy Weapons Squad|unica|unita|3|75|3 models
+4059|Renegade Ogryn Beast Handler|unica|unita|4|40|4 models
+4059|Renegade Ogryn Beast Handler|unica|unita|7|70|7 models
+4060|Renegade Ogryn Brutes|unica|unita|3|95|3 models
+4061|Renegade Plague Ogryns|unica|unita|3|95|3 models
+4062|Dark Apostle|unica|unita|3|65|3 models
+4063|Havocs|1-2|unita|5|125|5 models
+4063|Havocs|3+|unita|5|135|5 models
+4064|Legionaries|unica|unita|5|90|5 models
+4064|Legionaries|unica|unita|10|170|10 models
+4065|Master Of Possession|unica|unita|1|60|1 model
+4066|Possessed|1-2|unita|5|120|5 models
+4066|Possessed|1-2|unita|10|250|10 models
+4066|Possessed|3+|unita|5|130|5 models
+4066|Possessed|3+|unita|10|260|10 models
+4067|Raptors|1-2|unita|5|110|5 models
+4067|Raptors|1-2|unita|10|210|10 models
+4067|Raptors|3+|unita|5|120|5 models
+4067|Raptors|3+|unita|10|220|10 models
+4068|Sorcerer|unica|unita|1|60|1 model
+4069|Sorcerer On Disc Of Tzeentch|unica|unita|1|80|1 model
+4070|Sorcerer On Palanquin Of Nurgle|unica|unita|1|80|1 model
+4071|Sorcerer On Steed Of Slaanesh|unica|unita|1|85|1 model
+4072|Sorcerer In Terminator Armour|unica|unita|1|80|1 model
+4073|Warp Talons|1-2|unita|5|125|5 models
+4073|Warp Talons|1-2|unita|10|280|10 models
+4073|Warp Talons|3+|unita|5|135|5 models
+4073|Warp Talons|3+|unita|10|290|10 models
+4074|Sanctifiers|unica|unita|9|100|9 models
+4075|Sanctifiers|unica|unita|9|110|9 models
+4076|Goremongers|unica|unita|8|75|8 models
+4077|Fulgrim|unica|unita|1|340|1 model
+4078|Lord Exultant|1-2|unita|1|90|1 model
+4078|Lord Exultant|3+|unita|1|100|1 model
+4079|Tormentors|unica|unita|5|80|5 models
+4079|Tormentors|unica|unita|10|160|10 models
+4080|Infractors|unica|unita|5|85|5 models
+4080|Infractors|unica|unita|10|160|10 models
+4081|Chaos Terminators|unica|unita|5|145|5 models
+4082|Chaos Land Raider|1-2|unita|1|220|1 model
+4082|Chaos Land Raider|3+|unita|1|240|1 model
+4083|Lucius the Eternal|unica|unita|1|120|1 model
+4084|Lord Kakophonist|unica|unita|1|70|1 model
+4085|Sorcerer|unica|unita|1|55|1 model
+4086|Daemon Prince of Slaanesh|1|unita|1|170|1 model
+4086|Daemon Prince of Slaanesh|2+|unita|1|185|1 model
+4087|Daemon Prince of Slaanesh with Wings|1|unita|1|205|1 model
+4087|Daemon Prince of Slaanesh with Wings|2+|unita|1|235|1 model
+4088|Noise Marines|1-2|unita|6|145|6 models
+4088|Noise Marines|3+|unita|6|160|6 models
+4089|Flawless Blades|unica|unita|3|95|3 models
+4089|Flawless Blades|unica|unita|6|190|6 models
+4090|Chaos Spawn|unica|unita|2|70|2 models
+4091|Maulerfiend|1-2|unita|1|120|1 model
+4091|Maulerfiend|3+|unita|1|130|1 model
+4092|Heldrake|unica|unita|1|175|1 model
+4093|Chaos Rhino|1-3|unita|1|70|1 model
+4093|Chaos Rhino|4+|unita|1|80|1 model
+4094|Shalaxi Helbane|unica|unita|1|315|1 model
+4095|Daemonettes|unica|unita|10|100|10 models
+4096|Fiends|unica|unita|3|90|3 models
+4096|Fiends|unica|unita|6|190|6 models
+4097|Keeper of Secrets|1-2|unita|1|265|1 model
+4097|Keeper of Secrets|3+|unita|1|280|1 model
+4098|Seekers|unica|unita|5|85|5 models
+4098|Seekers|unica|unita|10|155|10 models
+4099|Noise Marines|1-2|unita|6|145|6 models
+4099|Noise Marines|3+|unita|6|160|6 models
+4100|Tormentbringer|unica|unita|1|135|1 model
+4103|Slaughterbound|unica|unita|1|100|1 model
+4104|Skarbrand|unica|unita|1|315|1 model
+4105|Bloodthirster|1-2|unita|1|320|1 model
+4105|Bloodthirster|3+|unita|1|335|1 model
+4106|Bloodletters|unica|unita|10|90|10 models
+4107|Bloodcrushers|1-2|unita|3|95|3 models
+4107|Bloodcrushers|1-2|unita|6|190|6 models
+4107|Bloodcrushers|3+|unita|3|115|3 models
+4107|Bloodcrushers|3+|unita|6|210|6 models
+4108|Flesh Hounds|unica|unita|5|75|5 models
+4108|Flesh Hounds|unica|unita|10|150|10 models
+4109|Lord of Poxes|unica|unita|1|65|1 model
+4110|Foetid Bloat-drone with Heavy Blight Launcher|1-2|unita|1|125|1 model
+4110|Foetid Bloat-drone with Heavy Blight Launcher|3+|unita|1|135|1 model
+4111|Rotigus|unica|unita|1|280|1 model
+4112|Great Unclean One|1-2|unita|1|265|1 model
+4112|Great Unclean One|3+|unita|1|280|1 model
+4113|Plaguebearers|unica|unita|10|115|10 models
+4114|Plague Drones|unica|unita|3|110|3 models
+4114|Plague Drones|unica|unita|6|220|6 models
+4115|Beasts of Nurgle|unica|unita|1|70|1 model
+4115|Beasts of Nurgle|unica|unita|2|140|2 models
+4116|Nurglings|unica|unita|3|45|3 models
+4116|Nurglings|unica|unita|6|90|6 models
+4117|Hyperadapted Raveners|1-2|unita|5|165|5 models
+4117|Hyperadapted Raveners|3+|unita|5|175|5 models
+4118|Hyperadapted Raveners|1-2|unita|5|165|5 models
+4118|Hyperadapted Raveners|3+|unita|5|175|5 models
+4119|Servitor Battleclade|1-2|unita|9|65|9 models
+4119|Servitor Battleclade|3+|unita|9|75|9 models
+4120|Daemon Prince of Tzeentch with Wings|1|unita|1|170|1 model
+4120|Daemon Prince of Tzeentch with Wings|2+|unita|1|180|1 model
+4121|Sekhetar Robots|1-2|unita|2|85|2 models
+4121|Sekhetar Robots|1-2|unita|4|175|4 models
+4121|Sekhetar Robots|3+|unita|2|100|2 models
+4121|Sekhetar Robots|3+|unita|4|190|4 models
+4122|Tzaangor Enlightened with Fatecaster Greatbows|unica|unita|3|55|3 models
+4122|Tzaangor Enlightened with Fatecaster Greatbows|unica|unita|6|110|6 models
+4123|Kairos Fateweaver|unica|unita|1|305|1 model
+4124|Lord of Change|1-2|unita|1|320|1 model
+4124|Lord of Change|3+|unita|1|340|1 model
+4125|Flamers|unica|unita|3|65|3 models
+4125|Flamers|unica|unita|6|130|6 models
+4126|Screamers|unica|unita|3|80|3 models
+4126|Screamers|unica|unita|6|160|6 models
+4127|Pink Horrors|unica|unita|10|115|10 models
+4128|Blue Horrors|unica|unita|10|90|10 models
+4129|Wolf Priest|unica|unita|1|70|1 model
+4130|Wolf Guard Battle Leader|unica|unita|1|65|1 model
+4131|Wolf Guard Headtakers|1-2|unita|3|85|3 Wolf Guard Headtakers
+4131|Wolf Guard Headtakers|1-2|unita|6|115|3 Wolf Guard Headtakers, 3 Hunting Wolves
+4131|Wolf Guard Headtakers|1-2|unita|6|170|6 Wolf Guard Headtakers
+4131|Wolf Guard Headtakers|1-2|unita|12|230|6 Wolf Guard Headtakers, 6 Hunting Wolves
+4131|Wolf Guard Headtakers|3+|unita|3|95|3 Wolf Guard Headtakers
+4131|Wolf Guard Headtakers|3+|unita|6|125|3 Wolf Guard Headtakers, 3 Hunting Wolves
+4131|Wolf Guard Headtakers|3+|unita|6|180|6 Wolf Guard Headtakers
+4131|Wolf Guard Headtakers|3+|unita|12|240|6 Wolf Guard Headtakers, 6 Hunting Wolves
+4132|Wulfen with Storm Shields|1-2|unita|5|100|5 models
+4132|Wulfen with Storm Shields|1-2|unita|10|200|10 models
+4132|Wulfen with Storm Shields|3+|unita|5|110|5 models
+4132|Wulfen with Storm Shields|3+|unita|10|210|10 models
+4133|Wulfen Dreadnought|1-2|unita|1|135|1 model
+4133|Wulfen Dreadnought|3+|unita|1|145|1 model
+4134|Knight Ruinator|1-2|unita|1|340|1 model
+4134|Knight Ruinator|3+|unita|1|355|1 model
+4135|Execrator|unica|unita|1|50|1 model
+4136|Crusade Ancient|unica|unita|1|40|1 model
+4137|Sternguard Veteran Squad|unica|unita|5|85|5 models
+4137|Sternguard Veteran Squad|unica|unita|10|160|10 models
+4138|Terminator Squad|unica|unita|5|160|5 models
+4138|Terminator Squad|unica|unita|10|320|10 models
+4139|Land Raider Crusader|1-2|unita|1|220|1 model
+4139|Land Raider Crusader|3+|unita|1|240|1 model
+4140|Buri Aegnirssen|unica|unita|1|85|1 model
+4141|Memnyr Strategist|unica|unita|1|45|1 model
+4142|Arkanyst Evaluator|unica|unita|1|70|1 model
+4143|Ironkin Steeljacks with Heavy Volkanite Disintegrators|1-2|unita|3|80|3 models
+4143|Ironkin Steeljacks with Heavy Volkanite Disintegrators|1-2|unita|6|170|6 models
+4143|Ironkin Steeljacks with Heavy Volkanite Disintegrators|3+|unita|3|90|3 models
+4143|Ironkin Steeljacks with Heavy Volkanite Disintegrators|3+|unita|6|180|6 models
+4144|Ironkin Steeljacks with Melee Weapons|1-2|unita|3|75|3 models
+4144|Ironkin Steeljacks with Melee Weapons|1-2|unita|6|150|6 models
+4144|Ironkin Steeljacks with Melee Weapons|3+|unita|3|85|3 models
+4144|Ironkin Steeljacks with Melee Weapons|3+|unita|6|160|6 models
+4145|Cthonian Earthshakers|unica|unita|2|100|2 models
+4146|Kapricus Defenders|1-2|unita|1|70|1 model
+4146|Kapricus Defenders|1-2|unita|2|140|2 models
+4146|Kapricus Defenders|3+|unita|1|80|1 model
+4146|Kapricus Defenders|3+|unita|2|150|2 models
+4147|Kapricus Carrier|1-3|unita|1|70|1 model
+4147|Kapricus Carrier|4+|unita|1|80|1 model
+4148|Aethon Shaan|unica|unita|1|100|1 model
+4149|Knight Defender|1|unita|1|400|1 model
+4149|Knight Defender|2+|unita|1|420|1 model
+4155|Lady Malys|unica|unita|1|100|1 model
+4156|Hand of the Archon|unica|unita|10|115|10 models
+4157|Scourges with Shardcarbines|1-2|unita|5|75|5 models
+4157|Scourges with Shardcarbines|3+|unita|5|85|5 models
+4158|Death Jester|unica|unita|1|70|1 model
+4159|Shadowseer|unica|unita|1|50|1 model
+4160|Solitaire|unica|unita|1|115|1 model
+4161|Troupe Master|unica|unita|1|75|1 model
+4162|Starweaver|1-3|unita|1|70|1 model
+4162|Starweaver|4+|unita|1|80|1 model
+4163|Skyweavers|unica|unita|2|95|2 models
+4163|Skyweavers|unica|unita|4|190|4 models
+4164|Troupe|unica|unita|5|85|5 models
+4164|Troupe|unica|unita|6|100|6 models
+4164|Troupe|unica|unita|11|190|11 models
+4164|Troupe|unica|unita|12|205|12 models
+4165|Voidweaver|unica|unita|1|115|1 model
+4166|Caanok Var|unica|unita|1|90|1 model
+4167|Suboden Khan|unica|unita|1|90|1 model
+4168|Corsair Voidreavers|unica|unita|5|65|5 models
+4168|Corsair Voidreavers|unica|unita|10|110|10 models
+4169|Corsair Voidscarred|unica|unita|5|70|5 models
+4169|Corsair Voidscarred|unica|unita|10|140|10 models
+4170|Corsair Cloud Dancer Band|unica|unita|3|125|3 models
+4170|Corsair Cloud Dancer Band|unica|unita|4|150|4 models
+4170|Corsair Cloud Dancer Band|unica|unita|6|210|6 models
+4170|Corsair Cloud Dancer Band|unica|unita|7|245|7 models
+4171|Corsair Reaver Band|unica|unita|5|125|5 models
+4171|Corsair Reaver Band|unica|unita|6|150|6 models
+4171|Corsair Reaver Band|unica|unita|10|250|10 models
+4171|Corsair Reaver Band|unica|unita|11|275|11 models
+4173|Inquisitor Ostromandeus|unica|unita|2|65|2 models
+4174|Aquila Kill Team|unica|unita|5|100|5 models
+4174|Aquila Kill Team|unica|unita|10|200|10 models
+4175|Decimus Kill Team|unica|unita|5|100|5 models
+4175|Decimus Kill Team|unica|unita|10|190|10 models
+4176|Canoptek Macrocytes|unica|unita|5|70|5 models
+4177|Canoptek Tomb Crawlers|unica|unita|2|50|2 models
+4178|Geomancer|unica|unita|1|75|1 model
+4182|Wolf Scouts|unica|unita|6|90|6 models
+4182|Wolf Scouts|unica|unita|12|180|12 models
+4183|Marneus Calgar in Armour of Antilochus|unica|unita|1|155|1 model
+4184|Cato Sicarius|unica|unita|1|105|1 model
+4185|Victrix Honour Guard|1|unita|3|110|3 models
+4185|Victrix Honour Guard|1|unita|6|230|6 models
+4185|Victrix Honour Guard|2+|unita|3|130|3 models
+4185|Victrix Honour Guard|2+|unita|6|250|6 models
+4185|Victrix Honour Guard|2+|opzione||15|per Banner of Macragge
+4185|Victrix Honour Guard|2+|opzione||10|per Blades of honour
+4186|Nekrosor Ammentar|unica|unita|1|185|1 model
+4187|Captain Titus|unica|unita|1|100|1 model
+4188|Wardens of Ultramar|unica|unita|6|120|6 models
+4189|Celestian Insidiants|unica|unita|10|120|10 models
+4190|Masters of the Maelstrom|unica|unita|5|145|5 models
+4191|Red Corsairs Raiders|1-2|unita|5|110|5 models
+4191|Red Corsairs Raiders|1-2|unita|10|210|10 models
+4191|Red Corsairs Raiders|3+|unita|5|120|5 models
+4191|Red Corsairs Raiders|3+|unita|10|220|10 models
+4192|Red Corsairs Reave-Captain|unica|unita|1|60|1 model
+4193|Prince Yriel|unica|unita|1|95|1 model
+4194|Kharseth|unica|unita|1|85|1 model
+4195|Starfangs|unica|unita|1|70|1 model
+4195|Starfangs|unica|unita|2|140|2 models
+4196|Corsair Skyreavers|unica|unita|5|75|5 models
+4196|Corsair Skyreavers|unica|unita|10|140|10 models
+4197|Kharseth|unica|unita|1|85|1 model
+4198|Prince Yriel|unica|unita|1|95|1 model
+4199|Corsair Skyreavers|unica|unita|5|75|5 models
+4199|Corsair Skyreavers|unica|unita|10|140|10 models
+4200|Starfangs|unica|unita|1|70|1 model
+4200|Starfangs|unica|unita|2|140|2 models
+4201|Berehk Stornbröw|unica|unita|1|85|1 model
+4202|Tyranid Prime with Lash Whip|unica|unita|1|75|1 model
+4203|The Twin Lance|unica|unita|2|230|2 models
+4204|Ferren Areios|unica|unita|1|80|1 model
+4204|Ferren Areios|unica|unita|1|80|1 model
+4204|Ferren Areios|unica|unita|1|80|1 model
+4205|Kravek Morne|unica|unita|1|120|1 model
+4206|Mutilators|1-2|unita|3|165|3 models
+4206|Mutilators|3+|unita|3|175|3 models
+4207|Defiler|1|unita|1|270|1 model
+4207|Defiler|2+|unita|1|310|1 model
+4207|Defiler|2+|opzione||15|per Hades lascannon
+4207|Defiler|2+|opzione||15|per Heavy reaper autocannon
+4208|Defiler|1|unita|1|300|1 model
+4208|Defiler|2+|unita|1|350|1 model
+4208|Defiler|2+|opzione||15|per Heavy reaper autocannon
+4208|Defiler|2+|opzione||15|per Hades lascannon
+4209|Defiler|1|unita|1|300|1 model
+4209|Defiler|2+|unita|1|350|1 model
+4209|Defiler|2+|opzione||15|per Heavy reaper autocannon
+4209|Defiler|2+|opzione||15|per Hades lascannon
+4210|Thulia Ghuld|unica|unita|1|180|1 model
+4211|Hastarii Exterminators|1-2|unita|5|105|5 models
+4211|Hastarii Exterminators|3+|unita|5|120|5 models
+4212|Hastarii Fusiliers|1-2|unita|5|115|5 models
+4212|Hastarii Fusiliers|3+|unita|5|130|5 models
+4213|Knight Destrier|1-2|unita|1|265|1 model
+4213|Knight Destrier|3+|unita|1|280|1 model
+4214|Inquisitor Kroyle|unica|unita|1|100|1 model
+4215|Intranzia Fraye|unica|unita|1|135|1 model
+4216|Commissar Yarrick|unica|unita|1|120|1 model
+4217|Commissar Graves|unica|unita|1|125|1 model
+4218|Commissar Graves on Foot|unica|unita|1|65|1 model
+4219|Hippogriff AFV|unica|unita|1|70|1 model
+4219|Hippogriff AFV|unica|unita|2|140|2 models
+4220|Centaur RSV|1-3|unita|1|65|1 model
+4220|Centaur RSV|4+|unita|1|75|1 model
+4221|Wazdakka Gutsmek|unica|unita|1|200|1 model
+4222|Centaur RSV|1-3|unita|1|65|1 model
+4222|Centaur RSV|4+|unita|1|75|1 model
+4223|Hippogriff AFV|unica|unita|1|70|1 model
+4223|Hippogriff AFV|unica|unita|2|140|2 models
+4224|Cadian Recon Squad|unica|unita|10|80|10 models
+4225|The Red Terror|unica|unita|1|130|1 model
+4226|The Red Terror|unica|unita|1|130|1 model
+4227|Bannernob|unica|unita|1|35|1 model
+4228|Bigboss|unica|unita|1|50|1 model
+4229|Big Mek Dakkarig|1-2|unita|1|135|1 model
+4229|Big Mek Dakkarig|3+|unita|1|145|1 model
+4231|Eradicator Squad with Heavy Bolters|unica|unita|3|80|3 models
+4231|Eradicator Squad with Heavy Bolters|unica|unita|3|80|3 models
+4231|Eradicator Squad with Heavy Bolters|unica|unita|3|80|3 models
+4232|Wolf Guard Battle Leader In Terminator Armour|unica|unita|1|75|1 model
+4233|Wolf Guard Battle Leader On Thunderwolf|unica|unita|1|80|1 model
+4234|Company Champion on Bike|unica|unita|1|60|1 model
+4234|Company Champion on Bike|unica|unita|1|60|1 model
+4234|Company Champion on Bike|unica|unita|1|60|1 model
+4235|Dragon Knights|unica|unita|3|90|3 models
+4235|Dragon Knights|unica|unita|6|180|6 models
+4236|Leystalker|unica|unita|1|80|1 model
+4237|Stonesinger|unica|unita|1|60|1 model
+4238|Clanblade|unica|unita|1|70|1 model
+4239|Runtherd|unica|unita|1|10|1 model
+4240|Wartrakks|unica|unita|1|70|1 model
+4240|Wartrakks|unica|unita|2|130|2 models
+4241|Gunwagon|1-2|unita|1|150|1 model
+4241|Gunwagon|3+|unita|1|160|1 model
+4241|Gunwagon|3+|opzione||10|per Zzap Gun
+4242|Nazdreg|unica|unita|1|175|1 model
+4243|Rukkatrukk Squigbuggies|unica|unita|1|85|1 model
+4243|Rukkatrukk Squigbuggies|unica|unita|2|160|2 models
+4244|Ciaphas Cain|unica|unita|1|70|1 model

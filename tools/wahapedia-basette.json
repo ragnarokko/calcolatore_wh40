@@ -1,0 +1,119 @@
+{
+  "_nota": "Correzioni manuali delle dimensioni delle basette: valgono al posto del valore di Wahapedia (che per molti modelli manca o è sbagliato). Formato di base come in info.csv: «32mm», «120 x 92mm», «r_100x50mm» (rettangolare). Lo script avvisa quando una correzione differisce da un valore reale di Wahapedia.",
+  "basette": [
+    {
+      "id": 16,
+      "line": 2,
+      "nome": "Nob",
+      "base": "32mm"
+    },
+    {
+      "id": 139,
+      "line": 1,
+      "nome": "Thunderhawk Gunship",
+      "base": "120 x 92mm"
+    },
+    {
+      "id": 399,
+      "line": 1,
+      "nome": "Brotherhood Techmarine",
+      "base": "32mm"
+    },
+    {
+      "id": 498,
+      "line": 1,
+      "nome": "Sporocyst",
+      "base": "100mm"
+    },
+    {
+      "id": 504,
+      "line": 1,
+      "nome": "Harridan",
+      "base": "120 x 92mm"
+    },
+    {
+      "id": 935,
+      "line": 1,
+      "nome": "Chaos Lord On Steed Of Slaanesh",
+      "base": "60 x 35.5mm"
+    },
+    {
+      "id": 943,
+      "line": 1,
+      "nome": "Sorcerer On Steed Of Slaanesh",
+      "base": "60 x 35.5mm"
+    },
+    {
+      "id": 1456,
+      "line": 1,
+      "nome": "Skullmaster",
+      "base": "60mm"
+    },
+    {
+      "id": 1560,
+      "line": 1,
+      "nome": "Agamatus Custodians",
+      "base": "60mm"
+    },
+    {
+      "id": 2540,
+      "line": 1,
+      "nome": "Voidweaver",
+      "base": "65mm"
+    },
+    {
+      "id": 2541,
+      "line": 1,
+      "nome": "Starweaver",
+      "base": "65mm"
+    },
+    {
+      "id": 2602,
+      "line": 1,
+      "nome": "Sagitaur",
+      "base": "r_70x40mm"
+    },
+    {
+      "id": 2604,
+      "line": 1,
+      "nome": "Hekaton Land Fortress",
+      "base": "r_170x105mm"
+    },
+    {
+      "id": 2700,
+      "line": 1,
+      "nome": "Astraeus",
+      "base": "160mm"
+    },
+    {
+      "id": 2713,
+      "line": 1,
+      "nome": "Pedro Kantor",
+      "base": "25mm"
+    },
+    {
+      "id": 4042,
+      "line": 1,
+      "nome": "Chaos Lord On Steed Of Slaanesh",
+      "base": "60 x 35.5mm"
+    },
+    {
+      "id": 4071,
+      "line": 1,
+      "nome": "Sorcerer On Steed Of Slaanesh",
+      "base": "60 x 35.5mm"
+    },
+    {
+      "id": 4162,
+      "line": 1,
+      "nome": "Starweaver",
+      "base": "65mm"
+    },
+    {
+      "id": 4165,
+      "line": 1,
+      "nome": "Voidweaver",
+      "base": "65mm"
+    }
+  ]
+}
