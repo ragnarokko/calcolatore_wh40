@@ -14,7 +14,9 @@
 // Pulizie rispetto ai file grezzi (le stesse già applicate a mano finora):
 //   - info.csv: una riga per profilo di modello; MOV=M, RES=T, TS=Sv, TS+=inv_sv, Note=inv_sv_descr;
 //     base_size ripulita ("flying base", "Use model", "Unique"... diventano vuote) e poi sovrascritta
-//     dalle correzioni manuali di tools/wahapedia-basette.json.
+//     dalle correzioni manuali di tools/wahapedia-basette.json. Ultima colonna FNP: soglia dell'abilità
+//     Feel No Pain (ability_id 000008338 in Datasheets_abilities.csv, valore della colonna parameter,
+//     es. "5+"), uguale per tutti i modelli della scheda; vuota se l'unità non ce l'ha.
 //   - Datasheets_wargear.csv: dopo datasheet_id c'è il nome della scheda; BS_WS senza "+" ("3+" → "3"),
 //     spazi tolti, "-0" → "0", righe senza nome arma scartate.
 // Gli id sono quelli di Wahapedia senza zeri iniziali (identici a quelli già in uso).
@@ -27,6 +29,8 @@ const FILE_SORGENTE = path.join(RADICE, 'tools', 'wahapedia-sorgente.json');
 const FILE_BASETTE = path.join(RADICE, 'tools', 'wahapedia-basette.json');
 const SORGENTE_PREDEFINITA = 'https://wahapedia.ru/wh40k11ed';
 const CARTELLA_EXTRA = 'army_builder';
+// Abilità "Feel No Pain" in Abilities.csv / Datasheets_abilities.csv (la soglia sta in `parameter`).
+const ID_ABILITA_FNP = 8338;
 
 const TABELLE = [
   'Last_update',
@@ -238,6 +242,21 @@ function costruisciTutto(tab) {
   const correzioniUsate = new Set();
   const discordanti = [];
 
+  // Feel No Pain per scheda. Solo l'abilità propria della scheda (ability_id fisso): i bonus concessi
+  // da altri (capi, equipaggiamento, "contro ferite mortali") sono righe di testo libero e non contano.
+  const idFnp = new Set([ID_ABILITA_FNP]);
+  for (const a of tab.Abilities) if (/^feel no pain$/i.test((a.name ?? '').trim())) idFnp.add(idNumerico(a.id));
+  const fnpPerScheda = new Map();
+  for (const a of tab.Datasheets_abilities) {
+    if (!a.ability_id || !idFnp.has(idNumerico(a.ability_id))) continue;
+    const soglia = (a.parameter ?? '').replace(/\s+/g, '');
+    if (!/^\d\+$/.test(soglia)) {
+      avvisi.push(`Feel No Pain senza soglia leggibile nella scheda ${a.datasheet_id}: «${a.parameter ?? ''}»`);
+      continue;
+    }
+    fnpPerScheda.set(idNumerico(a.datasheet_id), soglia);
+  }
+
   const info = [];
   for (const m of tab.Datasheets_models) {
     const id = idNumerico(m.datasheet_id);
@@ -263,7 +282,7 @@ function costruisciTutto(tab) {
     }
     // Alcuni modelli non hanno nome (la scheda ha un solo profilo): vale il nome della scheda.
     const nome = (m.name || scheda?.name || '').trim();
-    info.push([id, m.line, nome, m.M, m.T, m.Sv, m.inv_sv, m.inv_sv_descr, m.W, m.Ld, m.OC, base, fac, faction]);
+    info.push([id, m.line, nome, m.M, m.T, m.Sv, m.inv_sv, m.inv_sv_descr, m.W, m.Ld, m.OC, base, fac, faction, fnpPerScheda.get(id) ?? '']);
   }
   for (const [chiave, corr] of correzioni) {
     if (!correzioniUsate.has(chiave)) avvisi.push(`Correzione basetta orfana (la scheda non esiste più?): ${corr.nome} ${chiave}`);
@@ -506,7 +525,7 @@ async function main() {
   const { info, wargear, extra, avvisi, discordanti } = costruisciTutto(tab);
 
   const principali = {
-    'info.csv': costruisciCsv(['datasheet_id', 'line', 'name', 'MOV', 'RES', 'TS', 'TS+', 'Note', 'W', 'Ld', 'OC', 'base_size', 'fac', 'faction'], info),
+    'info.csv': costruisciCsv(['datasheet_id', 'line', 'name', 'MOV', 'RES', 'TS', 'TS+', 'Note', 'W', 'Ld', 'OC', 'base_size', 'fac', 'faction', 'FNP'], info),
     'Datasheets_wargear.csv': costruisciCsv(
       ['datasheet_id', 'name', 'line', 'line_in_wargear', 'dice', 'name', 'description', 'range', 'type', 'A', 'BS_WS', 'S', 'AP', 'D'],
       wargear,

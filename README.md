@@ -26,7 +26,7 @@ Dati tradizionali da Wahapedia (con punti e dati per l'army builder)
 node tools/wahapedia-to-csv.mjs
 
 Scarica l'export dati di Wahapedia (https://wahapedia.ru/wh40k11ed/<Tabella>.csv, specifica in "Export Data Specs"), mostra le differenze rispetto ai file attuali e poi riscrive:
-- info.csv e Datasheets_wargear.csv (stesso formato di sempre, con le stesse pulizie: basette senza "flying base"/"Use model", BS_WS senza "+", ecc.);
+- info.csv e Datasheets_wargear.csv (stesso formato di sempre più l'ultima colonna FNP, la soglia di Feel No Pain, presa da Datasheets_abilities.csv: abilità 000008338, valore della colonna parameter; con le stesse pulizie: basette senza "flying base"/"Use model", BS_WS senza "+", ecc.);
 - la cartella army_builder/ con i dati extra: schede.csv (ruolo, fonte, Legends), punti.csv (costi per taglia e scaglione), composizione.csv (modelli minimi/massimi), opzioni.csv (opzioni di equipaggiamento, in testo), leader.csv, keywords.csv, abilita.csv + abilita_comuni.csv, distaccamenti.csv, potenziamenti.csv.
 
 Opzioni: --sorgente <indirizzo> (altra edizione, es. https://wahapedia.ru/wh40k12ed; viene ricordato in tools/wahapedia-sorgente.json), --cache (riusa i file già scaricati in wahapedia/cache/, senza rete), --out <cartella> (scrive altrove invece che nel repo: utile per provare).
@@ -43,6 +43,8 @@ node tools/bsdata-to-csv.mjs --refresh
 Se BSData sposta la repo: node tools/bsdata-to-csv.mjs --refresh --repo https://github.com/nuovo/indirizzo (l'indirizzo viene ricordato in tools/bsdata-sorgente.json: da committare insieme ai file; il Tavolo da Gioco, in Impostazioni, mostra il comando già pronto).
 
 poi git add info_11e.csv Datasheets_wargear_11e.csv tools/bsdata-ids.json tools/bsdata-sorgente.json, commit e push. Le dimensioni delle basette mancanti si correggono a mano in info_11e.csv: vengono mantenute alle rigenerazioni successive. node tools/confronta-csv.mjs scrive in bsdata/confronto.md le differenze rispetto agli originali.
+
+Anche info_11e.csv ha la colonna FNP: in BSData è il collegamento alla regola "Feel No Pain" della scheda (quelli con commento o nascosti, cioè concessi da capi/potenziamenti, sono ignorati).
 
 I punti (army_builder/punti.csv) sono indicizzati per id Wahapedia: le unità BSData con lo stesso id o lo stesso nome li trovano (circa il 93%).
 

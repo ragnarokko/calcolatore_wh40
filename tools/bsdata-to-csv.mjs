@@ -149,6 +149,17 @@ function raccogli(nodo, ris, visitati, profondita = 0) {
     else if (/Weapons$/.test(p.typeName)) ris.armi.push(p);
   };
   for (const p of nodo.profiles || []) aggiungi(p);
+  // Feel No Pain proprio della scheda: un collegamento alla regola "Feel No Pain" con un modificatore che
+  // ne aggiunge la soglia al nome ("5+"), oppure già "Feel No Pain 5+". Quelli con commento o che
+  // nascondono la regola sono concessioni condizionate (capi che si uniscono, potenziamenti).
+  for (const r of [...(nodo.rules || []), ...(nodo.infoLinks || []).filter((l) => l.type === 'rule')]) {
+    if (!/^Feel No Pain/.test(r.name ?? '') || r.comment) continue;
+    const modificatori = r.modifiers || [];
+    if (modificatori.some((m) => m.field === 'hidden')) continue;
+    const testo = [r.name, ...modificatori.filter((m) => m.field === 'name' && m.type === 'append').map((m) => m.value)].join(' ');
+    const m = /Feel No Pain\s+(\d)\+/.exec(testo);
+    if (m) ris.fnp.push(Number(m[1]));
+  }
   for (const l of nodo.infoLinks || []) {
     if (l.type === 'profile') aggiungi(indice.get(l.targetId)?.nodo);
   }
@@ -276,7 +287,7 @@ for (const { nome, radice } of cataloghi) {
 // 2. Estrae modelli e armi di ogni scheda; i "model" già contenuti in una unit della stessa
 //    fazione non sono schede a sé.
 const estratte = schede.map((s) => {
-  const ris = { modelli: [], armi: [] };
+  const ris = { modelli: [], armi: [], fnp: [] };
   const visitati = new Set();
   raccogli(s.nodo, ris, visitati);
   return { ...s, ...ris, visitati };
@@ -293,7 +304,7 @@ const finali = estratte.filter(
 const scartate = estratte.length - finali.length;
 
 // 3. CSV
-const intestazioneInfo = 'datasheet_id|line|name|MOV|RES|TS|TS+|Note|W|Ld|OC|base_size|fac|faction';
+const intestazioneInfo = 'datasheet_id|line|name|MOV|RES|TS|TS+|Note|W|Ld|OC|base_size|fac|faction|FNP';
 const intestazioneArmi =
   'datasheet_id|name|line|line_in_wargear|dice|name|description|range|type|A|BS_WS|S|AP|D';
 const righeInfo = [];
@@ -357,6 +368,8 @@ for (const s of finali) {
     codiciNuovi.add(`${fazioneOut} → ${fac}`);
   }
 
+  // Soglia migliore (la più bassa) tra quelle trovate nella scheda; vale per tutti i suoi modelli.
+  const fnp = s.fnp.length ? `${Math.min(...s.fnp)}+` : '';
   modelli.forEach((p, i) => {
     const c = caratteristiche(p);
     // Prima le righe della stessa scheda nel file attuale (così le basi corrette a mano restano),
@@ -373,7 +386,7 @@ for (const s of finali) {
     // Salvezza invulnerabile condizionata (es. "4+* / 6", "5+ (Ranged)"): il testo originale va in Note.
     const nota = /[*(/]/.test(c.InSv ?? '') ? `Invulnerabile: ${c.InSv}` : '';
     righeInfo.push(
-      riga([id, i + 1, p.name, c.M, c.T, c.Sv, senzaPiu(c.InSv ?? ''), nota, c.W, c.LD, c.OC, base, fac, fazioneOut]),
+      riga([id, i + 1, p.name, c.M, c.T, c.Sv, senzaPiu(c.InSv ?? ''), nota, c.W, c.LD, c.OC, base, fac, fazioneOut, fnp]),
     );
   });
 

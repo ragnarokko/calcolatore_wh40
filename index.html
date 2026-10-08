@@ -1384,7 +1384,8 @@ body{
 
     // W/RES si chiamano allo stesso modo nelle due app; SAVE del calcolatore è il campo TS
     // del Tavolo da Gioco; "Invulnerabile" va attivato e valorizzato solo se l'unità ha un
-    // TS+ impostato (altrimenti resta spento, come per un'unità senza invulnerabile).
+    // TS+ impostato (altrimenti resta spento, come per un'unità senza invulnerabile). Lo stesso vale
+    // per Feel No Pain (campo fnp).
     function applicaUnita(u){
       var res = parseInt(u.res, 10);
       if(!isNaN(res) && res > 0){
@@ -1409,6 +1410,16 @@ body{
       if(haInvul){
         combat.invulThreshold = invulValore;
         selezionaSogliaGruppo(E("d-invul-threshold"), invulValore);
+      }
+      // Feel No Pain: stessa logica, si spunta da solo solo se l'unità ce l'ha (colonna FNP, es. "5+").
+      var fnpValore = parseInt(u.fnp, 10);
+      var haFnp = !isNaN(fnpValore) && fnpValore >= 2 && fnpValore <= 6;
+      combat.fnp = haFnp;
+      E("d-fnp").checked = haFnp;
+      fnpSub.style.display = haFnp ? "" : "none";
+      if(haFnp){
+        combat.fnpThreshold = fnpValore;
+        selezionaSogliaGruppo(E("d-fnp-threshold"), fnpValore);
       }
       renderCombat();
     }
@@ -1553,7 +1564,7 @@ body{
         datasheetId: r.datasheet_id,
         fazione: r.faction,
         nome: r.name,
-        res: r.RES, ts: r.TS, tsPiu: r["TS+"], w: r.W
+        res: r.RES, ts: r.TS, tsPiu: r["TS+"], w: r.W, fnp: r.FNP
       };
     }).filter(function(u){ return u.fazione && u.nome; });
   }
