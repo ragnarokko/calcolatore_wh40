@@ -27,7 +27,7 @@ node tools/wahapedia-to-csv.mjs
 
 Scarica l'export dati di Wahapedia (https://wahapedia.ru/wh40k11ed/<Tabella>.csv, specifica in "Export Data Specs"), mostra le differenze rispetto ai file attuali e poi riscrive:
 - info.csv e Datasheets_wargear.csv (stesso formato di sempre più l'ultima colonna FNP, la soglia di Feel No Pain, presa da Datasheets_abilities.csv: abilità 000008338, valore della colonna parameter; con le stesse pulizie: basette senza "flying base"/"Use model", BS_WS senza "+", ecc.);
-- la cartella army_builder/ con i dati extra: schede.csv (ruolo, fonte, Legends), punti.csv (costi per taglia e scaglione), composizione.csv (modelli minimi/massimi), opzioni.csv (opzioni di equipaggiamento, in testo), leader.csv, keywords.csv, abilita.csv + abilita_comuni.csv, distaccamenti.csv, potenziamenti.csv.
+- la cartella army_builder/ con i dati extra: schede.csv (ruolo, fonte, Legends), punti.csv (costi per taglia e scaglione), composizione.csv (modelli minimi/massimi), opzioni.csv (opzioni di equipaggiamento, in testo), leader.csv, keywords.csv, abilita.csv + abilita_comuni.csv, distaccamenti.csv, potenziamenti.csv, regole_distaccamento.csv (regola di ogni distaccamento) e stratagemmi.csv (quelli dei distaccamenti più i 10 Core; ¶ separa i capoversi dei testi).
 
 Opzioni: --sorgente <indirizzo> (altra edizione, es. https://wahapedia.ru/wh40k12ed; viene ricordato in tools/wahapedia-sorgente.json), --cache (riusa i file già scaricati in wahapedia/cache/, senza rete), --out <cartella> (scrive altrove invece che nel repo: utile per provare).
 

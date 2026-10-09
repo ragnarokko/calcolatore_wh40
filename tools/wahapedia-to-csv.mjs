@@ -48,6 +48,8 @@ const TABELLE = [
   'Abilities',
   'Detachments',
   'Enhancements',
+  'Detachment_abilities',
+  'Stratagems',
 ];
 
 // ---------------------------------------------------------------------------------------------
@@ -194,6 +196,21 @@ function testoSemplice(html) {
     .replace(/&amp;/g, '&')
     .replace(/\s+/g, ' ')
     .trim();
+}
+
+// Come testoSemplice ma conserva i capoversi (WHEN/TARGET/EFFECT degli stratagemmi, elenchi) con il
+// carattere ¶, perché un CSV a una riga per record non può contenere a capo; l'app lo riconverte.
+function testoConCapoversi(html) {
+  return testoSemplice(
+    String(html ?? '')
+      .replace(/(<br\s*\/?>\s*)+/gi, '¶')
+      .replace(/<\/li>\s*<li[^>]*>/gi, '¶• ')
+      .replace(/<li[^>]*>/gi, '¶• ')
+      .replace(/<\/?(ul|ol)[^>]*>/gi, '¶'),
+  )
+    .replace(/\s*¶\s*/g, '¶')
+    .replace(/(¶)+/g, '¶')
+    .replace(/^¶|¶$/g, '');
 }
 
 // ---------------------------------------------------------------------------------------------
@@ -446,6 +463,42 @@ function costruisciTutto(tab) {
       e.upgrade,
       testoSemplice(e.support_leader),
       testoSemplice(e.description),
+    ]),
+  ];
+
+  // Regole di distaccamento e stratagemmi. Il file di Wahapedia contiene anche gli stratagemmi di
+  // Boarding Actions e residui di altre edizioni: si tengono solo quelli dei distaccamenti presenti in
+  // distaccamenti.csv (esclusi Boarding Actions) e i 10 stratagemmi Core ("Core Stratagem").
+  const distaccamentiNormali = new Set(tab.Detachments.filter((d) => d.type !== 'Boarding Actions').map((d) => d.id));
+  extra['regole_distaccamento.csv'] = [
+    ['id', 'fac', 'detachment_id', 'detachment', 'name', 'descrizione'],
+    tab.Detachment_abilities.filter((a) => distaccamentiNormali.has(a.detachment_id)).map((a) => [
+      a.id,
+      a.faction_id,
+      a.detachment_id,
+      a.detachment || nomeDistaccamento.get(a.detachment_id) || '',
+      a.name,
+      testoConCapoversi(a.description),
+    ]),
+  ];
+  // Tipo ("Strategic Ploy", "Battle Tactic"…): sta in coda a "Nome distaccamento – Tipo Stratagem".
+  const tipoStratagemma = (t) => {
+    const parti = String(t ?? '').replace(/\s*Stratagem$/i, '').split(/\s+[–-]\s+/);
+    return parti.length > 1 ? parti[parti.length - 1].trim() : '';
+  };
+  extra['stratagemmi.csv'] = [
+    ['id', 'fac', 'detachment_id', 'detachment', 'name', 'tipo', 'cp', 'turno', 'fase', 'descrizione'],
+    tab.Stratagems.filter((t) => distaccamentiNormali.has(t.detachment_id) || (!t.detachment_id && t.type === 'Core Stratagem')).map((t) => [
+      t.id,
+      t.faction_id,
+      t.detachment_id,
+      t.detachment || nomeDistaccamento.get(t.detachment_id) || '',
+      t.name,
+      tipoStratagemma(t.type),
+      t.cp_cost,
+      t.turn,
+      t.phase,
+      testoConCapoversi(t.description),
     ]),
   ];
 
