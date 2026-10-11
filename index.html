@@ -147,7 +147,7 @@ body{
 /* ---------- tab bar ---------- */
 .tabbar{
   display:grid;
-  grid-template-columns:1fr 1fr 1fr;
+  grid-template-columns:repeat(4,1fr);
   gap:8px;
   background:var(--surface-2);
   border:1px solid var(--border);
@@ -544,6 +544,71 @@ body{
   margin-top:14px;
   line-height:1.5;
 }
+
+/* ---------- duello: schermata compatta di attacco tra due unità, riempita dal Tavolo da Gioco ---------- */
+#panel-duello .card{padding:10px 12px; margin-bottom:10px;}
+#panel-duello .card + .card{margin-top:10px;}
+#panel-duello .card-title{margin:0 0 8px; font-size:.95rem; flex-wrap:wrap;}
+.dl-vuoto{color:var(--text-dim); font-size:.9rem; line-height:1.5;}
+.dl-testata{display:flex; flex-wrap:wrap; align-items:baseline; gap:4px 14px;}
+.dl-testata .field-label{margin-right:6px;}
+.dl-distanza{font-family:"IBM Plex Mono",monospace; font-weight:700; font-size:1.6rem; line-height:1;}
+.dl-sub{font-weight:500; font-size:.8rem; text-transform:none; letter-spacing:0; color:var(--text-dim);}
+.dl-armi{display:flex; flex-direction:column; gap:6px;}
+.dl-riga{
+  display:flex; flex-wrap:wrap; align-items:flex-end; gap:4px 8px;
+  padding:6px 8px;
+  border:1px solid var(--border); border-left:3px solid var(--border);
+  border-radius:8px; background:var(--surface-2);
+}
+.dl-arma.attiva{border-left-color:var(--att); background:var(--att-soft);}
+.dl-arma:not(.attiva){opacity:.8;}
+.dl-nome{flex:1 1 120px; min-width:110px; align-self:center; font-size:.85rem; font-weight:600; line-height:1.2;}
+.dl-nome small{display:block; font-weight:400; font-size:.68rem; color:var(--text-faint);}
+.dl-nome.fuori small{color:var(--fail); font-weight:600;}
+.dl-tipo{
+  display:inline-block; min-width:16px; padding:0 3px; margin-right:4px;
+  border-radius:4px; background:var(--border); color:var(--text-dim);
+  font-size:.62rem; font-weight:700; text-align:center;
+}
+.dl-c{display:flex; flex-direction:column; gap:2px; margin:0;}
+.dl-riga{column-gap:6px;}
+.dl-c > span{font-size:.58rem; font-weight:600; letter-spacing:.07em; text-transform:uppercase; color:var(--text-dim); text-align:center;}
+.dl-in{
+  width:40px; min-height:28px; padding:0 2px;
+  font-family:"IBM Plex Mono",monospace; font-weight:600; font-size:.88rem; text-align:center;
+  color:var(--text); background:var(--surface);
+  border:1px solid var(--border); border-radius:6px;
+}
+select.dl-in{width:auto; padding:0 3px;}
+.dl-in:focus-visible,.dl-chip:focus-visible{outline:2px solid var(--accent, var(--att)); outline-offset:1px;}
+.dl-mod{width:46px; border-color:var(--att);}
+.dl-chip{
+  min-height:28px; padding:0 6px;
+  font-family:"IBM Plex Sans",sans-serif; font-weight:600; font-size:.7rem;
+  color:var(--text-dim); background:var(--surface);
+  border:1px solid var(--border); border-radius:var(--radius-pill);
+  cursor:pointer;
+}
+.dl-chip[aria-pressed="true"]{background:var(--att); border-color:var(--att); color:#fff;}
+.dl-tot{align-self:center; min-width:62px; font-family:"IBM Plex Mono",monospace; font-size:.75rem; color:var(--text-dim);}
+.dl-dif .dl-in{border-color:var(--def);}
+.dl-dif{border-left-color:var(--def); background:var(--def-soft);}
+.dl-risultato{
+  position:sticky; bottom:8px; z-index:10;
+  margin-top:0;
+  padding:6px; border-radius:var(--radius-card);
+  background:var(--surface); border:1px solid var(--border); box-shadow:var(--shadow);
+}
+.dl-risultato .pl-final{padding:8px 12px 6px;}
+.dl-risultato .pl-final .rt-value{font-size:1.9rem;}
+.dl-stat{overflow-x:auto;}
+.dl-stat-tab{width:100%; border-collapse:collapse; font-size:.8rem;}
+.dl-stat-tab th{padding:2px 8px 6px; font-size:.68rem; font-weight:600; letter-spacing:.05em; text-transform:uppercase; color:var(--text-dim); text-align:right; max-width:150px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+.dl-stat-tab td{padding:3px 8px; border-top:1px solid var(--border); text-align:right; font-family:"IBM Plex Mono",monospace; font-weight:600;}
+.dl-stat-tab td.dl-stat-nome{text-align:left; font-family:"IBM Plex Sans",sans-serif; font-weight:500; color:var(--text-dim); white-space:nowrap;}
+.dl-stat-tab .dl-totale{border-left:1px solid var(--border); color:var(--att);}
+.dl-risultato .rt-sub{display:block; margin-top:3px; font-size:.7rem; font-weight:500; color:var(--text-dim);}
 </style>
 <script>
   // Applica subito il tema scelto in precedenza (prima del primo disegno, niente lampo di colore);
@@ -580,6 +645,7 @@ body{
     <button class="tab-btn active" id="tab-stats-btn" role="tab" aria-selected="true">Statistiche</button>
     <button class="tab-btn" id="tab-combat-btn" role="tab" aria-selected="false">Combattimento</button>
     <button class="tab-btn" id="tab-vs-btn" role="tab" aria-selected="false">VSunità</button>
+    <button class="tab-btn" id="tab-duello-btn" role="tab" aria-selected="false">Duello</button>
   </nav>
 
   <!-- ============ STATISTICHE ============ -->
@@ -873,6 +939,44 @@ body{
       <p class="footnote">Fer OK: <span id="r-fer-ok">0</span> · Non salvati: <span id="r-non-salvati">0</span><span id="r-fnp-line"></span></p>
     </div>
   </section>
+
+  <!-- ============ DUELLO ============ -->
+  <section class="panel" id="panel-duello">
+    <div class="card dl-vuoto" id="dl-vuoto">
+      Nessun attacco in corso. Dal Tavolo da Gioco seleziona un'unità, premi <b>E</b> e clicca l'unità bersaglio:
+      qui compaiono le due unità, la distanza e le armi, con il risultato complessivo in fondo.
+    </div>
+    <div id="dl-contenuto" style="display:none">
+      <div class="card dl-testata">
+        <div><span class="field-label">Distanza tra le unità</span><span class="dl-distanza" id="dl-distanza">—</span></div>
+        <span class="dl-sub" id="dl-distanza-nota">punti più vicini delle due unità</span>
+      </div>
+      <div class="card side-card attacker">
+        <h2 class="card-title" id="dl-att-titolo">Attaccante</h2>
+        <div class="dl-armi" id="dl-armi"></div>
+      </div>
+      <div class="card side-card defender">
+        <h2 class="card-title" id="dl-dif-titolo">Difensore</h2>
+        <div class="dl-riga dl-dif" id="dl-dif"></div>
+      </div>
+      <div class="pipeline-final dl-risultato">
+        <div class="pl-final morti">
+          <span class="rt-label">Modelli uccisi</span>
+          <span class="rt-value" id="dl-morti">0</span>
+          <span class="rt-sub" id="dl-morti-sub"></span>
+        </div>
+        <div class="pl-final ferite">
+          <span class="rt-label">Ferite all'ultimo non ucciso</span>
+          <span class="rt-value" id="dl-ferite">0</span>
+          <span class="rt-sub" id="dl-ferite-sub"></span>
+        </div>
+      </div>
+      <div class="card" style="margin-top:10px">
+        <h2 class="card-title">Statistiche</h2>
+        <div class="dl-stat" id="dl-stat"></div>
+      </div>
+    </div>
+  </section>
 </div>
 
 <script>
@@ -999,6 +1103,116 @@ body{
     } else {
       critTile.style.display = "none";
     }
+  }
+
+  // Cuore del calcolo di un attacco (usato da Combattimento, VSunità e Duello): dato lo stato `combat`
+  // restituisce i numeri di ogni fase fino a morti e ferite residue. Funzione pura, senza accesso al DOM.
+  function woundThreshold(for_, res){
+    if(for_ >= res*2) return 2;
+    if(for_ > res) return 3;
+    if(for_ === res) return 4;
+    if(for_ <= res/2) return 6;
+    return 5;
+  }
+
+  function passPhase(n, threshold){
+    var succ = round(n*successProb(threshold));
+    var fail = Math.max(0, n - succ);
+    // Stima dei dadi con 1 naturale (falliscono sempre): 1 ogni 6 dadi tirati in questa fase,
+    // usata da "Ripeti 1 per ferire" per rilanciare solo quelli invece di tutti i falliti.
+    var ones = Math.min(fail, round(n/6));
+    return {succ:succ, fail:fail, ones:ones};
+  }
+
+  function calcolaAttacco(combat){
+    // FASE 1 - PER COLPIRE
+    var initial = hitPhase(combat.att, combat.xcol, combat.lethal, combat.sustained, combat.lethalThreshold, combat.sustainedThreshold);
+    var critTotal = initial.crit;
+    var normalSuccessTotal = initial.normalSuccess + initial.sustBonus;
+    var failTotal = initial.fail;
+    var sustTotal = initial.sustBonus;
+    if(combat.repeat){
+      // Reroll di tutti i falliti: include già gli 1 naturali, "Ripeti 1 per colpire" (se
+      // attivo insieme) non farebbe che rilanciare dadi già rilanciati, quindi va ignorato.
+      var reroll = hitPhase(initial.fail, combat.xcol, combat.lethal, combat.sustained, combat.lethalThreshold, combat.sustainedThreshold);
+      critTotal += reroll.crit;
+      normalSuccessTotal += reroll.normalSuccess + reroll.sustBonus;
+      sustTotal += reroll.sustBonus;
+      failTotal = reroll.fail;
+    } else if(combat.repeatOnesHit){
+      // "Un solo 1": si rilancia un solo dado tra quelli con 1 naturale, non tutti.
+      var onesToRerollHit = combat.repeatOnesHitMode === "uno" ? Math.min(1, initial.ones) : initial.ones;
+      var rerollOnesHit = hitPhase(onesToRerollHit, combat.xcol, combat.lethal, combat.sustained, combat.lethalThreshold, combat.sustainedThreshold);
+      critTotal += rerollOnesHit.crit;
+      normalSuccessTotal += rerollOnesHit.normalSuccess + rerollOnesHit.sustBonus;
+      sustTotal += rerollOnesHit.sustBonus;
+      failTotal = initial.fail - onesToRerollHit + rerollOnesHit.fail;
+    }
+    var attOk = normalSuccessTotal + critTotal;
+
+    // FASE 2 - PER FERIRE
+    var woundT = combat.antiX ? combat.antiXThreshold : woundThreshold(combat.for_, combat.res);
+    if(combat.lancia) woundT = Math.max(2, woundT - 1);
+    // Dev: un ferimento critico (dado >= soglia Dev) ferisce sempre, quindi se la soglia Dev è
+    // più facile di quella per ferire è lei a decidere quali dadi feriscono.
+    var devFacce = 7 - combat.devThreshold;
+    if(combat.dev) woundT = Math.min(woundT, combat.devThreshold);
+    var initialWound = passPhase(normalSuccessTotal, woundT);
+    var woundSuccessTotal, woundFailTotal;
+    // Dadi con ferimento critico per Dev (con soglia 6: 1 ogni 6 dadi tirati)
+    var woundSixes = Math.min(initialWound.succ, round(normalSuccessTotal*devFacce/6));
+    if(combat.twinlink){
+      // Reroll di tutti i falliti: include già gli 1 naturali, "Ripeti 1 per ferire" (se
+      // attivo insieme) andrebbe a rilanciare dadi già rilanciati, quindi va ignorato.
+      var woundReroll = passPhase(initialWound.fail, woundT);
+      woundSuccessTotal = initialWound.succ + woundReroll.succ;
+      woundFailTotal = woundReroll.fail;
+      woundSixes += Math.min(woundReroll.succ, round(initialWound.fail*devFacce/6));
+    } else if(combat.repeatOnesWound){
+      // "Un solo 1": si rilancia un solo dado tra quelli con 1 naturale, non tutti.
+      var onesToRerollWound = combat.repeatOnesWoundMode === "uno" ? Math.min(1, initialWound.ones) : initialWound.ones;
+      var rerollOnesWound = passPhase(onesToRerollWound, woundT);
+      woundSuccessTotal = initialWound.succ + rerollOnesWound.succ;
+      woundFailTotal = initialWound.fail - onesToRerollWound + rerollOnesWound.fail;
+      woundSixes += Math.min(rerollOnesWound.succ, round(onesToRerollWound*devFacce/6));
+    } else {
+      woundSuccessTotal = initialWound.succ;
+      woundFailTotal = initialWound.fail;
+    }
+    var ferOk = woundSuccessTotal + critTotal;
+
+    // FASE 3 - SALVEZZA
+    var perDanniRaw = combat.ap + combat.save;
+    var perDanniEffective = combat.invul ? Math.min(perDanniRaw, combat.invulThreshold) : perDanniRaw;
+    var calcThreshold = Math.min(perDanniEffective, 7);
+    var devBypassCount = combat.dev ? woundSixes : 0;
+    var normalDamageCount = woundSuccessTotal - devBypassCount + critTotal;
+    var nonSalvatiFromNormal = round(normalDamageCount * failProb(calcThreshold));
+    var nonSalvati = nonSalvatiFromNormal + devBypassCount;
+
+    // FASE 4 - FNP
+    var feriteDopoFnp;
+    if(combat.fnp){
+      feriteDopoFnp = round(nonSalvati * failProb(combat.fnpThreshold));
+    } else {
+      feriteDopoFnp = nonSalvati;
+    }
+
+    // FASE 5 - DANNI
+    var effectiveAttacks = Math.max(0, Math.round(feriteDopoFnp));
+    var danniTotali = effectiveAttacks * combat.danni;
+    var wCurrent = 0, morti = 0;
+    for(var i=0;i<effectiveAttacks;i++){
+      wCurrent += combat.danni;
+      if(wCurrent >= combat.w){ morti++; wCurrent = 0; }
+    }
+    var feriteResidue = wCurrent;
+
+    return {
+      attOk: attOk, critTotal: critTotal, sustTotal: sustTotal, woundT: woundT, ferOk: ferOk, calcThreshold: calcThreshold,
+      nonSalvati: nonSalvati, devBypassCount: devBypassCount, feriteDopoFnp: feriteDopoFnp,
+      effectiveAttacks: effectiveAttacks, danniTotali: danniTotali, morti: morti, feriteResidue: feriteResidue
+    };
   }
 
   // Il pannello Combattimento è costruito da una "fattoria": la stessa logica serve sia al tab
@@ -1162,103 +1376,12 @@ body{
       renderCombat();
     });
 
-    function woundThreshold(for_, res){
-      if(for_ >= res*2) return 2;
-      if(for_ > res) return 3;
-      if(for_ === res) return 4;
-      if(for_ <= res/2) return 6;
-      return 5;
-    }
-
-    function passPhase(n, threshold){
-      var succ = round(n*successProb(threshold));
-      var fail = Math.max(0, n - succ);
-      // Stima dei dadi con 1 naturale (falliscono sempre): 1 ogni 6 dadi tirati in questa fase,
-      // usata da "Ripeti 1 per ferire" per rilanciare solo quelli invece di tutti i falliti.
-      var ones = Math.min(fail, round(n/6));
-      return {succ:succ, fail:fail, ones:ones};
-    }
-
     function renderCombat(){
-      // FASE 1 - PER COLPIRE
-      var initial = hitPhase(combat.att, combat.xcol, combat.lethal, combat.sustained, combat.lethalThreshold, combat.sustainedThreshold);
-      var critTotal = initial.crit;
-      var normalSuccessTotal = initial.normalSuccess + initial.sustBonus;
-      var failTotal = initial.fail;
-      if(combat.repeat){
-        // Reroll di tutti i falliti: include già gli 1 naturali, "Ripeti 1 per colpire" (se
-        // attivo insieme) non farebbe che rilanciare dadi già rilanciati, quindi va ignorato.
-        var reroll = hitPhase(initial.fail, combat.xcol, combat.lethal, combat.sustained, combat.lethalThreshold, combat.sustainedThreshold);
-        critTotal += reroll.crit;
-        normalSuccessTotal += reroll.normalSuccess + reroll.sustBonus;
-        failTotal = reroll.fail;
-      } else if(combat.repeatOnesHit){
-        // "Un solo 1": si rilancia un solo dado tra quelli con 1 naturale, non tutti.
-        var onesToRerollHit = combat.repeatOnesHitMode === "uno" ? Math.min(1, initial.ones) : initial.ones;
-        var rerollOnesHit = hitPhase(onesToRerollHit, combat.xcol, combat.lethal, combat.sustained, combat.lethalThreshold, combat.sustainedThreshold);
-        critTotal += rerollOnesHit.crit;
-        normalSuccessTotal += rerollOnesHit.normalSuccess + rerollOnesHit.sustBonus;
-        failTotal = initial.fail - onesToRerollHit + rerollOnesHit.fail;
-      }
-      var attOk = normalSuccessTotal + critTotal;
-
-      // FASE 2 - PER FERIRE
-      var woundT = combat.antiX ? combat.antiXThreshold : woundThreshold(combat.for_, combat.res);
-      if(combat.lancia) woundT = Math.max(2, woundT - 1);
-      // Dev: un ferimento critico (dado >= soglia Dev) ferisce sempre, quindi se la soglia Dev è
-      // più facile di quella per ferire è lei a decidere quali dadi feriscono.
-      var devFacce = 7 - combat.devThreshold;
-      if(combat.dev) woundT = Math.min(woundT, combat.devThreshold);
-      var initialWound = passPhase(normalSuccessTotal, woundT);
-      var woundSuccessTotal, woundFailTotal;
-      // Dadi con ferimento critico per Dev (con soglia 6: 1 ogni 6 dadi tirati)
-      var woundSixes = Math.min(initialWound.succ, round(normalSuccessTotal*devFacce/6));
-      if(combat.twinlink){
-        // Reroll di tutti i falliti: include già gli 1 naturali, "Ripeti 1 per ferire" (se
-        // attivo insieme) andrebbe a rilanciare dadi già rilanciati, quindi va ignorato.
-        var woundReroll = passPhase(initialWound.fail, woundT);
-        woundSuccessTotal = initialWound.succ + woundReroll.succ;
-        woundFailTotal = woundReroll.fail;
-        woundSixes += Math.min(woundReroll.succ, round(initialWound.fail*devFacce/6));
-      } else if(combat.repeatOnesWound){
-        // "Un solo 1": si rilancia un solo dado tra quelli con 1 naturale, non tutti.
-        var onesToRerollWound = combat.repeatOnesWoundMode === "uno" ? Math.min(1, initialWound.ones) : initialWound.ones;
-        var rerollOnesWound = passPhase(onesToRerollWound, woundT);
-        woundSuccessTotal = initialWound.succ + rerollOnesWound.succ;
-        woundFailTotal = initialWound.fail - onesToRerollWound + rerollOnesWound.fail;
-        woundSixes += Math.min(rerollOnesWound.succ, round(onesToRerollWound*devFacce/6));
-      } else {
-        woundSuccessTotal = initialWound.succ;
-        woundFailTotal = initialWound.fail;
-      }
-      var ferOk = woundSuccessTotal + critTotal;
-
-      // FASE 3 - SALVEZZA
-      var perDanniRaw = combat.ap + combat.save;
-      var perDanniEffective = combat.invul ? Math.min(perDanniRaw, combat.invulThreshold) : perDanniRaw;
-      var calcThreshold = Math.min(perDanniEffective, 7);
-      var devBypassCount = combat.dev ? woundSixes : 0;
-      var normalDamageCount = woundSuccessTotal - devBypassCount + critTotal;
-      var nonSalvatiFromNormal = round(normalDamageCount * failProb(calcThreshold));
-      var nonSalvati = nonSalvatiFromNormal + devBypassCount;
-
-      // FASE 4 - FNP
-      var feriteDopoFnp;
-      if(combat.fnp){
-        feriteDopoFnp = round(nonSalvati * failProb(combat.fnpThreshold));
-      } else {
-        feriteDopoFnp = nonSalvati;
-      }
-
-      // FASE 5 - DANNI
-      var effectiveAttacks = Math.max(0, Math.round(feriteDopoFnp));
-      var danniTotali = effectiveAttacks * combat.danni;
-      var wCurrent = 0, morti = 0;
-      for(var i=0;i<effectiveAttacks;i++){
-        wCurrent += combat.danni;
-        if(wCurrent >= combat.w){ morti++; wCurrent = 0; }
-      }
-      var feriteResidue = wCurrent;
+      var r = calcolaAttacco(combat);
+      var attOk = r.attOk, critTotal = r.critTotal, woundT = r.woundT, ferOk = r.ferOk,
+          calcThreshold = r.calcThreshold, nonSalvati = r.nonSalvati, devBypassCount = r.devBypassCount,
+          feriteDopoFnp = r.feriteDopoFnp, effectiveAttacks = r.effectiveAttacks, danniTotali = r.danniTotali,
+          morti = r.morti, feriteResidue = r.feriteResidue;
 
       // render
       E("r-att-ok").textContent = attOk;
@@ -1441,7 +1564,8 @@ body{
   var tabs = [
     { btn: document.getElementById("tab-stats-btn"), panel: document.getElementById("panel-stats") },
     { btn: document.getElementById("tab-combat-btn"), panel: panelCombat },
-    { btn: document.getElementById("tab-vs-btn"), panel: panelVs }
+    { btn: document.getElementById("tab-vs-btn"), panel: panelVs },
+    { btn: document.getElementById("tab-duello-btn"), panel: document.getElementById("panel-duello") }
   ];
   tabs.forEach(function(t){
     t.btn.addEventListener("click", function(){
@@ -1460,6 +1584,8 @@ body{
     tabs[1].btn.click();
   } else if(location.hash === "#vs"){
     tabs[2].btn.click();
+  } else if(location.hash === "#duello"){
+    tabs[3].btn.click();
   }
 
   // ---------------- INTEGRAZIONE TAVOLO DA GIOCO (tab Combattimento) ----------------
@@ -1808,6 +1934,13 @@ body{
       caricaDati();
       return;
     }
+    // Attacco tra due unità dal Tavolo da Gioco (E + click sul bersaglio): riempie e mostra la scheda Duello.
+    if(dati && dati.type === "wh40-duello"){
+      duelloImposta(dati);
+      tabs[3].btn.click();
+      try { window.focus(); } catch(err) {}
+      return;
+    }
     if(!dati || dati.type !== "wh40-eserciti") return;
     popolaSelectUnita(dati);
     vsImpostaFiltro(dati);
@@ -1815,6 +1948,332 @@ body{
 
   if(window.opener){
     try { window.opener.postMessage({ type: "wh40-ready" }, "*"); } catch(err) {}
+  }
+
+  // ---------------- DUELLO ----------------
+  // Schermata compatta di attacco tra due unità, riempita dal Tavolo da Gioco (messaggio wh40-duello,
+  // dopo "E" + click sull'unità bersaglio): unità, distanza e armi arrivano già pronte e restano
+  // modificabili. I calcoli sono quelli del tab Combattimento (calcolaAttacco): per ogni arma con
+  // modelli > 0 si ottengono gli attacchi che vanno a segno; i danni di tutte le armi, nell'ordine
+  // dell'elenco, si applicano poi uno dopo l'altro ai modelli del difensore (come in Combattimento:
+  // il danno oltre le ferite di un modello si perde).
+  var duello = null;
+  var duelloMemoria = {};
+  var DL_CAMPI_ARMA = ["modelli", "att", "xcol", "forza", "ap", "danni", "lethal", "sust", "dev", "twin", "lancia", "antiX", "ripCol", "rip1Col", "rip1Fer"];
+  var DL_CAMPI_DIFENSORE = ["res", "save", "w", "invulT", "fnpT"];
+
+  function dlSoglia(testo){
+    var n = parseInt(testo, 10);
+    return (!isNaN(n) && n >= 2 && n <= 6) ? n : 0;
+  }
+
+  function dlIntero(testo, predefinito, minimo){
+    var n = parseInt(testo, 10);
+    return isNaN(n) ? predefinito : Math.max(minimo, n);
+  }
+
+  // Regole speciali riconosciute dal testo dell'arma (campo descrizione del CSV); Anti-X resta da
+  // attivare a mano perché dipende dalle parole chiave del difensore. Lethal e Dev valgono da 6+ (modificabile).
+  function dlFlagDaDescrizione(descrizione){
+    var d = descrizione || "";
+    var f = {
+      lethal: /lethal hits/i.test(d) ? 6 : 0, dev: /devastating wounds/i.test(d) ? 6 : 0,
+      twin: /twin-?linked/i.test(d), lancia: /\blance\b/i.test(d), sust: 0
+    };
+    var s = d.match(/sustained hits\s*(\d+|d\d)/i);
+    if(s) f.sust = /^\d+$/.test(s[1]) ? Math.min(3, parseInt(s[1], 10)) : 2;
+    return f;
+  }
+
+  function dlNuovaArma(a){
+    var f = dlFlagDaDescrizione(a.descrizione);
+    return {
+      nome: a.nome, descrizione: a.descrizione || "", tipo: a.tipo || "", gittata: a.range || "",
+      modelli: 0, att: a.att || 1,
+      xcol: a.xcol || 1, // senza soglia per colpire (es. Torrent) i colpi vanno sempre a segno
+      forza: a.forza || 1, ap: a.ap || 0, danni: a.danni || 1,
+      lethal: f.lethal, sust: f.sust, dev: f.dev, twin: f.twin, lancia: f.lancia,
+      antiX: 0, ripCol: false, rip1Col: "", rip1Fer: ""
+    };
+  }
+
+  function dlNuovoDifensore(d){
+    return {
+      res: dlIntero(d.res, 4, 1), save: dlSoglia(d.ts) || 4, w: dlIntero(d.w, 1, 1),
+      invulT: dlSoglia(d.tsPiu), fnpT: dlSoglia(d.fnp),
+      modelli: dlIntero(d.modelli, 1, 1),
+      // Ferite attuali di ogni modello (una voce per basetta attiva); se mancano si assume W pieno.
+      ferite: Array.isArray(d.ferite) ? d.ferite.map(function(n){ return dlIntero(n, 0, 0); }) : []
+    };
+  }
+
+  function dlEl(tag, classe, testo){
+    var e = document.createElement(tag);
+    if(classe) e.className = classe;
+    if(testo !== undefined) e.textContent = testo;
+    return e;
+  }
+
+  function dlCampo(etichetta, controllo, titolo){
+    var l = dlEl("label", "dl-c");
+    if(titolo) l.title = titolo;
+    l.appendChild(dlEl("span", "", etichetta));
+    l.appendChild(controllo);
+    return l;
+  }
+
+  function dlInputNumero(valore, minimo, classe, onChange, massimo){
+    var i = dlEl("input", "dl-in" + (classe ? " " + classe : ""));
+    i.type = "number";
+    i.min = minimo;
+    i.step = 1;
+    i.value = valore;
+    i.setAttribute("inputmode", "numeric");
+    if(massimo !== undefined) i.max = massimo;
+    i.addEventListener("input", function(){
+      var v = dlIntero(i.value, minimo, minimo);
+      if(massimo !== undefined && v > massimo){ v = massimo; i.value = v; }
+      onChange(v);
+    });
+    return i;
+  }
+
+  function dlSelect(voci, valore, onChange){
+    var s = dlEl("select", "dl-in");
+    voci.forEach(function(v){
+      var o = dlEl("option", "", v[1]);
+      o.value = v[0];
+      s.appendChild(o);
+    });
+    s.value = String(valore);
+    s.addEventListener("change", function(){ onChange(s.value); });
+    return s;
+  }
+
+  function dlChip(testo, attivo, titolo, onChange){
+    var b = dlEl("button", "dl-chip", testo);
+    b.type = "button";
+    b.title = titolo || "";
+    b.setAttribute("aria-pressed", attivo ? "true" : "false");
+    b.addEventListener("click", function(){
+      var nuovo = b.getAttribute("aria-pressed") !== "true";
+      b.setAttribute("aria-pressed", nuovo ? "true" : "false");
+      onChange(nuovo);
+    });
+    return b;
+  }
+
+  // [["0","—"], ["2","2+"], …]; con senzaNessuna il "—" non c'è (soglie sempre presenti)
+  function dlVociSoglie(senzaNessuna, primaVoce){
+    var voci = senzaNessuna ? [] : [["0", primaVoce || "—"]];
+    [2, 3, 4, 5, 6].forEach(function(n){ voci.push([String(n), n + "+"]); });
+    return voci;
+  }
+
+  function dlCostruisciArma(a, distanza, massimoModelli){
+    var riga = dlEl("div", "dl-riga dl-arma");
+    var gittata = parseInt(a.gittata, 10);
+    var fuori = a.tipo !== "Melee" && !isNaN(gittata) && distanza !== null && distanza !== undefined && distanza > gittata;
+
+    var nome = dlEl("div", "dl-nome" + (fuori ? " fuori" : ""));
+    nome.title = a.nome + (a.descrizione ? " — " + a.descrizione : "");
+    nome.appendChild(dlEl("span", "dl-tipo", a.tipo === "Melee" ? "M" : "T"));
+    nome.appendChild(document.createTextNode(a.nome));
+    var info = [isNaN(gittata) ? "" : gittata + "″", a.descrizione, fuori ? "fuori portata" : ""].filter(Boolean).join(" · ");
+    if(info) nome.appendChild(dlEl("small", "", info));
+    riga.appendChild(nome);
+
+    riga.appendChild(dlCampo("Modelli", dlInputNumero(a.modelli, 0, "dl-mod", function(v){ a.modelli = v; dlAggiorna(); }, massimoModelli)));
+    riga.appendChild(dlCampo("ATT", dlInputNumero(a.att, 1, "", function(v){ a.att = v; dlAggiorna(); })));
+    riga.appendChild(dlCampo("Colpire", dlSelect([["1", "auto"]].concat(dlVociSoglie(true)), a.xcol, function(v){ a.xcol = parseInt(v, 10); dlAggiorna(); })));
+    riga.appendChild(dlCampo("FOR", dlInputNumero(a.forza, 1, "", function(v){ a.forza = v; dlAggiorna(); })));
+    riga.appendChild(dlCampo("AP", dlInputNumero(a.ap, 0, "", function(v){ a.ap = v; dlAggiorna(); })));
+    riga.appendChild(dlCampo("Danni", dlInputNumero(a.danni, 1, "", function(v){ a.danni = v; dlAggiorna(); })));
+
+    var vociUno = [["", "—"], ["uno", "un 1"], ["tutti", "tutti"]];
+    riga.appendChild(dlCampo("Sust", dlSelect([["0", "—"], ["1", "1"], ["2", "2"], ["3", "3"]], a.sust, function(v){ a.sust = parseInt(v, 10); dlAggiorna(); }), "Sustained Hits: colpi extra su ogni colpo critico"));
+    riga.appendChild(dlCampo("Lethal", dlSelect(dlVociSoglie(false), a.lethal, function(v){ a.lethal = parseInt(v, 10); dlAggiorna(); }), "Lethal Hits: con questo valore o più il colpo ferisce automaticamente"));
+    riga.appendChild(dlCampo("Dev", dlSelect(dlVociSoglie(false), a.dev, function(v){ a.dev = parseInt(v, 10); dlAggiorna(); }), "Devastating Wounds: con questo valore o più il ferimento salta AP e salvezza"));
+    riga.appendChild(dlCampo("Anti-X", dlSelect(dlVociSoglie(false), a.antiX, function(v){ a.antiX = parseInt(v, 10); dlAggiorna(); }), "Anti-X: soglia fissa per ferire"));
+    riga.appendChild(dlCampo("Rip.1.col.", dlSelect(vociUno, a.rip1Col, function(v){ a.rip1Col = v; dlAggiorna(); }), "Ripete gli 1 per colpire: un solo 1 o tutti gli 1"));
+    riga.appendChild(dlCampo("Rip.1.fer.", dlSelect(vociUno, a.rip1Fer, function(v){ a.rip1Fer = v; dlAggiorna(); }), "Ripete gli 1 per ferire: un solo 1 o tutti gli 1"));
+    riga.appendChild(dlChip("Rip.col.", a.ripCol, "Ripete tutti i tiri per colpire falliti", function(v){ a.ripCol = v; dlAggiorna(); }));
+    riga.appendChild(dlChip("Twin", a.twin, "Twin-linked: ripete tutti i tiri per ferire falliti", function(v){ a.twin = v; dlAggiorna(); }));
+    riga.appendChild(dlChip("Lance", a.lancia, "Lance: +1 per ferire", function(v){ a.lancia = v; dlAggiorna(); }));
+
+    a._tot = dlEl("span", "dl-tot");
+    riga.appendChild(a._tot);
+    a._riga = riga;
+    return riga;
+  }
+
+  function dlCostruisciDifensore(c){
+    var riga = document.getElementById("dl-dif");
+    riga.innerHTML = "";
+    riga.appendChild(dlCampo("RES", dlInputNumero(c.res, 1, "", function(v){ c.res = v; dlAggiorna(); })));
+    riga.appendChild(dlCampo("Salvezza", dlSelect(dlVociSoglie(true), c.save, function(v){ c.save = parseInt(v, 10); dlAggiorna(); })));
+    riga.appendChild(dlCampo("W", dlInputNumero(c.w, 1, "", function(v){ c.w = v; dlAggiorna(); })));
+    riga.appendChild(dlCampo("Invulnerabile", dlSelect(dlVociSoglie(false), c.invulT, function(v){ c.invulT = parseInt(v, 10); dlAggiorna(); })));
+    riga.appendChild(dlCampo("Feel No Pain", dlSelect(dlVociSoglie(false), c.fnpT, function(v){ c.fnpT = parseInt(v, 10); dlAggiorna(); })));
+    riga.appendChild(dlCampo("Modelli", dlInputNumero(c.modelli, 1, "", function(v){ c.modelli = v; dlAggiorna(); }), "Basette attive del difensore (meno quelle cancellate sul tavolo)"));
+    var attuali = dlEl("span", "dl-attuali");
+    attuali.id = "dl-ferite-attuali";
+    riga.appendChild(dlCampo("Ferite attuali", attuali, "Quanti modelli hanno quante ferite rimaste (dal Tavolo da Gioco). I modelli già feriti subiscono i danni per primi."));
+  }
+
+  // Ferite attuali dei modelli del difensore, dal più ferito al meno ferito (un modello già ferito
+  // subisce i danni per primo); i modelli in più rispetto ai dati ricevuti hanno W pieno.
+  function dlFeriteModelli(d){
+    var lista = d.ferite.slice(0, d.modelli).sort(function(x, y){ return x - y; });
+    while(lista.length < d.modelli) lista.push(d.w);
+    return lista;
+  }
+
+  // "2 × 3 F · 1 × 1 F" = 2 modelli con 3 ferite rimaste, 1 modello con 1 ferita rimasta.
+  function dlTestoFerite(lista){
+    var gruppi = [];
+    lista.forEach(function(f){
+      var g = gruppi[gruppi.length - 1];
+      if(g && g.f === f) g.n++; else gruppi.push({ f: f, n: 1 });
+    });
+    return gruppi.map(function(g){ return g.n + " \u00d7 " + g.f + " F"; }).join(" \u00b7 ");
+  }
+
+  // Tabella delle statistiche in fondo: una colonna per arma in uso più il totale, una riga per fase
+  // (le righe Lethal/Sustained/Dev/FNP compaiono solo se c'è la relativa regola).
+  function dlStatistiche(usate, d){
+    var cont = document.getElementById("dl-stat");
+    cont.innerHTML = "";
+    if(!usate.length){
+      cont.appendChild(dlEl("div", "dl-vuoto", "Imposta i modelli di almeno un'arma per vedere le statistiche."));
+      return;
+    }
+    function qualcuna(fn){ return usate.some(fn); }
+    var righe = [
+      ["Attacchi", function(u){ return u.att; }, true],
+      ["Colpiti", function(u){ return u.r.attOk; }, true],
+      ["di cui Lethal (feriscono da soli)", function(u){ return u.r.critTotal; }, qualcuna(function(u){ return u.a.lethal > 0; })],
+      ["Colpi extra Sustained", function(u){ return u.r.sustTotal; }, qualcuna(function(u){ return u.a.sust > 0; })],
+      ["Feriti", function(u){ return u.r.ferOk; }, true],
+      ["di cui Dev (saltano la salvezza)", function(u){ return u.r.devBypassCount; }, qualcuna(function(u){ return u.a.dev > 0; })],
+      ["Salvati", function(u){ return u.r.ferOk - u.r.nonSalvati; }, true],
+      ["Non salvati", function(u){ return u.r.nonSalvati; }, true],
+      ["Evitati da Feel No Pain", function(u){ return u.r.nonSalvati - u.r.feriteDopoFnp; }, d.fnpT > 0],
+      ["Danni inflitti", function(u){ return u.r.danniTotali; }, true]
+    ];
+    var tabella = dlEl("table", "dl-stat-tab");
+    var intest = dlEl("tr");
+    intest.appendChild(dlEl("th", "", ""));
+    usate.forEach(function(u){ var th = dlEl("th", "", u.a.nome); th.title = u.a.nome; intest.appendChild(th); });
+    if(usate.length > 1) intest.appendChild(dlEl("th", "dl-totale", "Totale"));
+    tabella.appendChild(intest);
+    righe.forEach(function(riga){
+      if(!riga[2]) return;
+      var tr = dlEl("tr");
+      tr.appendChild(dlEl("td", "dl-stat-nome", riga[0]));
+      var somma = 0;
+      usate.forEach(function(u){
+        var v = riga[1](u);
+        somma += v;
+        tr.appendChild(dlEl("td", "", String(v)));
+      });
+      if(usate.length > 1) tr.appendChild(dlEl("td", "dl-totale", String(somma)));
+      tabella.appendChild(tr);
+    });
+    cont.appendChild(tabella);
+  }
+
+  // Ricalcola il risultato complessivo di tutte le armi usate (modelli > 0) contro il difensore.
+  function dlAggiorna(){
+    if(!duello) return;
+    var d = duello.dif;
+    var lista = dlFeriteModelli(d);
+    var indice = 0, resto = lista.length ? lista[0] : 0;
+    var morti = 0, armiUsate = 0, attacchi = 0, usate = [];
+    var elAttuali = document.getElementById("dl-ferite-attuali");
+    if(elAttuali) elAttuali.textContent = dlTestoFerite(lista);
+    duello.armi.forEach(function(a){
+      var attiva = a.modelli > 0;
+      a._riga.classList.toggle("attiva", attiva);
+      a._tot.textContent = attiva ? "= " + (a.modelli * a.att) + " att" : "";
+      if(!attiva) return;
+      armiUsate++;
+      attacchi += a.modelli * a.att;
+      var r = calcolaAttacco({
+        att: a.modelli * a.att, xcol: a.xcol, for_: a.forza, ap: a.ap, danni: a.danni,
+        lethal: a.lethal > 0, lethalThreshold: a.lethal || 6,
+        repeat: a.ripCol, repeatOnesHit: a.rip1Col !== "", repeatOnesHitMode: a.rip1Col || "tutti",
+        sustained: a.sust, sustainedThreshold: 6,
+        twinlink: a.twin, repeatOnesWound: a.rip1Fer !== "", repeatOnesWoundMode: a.rip1Fer || "tutti", lancia: a.lancia,
+        dev: a.dev > 0, devThreshold: a.dev || 6,
+        antiX: a.antiX > 0, antiXThreshold: a.antiX || 4,
+        res: d.res, save: d.save, w: d.w,
+        invul: d.invulT > 0, invulThreshold: d.invulT || 4,
+        fnp: d.fnpT > 0, fnpThreshold: d.fnpT || 4
+      });
+      usate.push({ a: a, att: a.modelli * a.att, r: r });
+      // Come in Combattimento il danno oltre le ferite rimaste a un modello si perde.
+      for(var i = 0; i < r.effectiveAttacks && indice < lista.length; i++){
+        resto -= a.danni;
+        if(resto <= 0){
+          morti++;
+          indice++;
+          resto = indice < lista.length ? lista[indice] : 0;
+        }
+      }
+    });
+    dlStatistiche(usate, d);
+    var distrutta = indice >= lista.length;
+    var feriteFatte = distrutta ? 0 : lista[indice] - resto;
+    document.getElementById("dl-morti").textContent = morti;
+    document.getElementById("dl-morti-sub").textContent =
+      "su " + d.modelli + (d.modelli === 1 ? " modello" : " modelli") + (distrutta ? " · unità distrutta" : "") +
+      " · " + (armiUsate ? armiUsate + (armiUsate === 1 ? " arma, " : " armi, ") + attacchi + " attacchi" : "nessuna arma in uso");
+    document.getElementById("dl-ferite").textContent = feriteFatte;
+    document.getElementById("dl-ferite-sub").textContent = distrutta ? "nessun modello rimasto" :
+      "su " + lista[indice] + (lista[indice] === 1 ? " ferita" : " ferite") + " attuali (ne restano " + resto + ")";
+  }
+
+  function dlTitolo(id, ruolo, nome, modelli){
+    var t = document.getElementById(id);
+    t.textContent = "";
+    t.appendChild(document.createTextNode(ruolo));
+    t.appendChild(dlEl("span", "dl-sub", nome + " · " + modelli + (modelli === 1 ? " modello" : " modelli")));
+  }
+
+  function duelloImposta(dati){
+    var att = dati.attaccante || {}, dif = dati.difensore || {};
+    var distanza = typeof dati.distanza === "number" ? dati.distanza : null;
+    var chiave = (att.id || att.nome) + "|" + (dif.id || dif.nome);
+    var armi = (att.armi || []).map(dlNuovaArma);
+    var difensore = dlNuovoDifensore({ res: dif.res, ts: dif.ts, tsPiu: dif.tsPiu, w: dif.w, fnp: dif.fnp, modelli: dif.modelli, ferite: dif.ferite });
+
+    // Riaprendo lo stesso confronto si ritrovano le modifiche già fatte (modelli per arma, regole, difensore).
+    var prima = duelloMemoria[chiave];
+    if(prima){
+      armi.forEach(function(a, i){
+        var p = prima.armi[i];
+        if(p && p.nome === a.nome) DL_CAMPI_ARMA.forEach(function(k){ a[k] = p[k]; });
+      });
+      DL_CAMPI_DIFENSORE.forEach(function(k){ difensore[k] = prima.dif[k]; });
+    }
+    duello = { armi: armi, dif: difensore, attModelli: dlIntero(att.modelli, 1, 1) };
+    duelloMemoria[chiave] = duello;
+
+    document.getElementById("dl-vuoto").style.display = "none";
+    document.getElementById("dl-contenuto").style.display = "";
+    document.getElementById("dl-distanza").textContent = distanza === null ? "—" : distanza.toFixed(1) + "″";
+    dlTitolo("dl-att-titolo", "Attaccante", att.nome || "?", duello.attModelli);
+    dlTitolo("dl-dif-titolo", "Difensore", dif.nome || "?", difensore.modelli);
+
+    var elArmi = document.getElementById("dl-armi");
+    elArmi.innerHTML = "";
+    if(!armi.length){
+      elArmi.appendChild(dlEl("div", "dl-vuoto", "Nessuna arma nei dati per questa unità."));
+    }
+    armi.forEach(function(a){ elArmi.appendChild(dlCostruisciArma(a, distanza, duello.attModelli)); });
+    dlCostruisciDifensore(difensore);
+    dlAggiorna();
   }
 
   // ---------------- TEMA CHIARO / SCURO ----------------
