@@ -14,21 +14,21 @@
 000000820|AdM|Adeptus Mechanicus|Skitarii Hunter Cohort||2|Reconnaissance
 000000821|AdM|Adeptus Mechanicus|Data-Psalm Conclave||2|Disruption
 000000822|AdM|Adeptus Mechanicus|Explorator Maniple||2|Priority Assets
-000000823|AdM|Adeptus Mechanicus|Cohort Cybernetica||2|Take and Hold
+000000823|AdM|Adeptus Mechanicus|Cohort Cybernetica||1|Take and Hold
 000000912|AdM|Adeptus Mechanicus|Electromartyrs|Boarding Actions||
 000000913|AdM|Adeptus Mechanicus|Response Clade|Boarding Actions||
 000000914|AdM|Adeptus Mechanicus|Machine Cult|Boarding Actions||
 000000984|AdM|Adeptus Mechanicus|Haloscreed Battle Clade||3|Priority Assets
-000001143|AdM|Adeptus Mechanicus|Eradication Cohort||3|Purge the Foe
+000001143|AdM|Adeptus Mechanicus|Eradication Cohort||2|Purge the Foe
 000001158|AdM|Adeptus Mechanicus|Cohort Acquisitus||1|Reconnaissance
-000001159|AdM|Adeptus Mechanicus|Lords of the Forge||1|Priority Assets
+000001159|AdM|Adeptus Mechanicus|Lords of the Forge||2|Priority Assets
 000001160|AdM|Adeptus Mechanicus|Luminen Auto-choir||1|Disruption
 000000919|AE|Aeldari|Khaine’s Arrow|Boarding Actions||
 000000920|AE|Aeldari|Protector Host|Boarding Actions||
 000000921|AE|Aeldari|Wraiths of the Void|Boarding Actions||
 000000922|AE|Aeldari|Star-dancer Masque|Boarding Actions||
 000000990|AE|Aeldari|Armoured Warhost||1|Reconnaissance
-000001017|AE|Aeldari|Warhost||3|Reconnaissance
+000001017|AE|Aeldari|Warhost||2|Reconnaissance
 000001018|AE|Aeldari|Windrider Host||2|Disruption
 000001019|AE|Aeldari|Spirit Conclave||2|Take and Hold
 000001020|AE|Aeldari|Guardian Battlehost||2|Take and Hold
@@ -62,7 +62,7 @@
 000000924|AoI|Imperial Agents|Voidship’s Company|Boarding Actions||
 000000925|AoI|Imperial Agents|Interdiction Team|Boarding Actions||
 000000987|AoI|Imperial Agents|Veiled Blade Elimination Force||1|Disruption
-000000791|AS|Adepta Sororitas|Hallowed Martyrs||3|Priority Assets
+000000791|AS|Adepta Sororitas|Hallowed Martyrs||3|Take and Hold
 000000878|AS|Adepta Sororitas|Penitent Host||2|Purge the Foe
 000000879|AS|Adepta Sororitas|Bringers of Flame||2|Priority Assets
 000000880|AS|Adepta Sororitas|Army of Faith||2|Take and Hold
@@ -86,10 +86,10 @@
 000001175|CD|Chaos Daemons|Cavalcade of Chaos||1|Disruption
 000001176|CD|Chaos Daemons|Lords of the Warp||1|Take and Hold
 000001177|CD|Chaos Daemons|Warptide||1|Reconnaissance
-000000751|CSM|Chaos Space Marines|Pactbound Zealots||3|Priority Assets
+000000751|CSM|Chaos Space Marines|Pactbound Zealots||3|Disruption
 000000867|CSM|Chaos Space Marines|Veterans of the Long War||2|Take and Hold
 000000868|CSM|Chaos Space Marines|Deceptors||2|Disruption
-000000869|CSM|Chaos Space Marines|Renegade Raiders||3|Reconnaissance
+000000869|CSM|Chaos Space Marines|Renegade Raiders||3|Priority Assets
 000000870|CSM|Chaos Space Marines|Dread Talons||2|Disruption
 000000871|CSM|Chaos Space Marines|Fellhammer Siege-host||2|Take and Hold
 000000872|CSM|Chaos Space Marines|Chaos Cult||2|Priority Assets
@@ -97,10 +97,10 @@
 000000946|CSM|Chaos Space Marines|Infernal Reavers|Boarding Actions||
 000000947|CSM|Chaos Space Marines|Underdeck Uprising|Boarding Actions||
 000000948|CSM|Chaos Space Marines|Champions of Chaos|Boarding Actions||
-000000991|CSM|Chaos Space Marines|Creations of Bile||3|Purge the Foe
+000000991|CSM|Chaos Space Marines|Creations of Bile||3|Take and Hold
 000001058|CSM|Chaos Space Marines|Cabal of Chaos||1|Disruption
 000001122|CSM|Chaos Space Marines|Nightmare Hunt||2|Disruption
-000001133|CSM|Chaos Space Marines|Huron’s Marauders||3|Purge the Foe
+000001133|CSM|Chaos Space Marines|Huron’s Marauders||3|Disruption
 000001134|CSM|Chaos Space Marines|Renegade Warband||2|Priority Assets
 000001141|CSM|Chaos Space Marines|Warpstrike Champions||2|Disruption
 000001142|CSM|Chaos Space Marines|Cult of the Arkifane||2|Priority Assets
@@ -123,7 +123,7 @@
 000000935|DRU|Drukhari|Kabalite Corsairs|Boarding Actions||
 000000936|DRU|Drukhari|Ship-killer Cult|Boarding Actions||
 000000937|DRU|Drukhari|Painbringers|Boarding Actions||
-000000993|DRU|Drukhari|Reaper’s Wager||3|Purge the Foe
+000000993|DRU|Drukhari|Reaper’s Wager||3|Priority Assets
 000000804|DRU|Drukhari|Realspace Raiders||2|Priority Assets
 000001113|DRU|Drukhari|Spectacle of Spite||2|Purge the Foe
 000001114|DRU|Drukhari|Covenite Coterie||2|Take and Hold
@@ -134,9 +134,9 @@
 000001033|EC|Emperor’s Children|Mercurial Host||2|Reconnaissance
 000001034|EC|Emperor’s Children|Peerless Bladesmen||2|Priority Assets
 000001035|EC|Emperor’s Children|Rapid Evisceration||2|Disruption
-000001036|EC|Emperor’s Children|Carnival of Excess||2|Disruption
+000001036|EC|Emperor’s Children|Carnival of Excess||3|Disruption
 000001037|EC|Emperor’s Children|Coterie of the Conceited||3|Priority Assets
-000001038|EC|Emperor’s Children|Slaanesh’s Chosen||2|Purge the Foe
+000001038|EC|Emperor’s Children|Slaanesh’s Chosen||1|Purge the Foe
 000001125|EC|Emperor’s Children|Court of the Phoenician||2|Purge the Foe
 000001154|EC|Emperor’s Children|Sublime Strike|Boarding Actions||
 000001180|EC|Emperor’s Children|Elegant Brutes||1|Take and Hold
@@ -179,7 +179,7 @@
 000001196|LoV|Leagues of Votann|Hearthguard Covenant||1|Priority Assets
 000000756|NEC|Necrons|Awakened Dynasty||3|Take and Hold
 000000815|NEC|Necrons|Annihilation Legion||2|Purge the Foe
-000000816|NEC|Necrons|Canoptek Court||3|Take and Hold
+000000816|NEC|Necrons|Canoptek Court||2|Take and Hold
 000000817|NEC|Necrons|Obeisance Phalanx||2|Disruption
 000000818|NEC|Necrons|Hypercrypt Legion||2|Reconnaissance
 000000959|NEC|Necrons|Tomb Ship Complement|Boarding Actions||
@@ -226,65 +226,47 @@
 000001144|QT|Chaos Knights|Helhunt Lance||2|Disruption
 000001173|QT|Chaos Knights|Bastions of Tyranny||1|Priority Assets
 000001174|QT|Chaos Knights|Hunting Warpack||1|Reconnaissance
-000000750|SM|Space Marines|Gladius Task Force||3|Priority Assets
-000000758|SM|Space Marines|Liberator Assault Group||3|Take and Hold
-000000793|SM|Space Marines|Anvil Siege Force||2|Take and Hold
-000000794|SM|Space Marines|Ironstorm Spearhead||2|Take and Hold
-000000795|SM|Space Marines|Firestorm Assault Force||2|Priority Assets
-000000796|SM|Space Marines|Stormlance Task Force||3|Disruption
-000000797|SM|Space Marines|Vanguard Spearhead||2|Reconnaissance
-000000798|SM|Space Marines|1st Company Task Force||2|Purge the Foe
-000000808|SM|Space Marines|Black Spear Task Force||3|Purge the Foe
-000000834|SM|Space Marines|Unforgiven Task Force||2|Take and Hold
-000000835|SM|Space Marines|Inner Circle Task Force||2|Priority Assets
-000000836|SM|Space Marines|Company of Hunters||2|Disruption
-000000900|SM|Space Marines|The Lost Brethren||2|Purge the Foe
-000000901|SM|Space Marines|The Angelic Host||2|Disruption
+000000750|SM|Space Marines|Gladius Task Force||3|Take and Hold
+000000794|SM|Space Marines|Ironstorm Spearhead||1|Purge the Foe
+000000796|SM|Space Marines|Stormlance Task Force||1|Reconnaissance
+000000808|SM|Space Marines|Black Spear Task Force||3|Priority Assets
+000000835|SM|Space Marines|Inner Circle Task Force||1|Priority Assets
 000000905|SM|Space Marines|Boarding Strike|Boarding Actions||
 000000906|SM|Space Marines|Pilum Strike Team|Boarding Actions||
 000000907|SM|Space Marines|Terminator Assault|Boarding Actions||
-000000981|SM|Space Marines|Lion’s Blade Task Force||2|Purge the Foe
-000000994|SM|Space Marines|Librarius Conclave||1|Reconnaissance
 000001004|SM|Space Marines|Angelic Inheritors||3|Priority Assets
-000001006|SM|Space Marines|Wrathful Procession||1|Take and Hold
 000001008|SM|Space Marines|Champions of Fenris||1|Priority Assets
-000001059|SM|Space Marines|Wrath of the Rock||3|Priority Assets
-000001068|SM|Space Marines|Saga of the Hunter||2|Disruption
-000001069|SM|Space Marines|Saga of the Bold||2|Priority Assets
-000001070|SM|Space Marines|Saga of the Beastslayer||2|Purge the Foe
+000001059|SM|Space Marines|Wrath of the Rock||2|Take and Hold
+000001070|SM|Space Marines|Saga of the Beastslayer||1|Purge the Foe
 000001086|SM|Space Marines|Forgefather’s Seekers||2|Priority Assets
-000001091|SM|Space Marines|Companions of Vehemence||2|Purge the Foe
-000001092|SM|Space Marines|Vindication Task Force||2|Priority Assets
-000001093|SM|Space Marines|Godhammer Assault Force||2|Purge the Foe
-000001103|SM|Space Marines|Emperor’s Shield||2|Purge the Foe
 000001104|SM|Space Marines|Shadowmark Talon||2|Disruption
-000001118|SM|Space Marines|Hammer of Avernii||2|Purge the Foe
-000001119|SM|Space Marines|Spearpoint Task Force||2|Disruption
-000001120|SM|Space Marines|Blade of Ultramar||3|Priority Assets
-000001123|SM|Space Marines|Rage-cursed Onslaught||3|Purge the Foe
+000001119|SM|Space Marines|Spearpoint Task Force||2|Reconnaissance
+000001120|SM|Space Marines|Blade of Ultramar||3|Take and Hold
 000001126|SM|Space Marines|Saga of the Great Wolf||2|Take and Hold
-000001130|SM|Space Marines|Bastion Task Force||2|Take and Hold
-000001131|SM|Space Marines|Orbital Assault Force||2|Take and Hold
-000001132|SM|Space Marines|Reclamation Force||2|Take and Hold
 000001139|SM|Space Marines|Shield of the Void|Boarding Actions||
-000001146|SM|Space Marines|Ceramite Sentinels||3|Take and Hold
-000001147|SM|Space Marines|Armoured Speartip||3|Take and Hold
-000001148|SM|Space Marines|Headhunter Task Force||2|Priority Assets
-000001210|SM|Space Marines|The Living Miracle||1|Disruption
+000001146|SM|Space Marines|Ceramite Sentinels||2|Take and Hold
 000001209|SM|Space Marines|Marshal’s Household||1|Priority Assets
-000001213|SM|Space Marines|Legacy of Grace||1|Priority Assets
 000001214|SM|Space Marines|Encarmine Speartip||1|Disruption
 000001215|SM|Space Marines|Wrath of the Doomed||1|Purge the Foe
-000001204|SM|Space Marines|Dark Age Arsenal||1|Priority Assets
 000001205|SM|Space Marines|Darkflight Pursuit||1|Reconnaissance
-000001206|SM|Space Marines|Interrogation Conclave||1|Take and Hold
-000001207|SM|Space Marines|Legends of Saga and Song||1|Take and Hold
-000001208|SM|Space Marines|Veterans of the Fang||1|Disruption
-000001221|SM|Space Marines|Vengeful Hosts||1|Take and Hold
-000001211|SM|Space Marines|Fulguris Task Force||1|Reconnaissance
-000001212|SM|Space Marines|Subversion Assets||1|Disruption
+000001229|SM|Space Marines|Deathwatch Support||1|Disruption
+000001230|SM|Space Marines|Vow-sworn Crusaders||2|Purge the Foe
+000001231|SM|Space Marines|Fist of the God-Emperor||1|Take and Hold
+000001232|SM|Space Marines|Medusa's Wrath||2|Purge the Foe
+000001233|SM|Space Marines|Gauntlet Task Force||1|Reconnaissance
+000001234|SM|Space Marines|Phobos Shadow Force||1|Disruption
+000001235|SM|Space Marines|Tacticus Attack Force||1|Take and Hold
+000001236|SM|Space Marines|Phobos Shock Force||1|Disruption
+000001237|SM|Space Marines|Terminator Storm Force||1|Priority Assets
+000001238|SM|Space Marines|Assault Brethren||1|Take and Hold
+000001239|SM|Space Marines|Gravis Linebreaker Force||1|Take and Hold
+000001240|SM|Space Marines|Devastator Brethren||1|Purge the Foe
+000001241|SM|Space Marines|Gravis Siege Force||1|Take and Hold
+000001242|SM|Space Marines|Tactical Brethren||1|Priority Assets
+000001243|SM|Space Marines|Ironclad Champions||1|Priority Assets
+000001244|SM|Space Marines|Tacticus Firestorm Force||1|Priority Assets
 000000781|TAU|T’au Empire|Kauyon||2|Reconnaissance
-000000845|TAU|T’au Empire|Mont’ka||3|Priority Assets
+000000845|TAU|T’au Empire|Mont’ka||3|Take and Hold
 000000846|TAU|T’au Empire|Retaliation Cadre||3|Purge the Foe
 000000847|TAU|T’au Empire|Kroot Hunting Pack||2|Take and Hold
 000000966|TAU|T’au Empire|Starfire Cadre|Boarding Actions||
@@ -296,7 +278,7 @@
 000000970|TS|Thousand Sons|Devoted Thralls|Boarding Actions||
 000000971|TS|Thousand Sons|Fateseekers|Boarding Actions||
 000000983|TS|Thousand Sons|Hexwarp Thrallband||3|Take and Hold
-000001061|TS|Thousand Sons|Grand Coven||3|Priority Assets
+000001061|TS|Thousand Sons|Grand Coven||3|Disruption
 000001062|TS|Thousand Sons|Changehost of Deceit||2|Reconnaissance
 000001063|TS|Thousand Sons|Warpmeld Pact||2|Purge the Foe
 000001064|TS|Thousand Sons|Rubricae Phalanx||3|Take and Hold
@@ -318,7 +300,7 @@
 000001057|TYR|Tyranids|Subterranean Assault||3|Disruption
 000001197|TYR|Tyranids|Ambush Predators||1|Disruption
 000001198|TYR|Tyranids|Talons of the Norn Queen||1|Take and Hold
-000000777|WE|World Eaters|Berzerker Warband||3|Purge the Foe
+000000777|WE|World Eaters|Berzerker Warband||2|Purge the Foe
 000000977|WE|World Eaters|Boarding Butchers|Boarding Actions||
 000000978|WE|World Eaters|Skullsworn|Boarding Actions||
 000001007|WE|World Eaters|Vessels of Wrath||1|Priority Assets

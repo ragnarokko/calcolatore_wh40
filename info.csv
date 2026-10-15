@@ -1,5 +1,5 @@
 ﻿datasheet_id|line|name|MOV|RES|TS|TS+|Note|W|Ld|OC|base_size|fac|faction|FNP
-1|1|Warboss|"6"""|6|4+|5||6|6+|1|40mm|ORK|Orks|
+1|1|Warboss|"6"""|6|4+|5||6|6+|1|50mm|ORK|Orks|
 2|1|Warboss in Mega Armour|"5"""|7|2+|5||7|6+|1|50mm|ORK|Orks|
 3|1|Warboss on Warbike|"12"""|6|4+|5||7|6+|2|100 x 40mm|ORK|Orks|
 4|1|Weirdboy|"6"""|5|5+|-||4|7+|1|50mm|ORK|Orks|
@@ -50,135 +50,109 @@
 54|1|Big Trakk|"12"""|9|4+|6||12|7+|3||ORK|Orks|
 56|1|Kill Tank|"12"""|12|3+|-||24|6+|10||ORK|Orks|
 59|1|Gargantuan Squiggoth|"10"""|13|3+|-||30|7+|12||ORK|Orks|
-60|1|Apothecary Biologis|"5"""|6|3+|-||5|6+|3|40mm|SM|Space Marines|
-61|1|Assault Squad|"6"""|4|3+|-||2|6+|1|32mm|SM|Space Marines|
-63|1|Apothecary On Bike|"12"""|5|3+|-||5|6+|2|75 x 25mm|SM|Space Marines|
-64|1|Assault Squad With Jump Packs|"12"""|4|3+|-||2|6+|1|32mm|SM|Space Marines|
+60|1|Apothecary Biologis|"5"""|6|3+|-||5|6+|1|40mm|SM|Space Marines|
 65|1|Land Raider|"10"""|12|2+|-||16|6+|5||SM|Space Marines|
 66|1|Land Raider Crusader|"12"""|12|2+|-||16|6+|5||SM|Space Marines|
 67|1|Land Raider Excelsior|"10"""|12|2+|5||16|6+|5||SM|Space Marines|
-68|1|Suppressor Squad|"12"""|4|3+|-||2|6+|1|40mm|SM|Space Marines|
-70|1|Tactical Squad|"6"""|4|3+|-||2|6+|2|32mm|SM|Space Marines|
-71|1|Bladeguard Veteran Squad|"6"""|4|3+|4||3|6+|1|40mm|SM|Space Marines|
-72|1|Caestus Assault Ram|"14"""|10|3+|-||18|6+|0|120 x 92mm|SM|Space Marines|
-73|1|Captain|"6"""|4|3+|4||5|6+|1|40mm|SM|Space Marines|
-76|1|Lieutenant With Combi-weapon|"6"""|4|3+|-||4|6+|1|40mm|SM|Space Marines|5+
-79|1|Librarian In Terminator Armour|"5"""|5|2+|4||5|6+|1|40mm|SM|Space Marines|
-83|1|Captain With Jump Pack|"12"""|4|3+|4||5|6+|1|40mm|SM|Space Marines|
+71|1|Bladeguard Veteran Sergeant|"6"""|5|3+|4||3|6+|1|40mm|SM|Space Marines|
+71|2|Bladeguard Veteran|"6"""|5|3+|4||3|6+|1|40mm|SM|Space Marines|
+73|1|Captain|"6"""|5|3+|4||5|6+|1|40mm|SM|Space Marines|
+76|1|Lieutenant with Combi-weapon|"8"""|4|3+|-||4|6+|1|40mm|SM|Space Marines|5+
+79|1|Librarian in Terminator Armour|"5"""|6|2+|4||5|6+|1|40mm|SM|Space Marines|
+83|1|Captain with Jump Pack|"12"""|5|3+|4||5|6+|1|40mm|SM|Space Marines|
 84|1|Stormhawk Interceptor|-|9|3+|-||10|6+|-|120 x 92mm|SM|Space Marines|
 85|1|Rhino Primaris|"12"""|9|3+|-||10|6+|3||SM|Space Marines|
-86|1|Firestrike Servo-turrets|"3"""|6|2+|-||6|6+|2|80mm|SM|Space Marines|
-87|1|Drop Pod|-|7|3+|-||8|6+|0||SM|Space Marines|
+86|1|Firestrike Servo-turrets|"5"""|6|2+|-||6|6+|2|80mm|SM|Space Marines|
+87|1|Drop Pod|-|7|3+|-||8|6+|-||SM|Space Marines|
 91|1|Ballistus Dreadnought|"8"""|10|2+|-||12|6+|4|90mm|SM|Space Marines|
-92|1|Sicaran Venator|"10"""|11|2+|-||14|6+|4||SM|Space Marines|
 93|1|Typhon|"10"""|12|2+|-||18|6+|6||SM|Space Marines|
-94|1|Chaplain On Bike|"12"""|5|3+|4||5|5+|1|90 x 52mm|SM|Space Marines|
-96|1|Carab Culln The Risen|"8"""|10|2+|5||12|6+|4|80mm|SM|Space Marines|
+94|1|Chaplain on Bike|"12"""|6|3+|4||5|5+|2|90 x 52mm|SM|Space Marines|
 97|1|Hammerfall Bunker|-|12|2+|-||14|6+|0||SM|Space Marines|
 98|1|Tarantula Sentry Battery|-|6|3+|-||4|6+|1||SM|Space Marines|
 99|1|Tarantula Air Defence Battery|-|5|3+|-||4|7+|0||SM|Space Marines|
-103|1|Eradicator Squad|"5"""|6|3+|-||3|6+|1|40mm|SM|Space Marines|
-104|1|Relic Terminator Squad|"5"""|5|2+|4||3|6+|1|40mm|SM|Space Marines|
-107|1|Javelin Attack Speeder|"14"""|8|3+|-||9|6+|3|60mm|SM|Space Marines|
 110|1|Rapier Carrier|"3"""|6|2+|-||6|6+|2||SM|Space Marines|
-111|1|Mortis Dreadnought|"6"""|9|2+|-||8|6+|3|60mm|SM|Space Marines|
-112|1|Chaplain With Jump Pack|"12"""|4|3+|4||4|5+|1|32mm|SM|Space Marines|
-113|1|Storm Eagle Gunship|-|10|3+|-||18|6+|-|120 x 92mm|SM|Space Marines|
+112|1|Chaplain with Jump Pack|"12"""|5|3+|4||4|5+|1|40mm|SM|Space Marines|
 114|1|Storm Speeder Hammerstrike|"14"""|9|3+|-||11|6+|3|90mm|SM|Space Marines|
-115|1|Chaplain In Terminator Armour|"5"""|5|2+|4||5|5+|1|40mm|SM|Space Marines|
-116|1|SPACE MARINE BIKE|"12"""|5|3+|-||3|6+|2|75 x 25mm|SM|Space Marines|
-116|2|ATTACK BIKE|"12"""|5|3+|-||5|6+|2||SM|Space Marines|
+115|1|Chaplain in Terminator Armour|"5"""|6|2+|4||5|5+|1|50mm|SM|Space Marines|
 117|1|Dreadnought|"6"""|9|2+|-||8|6+|3|60mm|SM|Space Marines|
-118|1|Terminator Assault Squad|"5"""|5|2+|4||3|6+|1|40mm|SM|Space Marines|
-119|1|Librarian In Phobos Armour|"6"""|4|3+|-||4|6+|1|40mm|SM|Space Marines|
+118|1|Terminator Sergeant|"5"""|6|2+|4||3|6+|1|40mm|SM|Space Marines|
+118|2|Terminator|"5"""|6|2+|4||3|6+|1|40mm|SM|Space Marines|
+119|1|Librarian in Phobos Armour|"8"""|4|3+|-||4|6+|1|40mm|SM|Space Marines|
 120|1|Venerable Dreadnought|"6"""|9|2+|-||8|6+|3|60mm|SM|Space Marines|
-121|1|Uriel Ventris|"6"""|4|3+|4||5|6+|1|40mm|SM|Space Marines|
-122|1|Dreadnought Drop Pod|-|7|3+|-||8|6+|2||SM|Space Marines|
-123|1|Sicaran Punisher|"10"""|11|2+|-||14|6+|4||SM|Space Marines|
 124|1|Storm Speeder Hailstrike|"14"""|9|3+|-||11|6+|3|90mm|SM|Space Marines|
-125|1|Inceptor Squad|"10"""|6|3+|-||3|6+|1|40mm|SM|Space Marines|
-126|1|Infernus Squad|"6"""|4|3+|-||2|6+|1|32mm|SM|Space Marines|
-127|1|Iron Father Feirros|"5"""|6|2+|-||6|6+|1|40mm|SM|Space Marines|
-128|1|Infiltrator Squad|"6"""|4|3+|-||2|6+|1|32mm|SM|Space Marines|
+125|1|Inceptor|"10"""|6|3+|-||3|6+|1|40mm|SM|Space Marines|
+125|2|Inceptor Sergeant|"10"""|6|3+|-||3|6+|1|40mm|SM|Space Marines|
+126|1|Infernus Marine|"6"""|5|3+|-||2|6+|1|32mm|SM|Space Marines|
+126|2|Infernus Sergeant|"6"""|5|3+|-||2|6+|1|32mm|SM|Space Marines|
+127|1|Iron Father Feirros|"5"""|6|2+|-||6|6+|1|40mm|SM|Space Marines|5+
+128|1|Infiltrator Sergeant|"8"""|4|3+|-||2|6+|1|32mm|SM|Space Marines|
+128|2|Infiltrator|"8"""|4|3+|-||2|6+|1|32mm|SM|Space Marines|
 129|1|Razorback|"12"""|9|3+|-||10|6+|2||SM|Space Marines|
-131|1|Leviathan Dreadnought|"8"""|10|2+|5||12|6+|4|80mm|SM|Space Marines|
-132|1|Land Speeder Storm|"14"""|7|4+|-||7|6+|1|60mm|SM|Space Marines|
-134|1|Astartes Servitors|"6"""|4|4+|6||1|8+|0|25mm|SM|Space Marines|
-135|1|Captain In Terminator Armour|"5"""|5|2+|4||6|6+|1|50mm|SM|Space Marines|
-136|1|Brutalis Dreadnought|"8"""|10|2+|-||12|6+|4|90mm|SM|Space Marines|
-137|1|Scout Bike Squad|"12"""|5|4+|-||3|6+|2|75 x 25mm|SM|Space Marines|
-138|1|Roboute Guilliman|"8"""|9|2+|4||10|5+|4|60mm|SM|Space Marines|
-139|1|Thunderhawk Gunship|"20"""|12|2+|-||30|6+|0|120 x 92mm|SM|Space Marines|
-140|1|Techmarine|"6"""|4|2+|-||4|6+|1|40mm|SM|Space Marines|
-146|1|Hunter|"9"""|11|3+|-||11|6+|3||SM|Space Marines|
-147|1|Vanguard Veteran Squad With Jump Packs|"12"""|4|3+|-||2|6+|1|32mm|SM|Space Marines|
-148|1|Imperial Space Marine|"6"""|4|3+|-||4|6+|1|32mm|SM|Space Marines|
-151|1|Commander Dante|"12"""|4|2+|4||6|6+|1|50mm|SM|Space Marines|
-152|1|Captain Tycho|"6"""|4|2+|4||5|6+|1|25mm|SM|Space Marines|
-153|1|Tycho The Lost|"6"""|4|2+|4||4|6+|1|25mm|SM|Space Marines|6+
-154|1|Librarian Dreadnought|"8"""|9|2+|-||8|6+|3|60mm|SM|Space Marines|
-155|1|Chief Librarian Mephiston|"7"""|5|2+|5||6|6+|1|40mm|SM|Space Marines|4+
-156|1|The Sanguinor|"12"""|4|2+|4||7|6+|1|40mm|SM|Space Marines|
-157|1|Astorath|"12"""|4|2+|4||5|5+|1|40mm|SM|Space Marines|
-158|1|Sanguinary Priest|"6"""|4|3+|-||4|6+|1|40mm|SM|Space Marines|
-160|1|Brother Corbulo|"6"""|4|3+|-||4|6+|1|25mm|SM|Space Marines|
-164|1|Lemartes|"12"""|4|3+|4||4|5+|1|40mm|SM|Space Marines|6+
-165|1|Sanguinary Guard|"12"""|4|2+|4||3|6+|1|40mm|SM|Space Marines|
-166|1|Death Company Dreadnought|"8"""|10|2+|-||12|6+|4|90mm|SM|Space Marines|6+
-167|1|Furioso Dreadnought|"8"""|9|2+|-||8|6+|3|60mm|SM|Space Marines|
+135|1|Captain in Terminator Armour|"5"""|6|2+|4||6|6+|1|40mm|SM|Space Marines|
+136|1|Brutalis Dreadnought|"10"""|10|2+|-||12|6+|4|90mm|SM|Space Marines|
+137|1|Scout Biker Sergeant|"12"""|5|4+|-||3|6+|2|75 x 25mm|SM|Space Marines|
+137|2|Scout Biker|"12"""|5|4+|-||3|6+|2|75 x 25mm|SM|Space Marines|
+138|1|Roboute Guilliman|"8"""|10|2+|4||16|5+|4|60mm|SM|Space Marines|5+
+139|1|Thunderhawk Gunship|"14"""|12|2+|-||30|6+|0|120 x 92mm|SM|Space Marines|
+140|1|Techmarine|"6"""|5|2+|-||4|6+|1|40mm|SM|Space Marines|
+147|1|Vanguard Veteran Sergeant|"12"""|5|3+|-||2|6+|1|32mm|SM|Space Marines|
+147|2|Vanguard Veteran|"12"""|5|3+|-||2|6+|1|32mm|SM|Space Marines|
+151|1|Commander Dante|"12"""|5|2+|4||6|6+|1|40mm|SM|Space Marines|
+155|1|Chief Librarian Mephiston|"8"""|6|2+|4||6|6+|1|40mm|SM|Space Marines|5+
+156|1|The Sanguinor|"12"""|5|2+|4||7|6+|1|40mm|SM|Space Marines|
+157|1|Astorath|"12"""|5|2+|4||5|5+|1|40mm|SM|Space Marines|
+158|1|Sanguinary Priest|"6"""|5|3+|-||4|6+|1|40mm|SM|Space Marines|
+164|1|Lemartes|"12"""|5|3+|4||5|5+|1|40mm|SM|Space Marines|6+
+165|1|Sanguinary Guard|"12"""|5|2+|4||3|6+|2|40mm|SM|Space Marines|
+166|1|Death Company Dreadnought|"10"""|10|2+|-||12|6+|4|90mm|SM|Space Marines|6+
 168|1|Baal Predator|"12"""|10|3+|-||11|6+|3||SM|Space Marines|
-169|1|Gabriel Seth|"6"""|4|3+|4||6|6+|1|25mm|SM|Space Marines|
-218|1|Azrael|"6"""|4|2+|4||6|6+|1|50mm|SM|Space Marines|
-219|1|Belial|"5"""|5|2+|4||6|6+|1|50mm|SM|Space Marines|
-225|1|Asmodai|"6"""|4|3+|4||4|5+|1|50mm|SM|Space Marines|
-226|1|Ezekiel|"6"""|4|2+|4||4|6+|1|25mm|SM|Space Marines|
-230|1|Deathwing Terminator Squad|"5"""|5|2+|4||3|6+|1|40mm|SM|Space Marines|
-231|1|Deathwing Knights|"5"""|5|2+|4||4|6+|1|40mm|SM|Space Marines|
-238|1|Ravenwing Darkshroud|"14"""|8|3+|5||10|6+|3|60mm|SM|Space Marines|
+218|1|Azrael|"6"""|5|2+|4||6|6+|1|50mm|SM|Space Marines|
+219|1|Belial|"5"""|6|2+|4||6|6+|1|50mm|SM|Space Marines|
+225|1|Asmodai|"6"""|5|3+|4||4|5+|1|50mm|SM|Space Marines|
+226|1|Ezekiel|"6"""|5|2+|4||5|6+|1|25mm|SM|Space Marines|
+230|1|Deathwing Terminators|"5"""|6|2+|4||3|6+|1|40mm|SM|Space Marines|
+230|2|Deathwing Sergeant|"5"""|6|2+|4||3|6+|1|40mm|SM|Space Marines|
+231|1|Deathwing Knights|"5"""|6|2+|4||4|6+|1|40mm|SM|Space Marines|
+231|2|Knight Master|"5"""|6|2+|4||4|6+|1|40mm|SM|Space Marines|
+238|1|Ravenwing Darkshroud|"14"""|8|3+|5||10|6+|3||SM|Space Marines|
 239|1|Nephilim Jetfighter|-|8|3+|5||11|6+|-|120 x 92mm|SM|Space Marines|
 240|1|Ravenwing Dark Talon|-|8|3+|5||11|6+|-|120 x 92mm|SM|Space Marines|
-241|1|Ravenwing Black Knights|"12"""|5|3+|5||3|6+|2|75 x 42mm|SM|Space Marines|
-242|1|Land Speeder Vengeance|"14"""|8|3+|5||10|6+|3|60mm|SM|Space Marines|
-282|1|Logan Grimnar|"6"""|5|2+|4||8|6+|1|80mm|SM|Space Marines|
-283|1|Logan Grimnar On Stormrider|"10"""|6|2+|4||12|6+|4|120 x 92mm|SM|Space Marines|
-284|1|Wolf Lord On Thunderwolf|"10"""|6|3+|4||6|6+|2|60mm|SM|Space Marines|
-285|1|Ragnar Blackmane|"7"""|4|3+|4||5|6+|1|40mm|SM|Space Marines|
-286|1|Krom Dragongaze|"6"""|4|3+|4||4|6+|1|32mm|SM|Space Marines|
-287|1|Harald Deathwolf|"10"""|6|3+|4||7|6+|2|60mm|SM|Space Marines|
-288|1|Canis Wolfborn|"10"""|6|3+|-||6|6+|2|60mm|SM|Space Marines|
-292|1|Njal Stormcaller|"7"""|4|3+|4||4|6+|1|40mm|SM|Space Marines|
-297|1|Ulrik The Slayer|"7"""|4|3+|4||4|5+|1|32mm|SM|Space Marines|6+
-302|1|Bjorn The Fell-handed|"9"""|9|2+|5||8|6+|3|60mm|SM|Space Marines|5+
-303|1|Blood Claws|"7"""|4|3+|-||2|6+|2|32mm|SM|Space Marines|
-304|1|Lukas The Trickster|"6"""|4|3+|-||4|6+|1|32mm|SM|Space Marines|
-305|1|Grey Hunters|"7"""|4|3+|-||2|6+|3|32mm|SM|Space Marines|
-306|1|Iron Priest|"7"""|4|2+|-||4|6+|1|32mm|SM|Space Marines|
+241|1|Ravenwing Huntmaster|"12"""|6|3+|5||3|6+|2|75 x 42mm|SM|Space Marines|
+241|2|Ravenwing Black Knight|"12"""|6|3+|5||3|6+|2|75 x 42mm|SM|Space Marines|
+242|1|Land Speeder Vengeance|"14"""|9|3+|5||11|6+|3|60mm|SM|Space Marines|
+282|1|Logan Grimnar|"6"""|6|2+|4||8|6+|1|80mm|SM|Space Marines|
+285|1|Ragnar Blackmane|"7"""|5|3+|4||5|6+|1|40mm|SM|Space Marines|
+292|1|Njal Stormcaller|"7"""|5|3+|4||4|6+|1|40mm|SM|Space Marines|
+297|1|Ulrik the Slayer|"7"""|5|3+|4||4|5+|1|32mm|SM|Space Marines|6+
+302|1|Bjorn the Fell-handed|"9"""|10|2+|5||8|6+|3|60mm|SM|Space Marines|5+
+303|1|Blood Claw Pack Leader|"7"""|5|3+|-||2|6+|2|32mm|SM|Space Marines|
+303|2|Blood Claw|"7"""|5|3+|-||2|6+|2|32mm|SM|Space Marines|
+305|1|Grey Hunter|"7"""|5|3+|-||2|6+|3|32mm|SM|Space Marines|
+305|2|Grey Hunter Pack Leader|"7"""|5|3+|-||2|6+|3|32mm|SM|Space Marines|
+306|1|Iron Priest|"7"""|5|2+|-||4|6+|1|32mm|SM|Space Marines|
 311|1|Wulfen|"9"""|6|4+|-||2|7+|0|40mm|SM|Space Marines|
 314|1|Murderfang|"9"""|9|2+|-||8|6+|0|60mm|SM|Space Marines|6+
-315|1|Wolf Guard|"6"""|4|3+|-||2|5+|1|32mm|SM|Space Marines|
-317|1|Arjac Rockfist|"6"""|5|2+|4||6|6+|1|50mm|SM|Space Marines|
-318|1|Wolf Guard Terminators|"6"""|5|2+|4||3|6+|1|40mm|SM|Space Marines|
-321|1|Stormwolf|"14"""|10|3+|-||14|6+|-|120 x 92mm|SM|Space Marines|
+317|1|Arjac Rockfist|"6"""|6|2+|4||6|6+|1|50mm|SM|Space Marines|
+318|1|Wolf Guard Terminator|"6"""|6|2+|4||3|6+|1|40mm|SM|Space Marines|
+318|2|Wolf Guard Terminator Pack Leader|"6"""|6|2+|4||3|6+|1|40mm|SM|Space Marines|
 322|1|Thunderwolf Cavalry|"12"""|6|3+|-||4|6+|2|60mm|SM|Space Marines|
-323|1|Fenrisian Wolves|"10"""|4|6+|-||1|8+|0|40mm|SM|Space Marines|
-324|1|Skyclaws|"12"""|4|3+|-||2|6+|1|32mm|SM|Space Marines|
-325|1|Stormfang Gunship|"14"""|10|3+|-||14|6+|-|120 x 92mm|SM|Space Marines|
-326|1|Long Fangs|"6"""|4|3+|-||2|6+|1|32mm|SM|Space Marines|
+322|2|Thunderwolf Cavalry Pack Leader|"12"""|6|3+|-||4|6+|2|60mm|SM|Space Marines|
+323|1|Fenrisian Wolf|"10"""|4|6+|-||1|8+|0|40mm|SM|Space Marines|
 358|1|Corvus Blackstar|"14"""|10|3+|-||14|6+|0|120 x 92mm|SM|Space Marines|
 373|1|Kaldor Draigo|"5"""|5|2+|4||7|6+|1|40mm|GK|Grey Knights|
-374|1|Grand Master Voldus|"5"""|5|2+|4||7|6+|1|40mm|GK|Grey Knights|
-375|1|Grand Master|"5"""|5|2+|4||7|6+|1|40mm|GK|Grey Knights|
-376|1|Brother-captain|"5"""|5|2+|4||6|6+|1|40mm|GK|Grey Knights|
+374|1|Grand Master Voldus|"5"""|6|2+|4||7|6+|1|40mm|GK|Grey Knights|
+375|1|Grand Master|"5"""|6|2+|4||7|6+|1|40mm|GK|Grey Knights|
+376|1|Brother-captain|"5"""|6|2+|4||6|6+|1|40mm|GK|Grey Knights|
 377|1|Brother-captain Stern|"5"""|5|2+|4||6|6+|1|40mm|GK|Grey Knights|
-379|1|Brotherhood Champion|"6"""|4|2+|4||4|6+|1|32mm|GK|Grey Knights|
-380|1|Castellan Crowe|"6"""|4|2+|4||5|6+|1|40mm|GK|Grey Knights|
-381|1|Strike Squad|"6"""|4|2+|-||2|6+|2|32mm|GK|Grey Knights|
-382|1|Brotherhood Terminator Squad|"5"""|5|2+|4||3|6+|2|40mm|GK|Grey Knights|
-383|1|Purifier Squad|"6"""|4|2+|-||2|6+|1|32mm|GK|Grey Knights|
-384|1|Paladin Squad|"5"""|5|2+|4||3|6+|1|40mm|GK|Grey Knights|
-387|1|Interceptor Squad|"12"""|4|2+|-||2|6+|1|32mm|GK|Grey Knights|
-388|1|Purgation Squad|"6"""|4|2+|-||2|6+|1|32mm|GK|Grey Knights|
-389|1|Nemesis Dreadknight|"8"""|8|2+|4||13|6+|4|120 x 92mm|GK|Grey Knights|
+379|1|Brotherhood Champion|"6"""|5|2+|4||4|6+|1|32mm|GK|Grey Knights|
+380|1|Castellan Crowe|"6"""|5|2+|4||5|6+|1|40mm|GK|Grey Knights|
+381|1|Strike Squad|"6"""|5|2+|-||2|6+|2|32mm|GK|Grey Knights|
+382|1|Brotherhood Terminator Squad|"5"""|6|2+|4||3|6+|2|40mm|GK|Grey Knights|
+383|1|Purifier Squad|"6"""|5|2+|-||2|6+|1|32mm|GK|Grey Knights|
+384|1|Paladin Squad|"5"""|6|2+|4||3|6+|1|40mm|GK|Grey Knights|
+387|1|Interceptor Squad|"12"""|5|2+|-||2|6+|1|32mm|GK|Grey Knights|
+388|1|Purgation Squad|"6"""|5|2+|-||2|6+|1|32mm|GK|Grey Knights|
+389|1|Nemesis Dreadknight|"8"""|9|2+|4||13|6+|4|120 x 92mm|GK|Grey Knights|
 390|1|Grey Knights Dreadnought|"6"""|9|2+|-||8|6+|3|60mm|GK|Grey Knights|
 391|1|Land Raider|"10"""|12|2+|-||16|6+|5||GK|Grey Knights|
 392|1|Land Raider Crusader|"12"""|12|2+|-||16|6+|5||GK|Grey Knights|
@@ -187,7 +161,7 @@
 396|1|Rhino|"12"""|9|3+|-||10|6+|2||GK|Grey Knights|
 397|1|Servitors|"6"""|4|4+|6||1|8+|0|25mm|GK|Grey Knights|
 398|1|Stormraven Gunship|"14"""|10|3+|-||14|6+|0|120 x 92mm|GK|Grey Knights|
-399|1|Brotherhood Techmarine|"6"""|4|2+|-||4|6+|1|32mm|GK|Grey Knights|
+399|1|Brotherhood Techmarine|"6"""|5|2+|-||4|6+|1|32mm|GK|Grey Knights|
 400|1|Venerable Dreadnought|"8"""|9|2+|-||8|6+|3|60mm|GK|Grey Knights|
 402|1|Commander In Coldstar Battlesuit|"12"""|5|3+|-||6|7+|2|60mm|TAU|T’au Empire|
 404|1|Ethereal|"6"""|3|5+|5||3|6+|1|40mm|TAU|T’au Empire|
@@ -567,52 +541,52 @@
 910|1|Sororitas Rhino|"12"""|9|3+|6||10|7+|2||AS|Adepta Sororitas|
 911|1|Immolator|"12"""|10|3+|6||11|7+|2||AS|Adepta Sororitas|
 912|1|Exorcist|"10"""|10|3+|6||11|7+|3||AS|Adepta Sororitas|
-924|1|Abaddon The Despoiler|"5"""|5|2+|4||9|5+|4|60mm|CSM|Chaos Space Marines|
-925|1|Huron Blackheart|"6"""|5|3+|4||5|6+|1|50mm|CSM|Chaos Space Marines|5+
-926|1|Cypher|"6"""|4|3+|4||5|6+|1|32mm|CSM|Chaos Space Marines|
-928|1|FABIUS BILE|"6"""|4|3+|-||5|6+|1|40mm|CSM|Chaos Space Marines|5+
-928|2|SURGEON ACOLYTE|"6"""|4|6+|-||1|7+|1|32mm|CSM|Chaos Space Marines|5+
-929|1|Chaos Lord|"6"""|4|3+|4||5|6+|1|40mm|CSM|Chaos Space Marines|
-930|1|Chaos Lord In Terminator Armour|"5"""|5|2+|4||6|6+|1|40mm|CSM|Chaos Space Marines|
+924|1|Abaddon The Despoiler|"5"""|6|2+|4||9|5+|4|60mm|CSM|Chaos Space Marines|
+925|1|Huron Blackheart|"6"""|6|3+|4||5|6+|1|50mm|CSM|Chaos Space Marines|5+
+926|1|Cypher|"6"""|5|3+|4||5|6+|1|32mm|CSM|Chaos Space Marines|
+928|1|FABIUS BILE|"6"""|5|3+|-||5|6+|1|40mm|CSM|Chaos Space Marines|5+
+928|2|SURGEON ACOLYTE|"6"""|5|6+|-||1|7+|1|32mm|CSM|Chaos Space Marines|5+
+929|1|Chaos Lord|"6"""|5|3+|4||5|6+|1|40mm|CSM|Chaos Space Marines|
+930|1|Chaos Lord In Terminator Armour|"5"""|6|2+|4||6|6+|1|40mm|CSM|Chaos Space Marines|
 931|1|Chaos Lord On Bike|"12"""|5|3+|4||6|6+|2|75 x 25mm|CSM|Chaos Space Marines|
 932|1|Chaos Lord On Juggernaut|"10"""|6|2+|4||7|6+|2|90 x 52mm|CSM|Chaos Space Marines|
 933|1|Chaos Lord On Disc Of Tzeentch|"12"""|4|3+|4||6|6+|1|40mm|CSM|Chaos Space Marines|
 934|1|Chaos Lord On Palanquin Of Nurgle|"5"""|5|3+|4||8|6+|2|60mm|CSM|Chaos Space Marines|
 935|1|Chaos Lord On Steed Of Slaanesh|"14"""|5|3+|4||6|6+|2|60 x 35.5mm|CSM|Chaos Space Marines|
-936|1|DARK APOSTLE|"6"""|4|3+|4||4|5+|1|40mm|CSM|Chaos Space Marines|
-936|2|DARK DISCIPLE|"6"""|4|6+|4||1|7+|1|25mm|CSM|Chaos Space Marines|
+936|1|DARK APOSTLE|"6"""|5|3+|4||4|5+|1|40mm|CSM|Chaos Space Marines|
+936|2|DARK DISCIPLE|"6"""|5|6+|4||1|7+|1|25mm|CSM|Chaos Space Marines|
 937|1|Heretic Astartes Daemon Prince|"8"""|10|2+|4||10|6+|3|60mm|CSM|Chaos Space Marines|
-938|1|Sorcerer|"6"""|4|3+|-||4|6+|1|40mm|CSM|Chaos Space Marines|
-939|1|Sorcerer In Terminator Armour|"5"""|5|2+|4||5|6+|1|40mm|CSM|Chaos Space Marines|
+938|1|Sorcerer|"6"""|5|3+|-||4|6+|1|40mm|CSM|Chaos Space Marines|
+939|1|Sorcerer In Terminator Armour|"5"""|6|2+|4||5|6+|1|40mm|CSM|Chaos Space Marines|
 940|1|Sorcerer On Bike|"12"""|5|3+|-||5|6+|2|75 x 25mm|CSM|Chaos Space Marines|
 941|1|Sorcerer On Disc Of Tzeentch|"12"""|4|3+|-||5|6+|1|40mm|CSM|Chaos Space Marines|
 942|1|Sorcerer On Palanquin Of Nurgle|"5"""|5|3+|-||7|6+|2|60mm|CSM|Chaos Space Marines|
 943|1|Sorcerer On Steed Of Slaanesh|"14"""|5|3+|-||5|6+|2|60 x 35.5mm|CSM|Chaos Space Marines|
-944|1|Warpsmith|"6"""|4|2+|-||4|6+|1|60 x 35.5mm|CSM|Chaos Space Marines|
+944|1|Warpsmith|"6"""|5|2+|-||4|6+|1|60 x 35.5mm|CSM|Chaos Space Marines|
 946|1|Cultist Mob|"6"""|3|6+|-||1|7+|1|25mm|CSM|Chaos Space Marines|
-947|1|Chaos Terminator Squad|"5"""|5|2+|4||3|6+|1|40mm|CSM|Chaos Space Marines|
-952|1|Chosen|"6"""|4|3+|-||3|6+|1|32mm|CSM|Chaos Space Marines|
+947|1|Chaos Terminator Squad|"5"""|6|2+|4||3|6+|1|40mm|CSM|Chaos Space Marines|
+952|1|Chosen|"6"""|5|3+|-||3|6+|1|32mm|CSM|Chaos Space Marines|
 953|1|Possessed|"9"""|6|3+|5||3|6+|1|40mm|CSM|Chaos Space Marines|
 954|1|Helbrute|"6"""|9|2+|-||8|6+|3|60mm|CSM|Chaos Space Marines|
 956|1|Chaos Rhino|"12"""|9|3+|-||10|6+|2||CSM|Chaos Space Marines|
-957|1|Chaos Bikers|"12"""|5|3+|-||3|6+|2|75 x 42mm|CSM|Chaos Space Marines|
-958|1|Raptors|"12"""|4|3+|-||2|6+|1|32mm|CSM|Chaos Space Marines|
-959|1|Warp Talons|"12"""|4|3+|5||2|6+|1|32mm|CSM|Chaos Space Marines|
+957|1|Chaos Bikers|"12"""|6|3+|-||3|6+|2|75 x 42mm|CSM|Chaos Space Marines|
+958|1|Raptors|"12"""|5|3+|-||2|6+|1|32mm|CSM|Chaos Space Marines|
+959|1|Warp Talons|"12"""|5|3+|5||2|6+|1|32mm|CSM|Chaos Space Marines|
 960|1|Chaos Spawn|"8"""|5|4+|-||4|7+|0|50mm|CSM|Chaos Space Marines|5+
 961|1|Heldrake|"12"""|9|3+|5||12|6+|0|120 x 92mm|CSM|Chaos Space Marines|
 962|1|Chaos Land Raider|"10"""|12|2+|-||16|6+|5||CSM|Chaos Space Marines|
 963|1|Chaos Predator Destructor|"10"""|10|3+|-||11|6+|3||CSM|Chaos Space Marines|
 964|1|Chaos Vindicator|"9"""|11|2+|-||11|6+|3||CSM|Chaos Space Marines|
 965|1|Obliterators|"4"""|7|2+|5||5|6+|2|50mm|CSM|Chaos Space Marines|
-966|1|Havocs|"5"""|5|3+|-||2|6+|1|40mm|CSM|Chaos Space Marines|
+966|1|Havocs|"5"""|5|3+|-||3|6+|1|40mm|CSM|Chaos Space Marines|
 967|1|Forgefiend|"8"""|10|3+|5||12|6+|3|120 x 92mm|CSM|Chaos Space Marines|
 968|1|Maulerfiend|"10"""|10|3+|5||12|6+|3|120 x 92mm|CSM|Chaos Space Marines|
 969|1|Defiler|"12"""|11|3+|5||18|6+|5|160mm|CSM|Chaos Space Marines|
 970|1|Khorne Lord Of Skulls|"8"""|13|3+|5||24|6+|8||CSM|Chaos Space Marines|
-1016|1|Sorcerer|"6"""|4|3+|5||4|6+|1|32mm|TS|Thousand Sons|
-1017|1|Sorcerer In Terminator Armour|"5"""|5|2+|4||5|6+|1|40mm|TS|Thousand Sons|
-1020|1|Rubric Marine|"6"""|4|3+|5||2|7+|2|32mm|TS|Thousand Sons|
-1020|2|Aspiring Sorcerer|"6"""|4|3+|5||3|6+|2|32mm|TS|Thousand Sons|
+1016|1|Sorcerer|"6"""|5|3+|5||4|6+|1|32mm|TS|Thousand Sons|
+1017|1|Sorcerer In Terminator Armour|"5"""|6|2+|4||5|6+|1|40mm|TS|Thousand Sons|
+1020|1|Rubric Marine|"6"""|5|3+|5||2|7+|2|32mm|TS|Thousand Sons|
+1020|2|Aspiring Sorcerer|"6"""|5|3+|5||3|6+|2|32mm|TS|Thousand Sons|
 1021|1|Helbrute|"8"""|9|2+|5||8|6+|3|60mm|TS|Thousand Sons|
 1022|1|Chaos Rhino|"12"""|9|3+|-||10|6+|2||TS|Thousand Sons|
 1023|1|Chaos Spawn|"8"""|5|4+|5||4|7+|1|50mm|TS|Thousand Sons|5+
@@ -624,11 +598,11 @@
 1029|1|Maulerfiend|"10"""|10|3+|5||12|6+|3|120 x 92mm|TS|Thousand Sons|
 1030|1|Defiler|"12"""|11|3+|5||18|6+|5|160mm|TS|Thousand Sons|
 1031|1|Magnus The Red|"14"""|11|2+|4||16|5+|6|100mm|TS|Thousand Sons|
-1032|1|Ahriman|"10"""|4|3+|4||6|6+|2|40mm|TS|Thousand Sons|
-1033|1|Exalted Sorcerer|"6"""|4|3+|4||5|6+|1|32mm|TS|Thousand Sons|
+1032|1|Ahriman|"10"""|5|3+|4||6|6+|2|40mm|TS|Thousand Sons|
+1033|1|Exalted Sorcerer|"6"""|5|3+|4||5|6+|1|32mm|TS|Thousand Sons|
 1034|1|Tzaangors|"6"""|4|6+|6||1|7+|1|32mm|TS|Thousand Sons|
-1035|1|Scarab Occult Terminator|"5"""|5|2+|4||3|7+|1|40mm|TS|Thousand Sons|
-1035|2|Scarab Occult Sorcerer|"5"""|5|2+|4||4|6+|1|40mm|TS|Thousand Sons|
+1035|1|Scarab Occult Terminator|"5"""|6|2+|4||3|7+|1|40mm|TS|Thousand Sons|
+1035|2|Scarab Occult Sorcerer|"5"""|6|2+|4||4|6+|1|40mm|TS|Thousand Sons|
 1036|1|Daemon Prince of Tzeentch|"9"""|10|2+|4||10|6+|3|60mm|TS|Thousand Sons|
 1037|1|Death Guard Chaos Lord|"5"""|5|3+|4||5|6+|1|40mm|DG|Death Guard|
 1038|1|Death Guard Chaos Lord In Terminator Armour|"4"""|6|2+|4||6|6+|1|40mm|DG|Death Guard|
@@ -690,36 +664,29 @@
 1150|1|Furies|"12"""|3|7+|5||1|8+|1|25mm|CD|Chaos Daemons|
 1151|1|Soul Grinder|"8"""|11|3+|4||14|7+|5|160mm|CD|Chaos Daemons|
 1153|1|Cerberus|"10"""|12|2+|-||18|6+|6||SM|Space Marines|
-1154|1|Vanguard Veteran Squad|"6"""|4|3+|-||2|6+|1|32mm|SM|Space Marines|
-1156|1|Invictor Tactical Warsuit|"8"""|8|3+|-||12|6+|4|90mm|SM|Space Marines|
-1157|1|Intercessor Squad|"6"""|4|3+|-||2|6+|2|32mm|SM|Space Marines|
-1158|1|Invader Atv|"12"""|5|3+|-||8|6+|2||SM|Space Marines|
-1159|1|Incursor Squad|"6"""|4|3+|-||2|6+|1|32mm|SM|Space Marines|
-1160|1|Scout Squad|"6"""|4|4+|-||2|6+|1|28.5mm|SM|Space Marines|
-1161|1|Sicaran Arcus|"10"""|11|2+|-||14|6+|4||SM|Space Marines|
-1162|1|Sergeant Telion|"6"""|4|4+|-||3|6+|1|25mm|SM|Space Marines|
-1163|1|Sicaran Omega|"10"""|11|2+|-||14|6+|4||SM|Space Marines|
-1164|1|Thunderfire Cannon|"3"""|6|2+|-||6|6+|2||SM|Space Marines|
-1165|1|Bladeguard Ancient|"6"""|4|3+|4||4|6+|1|40mm|SM|Space Marines|
-1166|1|Company Veterans On Bikes|"12"""|5|3+|-||2|6+|2|75 x 25mm|SM|Space Marines|
-1168|1|Land Speeder Tempest|"14"""|8|3+|-||7|6+|2|60mm|SM|Space Marines|
-1169|1|Land Speeder Tornado|"14"""|7|3+|-||6|6+|2|60mm|SM|Space Marines|
-1172|1|Captain In Gravis Armour|"5"""|6|3+|4||6|6+|1|40mm|SM|Space Marines|
-1174|1|Chaplain|"6"""|4|3+|4||4|5+|1|40mm|SM|Space Marines|
+1154|1|Vanguard Veteran|"6"""|5|3+|-||2|6+|1|32mm|SM|Space Marines|
+1154|2|Vanguard Veteran Sergeant|"6"""|5|3+|-||2|6+|1|32mm|SM|Space Marines|
+1156|1|Invictor Tactical Warsuit|"10"""|9|3+|-||12|6+|4|90mm|SM|Space Marines|
+1157|1|Intercessor Sergeant|"6"""|5|3+|-||2|6+|2|32mm|SM|Space Marines|
+1157|2|Intercessor|"6"""|5|3+|-||2|6+|2|32mm|SM|Space Marines|
+1159|1|Incursor|"8"""|4|3+|-||2|6+|1|32mm|SM|Space Marines|
+1159|2|Incursor Sergeant|"8"""|4|3+|-||2|6+|1|32mm|SM|Space Marines|
+1160|1|Scout|"6"""|4|4+|-||2|6+|1|28.5mm|SM|Space Marines|
+1160|2|Scout Sergeant|"6"""|4|4+|-||2|6+|1|28.5mm|SM|Space Marines|
+1165|1|Bladeguard Ancient|"6"""|5|3+|4||4|6+|3|40mm|SM|Space Marines|
+1172|1|Captain in Gravis Armour|"5"""|6|3+|4||6|6+|1|40mm|SM|Space Marines|
+1174|1|Chaplain|"6"""|5|3+|4||4|5+|1|40mm|SM|Space Marines|
 1175|1|Kratos|"10"""|12|2+|-||18|6+|6||SM|Space Marines|
-1177|1|Heavy Intercessor Squad|"5"""|6|3+|-||3|6+|2|40mm|SM|Space Marines|
-1178|1|Vindicator Laser Destroyer|"9"""|11|2+|-||11|6+|3||SM|Space Marines|
-1179|1|Sokar-pattern Stormbird|"20"""|13|2+|4|* Against ranged attacks only|40|6+|0||SM|Space Marines|
-1182|1|Ancient On Bike|"12"""|5|3+|-||5|6+|2|75 x 25mm|SM|Space Marines|
-1183|1|Terminator Squad|"5"""|5|2+|4||3|6+|1|40mm|SM|Space Marines|
-1184|1|Terminus Ultra|"10"""|12|2+|-||16|6+|5||SM|Space Marines|
-1185|1|Sicaran Battle Tank|"10"""|11|2+|-||14|6+|4||SM|Space Marines|
+1177|1|Heavy Intercessor Sergeant|"5"""|6|3+|-||3|6+|2|40mm|SM|Space Marines|
+1177|2|Heavy Intercessor|"5"""|6|3+|-||3|6+|2|40mm|SM|Space Marines|
+1183|1|Terminator|"5"""|6|2+|4||3|6+|1|40mm|SM|Space Marines|
+1183|2|Terminator Sergeant|"5"""|6|2+|4||3|6+|1|40mm|SM|Space Marines|
 1188|1|Vindicator|"9"""|11|2+|-||11|6+|3||SM|Space Marines|
 1189|1|Mastodon|"9"""|14|2+|-||30|6+|12||SM|Space Marines|
 1190|1|Stormtalon Gunship|-|8|3+|-||10|6+|-|120 x 92mm|SM|Space Marines|
 1191|1|Stormraven Gunship|"14"""|10|3+|-||14|6+|0|120 x 92mm|SM|Space Marines|
-1192|1|Chaplain Venerable Dreadnought|"6"""|9|2+|5||8|6+|3|60mm|SM|Space Marines|
-1193|1|Centurion Devastator Squad|"4"""|7|2+|-||4|6+|2|50mm|SM|Space Marines|
+1193|1|Devastator Centurion|"4"""|7|2+|-||4|6+|2|50mm|SM|Space Marines|
+1193|2|Devastator Centurion Sergeant|"4"""|7|2+|-||4|6+|2|50mm|SM|Space Marines|
 1197|1|Grey Knights Thunderhawk Gunship|"20"""|12|2+|-||30|6+|0||GK|Grey Knights|
 1199|1|Repressor|"12"""|10|3+|6||12|7+|2||AS|Adepta Sororitas|
 1237|1|Valkyrie Sky Talon|"14"""|10|2+|-||14|7+|0|120 x 92mm|AM|Astra Militarum|
@@ -742,15 +709,11 @@
 1338|1|Spined Chaos Beast|"10"""|10|4+|5||12|7+|4||CD|Chaos Daemons|
 1339|1|Giant Chaos Spawn|"10"""|8|4+|5||10|7+|3|100mm|CD|Chaos Daemons|5+
 1340|1|Scabeiathrax The Bloated|"7"""|12|5+|4||22|6+|5||CD|Chaos Daemons|6+
-1344|1|Librarian With Jump Pack|"12"""|4|3+|-||4|6+|1|25mm|SM|Space Marines|
-1345|1|Lieutenant In Reiver Armour|"6"""|4|3+|-||4|6+|1|40mm|SM|Space Marines|
-1346|1|Lieutenant|"6"""|4|3+|-||4|6+|1|40mm|SM|Space Marines|
-1347|1|Land Raider Prometheus|"10"""|12|2+|-||16|6+|5||SM|Space Marines|
-1348|1|Librarian On Bike|"12"""|5|3+|-||5|6+|2|75 x 25mm|SM|Space Marines|
+1346|1|Lieutenant|"6"""|5|3+|-||4|6+|1|40mm|SM|Space Marines|
 1355|1|Exalted Champion|"6"""|4|3+|-||4|6+|1|40mm|CSM|Chaos Space Marines|
-1360|1|Grand Master In Nemesis Dreadknight|"8"""|8|2+|4||13|6+|4|120 x 92mm|GK|Grey Knights|
-1361|1|Brotherhood Librarian|"5"""|5|2+|4||5|6+|1|40mm|GK|Grey Knights|
-1362|1|Brotherhood Chaplain|"5"""|5|2+|4||5|5+|1|40mm|GK|Grey Knights|
+1360|1|Grand Master In Nemesis Dreadknight|"8"""|9|2+|4||13|6+|4|120 x 92mm|GK|Grey Knights|
+1361|1|Brotherhood Librarian|"5"""|6|2+|4||5|6+|1|40mm|GK|Grey Knights|
+1362|1|Brotherhood Chaplain|"5"""|6|2+|4||5|5+|1|40mm|GK|Grey Knights|
 1363|1|Stormhawk Interceptor|-|9|3+|-||10|6+|-|120 x 92mm|GK|Grey Knights|
 1364|1|Stormtalon Gunship|-|9|3+|-||10|6+|-|120 x 92mm|GK|Grey Knights|
 1367|1|Foul Blightspawn|"5"""|6|3+|-||4|6+|1|40mm|DG|Death Guard|
@@ -773,7 +736,6 @@
 1398|1|Ogryn Bodyguard|"6"""|6|5+|-||6|7+|1|40mm|AM|Astra Militarum|6+
 1400|1|Bonesinger|"7"""|3|6+|4||3|6+|1|25mm|AE|Aeldari|
 1406|1|Sly Marbo|"6"""|3|5+|-||4|7+|1|32mm|AM|Astra Militarum|
-1423|1|Ravenwing Talonmaster|"16"""|7|3+|5||6|6+|2|65mm|SM|Space Marines|
 1446|1|Trajann Valoris|"6"""|6|2+|4||7|5+|2|40mm|AC|Adeptus Custodes|5+
 1447|1|Shield-captain|"6"""|6|2+|4||6|6+|2|40mm|AC|Adeptus Custodes|
 1448|1|Shield-captain In Allarus Terminator Armour|"5"""|7|2+|4||7|6+|2|40mm|AC|Adeptus Custodes|
@@ -807,18 +769,15 @@
 1484|1|Canis Rex|"10"""|11|3+|5|* against ranged attacks only|26|6+|10|170 x 109mm|QI|Imperial Knights|
 1485|1|Knight Castellan|"8"""|12|3+|5|* against ranged attacks only|28|6+|10|170 x 109mm|QI|Imperial Knights|
 1486|1|Knight Valiant|"8"""|12|3+|5|* against ranged attacks only|28|6+|10|170 x 109mm|QI|Imperial Knights|
-1523|1|Scout Sniper Squad|"6"""|4|4+|-||2|6+|1|25mm|SM|Space Marines|
-1524|1|Sergeant Chronus|"6"""|4|2+|-||3|6+|1|25mm|SM|Space Marines|
 1525|1|Secutarii Hoplites|"6"""|3|5+|4||1|7+|1|25mm|AdM|Adeptus Mechanicus|
 1526|1|Secutarii Peltasts|"6"""|3|5+|6||1|7+|1|25mm|AdM|Adeptus Mechanicus|
-1527|1|Techmarine On Bike|"12"""|5|3+|-||5|6+|2|75 x 25mm|SM|Space Marines|
 1533|1|Terrax-pattern Termite|"8"""|10|3+|-||14|6+|2||AdM|Adeptus Mechanicus|
 1536|1|Big Mek with Shokk Attack Gun|"6"""|5|4+|-||5|7+|1|40mm|ORK|Orks|
 1537|1|Deffkilla Wartrike|"12"""|6|4+|5||9|6+|3|150 x 95mm|ORK|Orks|
 1545|1|Mekboy Workshop|-|9|4+|-||10|7+|0||ORK|Orks|
 1546|1|Abominant|"6"""|6|5+|-||5|7+|1|40mm|GC|Genestealer Cults|5+
 1553|1|Preacher|"6"""|3|6+|4||3|7+|1|32mm|AS|Adepta Sororitas|
-1556|1|Haarken Worldclaimer|"12"""|4|3+|4||5|6+|1|40mm|CSM|Chaos Space Marines|
+1556|1|Haarken Worldclaimer|"12"""|5|3+|4||5|6+|1|40mm|CSM|Chaos Space Marines|
 1557|1|Contemptor-galatus Dreadnought|"6"""|9|2+|4||10|6+|3|60mm|AC|Adeptus Custodes|
 1558|1|Aquilon Custodians|"5"""|7|2+|4||4|6+|2|50mm|AC|Adeptus Custodes|
 1559|1|Custodian Guard With Adrasite And Pyrithite Spears|"6"""|6|2+|4||3|6+|2|40mm|AC|Adeptus Custodes|
@@ -841,9 +800,9 @@
 1577|1|Seraptek Heavy Construct|"10"""|12|3+|5||24|7+|10||NEC|Necrons|
 1579|1|Inquisitor Eisenhorn|"6"""|3|4+|5||4|6+|1|32mm|AoI|Imperial Agents|6+
 1580|1|Tech-priest Manipulus|"6"""|4|2+|5||4|7+|1|50mm|AdM|Adeptus Mechanicus|
-1581|1|Master Of Possession|"8"""|4|3+|5||4|6+|1|40mm|CSM|Chaos Space Marines|
+1581|1|Master Of Possession|"8"""|5|3+|5||4|6+|1|40mm|CSM|Chaos Space Marines|
 1583|1|Lord Discordant On Helstalker|"14"""|9|2+|4||10|6+|4|120 x 92mm|CSM|Chaos Space Marines|
-1584|1|Master Of Executions|"6"""|4|3+|-||4|6+|1|40mm|CSM|Chaos Space Marines|
+1584|1|Master Of Executions|"6"""|5|3+|-||4|6+|1|40mm|CSM|Chaos Space Marines|
 1586|1|Venomcrawler|"12"""|9|3+|5||9|6+|3|100mm|CSM|Chaos Space Marines|
 1587|1|Noctilith Crown|-|11|3+|-||14|6+|0||CSM|Chaos Space Marines|
 1588|1|Skull Altar|-|12|3+|-||10|7+|0||CD|Chaos Daemons|
@@ -853,12 +812,10 @@
 1600|1|Rogue Psyker|"6"""|3|5+|-||3|7+|1|32mm|CSM|Chaos Space Marines|
 1601|1|Negavolt Cultists|"6"""|3|7+|5||1|7+|1|32mm|CSM|Chaos Space Marines|5+
 1604|1|Fellgor Beastmen|"6"""|4|5+|-||1|7+|1|32mm|CSM|Chaos Space Marines|
-1606|1|Assault Intercessor Squad|"6"""|4|3+|-||2|6+|2|32mm|SM|Space Marines|
-1607|1|Land Raider Achilles|"10"""|12|2+|4||16|6+|5||SM|Space Marines|
-1608|1|Land Raider Proteus|"12"""|12|2+|-||16|6+|5||SM|Space Marines|
-1609|1|Fire Raptor Gunship|-|10|3+|-||18|6+|-|120 x 92mm|SM|Space Marines|
+1606|1|Assault Intercessor|"6"""|5|3+|-||2|6+|2|32mm|SM|Space Marines|
+1606|2|Assault Intercessor Sergeant|"6"""|5|3+|-||2|6+|2|32mm|SM|Space Marines|
 1610|1|Storm Speeder Thunderstrike|"14"""|9|3+|-||11|6+|3|90mm|SM|Space Marines|
-1611|1|Chief Librarian Tigurius|"6"""|4|3+|4||4|6+|1|40mm|SM|Space Marines|
+1611|1|Chief Librarian Tigurius|"6"""|5|3+|4||5|6+|1|40mm|SM|Space Marines|
 1647|1|Contorted Epitome|"9"""|6|5+|4||8|7+|2|75 x 42mm|CD|Chaos Daemons|
 1648|1|Shalaxi Helbane|"14"""|10|3+|4||20|6+|5|100mm|CD|Chaos Daemons|
 1649|1|Syll’esske|"9"""|6|6+|4||9|6+|2|50mm|CD|Chaos Daemons|
@@ -873,19 +830,19 @@
 1664|1|Acastus Knight Asterius|"8"""|13|2+|5|* Against ranged attacks only|30|6+|10||QI|Imperial Knights|
 1666|1|Falchion|"9"""|13|2+|-||24|6+|8||SM|Space Marines|
 1667|1|Gladiator Reaper|"10"""|10|3+|-||12|6+|3|100mm|SM|Space Marines|
-1668|1|Eliminator Squad|"6"""|4|3+|-||2|6+|1|40mm|SM|Space Marines|
+1668|1|Eliminator|"8"""|4|3+|-||2|6+|1|40mm|SM|Space Marines|
+1668|2|Eliminator Sergeant|"8"""|4|3+|-||2|6+|1|40mm|SM|Space Marines|
 1680|1|Ares Gunship|-|12|2+|5||22|6+|-|160mm|AC|Adeptus Custodes|
 1822|1|X-101|"6"""|3|4+|-||3|8+|0|32mm|AdM|Adeptus Mechanicus|
 1825|1|Gladiator Valiant|"10"""|10|3+|-||12|6+|3|100mm|SM|Space Marines|
 1991|1|Terrax-pattern Termite|"8"""|10|3+|-||14|6+|2||SM|Space Marines|
 1994|1|Carnodon|"12"""|10|2+|-||12|7+|3||AM|Astra Militarum|
-1997|1|Death Company Marines|"6"""|4|3+|-||2|6+|1|32mm|SM|Space Marines|6+
+1997|1|Death Company Marines|"6"""|5|3+|-||2|6+|1|32mm|SM|Space Marines|6+
 2063|1|Triumph Of Saint Katherine|"6"""|3|3+|4||18|6+|6|120 x 92mm|AS|Adepta Sororitas|
 2064|1|Junith Eruita|"8"""|5|2+|4||8|6+|2|50mm|AS|Adepta Sororitas|
 2066|1|Zephyrim Squad|"12"""|3|3+|5||1|7+|1|32mm|AS|Adepta Sororitas|
 2067|1|Mortifiers|"8"""|6|4+|6||5|7+|2|50mm|AS|Adepta Sororitas|5+
 2068|1|Battle Sanctum|-|11|3+|-||20|7+|0||AS|Adepta Sororitas|
-2076|1|Attack Bike Squad|"12"""|5|3+|-||5|6+|2||SM|Space Marines|
 2077|1|Warbringer Nemesis Titan|"12"""|14|2+|5|* Against ranged attacks only|80|6+|20||TL|Adeptus Titanicus|
 2081|1|Serberys Sulphurhounds|"12"""|4|4+|5||2|7+|2|60 x 35.5mm|AdM|Adeptus Mechanicus|
 2082|1|Serberys Raiders|"12"""|4|4+|5||2|7+|2|60 x 35.5mm|AdM|Adeptus Mechanicus|
@@ -897,12 +854,12 @@
 2088|1|Aleya|"6"""|3|3+|5||4|6+|1|32mm|AC|Adeptus Custodes|5+
 2090|1|Inquisitor Draxus|"6"""|3|3+|5||4|6+|1|32mm|AoI|Imperial Agents|
 2092|1|Illuminor Szeras|"8"""|8|2+|4||9|6+|3|80mm|NEC|Necrons|4+
-2098|1|Hellblaster Squad|"6"""|4|3+|-||2|6+|1|32mm|SM|Space Marines|
-2099|1|Aggressor Squad|"5"""|6|3+|-||3|6+|1|40mm|SM|Space Marines|
-2100|1|Adrax Agatone|"6"""|4|2+|4||5|6+|1|40mm|SM|Space Marines|
-2102|1|Land Speeder Typhoon|"14"""|7|3+|-||6|6+|2|60mm|SM|Space Marines|
-2103|1|Command Squad|"6"""|4|3+|-||3|6+|1|32mm|SM|Space Marines|
-2105|1|Darnath Lysander|"5"""|5|2+|4||7|6+|1|50mm|SM|Space Marines|
+2098|1|Hellblaster Sergeant|"6"""|5|3+|-||2|6+|1|32mm|SM|Space Marines|
+2098|2|Hellblaster|"6"""|5|3+|-||2|6+|1|32mm|SM|Space Marines|
+2099|1|Aggressor Sergeant|"5"""|6|3+|-||3|6+|1|40mm|SM|Space Marines|
+2099|2|Aggressor|"5"""|6|3+|-||3|6+|1|40mm|SM|Space Marines|
+2100|1|Adrax Agatone|"6"""|5|2+|4||5|6+|1|40mm|SM|Space Marines|
+2105|1|Darnath Lysander|"5"""|6|2+|4||7|6+|1|50mm|SM|Space Marines|
 2108|1|Plasmancer|"5"""|4|4+|-||4|6+|1|32mm|NEC|Necrons|
 2109|1|Skorpekh Lord|"8"""|7|3+|4||7|6+|2|60mm|NEC|Necrons|
 2110|1|Skorpekh Destroyers|"8"""|6|3+|-||3|7+|2|50mm|NEC|Necrons|
@@ -912,20 +869,13 @@
 2115|1|Canoptek Doomstalker|"8"""|8|3+|4||12|8+|4|90mm|NEC|Necrons|
 2116|1|Lokhust Heavy Destroyers|"8"""|6|3+|-||4|7+|2|60mm|NEC|Necrons|
 2173|1|Land Raider Redeemer|"12"""|12|2+|-||16|6+|5||SM|Space Marines|
-2202|1|Devastator Squad|"6"""|4|3+|-||2|6+|1|32mm|SM|Space Marines|
-2234|1|Primaris Company Champion|"6"""|4|3+|-||4|6+|1|32mm|SM|Space Marines|
-2252|1|Spartan|"10"""|12|2+|-||18|6+|6||SM|Space Marines|
-2255|1|Sternguard Veteran Squad|"6"""|4|3+|-||2|6+|1|32mm|SM|Space Marines|
-2258|1|Stalker|"9"""|11|3+|-||11|6+|3||SM|Space Marines|
-2266|1|Librarian|"6"""|4|3+|-||4|6+|1|40mm|SM|Space Marines|
-2267|1|Deathstorm Drop Pod|-|7|3+|-||8|6+|2||SM|Space Marines|
-2268|1|Deimos Predator|"10"""|10|3+|-||11|6+|3||SM|Space Marines|
-2269|1|Deredeo Dreadnought|"6"""|9|2+|5||12|6+|3|80mm|SM|Space Marines|
-2270|1|Desolation Squad|"6"""|4|3+|-||2|6+|1|32mm|SM|Space Marines|
-2285|1|Death Company Marines|"6"""|4|3+|-||2|6+|1|32mm|SM|Space Marines|6+
-2291|1|Sammael|"12"""|5|3+|4||7|6+|2|60mm|SM|Space Marines|
-2296|1|Lazarus|"6"""|4|3+|4||5|6+|1|40mm|SM|Space Marines|
-2302|1|Deathwing Command Squad|"5"""|5|2+|4||3|6+|1|40mm|SM|Space Marines|
+2255|1|Sternguard Veteran Sergeant|"6"""|5|3+|-||2|6+|1|32mm|SM|Space Marines|
+2255|2|Sternguard Veteran|"6"""|5|3+|-||2|6+|1|32mm|SM|Space Marines|
+2266|1|Librarian|"6"""|5|3+|-||4|6+|1|40mm|SM|Space Marines|
+2270|1|Desolation Marine|"6"""|5|3+|-||2|6+|1|32mm|SM|Space Marines|
+2270|2|Desolation Sergeant|"6"""|5|3+|-||2|6+|1|32mm|SM|Space Marines|
+2291|1|Sammael|"12"""|6|3+|4||7|6+|2|60mm|SM|Space Marines|
+2296|1|Lazarus|"6"""|5|3+|4||5|6+|1|40mm|SM|Space Marines|
 2350|1|Royal Warden|"5"""|5|3+|-||4|6+|1|32mm|NEC|Necrons|
 2351|1|Lokhust Lord|"8"""|6|3+|4||6|6+|2|60mm|NEC|Necrons|
 2352|1|Technomancer|"10"""|4|4+|-||4|6+|1|50mm|NEC|Necrons|
@@ -950,7 +900,6 @@
 2460|1|Lord of Virulence|"5"""|7|2+|4||6|6+|1|50mm|DG|Death Guard|
 2461|1|Chaos Predator Destructor|"10"""|10|3+|-||11|6+|3||DG|Death Guard|
 2462|1|Miasmic Malignifier|-|10|3+|-||12|6+|0||DG|Death Guard|
-2468|1|Deathwing Strikemaster|"5"""|5|2+|4||5|6+|1|40mm|SM|Space Marines|
 2471|1|Court Of The Archon|"7"""|3|5+|5||2|7+|1|25mm|DRU|Drukhari|
 2472|1|Palatine|"6"""|3|3+|4||4|7+|1|32mm|AS|Adepta Sororitas|
 2473|1|Tor Garadon|"5"""|6|3+|4||6|6+|1|40mm|SM|Space Marines|
@@ -977,7 +926,7 @@
 2497|1|Kill Rig|"10"""|10|3+|6||16|7+|5|170 x 109mm|ORK|Orks|5+
 2498|1|Hunta Rig|"10"""|10|3+|6||16|7+|5|170 x 109mm|ORK|Orks|5+
 2499|1|Big 'Ed Bossbunka|-|10|3+|-||12|7+|0||ORK|Orks|
-2500|1|Infernal Master|"6"""|4|3+|5||4|6+|1|40mm|TS|Thousand Sons|
+2500|1|Infernal Master|"6"""|5|3+|5||4|6+|1|40mm|TS|Thousand Sons|
 2501|1|Chaos Predator Annihilator|"10"""|10|3+|-||11|6+|3||TS|Thousand Sons|
 2507|1|NOVITIATE SUPERIOR|"6"""|3|3+|6||1|7+|2|32mm|AS|Adepta Sororitas|
 2507|2|SISTER NOVITIATE|"6"""|3|4+|6||1|8+|2|28.5mm|AS|Adepta Sororitas|
@@ -992,7 +941,7 @@
 2525|1|Reductus Saboteur|"6"""|3|5+|5||3|7+|1|32mm|GC|Genestealer Cults|
 2528|1|Winged Hive Tyrant|"12"""|9|2+|4||10|7+|3|60mm|TYR|Tyranids|
 2529|1|Parasite Of Mortrex|"12"""|5|4+|-||5|8+|1|40mm|TYR|Tyranids|
-2530|1|Lieutenant In Phobos Armour|"6"""|4|3+|-||4|6+|1|40mm|SM|Space Marines|
+2530|1|Lieutenant in Phobos Armour|"8"""|4|3+|-||4|6+|1|40mm|SM|Space Marines|
 2531|1|Corsair Voidreavers|"7"""|3|4+|-||1|7+|2|28.5mm|AE|Aeldari|
 2532|1|Corsair Voidscarred|"7"""|3|4+|-||1|7+|1|28.5mm|AE|Aeldari|
 2533|1|Shroud Runners|"14"""|4|5+|5|* Against ranged attacks only|3|7+|2|60mm|AE|Aeldari|
@@ -1016,7 +965,7 @@
 2568|1|Impulsor|"12"""|9|3+|-||11|6+|2|100mm|SM|Space Marines|
 2569|1|CULT DEMAGOGUE|"6"""|3|6+|-||4|6+|1|32mm|CSM|Chaos Space Marines|
 2569|2|OTHER MODELS|"6"""|3|6+|-||1|7+|1|28.5mm|CSM|Chaos Space Marines|
-2570|1|Legionaries|"6"""|4|3+|-||2|6+|2|32mm|CSM|Chaos Space Marines|
+2570|1|Legionaries|"6"""|5|3+|-||2|6+|2|32mm|CSM|Chaos Space Marines|
 2571|1|MUTANT|"6"""|4|6+|-||1|7+|1|25mm|CSM|Chaos Space Marines|6+
 2571|2|TORMENT|"6"""|4|6+|-||3|7+|1|40mm|CSM|Chaos Space Marines|6+
 2572|1|Chaos Predator Annihilator|"10"""|10|3+|-||11|6+|3||CSM|Chaos Space Marines|
@@ -1062,14 +1011,14 @@
 2617|1|Rogal Dorn Battle Tank|"10"""|12|2+|-||18|7+|5||AM|Astra Militarum|
 2619|1|Aegis Defence Line|-|12|2+|-||10|7+|0||AM|Astra Militarum|
 2621|1|Angron|"14"""|11|2+|4||16|5+|6|100mm|WE|World Eaters|
-2622|1|Khârn The Betrayer|"8"""|4|3+|4||5|6+|1|40mm|WE|World Eaters|
+2622|1|Khârn The Betrayer|"8"""|5|3+|4||5|6+|1|40mm|WE|World Eaters|
 2623|1|Lord Invocatus|"10"""|6|3+|4||8|6+|2|90 x 52mm|WE|World Eaters|
 2624|1|Daemon Prince of Khorne|"10"""|10|2+|4||10|6+|3|60mm|WE|World Eaters|
 2625|1|Lord On Juggernaut|"10"""|6|3+|4||7|6+|2|90 x 52mm|WE|World Eaters|
-2626|1|Master of Executions|"8"""|4|3+|-||4|6+|1|40mm|WE|World Eaters|
-2627|1|Khorne Berzerkers|"8"""|4|3+|-||2|6+|2|32mm|WE|World Eaters|
+2626|1|Master of Executions|"8"""|5|3+|-||4|6+|1|40mm|WE|World Eaters|
+2627|1|Khorne Berzerkers|"8"""|5|3+|-||2|6+|2|32mm|WE|World Eaters|
 2628|1|Jakhals|"7"""|4|6+|-||1|7+|1|28.5mm|WE|World Eaters|
-2629|1|Chaos Terminators|"7"""|5|2+|4||3|6+|1|40mm|WE|World Eaters|
+2629|1|Chaos Terminators|"7"""|6|2+|4||3|6+|1|40mm|WE|World Eaters|
 2630|1|Eightbound|"10"""|6|3+|5||3|6+|1|40mm|WE|World Eaters|
 2631|1|Exalted Eightbound|"10"""|6|3+|5||3|6+|1|40mm|WE|World Eaters|
 2632|1|Helbrute|"9"""|9|2+|-||8|6+|3|60mm|WE|World Eaters|
@@ -1082,10 +1031,9 @@
 2640|1|Chaos Rhino|"12"""|9|3+|-||10|6+|2||WE|World Eaters|
 2641|1|Heldrake|"12"""|9|3+|5||12|6+|0|120 x 92mm|WE|World Eaters|
 2642|1|Khorne Lord of Skulls|"12"""|13|3+|5||24|6+|8||WE|World Eaters|
-2677|1|Ancient In Terminator Armour|"5"""|5|2+|4||5|6+|1|40mm|SM|Space Marines|
-2678|1|Chaplain Cassius|"6"""|4|3+|4||4|5+|1|32mm|SM|Space Marines|5+
+2677|1|Ancient in Terminator Armour|"5"""|6|2+|4||5|6+|2|40mm|SM|Space Marines|
 2679|1|Vashtorr The Arkifane|"12"""|10|2+|4||14|6+|3|80mm|CSM|Chaos Space Marines|
-2682|1|Lion El’jonson|"8"""|9|2+|3||10|5+|4|60mm|SM|Space Marines|
+2682|1|Lion El'Jonson|"8"""|10|2+|3||16|5+|4|60mm|SM|Space Marines|
 2683|1|Vigilant Squad|"6"""|3|4+|-||1|7+|2|28.5mm|AoI|Imperial Agents|
 2684|1|Subductor Squad|"6"""|3|3+|4|*Excluding the Cyber-mastiff.|1|7+|1|28.5mm|AoI|Imperial Agents|
 2685|1|Exaction Squad|"6"""|3|4+|-||1|7+|1|28.5mm|AoI|Imperial Agents|
@@ -1098,36 +1046,29 @@
 2692|1|Tyranid Warriors With Ranged Bio-weapons|"6"""|5|4+|-||3|7+|2|50mm|TYR|Tyranids|
 2693|1|Von Ryan’s Leapers|"10"""|5|4+|6||3|8+|1|40mm|TYR|Tyranids|
 2694|1|Winged Tyranid Prime|"12"""|5|4+|-||6|7+|1|50mm|TYR|Tyranids|
-2700|1|Astraeus|"10"""|12|2+|5|*This model has a 5+ invulnerable save against ranged attacks.|24|6+|8|160mm|SM|Space Marines|
-2701|1|Captain In Phobos Armour|"6"""|4|3+|4||5|6+|1|40mm|SM|Space Marines|
-2702|1|Captain On Bike|"12"""|5|3+|4||6|6+|2|75 x 25mm|SM|Space Marines|
-2703|1|Centurion Assault Squad|"4"""|7|2+|-||4|6+|2|50mm|SM|Space Marines|
-2704|1|Fellblade|"9"""|13|2+|-||24|6+|8||SM|Space Marines|
+2700|1|Astraeus|"10"""|12|2+|5|Against ranged attacks only|24|6+|8|160mm|SM|Space Marines|
+2701|1|Captain in Phobos Armour|"8"""|4|3+|4||5|6+|1|40mm|SM|Space Marines|
+2702|1|Captain on Bike|"12"""|6|3+|4||6|6+|2|90 x 52mm|SM|Space Marines|
+2703|1|Assault Centurion Sergeant|"4"""|7|2+|-||4|6+|2|50mm|SM|Space Marines|
+2703|2|Assault Centurion|"4"""|7|2+|-||4|6+|2|50mm|SM|Space Marines|
 2705|1|Gladiator Lancer|"10"""|10|3+|-||12|6+|3|100mm|SM|Space Marines|
-2706|1|Ironclad Dreadnought|"6"""|10|2+|-||8|6+|3|60mm|SM|Space Marines|
-2707|1|Judiciar|"6"""|4|3+|4|* This model has a 4+ invulnerable save against melee attacks.|4|5+|1|40mm|SM|Space Marines|
+2707|1|Judiciar|"6"""|5|3+|4|Against melee attacks only|4|6+|1|40mm|SM|Space Marines|
 2708|1|Kayvaan Shrike|"12"""|4|3+|4||5|6+|1|40mm|SM|Space Marines|
-2709|1|Kor’sarro Khan|"6"""|4|3+|4||5|6+|1|40mm|SM|Space Marines|
-2710|1|Land Raider Helios|"10"""|12|2+|-||16|6+|5||SM|Space Marines|
+2709|1|Kor'sarro Khan|"6"""|5|3+|4||5|6+|1|40mm|SM|Space Marines|
 2711|1|Land Speeder|"14"""|8|3+|-||9|6+|3|105 x 70mm|SM|Space Marines|
-2712|1|OUTRIDER|"12"""|5|3+|-||4|6+|2|90 x 52mm|SM|Space Marines|
-2712|2|INVADER ATV|"12"""|5|3+|-||8|6+|2||SM|Space Marines|
-2713|1|Pedro Kantor|"6"""|4|2+|4||5|6+|1|25mm|SM|Space Marines|6+
+2712|1|Outrider|"12"""|6|3+|-||4|6+|2|90 x 52mm|SM|Space Marines|
+2712|2|Outrider Sergeant|"12"""|6|3+|-||4|6+|2|90 x 52mm|SM|Space Marines|
 2714|1|Predator Annihilator|"10"""|10|3+|-||11|6+|3||SM|Space Marines|
 2715|1|Predator Destructor|"10"""|10|3+|-||11|6+|3||SM|Space Marines|
 2717|1|Redemptor Dreadnought|"8"""|10|2+|-||12|6+|4|90mm|SM|Space Marines|
-2718|1|Reiver Squad|"6"""|4|3+|-||2|6+|1|32mm|SM|Space Marines|
-2719|1|Relic Contemptor Dreadnought|"6"""|9|2+|5||10|6+|3|60mm|SM|Space Marines|
+2718|1|Reiver Sergeant|"8"""|4|3+|-||2|6+|1|32mm|SM|Space Marines|
+2718|2|Reiver|"8"""|4|3+|-||2|6+|1|32mm|SM|Space Marines|
 2720|1|Relic Razorback|"12"""|9|3+|-||10|6+|2||SM|Space Marines|
 2721|1|Repulsor|"10"""|12|3+|-||16|6+|5|100mm|SM|Space Marines|
 2722|1|Repulsor Executioner|"10"""|12|3+|-||16|6+|5|100mm|SM|Space Marines|
 2723|1|Rhino|"12"""|9|3+|-||10|6+|2||SM|Space Marines|
-2724|1|Thunderhawk Transporter|"20"""|12|2+|-||30|6+|0|120 x 92mm|SM|Space Marines|
-2725|1|Tyrannic War Veterans|"6"""|4|3+|-||2|6+|1|25mm|SM|Space Marines|
-2726|1|Vulkan He’stan|"6"""|4|2+|4||5|6+|1|40mm|SM|Space Marines|6+
+2726|1|Vulkan He'stan|"6"""|5|2+|4||5|6+|1|40mm|SM|Space Marines|6+
 2727|1|Whirlwind|"10"""|10|3+|-||11|6+|3||SM|Space Marines|
-2728|1|Whirlwind Scorpius|"10"""|10|3+|-||11|6+|3||SM|Space Marines|
-2729|1|Xiphon Interceptor|-|9|3+|-||12|6+|-|120 x 92mm|SM|Space Marines|
 2730|1|Heretic Astartes Daemon Prince With Wings|"12"""|9|2+|4||10|6+|3|60mm|CSM|Chaos Space Marines|
 2731|1|Renegade Enforcer|"6"""|3|5+|5||3|6+|1|25mm|CSM|Chaos Space Marines|
 2732|1|Renegade Heavy Weapons Squad|"6"""|3|5+|-||2|7+|2|40mm|CSM|Chaos Space Marines|
@@ -1135,8 +1076,7 @@
 2733|2|CHAOS MAULER HOUND|"6"""|4|6+|-||1|7+|1|60 x 35.5mm|CSM|Chaos Space Marines|
 2734|1|Renegade Ogryn Brutes|"6"""|6|5+|-||3|7+|1|40mm|CSM|Chaos Space Marines|
 2735|1|Renegade Plague Ogryns|"5"""|7|5+|-||3|7+|1|40mm|CSM|Chaos Space Marines|6+
-2737|1|Death Company Marines With Jump Packs|"12"""|4|3+|-||2|6+|1|32mm|SM|Space Marines|6+
-2738|1|Sanguinary Priest With Jump Pack|"12"""|4|3+|-||4|6+|1|32mm|SM|Space Marines|
+2737|1|Death Company Marines with Jump Packs|"12"""|5|3+|-||2|6+|1|32mm|SM|Space Marines|6+
 2739|1|Earthshaker Platform|-|8|3+|-||8|7+|2||AM|Astra Militarum|
 2740|1|Elysian Drop Sentinel|"10"""|6|3+|-||6|7+|2|60mm|AM|Astra Militarum|
 2741|1|Leman Russ Eradicator|"10"""|11|2+|-||13|7+|3||AM|Astra Militarum|
@@ -1145,13 +1085,15 @@
 2744|1|Leman Russ Punisher|"10"""|11|2+|-||13|7+|3||AM|Astra Militarum|
 2745|1|Leman Russ Vanquisher|"10"""|11|2+|-||13|7+|3||AM|Astra Militarum|
 2746|1|Tempestus Scions|"6"""|3|4+|-||1|7+|1|25mm|AM|Astra Militarum|
-2748|1|Ravenwing Command Squad|"12"""|5|3+|5||4|6+|2|75 x 42mm|SM|Space Marines|
+2748|1|Ravenwing Ancient|"12"""|6|3+|5||4|6+|2|75 x 42mm|SM|Space Marines|
+2748|2|Ravenwing Apothecary|"12"""|6|3+|5||4|6+|2|75 x 42mm|SM|Space Marines|
+2748|3|Ravenwing Champion|"12"""|6|3+|5||4|6+|2|75 x 42mm|SM|Space Marines|
 2749|1|Daemon Prince of Nurgle with Wings|"12"""|11|2+|4||10|6+|3|60mm|DG|Death Guard|
 2750|1|Icon Bearer|"5"""|6|3+|-||4|5+|1|32mm|DG|Death Guard|
 2751|1|Norn Emissary|"10"""|11|2+|4||16|7+|5|100mm|TYR|Tyranids|
 2752|1|Norn Assimilator|"10"""|11|2+|-||16|7+|5|100mm|TYR|Tyranids|
 2753|1|Neurolictor|"8"""|5|4+|4||7|7+|1|50mm|TYR|Tyranids|
-2755|1|Exalted Sorcerer on Disc of Tzeentch|"10"""|4|3+|4||6|6+|2|40mm|TS|Thousand Sons|
+2755|1|Exalted Sorcerer on Disc of Tzeentch|"10"""|5|3+|4||6|6+|2|40mm|TS|Thousand Sons|
 2757|1|Daemon Prince of Khorne with Wings|"14"""|9|2+|4||10|6+|3|60mm|WE|World Eaters|
 2758|1|Daemon Prince Of Chaos With Wings|"12"""|9|2+|4||10|6+|3|60mm|CD|Chaos Daemons|
 2759|1|Autarch Wayleaper|"14"""|3|3+|4||4|6+|1|32mm|AE|Aeldari|
@@ -1169,38 +1111,49 @@
 2770|1|Sir Hekhtur|"6"""|3|4+|-||3|5+|1|25mm|QI|Imperial Knights|
 2771|1|EPHRAEL STERN|"8"""|3|3+|4||5|7+|1|32mm|AS|Adepta Sororitas|
 2771|2|KYGANIL OF THE BLOODY TEARS|"8"""|3|6+|4||3|7+|1|32mm|AS|Adepta Sororitas|
-2772|1|Company Heroes|"6"""|4|3+|-||4|6+|1|40mm|SM|Space Marines|
-2773|1|Apothecary|"6"""|4|3+|-||4|6+|1|40mm|SM|Space Marines|
-2775|1|Ancient|"6"""|4|3+|-||4|6+|1|40mm|SM|Space Marines|
-2776|1|Assault Intercessors With Jump Packs|"12"""|4|3+|-||2|6+|1|32mm|SM|Space Marines|
-2779|1|Spectrus Kill Team|"6"""|4|3+|-||2|6+|1|32mm|SM|Space Marines|
-2780|1|Fortis Kill Team|"6"""|4|3+|-||2|6+|2|32mm|SM|Space Marines|
-2781|1|Indomitor Kill Team|"5"""|6|3+|-||3|6+|1|40mm|SM|Space Marines|
-2783|1|Deathwatch Veterans|"6"""|4|3+|-||2|6+|2|32mm|SM|Space Marines|
+2772|1|Ancient|"6"""|5|3+|-||4|6+|2|40mm|SM|Space Marines|
+2772|2|Company veteran with bolt rifle|"6"""|5|3+|-||4|6+|2|40mm|SM|Space Marines|
+2772|3|Company Champion|"6"""|5|3+|-||4|6+|2|40mm|SM|Space Marines|
+2772|4|Company Veteran with heavy bolter|"6"""|5|3+|-||4|6+|2|40mm|SM|Space Marines|
+2773|1|Apothecary|"6"""|5|3+|-||4|6+|1|40mm|SM|Space Marines|
+2775|1|Ancient|"6"""|5|3+|-||4|6+|2|40mm|SM|Space Marines|
+2776|1|Assault Intercessor Sergeant with Jump Pack|"12"""|5|3+|-||2|6+|1|32mm|SM|Space Marines|
+2776|2|Assault Intercessor with Jump Pack|"12"""|5|3+|-||2|6+|1|32mm|SM|Space Marines|
+2779|1|Kill Team Infiltrator with Deathwatch Occulus Bolt Carbine, Bolt Pistol and Paired Combat Blades|"8"""|4|3+|-||2|6+|1|32mm|SM|Space Marines|
+2779|2|Kill Team Infiltrator with Bolt Sniper Rifle, Bolt Pistol and Ceramite Fists|"8"""|4|3+|-||2|6+|1|32mm|SM|Space Marines|
+2779|3|Kill Team Infiltrator with Deathwatch Marksman Bolt Carbine, Bolt Pistol and Ceramite Fists|"8"""|4|3+|-||2|6+|1|32mm|SM|Space Marines|
+2779|4|Kill Team Infiltrator with Special-issue Bolt Pistol and Combat Knife|"8"""|4|3+|-||2|6+|1|32mm|SM|Space Marines|
+2780|1|Kill Team Intercessor with Pyreblaster, Bolt Pistol and Knives and Fists|"6"""|5|3+|-||2|6+|2|32mm|SM|Space Marines|
+2780|2|Kill Team Sergeant|"6"""|5|3+|-||2|6+|2|32mm|SM|Space Marines|
+2780|3|Deathwatch Intercessor with Plasma Incinerator, Bolt Pistol and Knives and Fists|"6"""|5|3+|-||2|6+|2|32mm|SM|Space Marines|
+2780|4|Kill Team Intercessor with Deathwatch Bolt Rifle, Bolt Pistol and Knives and Fists|"6"""|5|3+|-||2|6+|2|32mm|SM|Space Marines|
+2780|5|Kill Team Intercessor with Heavy Bolt Pistol and Chainsword|"6"""|5|3+|-||2|6+|2|32mm|SM|Space Marines|
+2780|6|Kill Team Intercessor with Castellan Launcher, Superfrag Rocket Launcher and Knives and Fists|"6"""|5|3+|-||2|6+|2|32mm|SM|Space Marines|
+2781|1|Kill Team Heavy Intercessor with Deathwatch Heavy Bolt Rifle and Ceramite Fists.|"5"""|6|3+|-||3|6+|1|40mm|SM|Space Marines|
+2781|2|Kill Team Heavy Intercessor with Flamestorm Gauntlets and Twin Power Fists|"5"""|6|3+|-||3|6+|1|40mm|SM|Space Marines|
+2781|3|Kill Team Heavy Intercessor with Melta Rifle, Bolt Pistol and Ceramite Fists|"5"""|6|3+|-||3|6+|1|40mm|SM|Space Marines|
+2783|1|Watch Sergeant|"6"""|5|3+|-||2|6+|2|32mm|SM|Space Marines|
+2783|2|Deathwatch Veteran|"6"""|5|3+|-||2|6+|2|32mm|SM|Space Marines|
 2786|1|Impulsor|"12"""|9|3+|-||11|6+|2|100mm|SM|Space Marines|
 2787|1|Gladiator Lancer|"10"""|10|3+|-||12|6+|3|100mm|SM|Space Marines|
 2788|1|Gladiator Valiant|"10"""|10|3+|-||12|6+|3|100mm|SM|Space Marines|
 2789|1|Gladiator Reaper|"10"""|10|3+|-||12|6+|3|100mm|SM|Space Marines|
 2790|1|Repulsor Executioner|"10"""|12|3+|-||16|6+|5|100mm|SM|Space Marines|
 2791|1|Repulsor|"10"""|12|3+|-||16|6+|5|100mm|SM|Space Marines|
-2792|1|GRIMALDUS|"6"""|4|3+|4||4|5+|1|40mm|SM|Space Marines|5+
-2792|2|CENOBYTE SERVITOR|"6"""|4|3+|4||1|8+|1|28.5mm|SM|Space Marines|5+
-2793|1|Castellan|"6"""|4|3+|-||4|6+|1|40mm|SM|Space Marines|
-2794|1|High Marshal Helbrecht|"6"""|4|2+|4||6|6+|3|60mm|SM|Space Marines|
-2795|1|Emperor’s Champion|"8"""|4|2+|4||5|6+|1|40mm|SM|Space Marines|
-2796|1|Marshal|"6"""|4|3+|4||5|6+|1|40mm|SM|Space Marines|
-2798|1|Sword Brethren Squad|"6"""|4|3+|-||3|6+|1|40mm|SM|Space Marines|
-2799|1|NEOPHYTES|"6"""|4|4+|-||2|6+|2|28.5mm|SM|Space Marines|
-2799|2|OTHER MODELS|"6"""|4|3+|-||2|6+|2|32mm|SM|Space Marines|
+2792|1|Chaplain Grimaldus|"6"""|5|3+|4||5|5+|1|40mm|SM|Space Marines|5+
+2792|2|Cenobyte Servitor|"6"""|4|3+|4||1|8+|1|28.5mm|SM|Space Marines|5+
+2793|1|Castellan|"6"""|5|3+|-||4|6+|1|40mm|SM|Space Marines|
+2794|1|High Marshal Helbrecht|"6"""|5|2+|4||6|6+|3|60mm|SM|Space Marines|
+2795|1|Emperor's Champion|"8"""|5|2+|4||5|6+|1|40mm|SM|Space Marines|
+2796|1|Marshal|"6"""|5|3+|4||5|6+|1|40mm|SM|Space Marines|
+2798|1|Sword Brother|"6"""|5|3+|-||3|6+|1|40mm|SM|Space Marines|
+2799|1|Neophyte|"6"""|4|4+|-||2|6+|2|28.5mm|SM|Space Marines|
+2799|2|Sword Brother|"6"""|5|3+|-||2|6+|2|28.5mm|SM|Space Marines|
+2799|3|Initiate|"6"""|5|3+|-||2|6+|2|28.5mm|SM|Space Marines|
 2801|1|Venerable Dreadnought|"8"""|9|2+|-||8|6+|3|60mm|SM|Space Marines|
-2802|1|Wolf Guard Pack Leader With Jump Pack|"12"""|4|3+|-||2|6+|1|32mm|SM|Space Marines|
-2803|1|Wolf Guard Pack Leader In Terminator Armour|"5"""|5|2+|4||3|6+|1|40mm|SM|Space Marines|
-2804|1|Wolf Guard Pack Leader|"6"""|4|3+|-||2|6+|1|32mm|SM|Space Marines|
-2805|1|Cyberwolf|"10"""|4|6+|6||2|7+|0|40mm|SM|Space Marines|
-2806|1|Hounds Of Morkai|"6"""|4|3+|6|*  This invulnerable save is improved to 4+ against Psychic Attacks.|2|6+|1|32mm|SM|Space Marines|
-3582|1|Khorne Berzerkers|"8"""|4|3+|-||2|6+|2|32mm|CSM|Chaos Space Marines|
-3583|1|Rubric Marine|"6"""|4|3+|5||2|7+|2|32mm|CSM|Chaos Space Marines|
-3583|2|Aspiring Sorcerer|"6"""|4|3+|5||3|6+|2|32mm|CSM|Chaos Space Marines|
+3582|1|Khorne Berzerkers|"8"""|5|3+|-||2|6+|2|32mm|CSM|Chaos Space Marines|
+3583|1|Rubric Marine|"6"""|5|3+|5||2|7+|2|32mm|CSM|Chaos Space Marines|
+3583|2|Aspiring Sorcerer|"6"""|5|3+|5||3|6+|2|32mm|CSM|Chaos Space Marines|
 3584|1|Plague Marines|"5"""|6|3+|-||2|6+|2|32mm|CSM|Chaos Space Marines|
 3585|1|Chaos Thunderhawk|"20"""|12|2+|-||30|6+|-|120 x 92mm|DG|Death Guard|
 3586|1|Greater Blight Drone|"10"""|9|3+|5||10|6+|3|60mm|DG|Death Guard|
@@ -1225,26 +1178,6 @@
 3604|1|Terrax-pattern Termite|"8"""|10|3+|-||14|6+|2||DG|Death Guard|
 3605|1|Terrax-pattern Termite|"8"""|10|3+|-||14|6+|2||WE|World Eaters|
 3606|1|Terrax-pattern Termite|"8"""|10|3+|-||14|6+|2||CSM|Chaos Space Marines|
-3607|1|Land Raider Achilles|"10"""|12|2+|4||16|6+|5||TS|Thousand Sons|
-3608|1|Land Raider Achilles|"10"""|12|2+|4||16|6+|5||DG|Death Guard|
-3609|1|Land Raider Achilles|"10"""|12|2+|4||16|6+|5||WE|World Eaters|
-3610|1|Land Raider Achilles|"10"""|12|2+|4||16|6+|5||CSM|Chaos Space Marines|
-3611|1|Land Raider Proteus|"12"""|12|2+|-||16|6+|5||TS|Thousand Sons|
-3612|1|Land Raider Proteus|"12"""|12|2+|-||16|6+|5||DG|Death Guard|
-3613|1|Land Raider Proteus|"12"""|12|2+|-||16|6+|5||WE|World Eaters|
-3614|1|Land Raider Proteus|"12"""|12|2+|-||16|6+|5||CSM|Chaos Space Marines|
-3615|1|Fire Raptor Gunship|-|10|3+|-||18|6+|-|120 x 92mm|TS|Thousand Sons|
-3616|1|Fire Raptor Gunship|-|10|3+|-||18|6+|-|120 x 92mm|DG|Death Guard|
-3617|1|Fire Raptor Gunship|-|10|3+|-||18|6+|-|120 x 92mm|WE|World Eaters|
-3618|1|Fire Raptor Gunship|-|10|3+|-||18|6+|-|120 x 92mm|CSM|Chaos Space Marines|
-3619|1|Spartan|"10"""|12|2+|-||18|6+|6||TS|Thousand Sons|
-3620|1|Spartan|"10"""|12|2+|-||18|6+|6||DG|Death Guard|
-3621|1|Spartan|"10"""|12|2+|-||18|6+|6||WE|World Eaters|
-3622|1|Spartan|"10"""|12|2+|-||18|6+|6||CSM|Chaos Space Marines|
-3623|1|Deredeo Dreadnought|"6"""|9|2+|5||12|6+|3|80mm|TS|Thousand Sons|
-3624|1|Deredeo Dreadnought|"6"""|9|2+|5||12|6+|3|80mm|DG|Death Guard|
-3625|1|Deredeo Dreadnought|"6"""|9|2+|5||12|6+|3|80mm|WE|World Eaters|
-3626|1|Deredeo Dreadnought|"6"""|9|2+|5||12|6+|3|80mm|CSM|Chaos Space Marines|
 3627|1|Cerberus|"10"""|12|2+|-||18|6+|6||TS|Thousand Sons|
 3628|1|Cerberus|"10"""|12|2+|-||18|6+|6||DG|Death Guard|
 3629|1|Cerberus|"10"""|12|2+|-||18|6+|6||WE|World Eaters|
@@ -1253,58 +1186,18 @@
 3632|1|Kratos|"10"""|12|2+|-||18|6+|6||DG|Death Guard|
 3633|1|Kratos|"10"""|12|2+|-||18|6+|6||WE|World Eaters|
 3634|1|Kratos|"10"""|12|2+|-||18|6+|6||CSM|Chaos Space Marines|
-3635|1|Sokar-pattern Stormbird|"20"""|13|2+|4|* Against ranged attacks only|40|6+|0||TS|Thousand Sons|
-3636|1|Sokar-pattern Stormbird|"20"""|13|2+|4|* Against ranged attacks only|40|6+|0||DG|Death Guard|
-3637|1|Sokar-pattern Stormbird|"20"""|13|2+|4|* Against ranged attacks only|40|6+|0||WE|World Eaters|
-3638|1|Sokar-pattern Stormbird|"20"""|13|2+|4|* Against ranged attacks only|40|6+|0||CSM|Chaos Space Marines|
-3639|1|Sicaran Battle Tank|"10"""|11|2+|-||14|6+|4||TS|Thousand Sons|
-3640|1|Sicaran Battle Tank|"10"""|11|2+|-||14|6+|4||DG|Death Guard|
-3641|1|Sicaran Battle Tank|"10"""|11|2+|-||14|6+|4||WE|World Eaters|
-3642|1|Sicaran Battle Tank|"10"""|11|2+|-||14|6+|4||CSM|Chaos Space Marines|
 3643|1|Mastodon|"9"""|14|2+|-||30|6+|12||TS|Thousand Sons|
 3644|1|Mastodon|"9"""|14|2+|-||30|6+|12||DG|Death Guard|
 3645|1|Mastodon|"9"""|14|2+|-||30|6+|12||WE|World Eaters|
 3646|1|Mastodon|"9"""|14|2+|-||30|6+|12||CSM|Chaos Space Marines|
-3647|1|Leviathan Dreadnought|"8"""|10|2+|5||12|6+|4|80mm|TS|Thousand Sons|
-3648|1|Leviathan Dreadnought|"8"""|10|2+|5||12|6+|4|80mm|DG|Death Guard|
-3649|1|Leviathan Dreadnought|"8"""|10|2+|5||12|6+|4|80mm|WE|World Eaters|
-3650|1|Leviathan Dreadnought|"8"""|10|2+|5||12|6+|4|80mm|CSM|Chaos Space Marines|
-3651|1|Fellblade|"9"""|13|2+|-||24|6+|8||TS|Thousand Sons|
-3652|1|Fellblade|"9"""|13|2+|-||24|6+|8||DG|Death Guard|
-3653|1|Fellblade|"9"""|13|2+|-||24|6+|8||WE|World Eaters|
-3654|1|Fellblade|"9"""|13|2+|-||24|6+|8||CSM|Chaos Space Marines|
-3655|1|Relic Contemptor Dreadnought|"6"""|9|2+|5||10|6+|3|60mm|TS|Thousand Sons|
-3656|1|Relic Contemptor Dreadnought|"6"""|9|2+|5||10|6+|3|60mm|DG|Death Guard|
-3657|1|Relic Contemptor Dreadnought|"6"""|9|2+|5||10|6+|3|60mm|WE|World Eaters|
-3658|1|Relic Contemptor Dreadnought|"6"""|9|2+|5||10|6+|3|60mm|CSM|Chaos Space Marines|
-3659|1|Whirlwind Scorpius|"10"""|10|3+|-||11|6+|3||TS|Thousand Sons|
-3660|1|Whirlwind Scorpius|"10"""|10|3+|-||11|6+|3||DG|Death Guard|
-3661|1|Whirlwind Scorpius|"10"""|10|3+|-||11|6+|3||WE|World Eaters|
-3662|1|Whirlwind Scorpius|"10"""|10|3+|-||11|6+|3||CSM|Chaos Space Marines|
-3663|1|Xiphon Interceptor|-|9|3+|-||12|6+|-|120 x 92mm|TS|Thousand Sons|
-3664|1|Xiphon Interceptor|-|9|3+|-||12|6+|-|120 x 92mm|DG|Death Guard|
-3665|1|Xiphon Interceptor|-|9|3+|-||12|6+|-|120 x 92mm|WE|World Eaters|
-3666|1|Xiphon Interceptor|-|9|3+|-||12|6+|-|120 x 92mm|CSM|Chaos Space Marines|
 3667|1|Rapier Carrier|"3"""|6|2+|-||6|6+|2||TS|Thousand Sons|
 3668|1|Rapier Carrier|"3"""|6|2+|-||6|6+|2||DG|Death Guard|
 3669|1|Rapier Carrier|"3"""|6|2+|-||6|6+|2||WE|World Eaters|
 3670|1|Rapier Carrier|"3"""|6|2+|-||6|6+|2||CSM|Chaos Space Marines|
-3671|1|Storm Eagle Gunship|-|10|3+|-||18|6+|-|120 x 92mm|TS|Thousand Sons|
-3672|1|Storm Eagle Gunship|-|10|3+|-||18|6+|-|120 x 92mm|DG|Death Guard|
-3673|1|Storm Eagle Gunship|-|10|3+|-||18|6+|-|120 x 92mm|WE|World Eaters|
-3674|1|Storm Eagle Gunship|-|10|3+|-||18|6+|-|120 x 92mm|CSM|Chaos Space Marines|
-3675|1|Sicaran Venator|"10"""|11|2+|-||14|6+|4||TS|Thousand Sons|
-3676|1|Sicaran Venator|"10"""|11|2+|-||14|6+|4||DG|Death Guard|
-3677|1|Sicaran Venator|"10"""|11|2+|-||14|6+|4||WE|World Eaters|
-3678|1|Sicaran Venator|"10"""|11|2+|-||14|6+|4||CSM|Chaos Space Marines|
 3679|1|Typhon|"10"""|12|2+|-||18|6+|6||TS|Thousand Sons|
 3680|1|Typhon|"10"""|12|2+|-||18|6+|6||DG|Death Guard|
 3681|1|Typhon|"10"""|12|2+|-||18|6+|6||WE|World Eaters|
 3682|1|Typhon|"10"""|12|2+|-||18|6+|6||CSM|Chaos Space Marines|
-3683|1|Sicaran Punisher|"10"""|11|2+|-||14|6+|4||TS|Thousand Sons|
-3684|1|Sicaran Punisher|"10"""|11|2+|-||14|6+|4||DG|Death Guard|
-3685|1|Sicaran Punisher|"10"""|11|2+|-||14|6+|4||WE|World Eaters|
-3686|1|Sicaran Punisher|"10"""|11|2+|-||14|6+|4||CSM|Chaos Space Marines|
 3687|1|Falchion|"9"""|13|2+|-||24|6+|8||TS|Thousand Sons|
 3688|1|Falchion|"9"""|13|2+|-||24|6+|8||DG|Death Guard|
 3689|1|Falchion|"9"""|13|2+|-||24|6+|8||WE|World Eaters|
@@ -1312,7 +1205,7 @@
 3693|1|Overlord with translocation shroud|"5"""|5|2+|4||6|6+|1|40mm|NEC|Necrons|
 3694|1|Sydonian Dragoons|"10"""|7|3+|5||7|7+|2|105 x 70mm|AdM|Adeptus Mechanicus|
 3695|1|Sydonian Skatros|"8"""|4|4+|5||4|7+|1|40mm|AdM|Adeptus Mechanicus|
-3698|1|Inner Circle Companions|"6"""|4|3+|-||3|6+|2|40mm|SM|Space Marines|
+3698|1|Inner Circle Companions|"6"""|5|3+|-||3|6+|2|40mm|SM|Space Marines|
 3699|1|Crisis Sunforge Battlesuits|"10"""|5|3+|4||4|7+|2|50mm|TAU|T’au Empire|
 3700|1|Crisis Battlesuits|"10"""|5|3+|-||4|7+|2|50mm|TAU|T’au Empire|
 3701|1|Crisis Battlesuits|"10"""|5|3+|-||4|7+|2|50mm|TAU|T’au Empire|
@@ -1323,7 +1216,7 @@
 3706|1|Krootox Rampagers|"7"""|6|5+|-||5|7+|2|50mm|TAU|T’au Empire|
 3707|1|Big Mek|"6"""|5|3+|-||6|7+|1|50mm|ORK|Orks|
 3710|1|Hernkyn Yaegirs|"6"""|5|5+|-||1|7+|1|28.5mm|LoV|Leagues of Votann|
-3711|1|Chaos Lord|"12"""|4|3+|4||5|6+|1|40mm|CSM|Chaos Space Marines|
+3711|1|Chaos Lord|"12"""|5|3+|4||5|6+|1|40mm|CSM|Chaos Space Marines|
 3712|1|Cultist Firebrand|"6"""|4|4+|-||4|6+|1|32mm|CSM|Chaos Space Marines|
 3713|1|Cultist Mob with Firearms|"6"""|3|6+|-||1|7+|1|25mm|CSM|Chaos Space Marines|
 3714|1|Canoness|"12"""|3|3+|4||3|7+|1|32mm|AS|Adepta Sororitas|
@@ -1331,10 +1224,10 @@
 3716|1|Acolyte Hybrids With Hand Flamers|"6"""|4|5+|-||1|7+|2|32mm|GC|Genestealer Cults|
 3811|1|Celestian Sacresant Aveline|"6"""|3|3+|4||4|7+|1|50mm|AS|Adepta Sororitas|6+
 3812|1|Ministorum Priest|"6"""|3|6+|4||3|7+|1|32mm|AoI|Imperial Agents|
-3813|1|Grey Knights Terminator Squad|"5"""|5|2+|4||3|6+|2|40mm|AoI|Imperial Agents|
-3814|1|Watch Captain Artemis|"6"""|4|3+|4||4|6+|1|32mm|AoI|Imperial Agents|6+
-3815|1|Watch Master|"6"""|4|2+|4||5|6+|1|32mm|AoI|Imperial Agents|
-3816|1|Deathwatch Veterans|"6"""|4|3+|-||2|6+|2|32mm|AoI|Imperial Agents|
+3813|1|Grey Knights Terminator Squad|"5"""|6|2+|4||3|6+|2|40mm|AoI|Imperial Agents|
+3814|1|Watch Captain Artemis|"6"""|5|3+|4||4|6+|1|32mm|AoI|Imperial Agents|6+
+3815|1|Watch Master|"6"""|5|2+|4||5|6+|1|32mm|AoI|Imperial Agents|
+3816|1|Deathwatch Veterans|"6"""|5|3+|-||2|6+|2|32mm|AoI|Imperial Agents|
 3817|1|Corvus Blackstar|"14"""|10|3+|-||14|6+|0|120 x 92mm|AoI|Imperial Agents|
 3818|1|Battle Sisters Squad|"6"""|3|3+|6||1|7+|2|32mm|AoI|Imperial Agents|
 3819|1|Immolator|"12"""|10|3+|6||11|7+|2||AoI|Imperial Agents|
@@ -1355,13 +1248,10 @@
 3828|1|Daemonhost|"6"""|3|5+|5||3|7+|0|25mm|AoI|Imperial Agents|
 3829|1|Jokaero Weaponsmith|"6"""|3|5+|4||2|7+|0|25mm|AoI|Imperial Agents|
 3830|1|Imperial Rhino|"12"""|9|3+|-||10|6+|2||AoI|Imperial Agents|
-3831|1|Captain|"6"""|4|3+|4||5|6+|1|40mm|SM|Space Marines|
-3832|1|Death Company Captain|"6"""|4|3+|4||5|6+|1|40mm|SM|Space Marines|6+
-3833|1|Death Company Captain|"12"""|4|3+|4||5|6+|1|40mm|SM|Space Marines|6+
+3831|1|Blood Angels Captain|"6"""|5|3+|4||5|6+|1|40mm|SM|Space Marines|
+3832|1|Death Company Captain|"6"""|5|3+|4||5|6+|1|40mm|SM|Space Marines|6+
+3833|1|Death Company Captain with Jump Pack|"12"""|5|3+|4||5|6+|1|40mm|SM|Space Marines|6+
 3834|1|Tempestus Aquilons|"6"""|3|4+|-||1|7+|1|28.5mm|AM|Astra Militarum|
-3835|1|Death Company Dreadnought with Magna-grapple|"8"""|9|2+|-||8|6+|3|90mm|SM|Space Marines|6+
-3836|1|Death Company Marines with Boltguns|"6"""|4|3+|-||2|6+|1|32mm|SM|Space Marines|6+
-3837|1|Death Company Marines with Boltguns and Jump Packs|"12"""|4|3+|-||2|6+|1|32mm|SM|Space Marines|6+
 3839|1|Tech-priest Dominus|"6"""|4|2+|5||4|7+|1|50mm|QI|Imperial Knights|
 3840|1|Tech-priest Manipulus|"6"""|4|2+|5||4|7+|1|50mm|QI|Imperial Knights|
 3841|1|Skitarii Marshal|"6"""|3|4+|5||3|6+|1|32mm|QI|Imperial Knights|
@@ -1391,16 +1281,18 @@
 3860|1|Renegade Plague Ogryns|"5"""|7|5+|-||3|7+|1|40mm|QT|Chaos Knights|6+
 3861|1|Breaka Boy|"6"""|5|4+|-||2|7+|1|32mm|ORK|Orks|
 3861|2|Nob|"6"""|5|4+|-||3|7+|1|40mm|ORK|Orks|
-3871|1|Watch Master|"6"""|4|2+|4||5|6+|1|32mm|SM|Space Marines|
-3872|1|Watch Captain Artemis|"6"""|4|3+|4||4|6+|1|32mm|SM|Space Marines|6+
-3873|1|Deathwatch Terminator Squad|"5"""|5|2+|4||3|6+|1|40mm|SM|Space Marines|
-3874|1|KILL TEAM SERGEANT WITH JUMP PACK AND KILL TEAM INTERCESSORS WITH JUMP PACKS|"12"""|4|3+|-||2|6+|1|32mm|SM|Space Marines|
-3874|2|KILL TEAM HEAVY INTERCESSORS WITH JUMP PACKS|"10"""|6|3+|-||3|6+|1|40mm|SM|Space Marines|
+3871|1|Watch Master|"6"""|5|2+|4||5|6+|1|32mm|SM|Space Marines|
+3872|1|Watch Captain Artemis|"6"""|5|3+|4||4|6+|1|32mm|SM|Space Marines|6+
+3873|1|Deathwatch Terminator|"5"""|6|2+|4||3|6+|1|40mm|SM|Space Marines|
+3873|2|Deathwatch Terminator Sergeant|"5"""|6|2+|4||3|6+|1|40mm|SM|Space Marines|
+3874|1|Kill Team Intercessor with Jump Pack|"12"""|5|3+|-||2|6+|1|32mm|SM|Space Marines|
+3874|2|Kill Team Sergeant with Jump Pack|"12"""|5|3+|-||2|6+|1|32mm|SM|Space Marines|
+3874|3|Kill Team Heavy Intercessor with Jump Pack|"10"""|6|3+|-||3|6+|1|32mm|SM|Space Marines|
 3875|1|KILL TEAM VETERAN|"6"""|4|3+|-||2|6+|2|32mm|SM|Space Marines|
 3875|2|KILL TEAM BIKER|"12"""|5|3+|-||3|6+|2|75 x 42mm|SM|Space Marines|
 3875|3|CHAPLAIN CASSIUS|"6"""|4|3+|4|* Chaplain Cassius and Kill Team Terminator models only.|4|5+|2|32mm|SM|Space Marines|
 3875|4|KILL TEAM TERMINATOR|"5"""|5|2+|4|* Chaplain Cassius and Kill Team Terminator models only.|3|6+|2|40mm|SM|Space Marines|
-3876|1|Legionaries|"6"""|4|3+|-||2|6+|1|32mm|CSM|Chaos Space Marines|
+3876|1|Legionaries|"6"""|5|3+|-||2|6+|1|32mm|CSM|Chaos Space Marines|
 3877|1|Deathleaper|"8"""|6|3+|4||7|7+|1|60mm|GC|Genestealer Cults|
 3878|1|Parasite Of Mortrex|"12"""|5|4+|-||5|8+|1|40mm|GC|Genestealer Cults|
 3879|1|Winged Hive Tyrant|"12"""|9|2+|4||10|7+|3|60mm|GC|Genestealer Cults|
@@ -1548,15 +1440,15 @@
 4033|1|Tauros Venator|"12"""|6|4+|-||6|7+|2||GC|Genestealer Cults|
 4034|1|Trojan Support Vehicle|"10"""|9|3+|-||11|7+|2||GC|Genestealer Cults|
 4035|1|Valdor|"9"""|13|2+|-||20|7+|8||GC|Genestealer Cults|
-4036|1|Chaos Lord|"6"""|4|3+|4||5|6+|1|40mm|CD|Chaos Daemons|
-4037|1|Chaos Lord In Terminator Armour|"5"""|5|2+|4||6|6+|1|40mm|CD|Chaos Daemons|
-4038|1|Chaos Lord|"12"""|4|3+|4||5|6+|1|40mm|CD|Chaos Daemons|
+4036|1|Chaos Lord|"6"""|5|3+|4||5|6+|1|40mm|CD|Chaos Daemons|
+4037|1|Chaos Lord In Terminator Armour|"5"""|6|2+|4||6|6+|1|40mm|CD|Chaos Daemons|
+4038|1|Chaos Lord|"12"""|5|3+|4||5|6+|1|40mm|CD|Chaos Daemons|
 4039|1|Chaos Lord On Disc Of Tzeentch|"12"""|4|3+|4||6|6+|1|40mm|CD|Chaos Daemons|
 4040|1|Chaos Lord On Juggernaut|"10"""|6|2+|4||7|6+|2|90 x 52mm|CD|Chaos Daemons|
 4041|1|Chaos Lord On Palanquin Of Nurgle|"5"""|5|3+|4||8|6+|2|60mm|CD|Chaos Daemons|
 4042|1|Chaos Lord On Steed Of Slaanesh|"14"""|5|3+|4||6|6+|2|60 x 35.5mm|CD|Chaos Daemons|
-4043|1|Chaos Terminator Squad|"5"""|5|2+|4||3|6+|1|40mm|CD|Chaos Daemons|
-4044|1|Chosen|"6"""|4|3+|-||3|6+|1|32mm|CD|Chaos Daemons|
+4043|1|Chaos Terminator Squad|"5"""|6|2+|4||3|6+|1|40mm|CD|Chaos Daemons|
+4044|1|Chosen|"6"""|5|3+|-||3|6+|1|32mm|CD|Chaos Daemons|
 4045|1|Cultist Firebrand|"6"""|4|4+|-||4|6+|1|32mm|CD|Chaos Daemons|
 4046|1|CULT DEMAGOGUE|"6"""|3|6+|-||4|6+|1|32mm|CD|Chaos Daemons|
 4046|2|OTHER MODELS|"6"""|3|6+|-||1|7+|1|28.5mm|CD|Chaos Daemons|
@@ -1579,34 +1471,34 @@
 4059|2|CHAOS MAULER HOUND|"6"""|4|6+|-||1|7+|1|60 x 35.5mm|CD|Chaos Daemons|
 4060|1|Renegade Ogryn Brutes|"6"""|6|5+|-||3|7+|1|40mm|CD|Chaos Daemons|
 4061|1|Renegade Plague Ogryns|"5"""|7|5+|-||3|7+|1|40mm|CD|Chaos Daemons|6+
-4062|1|DARK APOSTLE|"6"""|4|3+|4||4|5+|1|40mm|CD|Chaos Daemons|
-4062|2|DARK DISCIPLE|"6"""|4|6+|4||1|7+|1|25mm|CD|Chaos Daemons|
-4063|1|Havocs|"5"""|5|3+|-||2|6+|1|40mm|CD|Chaos Daemons|
-4064|1|Legionaries|"6"""|4|3+|-||2|6+|2|32mm|CD|Chaos Daemons|
-4065|1|Master Of Possession|"8"""|4|3+|5||4|6+|1|40mm|CD|Chaos Daemons|
+4062|1|DARK APOSTLE|"6"""|5|3+|4||4|5+|1|40mm|CD|Chaos Daemons|
+4062|2|DARK DISCIPLE|"6"""|5|6+|4||1|7+|1|25mm|CD|Chaos Daemons|
+4063|1|Havocs|"5"""|5|3+|-||3|6+|1|40mm|CD|Chaos Daemons|
+4064|1|Legionaries|"6"""|5|3+|-||2|6+|2|32mm|CD|Chaos Daemons|
+4065|1|Master Of Possession|"8"""|5|3+|5||4|6+|1|40mm|CD|Chaos Daemons|
 4066|1|Possessed|"9"""|6|3+|5||3|6+|1|40mm|CD|Chaos Daemons|
-4067|1|Raptors|"12"""|4|3+|-||2|6+|1|32mm|CD|Chaos Daemons|
-4068|1|Sorcerer|"6"""|4|3+|-||4|6+|1|40mm|CD|Chaos Daemons|
+4067|1|Raptors|"12"""|5|3+|-||2|6+|1|32mm|CD|Chaos Daemons|
+4068|1|Sorcerer|"6"""|5|3+|-||4|6+|1|40mm|CD|Chaos Daemons|
 4069|1|Sorcerer On Disc Of Tzeentch|"12"""|4|3+|-||5|6+|1|40mm|CD|Chaos Daemons|
 4070|1|Sorcerer On Palanquin Of Nurgle|"5"""|5|3+|-||7|6+|2|60mm|CD|Chaos Daemons|
 4071|1|Sorcerer On Steed Of Slaanesh|"14"""|5|3+|-||5|6+|2|60 x 35.5mm|CD|Chaos Daemons|
-4072|1|Sorcerer In Terminator Armour|"5"""|5|2+|4||5|6+|1|40mm|CD|Chaos Daemons|
-4073|1|Warp Talons|"12"""|4|3+|5||2|6+|1|32mm|CD|Chaos Daemons|
+4072|1|Sorcerer In Terminator Armour|"5"""|6|2+|4||5|6+|1|40mm|CD|Chaos Daemons|
+4073|1|Warp Talons|"12"""|5|3+|5||2|6+|1|32mm|CD|Chaos Daemons|
 4074|1|Sanctifiers|"6"""|3|6+|5||1|7+|1|25mm|AoI|Imperial Agents|
 4075|1|Sanctifiers|"6"""|3|6+|5||1|7+|1|25mm|AS|Adepta Sororitas|
 4076|1|Goremongers|"9"""|4|6+|-||1|7+|1|32mm|WE|World Eaters|
 4077|1|Fulgrim|"16"""|11|2+|4||16|5+|6|130mm|EC|Emperor’s Children|
 4078|1|Lord Exultant|"7"""|4|3+|4||5|6+|1|40mm|EC|Emperor’s Children|
-4079|1|Tormentors|"7"""|4|3+|-||2|6+|2|32mm|EC|Emperor’s Children|
-4080|1|Infractors|"7"""|4|3+|-||2|6+|2|32mm|EC|Emperor’s Children|
-4081|1|Terminator Squad|"6"""|5|2+|4||3|6+|1|40mm|EC|Emperor’s Children|
+4079|1|Tormentors|"7"""|5|3+|-||2|6+|2|32mm|EC|Emperor’s Children|
+4080|1|Infractors|"7"""|5|3+|-||2|6+|2|32mm|EC|Emperor’s Children|
+4081|1|Terminator Squad|"6"""|6|2+|4||3|6+|1|40mm|EC|Emperor’s Children|
 4082|1|Chaos Land Raider|"10"""|12|2+|-||16|6+|5||EC|Emperor’s Children|
-4083|1|Lucius the Eternal|"8"""|5|2+|4||6|6+|1|50mm|EC|Emperor’s Children|5+
-4084|1|Lord Kakophonist|"6"""|5|2+|4||6|6+|1|40mm|EC|Emperor’s Children|
+4083|1|Lucius the Eternal|"8"""|6|2+|4||6|6+|1|50mm|EC|Emperor’s Children|5+
+4084|1|Lord Kakophonist|"6"""|6|2+|4||6|6+|1|40mm|EC|Emperor’s Children|
 4085|1|Sorcerer|"7"""|4|3+|-||4|6+|1|40mm|EC|Emperor’s Children|
 4086|1|Daemon Prince of Slaanesh|"10"""|10|2+|4||10|6+|3|60mm|EC|Emperor’s Children|
 4087|1|Daemon Prince of Slaanesh with Wings|"14"""|9|2+|4||10|6+|3|60mm|EC|Emperor’s Children|
-4088|1|Noise Marines|"6"""|5|3+|-||2|6+|1|40mm|EC|Emperor’s Children|
+4088|1|Noise Marines|"6"""|5|3+|-||3|6+|1|40mm|EC|Emperor’s Children|
 4089|1|Flawless Blades|"8"""|5|3+|5||3|6+|1|40mm|EC|Emperor’s Children|
 4090|1|Chaos Spawn|"10"""|5|4+|-||4|7+|1|50mm|EC|Emperor’s Children|5+
 4091|1|Maulerfiend|"10"""|10|3+|5||12|6+|3|120 x 92mm|EC|Emperor’s Children|
@@ -1617,7 +1509,7 @@
 4096|1|Fiends|"12"""|5|7+|5||4|7+|2|75 x 42mm|EC|Emperor’s Children|
 4097|1|Keeper of Secrets|"14"""|10|5+|4||18|6+|5|100mm|EC|Emperor’s Children|
 4098|1|Seekers|"14"""|4|7+|5||2|7+|1|60 x 35.5mm|EC|Emperor’s Children|
-4099|1|Noise Marines|"6"""|5|3+|-||2|6+|1|40mm|CSM|Chaos Space Marines|
+4099|1|Noise Marines|"6"""|5|3+|-||3|6+|1|40mm|CSM|Chaos Space Marines|
 4100|1|Tormentbringer|"14"""|6|5+|4||12|7+|3|120 x 92mm|CD|Chaos Daemons|
 4103|1|Slaughterbound|"10"""|6|3+|5||6|6+|1|50mm|WE|World Eaters|
 4104|1|Skarbrand|"10"""|11|3+|4||20|6+|5|100mm|WE|World Eaters|
@@ -1649,18 +1541,15 @@
 4127|1|PINK HORROR|"6"""|3|7+|4||1|7+|1|32mm|TS|Thousand Sons|
 4127|2|BLUE HORROR/BRIMSTONE HORROR|"6"""|3|7+|4||1|8+|0|25mm|TS|Thousand Sons|
 4128|1|Blue Horrors/Brimstone Horror|"6"""|3|7+|4||1|8+|0|25mm|TS|Thousand Sons|
-4129|1|Wolf Priest|"7"""|4|3+|4||4|6+|1|40mm|SM|Space Marines|
-4130|1|Wolf Guard Battle Leader|"7"""|4|3+|4||5|6+|1|40mm|SM|Space Marines|
-4131|1|Wolf Guard Headtakers|"7"""|4|3+|-||3|6+|1|40mm|SM|Space Marines|
-4131|2|Hunting Wolves|"10"""|4|6+|-||1|8+|0|60 x 35.5mm|SM|Space Marines|
-4132|1|Wulfen|"9"""|6|4+|4||2|7+|0|40mm|SM|Space Marines|
+4129|1|Wolf Priest|"7"""|5|3+|4||4|6+|1|40mm|SM|Space Marines|
+4130|1|Wolf Guard Battle Leader|"7"""|5|3+|4||5|6+|1|40mm|SM|Space Marines|
+4131|1|Wolf Guard Headtaker|"7"""|5|3+|-||3|6+|1|40mm|SM|Space Marines|
+4131|2|Hunting Wolf|"10"""|4|6+|-||1|8+|0|40mm|SM|Space Marines|
+4132|1|Wulfen with Storm Shield|"9"""|6|4+|4||2|7+|0|40mm|SM|Space Marines|
 4133|1|Wulfen Dreadnought|"9"""|9|2+|-||8|6+|0|60mm|SM|Space Marines|6+
 4134|1|Knight Ruinator|"10"""|11|3+|5| * Against ranged attacks only|26|6+|10|170 x 109mm|QT|Chaos Knights|
-4135|1|Execrator|"6"""|4|3+|4||4|5+|1|40mm|SM|Space Marines|
-4136|1|Crusade Ancient|"6"""|4|3+|-||4|6+|1|40mm|SM|Space Marines|
-4137|1|Sternguard Veteran Squad|"6"""|4|3+|-||2|6+|1|32mm|SM|Space Marines|
-4138|1|Terminator Squad|"5"""|5|2+|4||3|6+|1|40mm|SM|Space Marines|
-4139|1|Land Raider Crusader|"12"""|12|2+|-||16|6+|5||SM|Space Marines|
+4135|1|Execrator|"6"""|5|3+|4||4|5+|1|40mm|SM|Space Marines|
+4136|1|Crusade Ancient|"6"""|5|3+|-||4|6+|1|40mm|SM|Space Marines|
 4140|1|Buri Aegnirssen|"5"""|6|3+|4||5|6+|1|40mm|LoV|Leagues of Votann|
 4141|1|Memnyr Strategist|"5"""|5|4+|-||4|7+|1|32mm|LoV|Leagues of Votann|
 4142|1|Arkanyst Evaluator|"5"""|5|3+|-||4|7+|1|32mm|LoV|Leagues of Votann|
@@ -1669,7 +1558,7 @@
 4145|1|Cthonian Earthshakers|"4"""|6|4+|-||6|7+|2|80mm|LoV|Leagues of Votann|
 4146|1|Kapricus Defenders|"12"""|7|4+|-||7|7+|2|105 x 70mm|LoV|Leagues of Votann|
 4147|1|Kapricus Carrier|"12"""|7|4+|-||7|7+|2|105 x 70mm|LoV|Leagues of Votann|
-4148|1|Aethon Shaan|"14"""|4|3+|4||5|6+|1|50mm|SM|Space Marines|
+4148|1|Aethon Shaan|"14"""|5|3+|4||5|6+|1|50mm|SM|Space Marines|
 4149|1|Knight Defender|"10"""|11|3+|4|* against ranged attacks only|26|6+|10|170 x 109mm|QI|Imperial Knights|
 4150|1|Greater Daemon|"12"""|10|5+|4||18|6+|5|100mm|CD|Chaos Daemons|
 4151|1|Lesser Daemons|"6"""|4|7+|5||1|7+|1|32mm|CD|Chaos Daemons|
@@ -1686,35 +1575,45 @@
 4163|1|Skyweavers|"14"""|4|4+|4||3|6+|2|60mm|DRU|Drukhari|
 4164|1|Troupe|"8"""|3|6+|4||1|6+|1|25mm|DRU|Drukhari|
 4165|1|Voidweaver|"14"""|6|4+|4||6|6+|2|65mm|DRU|Drukhari|
-4166|1|Captain|"5"""|5|2+|4||6|6+|1|50mm|SM|Space Marines|5+
-4167|1|Captain On Bike|"12"""|5|3+|4||8|6+|2|90 x 52mm|SM|Space Marines|
+4166|1|Caanok Var|"5"""|6|2+|4||6|6+|1|50mm|SM|Space Marines|5+
+4167|1|Suboden Khan|"12"""|6|3+|4||8|6+|2|90 x 52mm|SM|Space Marines|
 4168|1|Corsair Voidreavers|"7"""|3|4+|-||1|7+|2|28.5mm|DRU|Drukhari|
 4169|1|Corsair Voidscarred|"7"""|3|4+|-||1|7+|1|28.5mm|DRU|Drukhari|
 4170|1|Corsair Cloud Dancer Band|"14"""|4|3+|-||2|6+|2|32mm|DRU|Drukhari|
 4171|1|Corsair Reaver Band|"7"""|3|5+|-||3|6+|2|25mm|DRU|Drukhari|
 4173|1|INQUISITOR OSTROMANDEUS|"6"""|3|3+|5|* Inquisitor Ostromandeus only.|4|6+|1|32mm|AoI|Imperial Agents|4+
 4173|2|STENTOR-I-52|"6"""|3|4+|-||3|8+|1|28.5mm|AoI|Imperial Agents|4+
-4174|1|KILL TEAM SERGEANT, DEATHWATCH VETERAN|"6"""|4|3+|-||2|6+|2|32mm|AoI|Imperial Agents|
+4174|1|KILL TEAM SERGEANT, DEATHWATCH VETERAN|"6"""|5|3+|-||2|6+|2|32mm|AoI|Imperial Agents|
 4174|2|GRAVIS VETERAN|"5"""|6|3+|-||3|6+|2|40mm|AoI|Imperial Agents|
-4175|1|KILL TEAM SERGEANT, DEATHWATCH VETERAN|"6"""|4|3+|-||2|6+|2|32mm|SM|Space Marines|
-4175|2|GRAVIS VETERAN|"5"""|6|3+|-||3|6+|2|40mm|SM|Space Marines|
+4175|1|Gravis Veteran|"5"""|6|3+|-||3|6+|2|40mm|SM|Space Marines|
+4175|2|Deathwatch Veteran with Stalker Bolt Rifle, Bolt Pistol and Knives and Fists|"6"""|5|3+|-||2|6+|2|32mm|SM|Space Marines|
+4175|3|Kill Team Sergeant|"6"""|5|3+|-||2|6+|2|32mm|SM|Space Marines|
+4175|4|Deathwatch Veteran with Xenophase Blade and Special-issue Bolt Pistol|"6"""|5|3+|-||2|6+|2|32mm|SM|Space Marines|
+4175|5|Deathwatch Veteran with Deathwatch Marksman Bolt Carbine, Special-issue Bolt Pistol and Knives and Fists|"6"""|5|3+|-||2|6+|2|32mm|SM|Space Marines|
+4175|6|Deathwatch Veteran with Heavy Thunder Hammer and Bolt Pistol|"6"""|5|3+|-||2|6+|2|32mm|SM|Space Marines|
 4176|1|Canoptek Macrocytes|"8"""|3|4+|-||1|8+|1|28.5mm|NEC|Necrons|
 4177|1|Canoptek Tomb Crawlers|"5"""|4|3+|-||3|8+|1|50mm|NEC|Necrons|
 4178|1|Geomancer|"8"""|4|4+|-||4|6+|1|50mm|NEC|Necrons|
-4182|1|WOLF SCOUTS|"7"""|4|3+|-||2|6+|1|32mm|SM|Space Marines|
-4182|2|HUNTING WOLVES|"10"""|4|6+|-||1|8+|0|60 x 35.5mm|SM|Space Marines|
-4183|1|MARNEUS CALGAR|"6"""|6|2+|4||6|6+|1|50mm|SM|Space Marines|
-4184|1|Cato Sicarius|"6"""|4|2+|4||5|6+|1|40mm|SM|Space Marines|
-4185|1|Victrix Honour Guard|"6"""|4|2+|-||3|6+|2|40mm|SM|Space Marines|
+4182|1|Hunting Wolf|"10"""|4|6+|-||1|8+|0|32mm|SM|Space Marines|
+4182|2|Wolf Scout|"8"""|4|3+|-||2|6+|1|32mm|SM|Space Marines|
+4182|3|Wolf Scout Pack Leader|"8"""|4|3+|-||2|6+|1|32mm|SM|Space Marines|
+4184|1|Cato Sicarius|"6"""|5|2+|4||5|6+|1|40mm|SM|Space Marines|
+4185|1|Chapter Ancient|"6"""|5|2+|-||3|6+|2|40mm|SM|Space Marines|
+4185|2|Victrix Honour Guard|"6"""|5|2+|-||3|6+|2|40mm|SM|Space Marines|
+4185|3|Chapter Champion|"6"""|5|2+|-||3|6+|2|40mm|SM|Space Marines|
 4186|1|Nekrosor Ammentar|"10"""|8|3+|4||9|6+|3|80mm|NEC|Necrons|
-4187|1|Captain Titus|"6"""|4|3+|4||6|6+|1|40mm|SM|Space Marines|5+
-4188|1|Ancient Gadriel, Veteran Sergeant Metaurus|"6"""|4|3+|-||4|6+|1|40mm|SM|Space Marines|
-4188|2|Gaius Silva, Aemelia Minervas, Dainal Kornelius, Lucia Vestha|"6"""|3|4+|-||3|6+|1|28.5mm|SM|Space Marines|
+4187|1|Captain Titus|"6"""|5|3+|4||6|6+|1|40mm|SM|Space Marines|5+
+4188|1|Gaius Silva|"6"""|3|4+|5|Gaius Silva only|3|6+|1|40mm|SM|Space Marines|
+4188|2|Aemelia Minervas|"6"""|3|4+|-||3|6+|1|40mm|SM|Space Marines|
+4188|3|Veteran Sergeant Metaurus|"6"""|5|3+|4|Veteran Sergeant Metaurus only|4|6+|1|40mm|SM|Space Marines|
+4188|4|Dainal Komelius|"6"""|3|4+|-||3|6+|1|40mm|SM|Space Marines|
+4188|5|Ancient Gadriel|"6"""|5|3+|-||4|6+|2|40mm|SM|Space Marines|
+4188|6|Lucia Vestha|"6"""|3|4+|-||3|6+|1|40mm|SM|Space Marines|
 4189|1|Celestian Insidiants|"6"""|3|3+|5||1|7+|1|32mm|AS|Adepta Sororitas|
-4190|1|GARLON SOULEATER, GARREON THE CORPSEMASTER, KATAR GARRIX|"6"""|4|3+|-||4|6+|1|40mm|CSM|Chaos Space Marines|
+4190|1|GARLON SOULEATER, GARREON THE CORPSEMASTER, KATAR GARRIX|"6"""|5|3+|-||4|6+|1|40mm|CSM|Chaos Space Marines|
 4190|2|CAPTAIN SARGOTTA, THE ENFORCER|"6"""|3|4+|-||3|6+|1|40mm|CSM|Chaos Space Marines|
-4191|1|Red Corsairs Raiders|"6"""|4|3+|-||3|6+|2|32mm|CSM|Chaos Space Marines|
-4192|1|Red Corsairs Reave-Captain|"6"""|4|3+|4||5|6+|1|40mm|CSM|Chaos Space Marines|
+4191|1|Red Corsairs Raiders|"6"""|5|3+|-||3|6+|2|32mm|CSM|Chaos Space Marines|
+4192|1|Red Corsairs Reave-Captain|"6"""|5|3+|4||5|6+|1|40mm|CSM|Chaos Space Marines|
 4193|1|Prince Yriel|"7"""|3|3+|4||5|6+|1|40mm|AE|Aeldari|
 4194|1|Prince Yriel|"7"""|3|6+|4||4|6+|1|32mm|AE|Aeldari|
 4195|1|Starfangs|"14"""|6|3+|-||6|7+|2|105 x 70mm|AE|Aeldari|
@@ -1726,8 +1625,7 @@
 4201|1|Berehk Stornbröw|"6"""|6|5+|5||5|7+|1|40mm|LoV|Leagues of Votann|4+
 4202|1|Tyranid Prime with Lash Whip|"10"""|5|3+|-||6|7+|1|50mm|TYR|Tyranids|
 4203|1|The Twin Lance|"10"""|6|2+|4||8|6+|2|60mm|TAU|T’au Empire|
-4204|1|Ferren Areios|"6"""|4|2+|4||5|6+|1|40mm|SM|Space Marines|
-4205|1|Kravek Morne|"5"""|5|2+|4||6|6+|1|50mm|CSM|Chaos Space Marines|
+4205|1|Kravek Morne|"5"""|6|2+|4||6|6+|1|50mm|CSM|Chaos Space Marines|
 4206|1|Mutilators|"5"""|7|2+|5||5|6+|2|50mm|CSM|Chaos Space Marines|
 4207|1|Defiler|"14"""|11|3+|5||18|6+|5|160mm|WE|World Eaters|
 4208|1|Defiler|"12"""|11|3+|5||18|6+|5|160mm|EC|Emperor’s Children|
@@ -1752,10 +1650,8 @@
 4227|1|Bannernob|"6"""|5|4+|5||4|7+|3|40mm|ORK|Orks|
 4228|1|Bigboss|"6"""|5|4+|-||5|7+|1|40mm|ORK|Orks|
 4229|1|Big Mek Dakkarig|"8"""|8|3+|5||11|7+|3|90mm|ORK|Orks|
-4231|1|Eradicator Squad|"5"""|6|3+|-||3|6+|1|40mm|SM|Space Marines|
-4232|1|Wolf Guard Battle Leader In Terminator Armour|"5"""|5|2+|4||5|6+|1|40mm|SM|Space Marines|
-4233|1|Wolf Guard Battle Leader On Thunderwolf|"10"""|6|3+|-||5|6+|2|60mm|SM|Space Marines|
-4234|1|Company Champion On Bike|"12"""|5|3+|4||5|6+|2|75 x 25mm|SM|Space Marines|
+4231|1|Eradicator|"5"""|6|3+|-||3|6+|1|40mm|SM|Space Marines|
+4231|2|Eradicator Sergeant|"5"""|6|3+|-||3|6+|1|40mm|SM|Space Marines|
 4235|1|Dragon Knights|"10"""|5|4+|-||4|7+|2|75 x 42mm|AE|Aeldari|
 4236|1|Leystalker|"10"""|5|4+|-||4|7+|2|75 x 42mm|AE|Aeldari|
 4237|1|Stonesinger|"10"""|5|4+|-||4|7+|2|75 x 42mm|AE|Aeldari|
@@ -1766,3 +1662,9 @@
 4242|1|Nazdreg|"5"""|7|2+|5||8|6+|1|60mm|ORK|Orks|
 4243|1|Rukkatrukk Squigbuggy|"12"""|7|4+|6||9|7+|3|150 x 95mm|ORK|Orks|
 4244|1|Commissar|"6"""|3|4+|5||5|6+|3|28.5mm|AM|Astra Militarum|
+4245|1|Sicaran|"10"""|11|2+|-||14|6+|4||SM|Space Marines|
+4246|1|Marneus Calgar|"6"""|6|2+|4||6|6+|1|50mm|SM|Space Marines|
+4247|1|Invader ATV|"10"""|6|3+|-||8|6+|2||SM|Space Marines|
+4248|1|Kaius Konorius|"6"""|5|2+|4||5|6+|1|40mm|SM|Space Marines|
+4249|1|Eradicator|"5"""|6|3+|-||3|6+|1|40mm|SM|Space Marines|
+4249|2|Eradicator Sergeant|"5"""|6|3+|-||3|6+|1|40mm|SM|Space Marines|
