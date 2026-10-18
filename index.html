@@ -543,6 +543,13 @@ body{
 /* ---------- duello: schermata compatta di attacco tra due unità, riempita dal Tavolo da Gioco; VSunità la riusa con la scelta delle unità ---------- */
 #panel-duello .card, #panel-vs .card{padding:10px 12px; margin-bottom:10px;}
 #panel-duello .card + .card, #panel-vs .card + .card{margin-top:10px;}
+/* VSunità: scelta delle unità, una sola riga per attaccante e per difensore (a capo solo se manca spazio) */
+.vs-riga{display:flex; flex-wrap:wrap; align-items:flex-end; gap:8px;}
+.vs-ruolo{flex:0 0 92px; align-self:center; margin:0 !important; font-size:.95rem;}
+.vs-campo{flex:1 1 130px; min-width:110px; display:flex; flex-direction:column; gap:4px;}
+.vs-campo.vs-unita{flex:2 1 190px;}
+.vs-campo.vs-modelli{flex:0 0 84px; min-width:84px;}
+.vs-campo .num-input{min-height:36px; font-size:.9rem; padding:0 8px;}
 #panel-duello .card-title, #panel-vs .card-title{margin:0 0 8px; font-size:.95rem; flex-wrap:wrap;}
 .dl-vuoto{color:var(--text-dim); font-size:.9rem; line-height:1.5;}
 .dl-dist{margin-left:auto; font-family:"IBM Plex Mono",monospace; font-weight:700; font-size:1.05rem; line-height:1; color:var(--text);}
@@ -980,12 +987,13 @@ select.dl-in{width:auto; padding:0 3px;}
   panelVs.id = "panel-vs";
   panelCombat.parentNode.insertBefore(panelVs, panelCombat.nextSibling);
 
+  // Fazione, ricerca e unità (e, per l'attaccante, i modelli) su un'unica riga.
   function righeFazioneUnita(prefisso){
-    return '<div class="field-row"><span class="field-label">Fazione</span>' +
+    return '<div class="vs-campo"><span class="field-label">Fazione</span>' +
              '<select class="num-input" id="' + prefisso + '-fazione-select"></select></div>' +
-           '<div class="field-row"><span class="field-label">Cerca unità</span>' +
-             '<input type="text" class="num-input" id="' + prefisso + '-cerca" placeholder="Scrivi parte del nome…" autocomplete="off"></div>' +
-           '<div class="field-row"><span class="field-label">Unità</span>' +
+           '<div class="vs-campo"><span class="field-label">Cerca unità</span>' +
+             '<input type="text" class="num-input" id="' + prefisso + '-cerca" placeholder="Parte del nome…" autocomplete="off"></div>' +
+           '<div class="vs-campo vs-unita"><span class="field-label">Unità</span>' +
              '<select class="num-input" id="' + prefisso + '-unita-select"></select></div>';
   }
 
@@ -1000,16 +1008,16 @@ select.dl-in{width:auto; padding:0 3px;}
       '</div>' +
       '<button class="step-btn" id="v-ricarica" style="margin-top:10px; padding:0 14px">⟳ Ricarica dati</button>' +
     '</div>' +
-    '<div class="card side-card attacker">' +
-      '<h2 class="card-title">Attaccante</h2>' +
+    '<div class="card side-card attacker"><div class="vs-riga">' +
+      '<h2 class="card-title vs-ruolo">Attaccante</h2>' +
       righeFazioneUnita("v-a") +
-      '<div class="field-row"><span class="field-label">Modelli</span>' +
+      '<div class="vs-campo vs-modelli"><span class="field-label">Modelli</span>' +
         '<input type="number" class="num-input" id="v-a-modelli" min="1" step="1" value="1" inputmode="numeric"></div>' +
-    '</div>' +
-    '<div class="card side-card defender">' +
-      '<h2 class="card-title">Difensore</h2>' +
+    '</div></div>' +
+    '<div class="card side-card defender"><div class="vs-riga">' +
+      '<h2 class="card-title vs-ruolo">Difensore</h2>' +
       righeFazioneUnita("v-d") +
-    '</div>' +
+    '</div></div>' +
     '<div class="card dl-vuoto" id="vs-dl-vuoto">Scegli l\'unità attaccante (con i suoi modelli) e quella difensore: compaiono tutte le armi dell\'attaccante, ' +
       'il difensore e il risultato complessivo, come nella scheda Duello.</div>' +
     '<div id="vs-dl-contenuto" style="display:none"></div>';
