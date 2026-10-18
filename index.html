@@ -550,9 +550,8 @@ body{
 #panel-duello .card + .card{margin-top:10px;}
 #panel-duello .card-title{margin:0 0 8px; font-size:.95rem; flex-wrap:wrap;}
 .dl-vuoto{color:var(--text-dim); font-size:.9rem; line-height:1.5;}
-.dl-testata{display:flex; flex-wrap:wrap; align-items:baseline; gap:4px 14px;}
-.dl-testata .field-label{margin-right:6px;}
-.dl-distanza{font-family:"IBM Plex Mono",monospace; font-weight:700; font-size:1.6rem; line-height:1;}
+.dl-dist{margin-left:auto; font-family:"IBM Plex Mono",monospace; font-weight:700; font-size:1.05rem; line-height:1; color:var(--text);}
+.dl-dist small{font-family:inherit; font-weight:500; font-size:.7rem; color:var(--text-dim); margin-right:4px; text-transform:none; letter-spacing:0;}
 .dl-sub{font-weight:500; font-size:.8rem; text-transform:none; letter-spacing:0; color:var(--text-dim);}
 .dl-armi{display:flex; flex-direction:column; gap:6px;}
 .dl-riga{
@@ -943,18 +942,11 @@ select.dl-in{width:auto; padding:0 3px;}
   <!-- ============ DUELLO ============ -->
   <section class="panel" id="panel-duello">
     <div class="card dl-vuoto" id="dl-vuoto">
-      Nessun attacco in corso. Dal Tavolo da Gioco seleziona un'unità, premi <b>E</b> e clicca l'unità bersaglio:
-      qui compaiono le due unità, la distanza e le armi, con il risultato complessivo in fondo.
+      Nessun attacco in corso. Dal Tavolo da Gioco seleziona una o più unità, premi <b>E</b> e clicca l'unità bersaglio:
+      qui compaiono un riquadro per ogni attaccante (distanza e armi), il difensore e il risultato complessivo in fondo.
     </div>
     <div id="dl-contenuto" style="display:none">
-      <div class="card dl-testata">
-        <div><span class="field-label">Distanza tra le unità</span><span class="dl-distanza" id="dl-distanza">—</span></div>
-        <span class="dl-sub" id="dl-distanza-nota">punti più vicini delle due unità</span>
-      </div>
-      <div class="card side-card attacker">
-        <h2 class="card-title" id="dl-att-titolo">Attaccante</h2>
-        <div class="dl-armi" id="dl-armi"></div>
-      </div>
+      <div id="dl-attaccanti"></div>
       <div class="card side-card defender">
         <h2 class="card-title" id="dl-dif-titolo">Difensore</h2>
         <div class="dl-riga dl-dif" id="dl-dif"></div>
@@ -1951,12 +1943,12 @@ select.dl-in{width:auto; padding:0 3px;}
   }
 
   // ---------------- DUELLO ----------------
-  // Schermata compatta di attacco tra due unità, riempita dal Tavolo da Gioco (messaggio wh40-duello,
-  // dopo "E" + click sull'unità bersaglio): unità, distanza e armi arrivano già pronte e restano
-  // modificabili. I calcoli sono quelli del tab Combattimento (calcolaAttacco): per ogni arma con
+  // Schermata compatta di attacco di una o più unità contro un'altra, riempita dal Tavolo da Gioco (messaggio
+  // wh40-duello, dopo "E" + click sull'unità bersaglio): unità, distanze e armi arrivano già pronte e restano
+  // modificabili; ogni attaccante ha il suo riquadro, uno sotto l'altro. I calcoli sono quelli del tab Combattimento (calcolaAttacco): per ogni arma con
   // modelli > 0 si ottengono gli attacchi che vanno a segno; i danni di tutte le armi, nell'ordine
   // dell'elenco, si applicano poi uno dopo l'altro ai modelli del difensore (come in Combattimento:
-  // il danno oltre le ferite di un modello si perde).
+  // il danno oltre le ferite di un modello si perde); con più attaccanti si procede riquadro per riquadro.
   var duello = null;
   var duelloMemoria = {};
   var DL_CAMPI_ARMA = ["modelli", "att", "xcol", "forza", "ap", "danni", "lethal", "sust", "dev", "twin", "lancia", "antiX", "ripCol", "rip1Col", "rip1Fer"];
@@ -2164,7 +2156,12 @@ select.dl-in{width:auto; padding:0 3px;}
     var tabella = dlEl("table", "dl-stat-tab");
     var intest = dlEl("tr");
     intest.appendChild(dlEl("th", "", ""));
-    usate.forEach(function(u){ var th = dlEl("th", "", u.a.nome); th.title = u.a.nome; intest.appendChild(th); });
+    usate.forEach(function(u){
+      var nome = u.a.attaccante ? u.a.attaccante + " – " + u.a.nome : u.a.nome;
+      var th = dlEl("th", "", nome);
+      th.title = nome;
+      intest.appendChild(th);
+    });
     if(usate.length > 1) intest.appendChild(dlEl("th", "dl-totale", "Totale"));
     tabella.appendChild(intest);
     righe.forEach(function(riga){
@@ -2234,44 +2231,74 @@ select.dl-in{width:auto; padding:0 3px;}
       "su " + lista[indice] + (lista[indice] === 1 ? " ferita" : " ferite") + " attuali (ne restano " + resto + ")";
   }
 
-  function dlTitolo(id, ruolo, nome, modelli){
-    var t = document.getElementById(id);
-    t.textContent = "";
-    t.appendChild(document.createTextNode(ruolo));
-    t.appendChild(dlEl("span", "dl-sub", nome + " · " + modelli + (modelli === 1 ? " modello" : " modelli")));
+  function dlTitolo(titolo, ruolo, nome, modelli, distanza){
+    titolo.textContent = "";
+    titolo.appendChild(document.createTextNode(ruolo));
+    titolo.appendChild(dlEl("span", "dl-sub", nome + " · " + modelli + (modelli === 1 ? " modello" : " modelli")));
+    if(distanza !== undefined){
+      var d = dlEl("span", "dl-dist", distanza === null ? "—" : distanza.toFixed(1) + "″");
+      d.title = "Distanza tra i punti più vicini delle due unità";
+      d.insertBefore(dlEl("small", "", "distanza"), d.firstChild);
+      titolo.appendChild(d);
+    }
   }
 
   function duelloImposta(dati){
-    var att = dati.attaccante || {}, dif = dati.difensore || {};
-    var distanza = typeof dati.distanza === "number" ? dati.distanza : null;
-    var chiave = (att.id || att.nome) + "|" + (dif.id || dif.nome);
-    var armi = (att.armi || []).map(dlNuovaArma);
+    var dif = dati.difensore || {};
+    // Più attaccanti (`attaccanti`, ognuno con la sua distanza); i messaggi di un Tavolo da Gioco più vecchio
+    // hanno un solo `attaccante` con la `distanza` a parte.
+    var elenco = Array.isArray(dati.attaccanti) && dati.attaccanti.length ? dati.attaccanti
+      : [Object.assign({}, dati.attaccante, { distanza: dati.distanza })];
+    var chiave = elenco.map(function(a){ return a.id || a.nome; }).sort().join("+") + "|" + (dif.id || dif.nome);
     var difensore = dlNuovoDifensore({ res: dif.res, ts: dif.ts, tsPiu: dif.tsPiu, w: dif.w, fnp: dif.fnp, modelli: dif.modelli, ferite: dif.ferite });
+    var attaccanti = elenco.map(function(att){
+      return {
+        id: att.id || att.nome, nome: att.nome || "?", modelli: dlIntero(att.modelli, 1, 1),
+        distanza: typeof att.distanza === "number" ? att.distanza : null,
+        armi: (att.armi || []).map(dlNuovaArma)
+      };
+    });
 
     // Riaprendo lo stesso confronto si ritrovano le modifiche già fatte (modelli per arma, regole, difensore).
     var prima = duelloMemoria[chiave];
     if(prima){
-      armi.forEach(function(a, i){
-        var p = prima.armi[i];
-        if(p && p.nome === a.nome) DL_CAMPI_ARMA.forEach(function(k){ a[k] = p[k]; });
+      attaccanti.forEach(function(att){
+        var p = prima.attaccanti.filter(function(x){ return x.id === att.id; })[0];
+        if(!p) return;
+        att.armi.forEach(function(a, i){
+          var pa = p.armi[i];
+          if(pa && pa.nome === a.nome) DL_CAMPI_ARMA.forEach(function(k){ a[k] = pa[k]; });
+        });
       });
       DL_CAMPI_DIFENSORE.forEach(function(k){ difensore[k] = prima.dif[k]; });
     }
-    duello = { armi: armi, dif: difensore, attModelli: dlIntero(att.modelli, 1, 1) };
+    var armi = [];
+    attaccanti.forEach(function(att){
+      att.armi.forEach(function(a){
+        if(attaccanti.length > 1) a.attaccante = att.nome;
+        armi.push(a);
+      });
+    });
+    duello = { attaccanti: attaccanti, armi: armi, dif: difensore };
     duelloMemoria[chiave] = duello;
 
     document.getElementById("dl-vuoto").style.display = "none";
     document.getElementById("dl-contenuto").style.display = "";
-    document.getElementById("dl-distanza").textContent = distanza === null ? "—" : distanza.toFixed(1) + "″";
-    dlTitolo("dl-att-titolo", "Attaccante", att.nome || "?", duello.attModelli);
-    dlTitolo("dl-dif-titolo", "Difensore", dif.nome || "?", difensore.modelli);
+    dlTitolo(document.getElementById("dl-dif-titolo"), "Difensore", dif.nome || "?", difensore.modelli);
 
-    var elArmi = document.getElementById("dl-armi");
-    elArmi.innerHTML = "";
-    if(!armi.length){
-      elArmi.appendChild(dlEl("div", "dl-vuoto", "Nessuna arma nei dati per questa unità."));
-    }
-    armi.forEach(function(a){ elArmi.appendChild(dlCostruisciArma(a, distanza, duello.attModelli)); });
+    var contenitore = document.getElementById("dl-attaccanti");
+    contenitore.innerHTML = "";
+    attaccanti.forEach(function(att){
+      var card = dlEl("div", "card side-card attacker");
+      var titolo = dlEl("h2", "card-title");
+      dlTitolo(titolo, "Attaccante", att.nome, att.modelli, att.distanza);
+      card.appendChild(titolo);
+      var elArmi = dlEl("div", "dl-armi");
+      if(!att.armi.length) elArmi.appendChild(dlEl("div", "dl-vuoto", "Nessuna arma nei dati per questa unità."));
+      att.armi.forEach(function(a){ elArmi.appendChild(dlCostruisciArma(a, att.distanza, att.modelli)); });
+      card.appendChild(elArmi);
+      contenitore.appendChild(card);
+    });
     dlCostruisciDifensore(difensore);
     dlAggiorna();
   }
