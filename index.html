@@ -440,11 +440,6 @@ body{
 @media (min-width:800px){
   .combat-sides{grid-template-columns:1fr 1fr;}
 }
-/* VSunità su telefono (anche in orizzontale o con "sito desktop", dove la larghezza supera 800px):
-   il Difensore va sotto l'Attaccante invece di restare affiancato. */
-@media (pointer:coarse) and (max-width:1100px){
-  #panel-vs .combat-sides{grid-template-columns:1fr;}
-}
 
 /* ---------- pipeline ---------- */
 .pipeline-card{
@@ -545,10 +540,10 @@ body{
   line-height:1.5;
 }
 
-/* ---------- duello: schermata compatta di attacco tra due unità, riempita dal Tavolo da Gioco ---------- */
-#panel-duello .card{padding:10px 12px; margin-bottom:10px;}
-#panel-duello .card + .card{margin-top:10px;}
-#panel-duello .card-title{margin:0 0 8px; font-size:.95rem; flex-wrap:wrap;}
+/* ---------- duello: schermata compatta di attacco tra due unità, riempita dal Tavolo da Gioco; VSunità la riusa con la scelta delle unità ---------- */
+#panel-duello .card, #panel-vs .card{padding:10px 12px; margin-bottom:10px;}
+#panel-duello .card + .card, #panel-vs .card + .card{margin-top:10px;}
+#panel-duello .card-title, #panel-vs .card-title{margin:0 0 8px; font-size:.95rem; flex-wrap:wrap;}
 .dl-vuoto{color:var(--text-dim); font-size:.9rem; line-height:1.5;}
 .dl-dist{margin-left:auto; font-family:"IBM Plex Mono",monospace; font-weight:700; font-size:1.05rem; line-height:1; color:var(--text);}
 .dl-dist small{font-family:inherit; font-weight:500; font-size:.7rem; color:var(--text-dim); margin-right:4px; text-transform:none; letter-spacing:0;}
@@ -975,16 +970,14 @@ select.dl-in{width:auto; padding:0 3px;}
 (function(){
   "use strict";
 
-  // ---------------- CLONAZIONE DEL PANNELLO PER VSunità ----------------
-  // Il tab VSunità riusa il markup del tab Combattimento: va clonato prima di qualsiasi
-  // inizializzazione, con tutti gli id prefissati da "v-" (coerente con creaCombattimento("v-")).
-  // Le righe "Unità (da Tavolo da Gioco)" clonate vengono sostituite dai selettori Fazione → Unità;
-  // campi, flag e risultati restano identici a Combattimento.
+  // ---------------- PANNELLO VSunità ----------------
+  // VSunità ha la scelta delle due unità (fazione → unità, con i modelli dell'attaccante) e, sotto, la stessa
+  // schermata del Duello (armi dell'attaccante, difensore, risultato, statistiche): il markup del Duello viene
+  // clonato con gli id prefissati da "vs-" (vedi creaDuello, più sotto). Va costruito prima di qualsiasi inizializzazione.
   var panelCombat = document.getElementById("panel-combat");
-  var panelVs = panelCombat.cloneNode(true);
-  Array.prototype.forEach.call(panelVs.querySelectorAll("[id]"), function(n){ n.id = "v-" + n.id; });
+  var panelVs = document.createElement("section");
+  panelVs.className = "panel";
   panelVs.id = "panel-vs";
-  panelVs.classList.remove("active");
   panelCombat.parentNode.insertBefore(panelVs, panelCombat.nextSibling);
 
   function righeFazioneUnita(prefisso){
@@ -995,10 +988,8 @@ select.dl-in{width:auto; padding:0 3px;}
            '<div class="field-row"><span class="field-label">Unità</span>' +
              '<select class="num-input" id="' + prefisso + '-unita-select"></select></div>';
   }
-  panelVs.querySelector("#v-a-unita-row").outerHTML = righeFazioneUnita("v-a");
-  panelVs.querySelector("#v-d-unita-row").outerHTML = righeFazioneUnita("v-d");
 
-  panelVs.querySelector(".combat-sides").insertAdjacentHTML("beforebegin",
+  panelVs.innerHTML =
     '<div class="card" style="margin-bottom:14px">' +
       '<h2 class="card-title">Dati unità</h2>' +
       '<div class="field-hint" id="v-dati-stato" style="margin-top:0">Caricamento dati…</div>' +
@@ -1008,7 +999,29 @@ select.dl-in{width:auto; padding:0 3px;}
         '<input type="checkbox" class="switch" id="v-filtro" checked>' +
       '</div>' +
       '<button class="step-btn" id="v-ricarica" style="margin-top:10px; padding:0 14px">⟳ Ricarica dati</button>' +
-    '</div>');
+    '</div>' +
+    '<div class="card side-card attacker">' +
+      '<h2 class="card-title">Attaccante</h2>' +
+      righeFazioneUnita("v-a") +
+      '<div class="field-row"><span class="field-label">Modelli</span>' +
+        '<input type="number" class="num-input" id="v-a-modelli" min="1" step="1" value="1" inputmode="numeric"></div>' +
+    '</div>' +
+    '<div class="card side-card defender">' +
+      '<h2 class="card-title">Difensore</h2>' +
+      righeFazioneUnita("v-d") +
+    '</div>' +
+    '<div class="card dl-vuoto" id="vs-dl-vuoto">Scegli l\'unità attaccante (con i suoi modelli) e quella difensore: compaiono tutte le armi dell\'attaccante, ' +
+      'il difensore e il risultato complessivo, come nella scheda Duello.</div>' +
+    '<div id="vs-dl-contenuto" style="display:none"></div>';
+
+  (function(){
+    var contenuto = document.getElementById("dl-contenuto").cloneNode(true);
+    Array.prototype.forEach.call(contenuto.querySelectorAll("[id]"), function(n){ n.id = "vs-" + n.id; });
+    contenuto.id = "vs-dl-contenuto";
+    contenuto.style.display = "none";
+    var segnaposto = panelVs.querySelector("#vs-dl-contenuto");
+    segnaposto.parentNode.replaceChild(contenuto, segnaposto);
+  })();
 
 
   function successProb(t){ return (7-t)/6; }
@@ -1550,7 +1563,6 @@ select.dl-in{width:auto; padding:0 3px;}
   }
 
   var C = creaCombattimento("");
-  var V = creaCombattimento("v-");
 
   // ---------------- TABS ----------------
   var tabs = [
@@ -1680,8 +1692,10 @@ select.dl-in{width:auto; padding:0 3px;}
       return {
         chiave: r.datasheet_id + "-" + r.line,
         datasheetId: r.datasheet_id,
+        riga: parseInt(r.line, 10) || 0,
         fazione: r.faction,
-        nome: r.name,
+        nome: r.name, nomeProfilo: r.name,
+        mov: r.MOV, oc: r.OC, note: r.Note, baseSize: r.base_size,
         res: r.RES, ts: r.TS, tsPiu: r["TS+"], w: r.W, fnp: r.FNP
       };
     }).filter(function(u){ return u.fazione && u.nome; });
@@ -1694,7 +1708,7 @@ select.dl-in{width:auto; padding:0 3px;}
     return righe.map(function(riga){
       var v = riga.split(SEP).map(function(c){ return c.trim(); });
       return {
-        datasheetId: v[0] || "", arma: v[5] || "", descrizione: v[6] || "",
+        datasheetId: v[0] || "", arma: v[5] || "", descrizione: v[6] || "", range: v[7] || "", tipo: v[8] || "",
         att: v[9] || "", bsWs: v[10] || "", forza: v[11] || "", ap: v[12] || "", danni: v[13] || ""
       };
     }).filter(function(a){ return a.datasheetId && a.arma; });
@@ -1726,9 +1740,117 @@ select.dl-in{width:auto; padding:0 3px;}
     return isNaN(n) ? 0 : Math.max(0, -n);
   }
 
+  // ---------------- VSunità: DATI DELL'ARMY BUILDER E PROFILI UNITI ----------------
+  // army_builder/composizione.csv e punti.csv (stessa cartella, indipendenti dal set di dati scelto) danno il
+  // numero di modelli predefinito di un'unità e il nome dell'intera scheda, come nel Tavolo da Gioco. Se
+  // mancano, i modelli predefiniti sono 1 e i nomi restano quelli dei profili.
+  var armyBuilder = { composizione: {}, puntiPerId: {}, idPerNome: {} };
+
+  function chiaveNome(testo){ return (testo || "").toLowerCase().replace(/[^a-z0-9]+/g, ""); }
+  function chiaveSingolare(testo){ return chiaveNome(testo).replace(/s$/, ""); }
+
+  function parseTabella(testo){
+    var righe = righeCsv(testo);
+    var colonne = righe[0].split(SEP).map(function(c){ return c.trim(); });
+    return righe.slice(1).map(function(riga){
+      var valori = riga.split(SEP).map(pulisciCampo);
+      var r = {};
+      colonne.forEach(function(c, i){ r[c] = valori[i] === undefined ? "" : valori[i]; });
+      return r;
+    });
+  }
+
+  function costruisciArmyBuilder(testoPunti, testoComposizione){
+    var ab = { composizione: {}, puntiPerId: {}, idPerNome: {} };
+    if(testoPunti){
+      parseTabella(testoPunti).forEach(function(r){
+        var id = String(r.datasheet_id);
+        if(!id) return;
+        var scheda = ab.puntiPerId[id] || (ab.puntiPerId[id] = { nome: r.name, scaglione: null, minModelli: 0 });
+        var k = chiaveNome(r.name);
+        if(k && !(k in ab.idPerNome)) ab.idPerNome[k] = id;
+        var modelli = parseInt(r.modelli, 10);
+        if(r.tipo !== "unita" || isNaN(modelli)) return;
+        // Taglia più piccola del primo scaglione della scheda.
+        if(scheda.scaglione === null) scheda.scaglione = r.scaglione;
+        if(r.scaglione === scheda.scaglione && (!scheda.minModelli || modelli < scheda.minModelli)) scheda.minModelli = modelli;
+      });
+    }
+    if(testoComposizione){
+      parseTabella(testoComposizione).forEach(function(r){
+        if(!r.modello) return;
+        var id = String(r.datasheet_id);
+        (ab.composizione[id] = ab.composizione[id] || []).push({ modello: r.modello, min: parseInt(r.min, 10) || 0 });
+      });
+    }
+    return ab;
+  }
+
+  // Id della scheda nei dati dell'army builder: per id Wahapedia o, per le unità BSData, per nome.
+  function idScheda(u){
+    var id = String(u.datasheetId);
+    if(armyBuilder.puntiPerId[id] || armyBuilder.composizione[id]) return id;
+    return armyBuilder.idPerNome[chiaveNome(u.nomeProfilo || u.nome)] || null;
+  }
+
+  // Modelli predefiniti all'importazione di un'unità: il minimo della composizione per il suo profilo
+  // (es. "9-18 Boy" → 9; con i profili uniti, la somma di tutta la composizione); se la composizione non lo
+  // nomina, la taglia più piccola dei punti quando la scheda ha un solo tipo di modello; altrimenti 1.
+  function modelliPredefiniti(u){
+    var id = idScheda(u);
+    if(!id) return 1;
+    var righe = armyBuilder.composizione[id] || [];
+    if(u.unito && righe.length){
+      var somma = righe.reduce(function(s, r){ return s + r.min; }, 0);
+      if(somma > 0) return somma;
+    }
+    var chiave = chiaveSingolare(u.nomeProfilo || u.nome);
+    var propria = righe.filter(function(r){ return chiaveSingolare(r.modello) === chiave; })[0];
+    if(propria && propria.min > 0) return propria.min;
+    if(righe.length <= 1){
+      var p = armyBuilder.puntiPerId[id];
+      if(p && p.minModelli) return p.minModelli;
+    }
+    return 1;
+  }
+
+  // I profili della stessa scheda con le stesse statistiche (es. Outrider e Outrider Sergeant: cambia solo
+  // l'equipaggiamento, e le armi sono comunque quelle dell'intera scheda) diventano una sola voce, quella
+  // della prima riga, con il nome della scheda. Profili con statistiche diverse (Boy e Nob) restano separati.
+  function stessoProfilo(a, b){
+    var uguali = ["mov", "res", "ts", "tsPiu", "w", "oc", "fnp", "note"].every(function(c){ return (a[c] || "") === (b[c] || ""); });
+    return uguali && (!a.baseSize || !b.baseSize || a.baseSize === b.baseSize);
+  }
+
+  function unisciProfili(unita){
+    var perScheda = {}, ordine = [];
+    unita.forEach(function(u){
+      if(!perScheda[u.datasheetId]){ perScheda[u.datasheetId] = []; ordine.push(u.datasheetId); }
+      perScheda[u.datasheetId].push(u);
+    });
+    var risultato = [];
+    ordine.forEach(function(id){
+      var tenuti = [];
+      perScheda[id].sort(function(a, b){ return a.riga - b.riga; }).forEach(function(u){
+        var uguale = tenuti.filter(function(x){ return stessoProfilo(x, u); })[0];
+        if(!uguale){ tenuti.push(Object.assign({}, u)); return; }
+        uguale.unito = true;
+        uguale.baseSize = uguale.baseSize || u.baseSize;
+      });
+      tenuti.forEach(function(u){
+        if(u.unito){
+          var scheda = armyBuilder.puntiPerId[idScheda(u)];
+          if(scheda && scheda.nome) u.nome = scheda.nome;
+        }
+        risultato.push(u);
+      });
+    });
+    return risultato;
+  }
+
   function normalizzaArma(a){
     return {
-      nome: a.arma, descrizione: a.descrizione,
+      nome: a.arma, descrizione: a.descrizione, tipo: a.tipo, range: a.range,
       att: valoreMedioDado(a.att, 1), xcol: sogliaDaTesto(a.bsWs),
       forza: Number(a.forza) || 1, ap: apDaTesto(a.ap), danni: valoreMedioDado(a.danni, 1)
     };
@@ -1758,8 +1880,12 @@ select.dl-in{width:auto; padding:0 3px;}
 
   function caricaDati(){
     mostraStato("Caricamento dati…");
-    return Promise.all([scaricaCsv(SET_DATI[setDati].info), scaricaCsv(SET_DATI[setDati].armi)]).then(function(testi){
-      var unita = parseUnita(testi[0]);
+    // I file dell'army builder sono facoltativi: se mancano (sito non aggiornato) si procede senza.
+    var facoltativo = function(nome){ return scaricaCsv("army_builder/" + nome).catch(function(){ return ""; }); };
+    return Promise.all([scaricaCsv(SET_DATI[setDati].info), scaricaCsv(SET_DATI[setDati].armi),
+                        facoltativo("punti.csv"), facoltativo("composizione.csv")]).then(function(testi){
+      armyBuilder = costruisciArmyBuilder(testi[2], testi[3]);
+      var unita = unisciProfili(parseUnita(testi[0]));
       var armi = parseArmi(testi[1]);
       var perId = {};
       armi.forEach(function(a){ (perId[a.datasheetId] = perId[a.datasheetId] || []).push(a); });
@@ -1822,10 +1948,11 @@ select.dl-in{width:auto; padding:0 3px;}
 
   // ---------------- VSunità: SELETTORI FAZIONE → UNITÀ ----------------
   var unitaPerChiave = {};
-  var vsAttF = V.E("a-fazione-select"), vsAttU = V.E("a-unita-select");
-  var vsDifF = V.E("d-fazione-select"), vsDifU = V.E("d-unita-select");
-  var vsAttC = V.E("a-cerca"), vsDifC = V.E("d-cerca");
-  var vsArma = V.E("a-arma-select");
+  var vsAttF = document.getElementById("v-a-fazione-select"), vsAttU = document.getElementById("v-a-unita-select");
+  var vsDifF = document.getElementById("v-d-fazione-select"), vsDifU = document.getElementById("v-d-unita-select");
+  var vsAttC = document.getElementById("v-a-cerca"), vsDifC = document.getElementById("v-d-cerca");
+  var vsAttModelli = document.getElementById("v-a-modelli");
+  var vsUltimoDif = "";
 
   function riempiSelect(select, voci, segnaposto, valoreCorrente){
     select.innerHTML = "";
@@ -1853,7 +1980,7 @@ select.dl-in{width:auto; padding:0 3px;}
     var q = normalizzaTesto(inCerca.value);
     var voci = unitaVisibili().filter(function(u){
       return u.fazione === fazione && (!q || normalizzaTesto(u.nome).indexOf(q) >= 0);
-    }).map(function(u){
+    }).sort(function(a, b){ return a.nome.localeCompare(b.nome) || a.riga - b.riga; }).map(function(u){
       unitaPerChiave[u.chiave] = u;
       return { valore: u.chiave, testo: u.nome };
     });
@@ -1872,49 +1999,65 @@ select.dl-in{width:auto; padding:0 3px;}
     riempiUnita(selF, selU, inCerca);
   }
 
+  // Con attaccante e difensore scelti mostra la schermata del Duello (armi dell'attaccante, difensore,
+  // risultato). Le modifiche già fatte allo stesso confronto si ritrovano (memoria del Duello); i modelli del
+  // difensore restano quelli impostati finché non cambia unità.
+  function vsAggiorna(){
+    var a = unitaPerChiave[vsAttU.value], d = unitaPerChiave[vsDifU.value];
+    if(!a || !d){
+      VSDL.svuota();
+      vsUltimoDif = "";
+      return;
+    }
+    var stato = VSDL.stato();
+    var modelliDif = (vsUltimoDif === d.chiave && stato) ? stato.dif.modelli : modelliPredefiniti(d);
+    vsUltimoDif = d.chiave;
+    VSDL.imposta({
+      attaccanti: [{ id: a.chiave, nome: a.nome, modelli: dlIntero(vsAttModelli.value, 1, 1), armi: armiDi(a) }],
+      difensore: { id: d.chiave, nome: d.nome, modelli: modelliDif, res: d.res, ts: d.ts, tsPiu: d.tsPiu, w: d.w, fnp: d.fnp }
+    });
+  }
+
   function vsRipopola(){
     riempiLato(vsAttF, vsAttU, vsAttC);
     riempiLato(vsDifF, vsDifU, vsDifC);
-    var uAtt = unitaPerChiave[vsAttU.value];
-    V.popolaSelectArmi(armiDi(uAtt));
+    vsAggiorna();
+  }
+
+  // Scelta una nuova unità attaccante, i suoi modelli tornano a quelli predefiniti.
+  function vsAttaccanteScelto(){
+    var a = unitaPerChiave[vsAttU.value];
+    if(a) vsAttModelli.value = modelliPredefiniti(a);
+    vsAggiorna();
   }
 
   // Cambiando fazione la ricerca riparte da zero.
   vsAttF.addEventListener("change", function(){
     vsAttC.value = "";
     riempiUnita(vsAttF, vsAttU, vsAttC);
-    V.popolaSelectArmi([]);
-    V.resetFlagsAttaccante();
+    vsAggiorna();
   });
-  // Scrivendo nella ricerca la lista si restringe in tempo reale; se l'unità scelta esce dalla
-  // lista (select tornato vuoto) armi e flag vengono azzerati come per un cambio unità.
+  // Scrivendo nella ricerca la lista si restringe in tempo reale; se l'unità scelta esce dalla lista
+  // (select tornato vuoto) la schermata si svuota.
   vsAttC.addEventListener("input", function(){
     var prima = vsAttU.value;
     riempiUnita(vsAttF, vsAttU, vsAttC);
-    if(vsAttU.value !== prima){
-      V.popolaSelectArmi([]);
-      V.resetFlagsAttaccante();
-    }
+    if(vsAttU.value !== prima) vsAggiorna();
   });
-  vsDifC.addEventListener("input", function(){ riempiUnita(vsDifF, vsDifU, vsDifC); });
-  vsAttU.addEventListener("change", function(){
-    V.popolaSelectArmi(armiDi(unitaPerChiave[vsAttU.value]));
-    V.resetFlagsAttaccante();
-  });
-  vsArma.addEventListener("change", function(){
-    var armi = armiDi(unitaPerChiave[vsAttU.value]);
-    V.resetFlagsAttaccante();
-    V.applicaArma(armi[parseInt(vsArma.value, 10)]);
-  });
+  vsAttU.addEventListener("change", vsAttaccanteScelto);
+  vsAttModelli.addEventListener("input", vsAggiorna);
 
   vsDifF.addEventListener("change", function(){
     vsDifC.value = "";
     riempiUnita(vsDifF, vsDifU, vsDifC);
+    vsAggiorna();
   });
-  vsDifU.addEventListener("change", function(){
-    var u = unitaPerChiave[vsDifU.value];
-    if(u) V.applicaUnita(u);
+  vsDifC.addEventListener("input", function(){
+    var prima = vsDifU.value;
+    riempiUnita(vsDifF, vsDifU, vsDifC);
+    if(vsDifU.value !== prima) vsAggiorna();
   });
+  vsDifU.addEventListener("change", vsAggiorna);
 
   window.addEventListener("message", function(e){
     if(window.opener && e.source !== window.opener) return;
@@ -1928,7 +2071,7 @@ select.dl-in{width:auto; padding:0 3px;}
     }
     // Attacco tra due unità dal Tavolo da Gioco (E + click sul bersaglio): riempie e mostra la scheda Duello.
     if(dati && dati.type === "wh40-duello"){
-      duelloImposta(dati);
+      DL.imposta(dati);
       tabs[3].btn.click();
       try { window.focus(); } catch(err) {}
       return;
@@ -1949,8 +2092,6 @@ select.dl-in{width:auto; padding:0 3px;}
   // modelli > 0 si ottengono gli attacchi che vanno a segno; i danni di tutte le armi, nell'ordine
   // dell'elenco, si applicano poi uno dopo l'altro ai modelli del difensore (come in Combattimento:
   // il danno oltre le ferite di un modello si perde); con più attaccanti si procede riquadro per riquadro.
-  var duello = null;
-  var duelloMemoria = {};
   var DL_CAMPI_ARMA = ["modelli", "att", "xcol", "forza", "ap", "danni", "lethal", "sust", "dev", "twin", "lancia", "antiX", "ripCol", "rip1Col", "rip1Fer"];
   var DL_CAMPI_DIFENSORE = ["res", "save", "w", "invulT", "fnpT"];
 
@@ -2062,56 +2203,7 @@ select.dl-in{width:auto; padding:0 3px;}
     return voci;
   }
 
-  function dlCostruisciArma(a, distanza, massimoModelli){
-    var riga = dlEl("div", "dl-riga dl-arma");
-    var gittata = parseInt(a.gittata, 10);
-    var fuori = a.tipo !== "Melee" && !isNaN(gittata) && distanza !== null && distanza !== undefined && distanza > gittata;
 
-    var nome = dlEl("div", "dl-nome" + (fuori ? " fuori" : ""));
-    nome.title = a.nome + (a.descrizione ? " — " + a.descrizione : "");
-    nome.appendChild(dlEl("span", "dl-tipo", a.tipo === "Melee" ? "M" : "T"));
-    nome.appendChild(document.createTextNode(a.nome));
-    var info = [isNaN(gittata) ? "" : gittata + "″", a.descrizione, fuori ? "fuori portata" : ""].filter(Boolean).join(" · ");
-    if(info) nome.appendChild(dlEl("small", "", info));
-    riga.appendChild(nome);
-
-    riga.appendChild(dlCampo("Modelli", dlInputNumero(a.modelli, 0, "dl-mod", function(v){ a.modelli = v; dlAggiorna(); }, massimoModelli)));
-    riga.appendChild(dlCampo("ATT", dlInputNumero(a.att, 1, "", function(v){ a.att = v; dlAggiorna(); })));
-    riga.appendChild(dlCampo("Colpire", dlSelect([["1", "auto"]].concat(dlVociSoglie(true)), a.xcol, function(v){ a.xcol = parseInt(v, 10); dlAggiorna(); })));
-    riga.appendChild(dlCampo("FOR", dlInputNumero(a.forza, 1, "", function(v){ a.forza = v; dlAggiorna(); })));
-    riga.appendChild(dlCampo("AP", dlInputNumero(a.ap, 0, "", function(v){ a.ap = v; dlAggiorna(); })));
-    riga.appendChild(dlCampo("Danni", dlInputNumero(a.danni, 1, "", function(v){ a.danni = v; dlAggiorna(); })));
-
-    var vociUno = [["", "—"], ["uno", "un 1"], ["tutti", "tutti"]];
-    riga.appendChild(dlCampo("Sust", dlSelect([["0", "—"], ["1", "1"], ["2", "2"], ["3", "3"]], a.sust, function(v){ a.sust = parseInt(v, 10); dlAggiorna(); }), "Sustained Hits: colpi extra su ogni colpo critico"));
-    riga.appendChild(dlCampo("Lethal", dlSelect(dlVociSoglie(false), a.lethal, function(v){ a.lethal = parseInt(v, 10); dlAggiorna(); }), "Lethal Hits: con questo valore o più il colpo ferisce automaticamente"));
-    riga.appendChild(dlCampo("Dev", dlSelect(dlVociSoglie(false), a.dev, function(v){ a.dev = parseInt(v, 10); dlAggiorna(); }), "Devastating Wounds: con questo valore o più il ferimento salta AP e salvezza"));
-    riga.appendChild(dlCampo("Anti-X", dlSelect(dlVociSoglie(false), a.antiX, function(v){ a.antiX = parseInt(v, 10); dlAggiorna(); }), "Anti-X: soglia fissa per ferire"));
-    riga.appendChild(dlCampo("Rip.1.col.", dlSelect(vociUno, a.rip1Col, function(v){ a.rip1Col = v; dlAggiorna(); }), "Ripete gli 1 per colpire: un solo 1 o tutti gli 1"));
-    riga.appendChild(dlCampo("Rip.1.fer.", dlSelect(vociUno, a.rip1Fer, function(v){ a.rip1Fer = v; dlAggiorna(); }), "Ripete gli 1 per ferire: un solo 1 o tutti gli 1"));
-    riga.appendChild(dlChip("Rip.col.", a.ripCol, "Ripete tutti i tiri per colpire falliti", function(v){ a.ripCol = v; dlAggiorna(); }));
-    riga.appendChild(dlChip("Twin", a.twin, "Twin-linked: ripete tutti i tiri per ferire falliti", function(v){ a.twin = v; dlAggiorna(); }));
-    riga.appendChild(dlChip("Lance", a.lancia, "Lance: +1 per ferire", function(v){ a.lancia = v; dlAggiorna(); }));
-
-    a._tot = dlEl("span", "dl-tot");
-    riga.appendChild(a._tot);
-    a._riga = riga;
-    return riga;
-  }
-
-  function dlCostruisciDifensore(c){
-    var riga = document.getElementById("dl-dif");
-    riga.innerHTML = "";
-    riga.appendChild(dlCampo("RES", dlInputNumero(c.res, 1, "", function(v){ c.res = v; dlAggiorna(); })));
-    riga.appendChild(dlCampo("Salvezza", dlSelect(dlVociSoglie(true), c.save, function(v){ c.save = parseInt(v, 10); dlAggiorna(); })));
-    riga.appendChild(dlCampo("W", dlInputNumero(c.w, 1, "", function(v){ c.w = v; dlAggiorna(); })));
-    riga.appendChild(dlCampo("Invulnerabile", dlSelect(dlVociSoglie(false), c.invulT, function(v){ c.invulT = parseInt(v, 10); dlAggiorna(); })));
-    riga.appendChild(dlCampo("Feel No Pain", dlSelect(dlVociSoglie(false), c.fnpT, function(v){ c.fnpT = parseInt(v, 10); dlAggiorna(); })));
-    riga.appendChild(dlCampo("Modelli", dlInputNumero(c.modelli, 1, "", function(v){ c.modelli = v; dlAggiorna(); }), "Basette attive del difensore (meno quelle cancellate sul tavolo)"));
-    var attuali = dlEl("span", "dl-attuali");
-    attuali.id = "dl-ferite-attuali";
-    riga.appendChild(dlCampo("Ferite attuali", attuali, "Quanti modelli hanno quante ferite rimaste (dal Tavolo da Gioco). I modelli già feriti subiscono i danni per primi."));
-  }
 
   // Ferite attuali dei modelli del difensore, dal più ferito al meno ferito (un modello già ferito
   // subisce i danni per primo); i modelli in più rispetto ai dati ricevuti hanno W pieno.
@@ -2133,103 +2225,8 @@ select.dl-in{width:auto; padding:0 3px;}
 
   // Tabella delle statistiche in fondo: una colonna per arma in uso più il totale, una riga per fase
   // (le righe Lethal/Sustained/Dev/FNP compaiono solo se c'è la relativa regola).
-  function dlStatistiche(usate, d){
-    var cont = document.getElementById("dl-stat");
-    cont.innerHTML = "";
-    if(!usate.length){
-      cont.appendChild(dlEl("div", "dl-vuoto", "Imposta i modelli di almeno un'arma per vedere le statistiche."));
-      return;
-    }
-    function qualcuna(fn){ return usate.some(fn); }
-    var righe = [
-      ["Attacchi", function(u){ return u.att; }, true],
-      ["Colpiti", function(u){ return u.r.attOk; }, true],
-      ["di cui Lethal (feriscono da soli)", function(u){ return u.r.critTotal; }, qualcuna(function(u){ return u.a.lethal > 0; })],
-      ["Colpi extra Sustained", function(u){ return u.r.sustTotal; }, qualcuna(function(u){ return u.a.sust > 0; })],
-      ["Feriti", function(u){ return u.r.ferOk; }, true],
-      ["di cui Dev (saltano la salvezza)", function(u){ return u.r.devBypassCount; }, qualcuna(function(u){ return u.a.dev > 0; })],
-      ["Salvati", function(u){ return u.r.ferOk - u.r.nonSalvati; }, true],
-      ["Non salvati", function(u){ return u.r.nonSalvati; }, true],
-      ["Evitati da Feel No Pain", function(u){ return u.r.nonSalvati - u.r.feriteDopoFnp; }, d.fnpT > 0],
-      ["Danni inflitti", function(u){ return u.r.danniTotali; }, true]
-    ];
-    var tabella = dlEl("table", "dl-stat-tab");
-    var intest = dlEl("tr");
-    intest.appendChild(dlEl("th", "", ""));
-    usate.forEach(function(u){
-      var nome = u.a.attaccante ? u.a.attaccante + " – " + u.a.nome : u.a.nome;
-      var th = dlEl("th", "", nome);
-      th.title = nome;
-      intest.appendChild(th);
-    });
-    if(usate.length > 1) intest.appendChild(dlEl("th", "dl-totale", "Totale"));
-    tabella.appendChild(intest);
-    righe.forEach(function(riga){
-      if(!riga[2]) return;
-      var tr = dlEl("tr");
-      tr.appendChild(dlEl("td", "dl-stat-nome", riga[0]));
-      var somma = 0;
-      usate.forEach(function(u){
-        var v = riga[1](u);
-        somma += v;
-        tr.appendChild(dlEl("td", "", String(v)));
-      });
-      if(usate.length > 1) tr.appendChild(dlEl("td", "dl-totale", String(somma)));
-      tabella.appendChild(tr);
-    });
-    cont.appendChild(tabella);
-  }
 
   // Ricalcola il risultato complessivo di tutte le armi usate (modelli > 0) contro il difensore.
-  function dlAggiorna(){
-    if(!duello) return;
-    var d = duello.dif;
-    var lista = dlFeriteModelli(d);
-    var indice = 0, resto = lista.length ? lista[0] : 0;
-    var morti = 0, armiUsate = 0, attacchi = 0, usate = [];
-    var elAttuali = document.getElementById("dl-ferite-attuali");
-    if(elAttuali) elAttuali.textContent = dlTestoFerite(lista);
-    duello.armi.forEach(function(a){
-      var attiva = a.modelli > 0;
-      a._riga.classList.toggle("attiva", attiva);
-      a._tot.textContent = attiva ? "= " + (a.modelli * a.att) + " att" : "";
-      if(!attiva) return;
-      armiUsate++;
-      attacchi += a.modelli * a.att;
-      var r = calcolaAttacco({
-        att: a.modelli * a.att, xcol: a.xcol, for_: a.forza, ap: a.ap, danni: a.danni,
-        lethal: a.lethal > 0, lethalThreshold: a.lethal || 6,
-        repeat: a.ripCol, repeatOnesHit: a.rip1Col !== "", repeatOnesHitMode: a.rip1Col || "tutti",
-        sustained: a.sust, sustainedThreshold: 6,
-        twinlink: a.twin, repeatOnesWound: a.rip1Fer !== "", repeatOnesWoundMode: a.rip1Fer || "tutti", lancia: a.lancia,
-        dev: a.dev > 0, devThreshold: a.dev || 6,
-        antiX: a.antiX > 0, antiXThreshold: a.antiX || 4,
-        res: d.res, save: d.save, w: d.w,
-        invul: d.invulT > 0, invulThreshold: d.invulT || 4,
-        fnp: d.fnpT > 0, fnpThreshold: d.fnpT || 4
-      });
-      usate.push({ a: a, att: a.modelli * a.att, r: r });
-      // Come in Combattimento il danno oltre le ferite rimaste a un modello si perde.
-      for(var i = 0; i < r.effectiveAttacks && indice < lista.length; i++){
-        resto -= a.danni;
-        if(resto <= 0){
-          morti++;
-          indice++;
-          resto = indice < lista.length ? lista[indice] : 0;
-        }
-      }
-    });
-    dlStatistiche(usate, d);
-    var distrutta = indice >= lista.length;
-    var feriteFatte = distrutta ? 0 : lista[indice] - resto;
-    document.getElementById("dl-morti").textContent = morti;
-    document.getElementById("dl-morti-sub").textContent =
-      "su " + d.modelli + (d.modelli === 1 ? " modello" : " modelli") + (distrutta ? " · unità distrutta" : "") +
-      " · " + (armiUsate ? armiUsate + (armiUsate === 1 ? " arma, " : " armi, ") + attacchi + " attacchi" : "nessuna arma in uso");
-    document.getElementById("dl-ferite").textContent = feriteFatte;
-    document.getElementById("dl-ferite-sub").textContent = distrutta ? "nessun modello rimasto" :
-      "su " + lista[indice] + (lista[indice] === 1 ? " ferita" : " ferite") + " attuali (ne restano " + resto + ")";
-  }
 
   function dlTitolo(titolo, ruolo, nome, modelli, distanza){
     titolo.textContent = "";
@@ -2243,65 +2240,240 @@ select.dl-in{width:auto; padding:0 3px;}
     }
   }
 
-  function duelloImposta(dati){
-    var dif = dati.difensore || {};
-    // Più attaccanti (`attaccanti`, ognuno con la sua distanza); i messaggi di un Tavolo da Gioco più vecchio
-    // hanno un solo `attaccante` con la `distanza` a parte.
-    var elenco = Array.isArray(dati.attaccanti) && dati.attaccanti.length ? dati.attaccanti
-      : [Object.assign({}, dati.attaccante, { distanza: dati.distanza })];
-    var chiave = elenco.map(function(a){ return a.id || a.nome; }).sort().join("+") + "|" + (dif.id || dif.nome);
-    var difensore = dlNuovoDifensore({ res: dif.res, ts: dif.ts, tsPiu: dif.tsPiu, w: dif.w, fnp: dif.fnp, modelli: dif.modelli, ferite: dif.ferite });
-    var attaccanti = elenco.map(function(att){
-      return {
-        id: att.id || att.nome, nome: att.nome || "?", modelli: dlIntero(att.modelli, 1, 1),
-        distanza: typeof att.distanza === "number" ? att.distanza : null,
-        armi: (att.armi || []).map(dlNuovaArma)
-      };
-    });
+  // Schermata del Duello: la schermata del tab Duello e quella di VSunità (id con prefisso "vs-") sono due
+  // istanze della stessa fabbrica, ognuna con il proprio stato e la propria memoria delle modifiche.
+  function creaDuello(prefisso, opzioni){
+    opzioni = opzioni || {};
+    var duello = null;
+    var memoria = {};
+    function el(id){ return document.getElementById(prefisso + "dl-" + id); }
 
-    // Riaprendo lo stesso confronto si ritrovano le modifiche già fatte (modelli per arma, regole, difensore).
-    var prima = duelloMemoria[chiave];
-    if(prima){
+    function dlCostruisciArma(a, distanza, massimoModelli){
+      var riga = dlEl("div", "dl-riga dl-arma");
+      var gittata = parseInt(a.gittata, 10);
+      var fuori = a.tipo !== "Melee" && !isNaN(gittata) && distanza !== null && distanza !== undefined && distanza > gittata;
+
+      var nome = dlEl("div", "dl-nome" + (fuori ? " fuori" : ""));
+      nome.title = a.nome + (a.descrizione ? " — " + a.descrizione : "");
+      nome.appendChild(dlEl("span", "dl-tipo", a.tipo === "Melee" ? "M" : "T"));
+      nome.appendChild(document.createTextNode(a.nome));
+      var info = [isNaN(gittata) ? "" : gittata + "″", a.descrizione, fuori ? "fuori portata" : ""].filter(Boolean).join(" · ");
+      if(info) nome.appendChild(dlEl("small", "", info));
+      riga.appendChild(nome);
+
+      riga.appendChild(dlCampo("Modelli", dlInputNumero(a.modelli, 0, "dl-mod", function(v){ a.modelli = v; dlAggiorna(); }, massimoModelli)));
+      riga.appendChild(dlCampo("ATT", dlInputNumero(a.att, 1, "", function(v){ a.att = v; dlAggiorna(); })));
+      riga.appendChild(dlCampo("Colpire", dlSelect([["1", "auto"]].concat(dlVociSoglie(true)), a.xcol, function(v){ a.xcol = parseInt(v, 10); dlAggiorna(); })));
+      riga.appendChild(dlCampo("FOR", dlInputNumero(a.forza, 1, "", function(v){ a.forza = v; dlAggiorna(); })));
+      riga.appendChild(dlCampo("AP", dlInputNumero(a.ap, 0, "", function(v){ a.ap = v; dlAggiorna(); })));
+      riga.appendChild(dlCampo("Danni", dlInputNumero(a.danni, 1, "", function(v){ a.danni = v; dlAggiorna(); })));
+
+      var vociUno = [["", "—"], ["uno", "un 1"], ["tutti", "tutti"]];
+      riga.appendChild(dlCampo("Sust", dlSelect([["0", "—"], ["1", "1"], ["2", "2"], ["3", "3"]], a.sust, function(v){ a.sust = parseInt(v, 10); dlAggiorna(); }), "Sustained Hits: colpi extra su ogni colpo critico"));
+      riga.appendChild(dlCampo("Lethal", dlSelect(dlVociSoglie(false), a.lethal, function(v){ a.lethal = parseInt(v, 10); dlAggiorna(); }), "Lethal Hits: con questo valore o più il colpo ferisce automaticamente"));
+      riga.appendChild(dlCampo("Dev", dlSelect(dlVociSoglie(false), a.dev, function(v){ a.dev = parseInt(v, 10); dlAggiorna(); }), "Devastating Wounds: con questo valore o più il ferimento salta AP e salvezza"));
+      riga.appendChild(dlCampo("Anti-X", dlSelect(dlVociSoglie(false), a.antiX, function(v){ a.antiX = parseInt(v, 10); dlAggiorna(); }), "Anti-X: soglia fissa per ferire"));
+      riga.appendChild(dlCampo("Rip.1.col.", dlSelect(vociUno, a.rip1Col, function(v){ a.rip1Col = v; dlAggiorna(); }), "Ripete gli 1 per colpire: un solo 1 o tutti gli 1"));
+      riga.appendChild(dlCampo("Rip.1.fer.", dlSelect(vociUno, a.rip1Fer, function(v){ a.rip1Fer = v; dlAggiorna(); }), "Ripete gli 1 per ferire: un solo 1 o tutti gli 1"));
+      riga.appendChild(dlChip("Rip.col.", a.ripCol, "Ripete tutti i tiri per colpire falliti", function(v){ a.ripCol = v; dlAggiorna(); }));
+      riga.appendChild(dlChip("Twin", a.twin, "Twin-linked: ripete tutti i tiri per ferire falliti", function(v){ a.twin = v; dlAggiorna(); }));
+      riga.appendChild(dlChip("Lance", a.lancia, "Lance: +1 per ferire", function(v){ a.lancia = v; dlAggiorna(); }));
+
+      a._tot = dlEl("span", "dl-tot");
+      riga.appendChild(a._tot);
+      a._riga = riga;
+      return riga;
+    }
+
+    function dlCostruisciDifensore(c){
+      var riga = el("dif");
+      riga.innerHTML = "";
+      riga.appendChild(dlCampo("RES", dlInputNumero(c.res, 1, "", function(v){ c.res = v; dlAggiorna(); })));
+      riga.appendChild(dlCampo("Salvezza", dlSelect(dlVociSoglie(true), c.save, function(v){ c.save = parseInt(v, 10); dlAggiorna(); })));
+      riga.appendChild(dlCampo("W", dlInputNumero(c.w, 1, "", function(v){ c.w = v; dlAggiorna(); })));
+      riga.appendChild(dlCampo("Invulnerabile", dlSelect(dlVociSoglie(false), c.invulT, function(v){ c.invulT = parseInt(v, 10); dlAggiorna(); })));
+      riga.appendChild(dlCampo("Feel No Pain", dlSelect(dlVociSoglie(false), c.fnpT, function(v){ c.fnpT = parseInt(v, 10); dlAggiorna(); })));
+      riga.appendChild(dlCampo("Modelli", dlInputNumero(c.modelli, 1, "", function(v){ c.modelli = v; dlAggiorna(); }), "Basette attive del difensore (meno quelle cancellate sul tavolo)"));
+      var attuali = dlEl("span", "dl-attuali");
+      attuali.id = prefisso + "dl-ferite-attuali";
+      riga.appendChild(dlCampo("Ferite attuali", attuali, "Quanti modelli hanno quante ferite rimaste (dal Tavolo da Gioco). I modelli già feriti subiscono i danni per primi."));
+    }
+
+    function dlStatistiche(usate, d){
+      var cont = el("stat");
+      cont.innerHTML = "";
+      if(!usate.length){
+        cont.appendChild(dlEl("div", "dl-vuoto", "Imposta i modelli di almeno un'arma per vedere le statistiche."));
+        return;
+      }
+      function qualcuna(fn){ return usate.some(fn); }
+      var righe = [
+        ["Attacchi", function(u){ return u.att; }, true],
+        ["Colpiti", function(u){ return u.r.attOk; }, true],
+        ["di cui Lethal (feriscono da soli)", function(u){ return u.r.critTotal; }, qualcuna(function(u){ return u.a.lethal > 0; })],
+        ["Colpi extra Sustained", function(u){ return u.r.sustTotal; }, qualcuna(function(u){ return u.a.sust > 0; })],
+        ["Feriti", function(u){ return u.r.ferOk; }, true],
+        ["di cui Dev (saltano la salvezza)", function(u){ return u.r.devBypassCount; }, qualcuna(function(u){ return u.a.dev > 0; })],
+        ["Salvati", function(u){ return u.r.ferOk - u.r.nonSalvati; }, true],
+        ["Non salvati", function(u){ return u.r.nonSalvati; }, true],
+        ["Evitati da Feel No Pain", function(u){ return u.r.nonSalvati - u.r.feriteDopoFnp; }, d.fnpT > 0],
+        ["Danni inflitti", function(u){ return u.r.danniTotali; }, true]
+      ];
+      var tabella = dlEl("table", "dl-stat-tab");
+      var intest = dlEl("tr");
+      intest.appendChild(dlEl("th", "", ""));
+      usate.forEach(function(u){
+        var nome = u.a.attaccante ? u.a.attaccante + " – " + u.a.nome : u.a.nome;
+        var th = dlEl("th", "", nome);
+        th.title = nome;
+        intest.appendChild(th);
+      });
+      if(usate.length > 1) intest.appendChild(dlEl("th", "dl-totale", "Totale"));
+      tabella.appendChild(intest);
+      righe.forEach(function(riga){
+        if(!riga[2]) return;
+        var tr = dlEl("tr");
+        tr.appendChild(dlEl("td", "dl-stat-nome", riga[0]));
+        var somma = 0;
+        usate.forEach(function(u){
+          var v = riga[1](u);
+          somma += v;
+          tr.appendChild(dlEl("td", "", String(v)));
+        });
+        if(usate.length > 1) tr.appendChild(dlEl("td", "dl-totale", String(somma)));
+        tabella.appendChild(tr);
+      });
+      cont.appendChild(tabella);
+    }
+
+    function dlAggiorna(){
+      if(!duello) return;
+      var d = duello.dif;
+      var lista = dlFeriteModelli(d);
+      var indice = 0, resto = lista.length ? lista[0] : 0;
+      var morti = 0, armiUsate = 0, attacchi = 0, usate = [];
+      var elAttuali = el("ferite-attuali");
+      if(elAttuali) elAttuali.textContent = dlTestoFerite(lista);
+      duello.armi.forEach(function(a){
+        var attiva = a.modelli > 0;
+        a._riga.classList.toggle("attiva", attiva);
+        a._tot.textContent = attiva ? "= " + (a.modelli * a.att) + " att" : "";
+        if(!attiva) return;
+        armiUsate++;
+        attacchi += a.modelli * a.att;
+        var r = calcolaAttacco({
+          att: a.modelli * a.att, xcol: a.xcol, for_: a.forza, ap: a.ap, danni: a.danni,
+          lethal: a.lethal > 0, lethalThreshold: a.lethal || 6,
+          repeat: a.ripCol, repeatOnesHit: a.rip1Col !== "", repeatOnesHitMode: a.rip1Col || "tutti",
+          sustained: a.sust, sustainedThreshold: 6,
+          twinlink: a.twin, repeatOnesWound: a.rip1Fer !== "", repeatOnesWoundMode: a.rip1Fer || "tutti", lancia: a.lancia,
+          dev: a.dev > 0, devThreshold: a.dev || 6,
+          antiX: a.antiX > 0, antiXThreshold: a.antiX || 4,
+          res: d.res, save: d.save, w: d.w,
+          invul: d.invulT > 0, invulThreshold: d.invulT || 4,
+          fnp: d.fnpT > 0, fnpThreshold: d.fnpT || 4
+        });
+        usate.push({ a: a, att: a.modelli * a.att, r: r });
+        // Come in Combattimento il danno oltre le ferite rimaste a un modello si perde.
+        for(var i = 0; i < r.effectiveAttacks && indice < lista.length; i++){
+          resto -= a.danni;
+          if(resto <= 0){
+            morti++;
+            indice++;
+            resto = indice < lista.length ? lista[indice] : 0;
+          }
+        }
+      });
+      dlStatistiche(usate, d);
+      var distrutta = indice >= lista.length;
+      var feriteFatte = distrutta ? 0 : lista[indice] - resto;
+      el("morti").textContent = morti;
+      el("morti-sub").textContent =
+        "su " + d.modelli + (d.modelli === 1 ? " modello" : " modelli") + (distrutta ? " · unità distrutta" : "") +
+        " · " + (armiUsate ? armiUsate + (armiUsate === 1 ? " arma, " : " armi, ") + attacchi + " attacchi" : "nessuna arma in uso");
+      el("ferite").textContent = feriteFatte;
+      el("ferite-sub").textContent = distrutta ? "nessun modello rimasto" :
+        "su " + lista[indice] + (lista[indice] === 1 ? " ferita" : " ferite") + " attuali (ne restano " + resto + ")";
+    }
+
+    function imposta(dati){
+      var dif = dati.difensore || {};
+      // Più attaccanti (`attaccanti`, ognuno con la sua distanza); i messaggi di un Tavolo da Gioco più vecchio
+      // hanno un solo `attaccante` con la `distanza` a parte.
+      var elenco = Array.isArray(dati.attaccanti) && dati.attaccanti.length ? dati.attaccanti
+        : [Object.assign({}, dati.attaccante, { distanza: dati.distanza })];
+      var chiave = elenco.map(function(a){ return a.id || a.nome; }).sort().join("+") + "|" + (dif.id || dif.nome);
+      var difensore = dlNuovoDifensore({ res: dif.res, ts: dif.ts, tsPiu: dif.tsPiu, w: dif.w, fnp: dif.fnp, modelli: dif.modelli, ferite: dif.ferite });
+      var attaccanti = elenco.map(function(att){
+        return {
+          id: att.id || att.nome, nome: att.nome || "?", modelli: dlIntero(att.modelli, 1, 1),
+          distanza: typeof att.distanza === "number" ? att.distanza : null,
+          armi: (att.armi || []).map(dlNuovaArma)
+        };
+      });
+
+      // Riaprendo lo stesso confronto si ritrovano le modifiche già fatte (modelli per arma, regole, difensore).
+      var prima = memoria[chiave];
+      if(prima){
+        attaccanti.forEach(function(att){
+          var p = prima.attaccanti.filter(function(x){ return x.id === att.id; })[0];
+          if(!p) return;
+          att.armi.forEach(function(a, i){
+            var pa = p.armi[i];
+            if(pa && pa.nome === a.nome) DL_CAMPI_ARMA.forEach(function(k){ a[k] = pa[k]; });
+          });
+        });
+        DL_CAMPI_DIFENSORE.forEach(function(k){ difensore[k] = prima.dif[k]; });
+      }
+      // Non si possono usare più modelli di quelli dell'unità attaccante.
       attaccanti.forEach(function(att){
-        var p = prima.attaccanti.filter(function(x){ return x.id === att.id; })[0];
-        if(!p) return;
-        att.armi.forEach(function(a, i){
-          var pa = p.armi[i];
-          if(pa && pa.nome === a.nome) DL_CAMPI_ARMA.forEach(function(k){ a[k] = pa[k]; });
+        att.armi.forEach(function(a){ if(a.modelli > att.modelli) a.modelli = att.modelli; });
+      });
+      var armi = [];
+      attaccanti.forEach(function(att){
+        att.armi.forEach(function(a){
+          if(attaccanti.length > 1) a.attaccante = att.nome;
+          armi.push(a);
         });
       });
-      DL_CAMPI_DIFENSORE.forEach(function(k){ difensore[k] = prima.dif[k]; });
-    }
-    var armi = [];
-    attaccanti.forEach(function(att){
-      att.armi.forEach(function(a){
-        if(attaccanti.length > 1) a.attaccante = att.nome;
-        armi.push(a);
+      duello = { attaccanti: attaccanti, armi: armi, dif: difensore };
+      memoria[chiave] = duello;
+
+      el("vuoto").style.display = "none";
+      el("contenuto").style.display = "";
+      dlTitolo(el("dif-titolo"), "Difensore", dif.nome || "?", difensore.modelli);
+
+      var contenitore = el("attaccanti");
+      contenitore.innerHTML = "";
+      attaccanti.forEach(function(att){
+        var card = dlEl("div", "card side-card attacker");
+        var titolo = dlEl("h2", "card-title");
+        dlTitolo(titolo, "Attaccante", att.nome, att.modelli, opzioni.senzaDistanza ? undefined : att.distanza);
+        card.appendChild(titolo);
+        var elArmi = dlEl("div", "dl-armi");
+        if(!att.armi.length) elArmi.appendChild(dlEl("div", "dl-vuoto", "Nessuna arma nei dati per questa unità."));
+        att.armi.forEach(function(a){ elArmi.appendChild(dlCostruisciArma(a, att.distanza, att.modelli)); });
+        card.appendChild(elArmi);
+        contenitore.appendChild(card);
       });
-    });
-    duello = { attaccanti: attaccanti, armi: armi, dif: difensore };
-    duelloMemoria[chiave] = duello;
+      dlCostruisciDifensore(difensore);
+      dlAggiorna();
+    }
 
-    document.getElementById("dl-vuoto").style.display = "none";
-    document.getElementById("dl-contenuto").style.display = "";
-    dlTitolo(document.getElementById("dl-dif-titolo"), "Difensore", dif.nome || "?", difensore.modelli);
+    // Nasconde il contenuto e mostra il messaggio iniziale (VSunità, finché le due unità non sono scelte).
+    function svuota(){
+      duello = null;
+      el("vuoto").style.display = "";
+      el("contenuto").style.display = "none";
+    }
 
-    var contenitore = document.getElementById("dl-attaccanti");
-    contenitore.innerHTML = "";
-    attaccanti.forEach(function(att){
-      var card = dlEl("div", "card side-card attacker");
-      var titolo = dlEl("h2", "card-title");
-      dlTitolo(titolo, "Attaccante", att.nome, att.modelli, att.distanza);
-      card.appendChild(titolo);
-      var elArmi = dlEl("div", "dl-armi");
-      if(!att.armi.length) elArmi.appendChild(dlEl("div", "dl-vuoto", "Nessuna arma nei dati per questa unità."));
-      att.armi.forEach(function(a){ elArmi.appendChild(dlCostruisciArma(a, att.distanza, att.modelli)); });
-      card.appendChild(elArmi);
-      contenitore.appendChild(card);
-    });
-    dlCostruisciDifensore(difensore);
-    dlAggiorna();
+    return { imposta: imposta, svuota: svuota, stato: function(){ return duello; } };
   }
+
+  var DL = creaDuello("");
+  var VSDL = creaDuello("vs-", { senzaDistanza: true });
+  // VSunità riparte dal messaggio iniziale (le unità si scelgono dopo il caricamento dei dati).
+  VSDL.svuota();
 
   // ---------------- TEMA CHIARO / SCURO ----------------
   // Il tema effettivo è quello scelto col pulsante (salvato in localStorage) oppure, se non c'è
