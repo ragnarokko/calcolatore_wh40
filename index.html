@@ -545,11 +545,18 @@ body{
 #panel-duello .card + .card, #panel-vs .card + .card{margin-top:10px;}
 /* VSunità: scelta delle unità, una sola riga per attaccante e per difensore (a capo solo se manca spazio) */
 .vs-riga{display:flex; flex-wrap:wrap; align-items:flex-end; gap:8px;}
-.vs-ruolo{flex:0 0 92px; align-self:center; margin:0 !important; font-size:.95rem;}
+.vs-ruolo{flex:0 0 136px; align-self:center; margin:0 !important; font-size:.95rem;}
 .vs-campo{flex:1 1 130px; min-width:110px; display:flex; flex-direction:column; gap:4px;}
 .vs-campo.vs-unita{flex:2 1 190px;}
 .vs-campo.vs-modelli{flex:0 0 84px; min-width:84px;}
 .vs-campo .num-input{min-height:36px; font-size:.9rem; padding:0 8px;}
+#panel-vs .vs-ruolo{display:flex; flex-wrap:nowrap; align-items:center; gap:8px;}
+.vs-piu{
+  width:26px; height:26px; padding:0; border-radius:6px; line-height:1;
+  font-size:1.1rem; font-weight:700; cursor:pointer;
+  color:var(--accent); background:var(--surface-2); border:1px solid var(--accent);
+}
+.vs-piu:disabled{opacity:.4; cursor:default;}
 #panel-duello .card-title, #panel-vs .card-title{margin:0 0 8px; font-size:.95rem; flex-wrap:wrap;}
 .dl-vuoto{color:var(--text-dim); font-size:.9rem; line-height:1.5;}
 .dl-dist{margin-left:auto; font-family:"IBM Plex Mono",monospace; font-weight:700; font-size:1.05rem; line-height:1; color:var(--text);}
@@ -1008,12 +1015,7 @@ select.dl-in{width:auto; padding:0 3px;}
       '</div>' +
       '<button class="step-btn" id="v-ricarica" style="margin-top:10px; padding:0 14px">⟳ Ricarica dati</button>' +
     '</div>' +
-    '<div class="card side-card attacker"><div class="vs-riga">' +
-      '<h2 class="card-title vs-ruolo">Attaccante</h2>' +
-      righeFazioneUnita("v-a") +
-      '<div class="vs-campo vs-modelli"><span class="field-label">Modelli</span>' +
-        '<input type="number" class="num-input" id="v-a-modelli" min="1" step="1" value="1" inputmode="numeric"></div>' +
-    '</div></div>' +
+    '<div id="v-att-righe"></div>' +
     '<div class="card side-card defender"><div class="vs-riga">' +
       '<h2 class="card-title vs-ruolo">Difensore</h2>' +
       righeFazioneUnita("v-d") +
@@ -1955,11 +1957,15 @@ select.dl-in{width:auto; padding:0 3px;}
   document.getElementById("v-ricarica").addEventListener("click", caricaDati);
 
   // ---------------- VSunità: SELETTORI FAZIONE → UNITÀ ----------------
+  // Il difensore è uno solo; gli attaccanti sono una o più righe (il pulsante + accanto ad "Attaccante" ne
+  // aggiunge una, il − la toglie), ognuna con fazione, ricerca, unità e modelli.
   var unitaPerChiave = {};
-  var vsAttF = document.getElementById("v-a-fazione-select"), vsAttU = document.getElementById("v-a-unita-select");
+  var MAX_ATTACCANTI = 6;
+  var vsAttaccanti = [];
+  var vsContaRighe = 0;
+  var vsContenitoreAtt = document.getElementById("v-att-righe");
   var vsDifF = document.getElementById("v-d-fazione-select"), vsDifU = document.getElementById("v-d-unita-select");
-  var vsAttC = document.getElementById("v-a-cerca"), vsDifC = document.getElementById("v-d-cerca");
-  var vsAttModelli = document.getElementById("v-a-modelli");
+  var vsDifC = document.getElementById("v-d-cerca");
   var vsUltimoDif = "";
 
   function riempiSelect(select, voci, segnaposto, valoreCorrente){
@@ -2007,12 +2013,15 @@ select.dl-in{width:auto; padding:0 3px;}
     riempiUnita(selF, selU, inCerca);
   }
 
-  // Con attaccante e difensore scelti mostra la schermata del Duello (armi dell'attaccante, difensore,
-  // risultato). Le modifiche già fatte allo stesso confronto si ritrovano (memoria del Duello); i modelli del
-  // difensore restano quelli impostati finché non cambia unità.
+  // Con almeno un attaccante e il difensore scelti mostra la schermata del Duello (armi di ogni attaccante,
+  // difensore, risultato). Le modifiche già fatte alle armi di un'unità contro lo stesso difensore si
+  // ritrovano (memoria del Duello); i modelli del difensore restano quelli impostati finché non cambia unità.
   function vsAggiorna(){
-    var a = unitaPerChiave[vsAttU.value], d = unitaPerChiave[vsDifU.value];
-    if(!a || !d){
+    var d = unitaPerChiave[vsDifU.value];
+    var scelti = vsAttaccanti.map(function(r){
+      return { riga: r, unita: unitaPerChiave[r.U.value] };
+    }).filter(function(x){ return x.unita; });
+    if(!scelti.length || !d){
       VSDL.svuota();
       vsUltimoDif = "";
       return;
@@ -2020,40 +2029,97 @@ select.dl-in{width:auto; padding:0 3px;}
     var stato = VSDL.stato();
     var modelliDif = (vsUltimoDif === d.chiave && stato) ? stato.dif.modelli : modelliPredefiniti(d);
     vsUltimoDif = d.chiave;
+    // Due righe con la stessa unità: il nome porta il numero d'ordine, per distinguerle nei riquadri.
+    var visti = {};
     VSDL.imposta({
-      attaccanti: [{ id: a.chiave, nome: a.nome, modelli: dlIntero(vsAttModelli.value, 1, 1), armi: armiDi(a) }],
+      attaccanti: scelti.map(function(x){
+        var n = visti[x.unita.chiave] = (visti[x.unita.chiave] || 0) + 1;
+        return {
+          id: x.unita.chiave, nome: x.unita.nome + (n > 1 ? " #" + n : ""),
+          modelli: dlIntero(x.riga.M.value, 1, 1), armi: armiDi(x.unita)
+        };
+      }),
       difensore: { id: d.chiave, nome: d.nome, modelli: modelliDif, res: d.res, ts: d.ts, tsPiu: d.tsPiu, w: d.w, fnp: d.fnp }
     });
   }
 
   function vsRipopola(){
-    riempiLato(vsAttF, vsAttU, vsAttC);
+    vsAttaccanti.forEach(function(r){ riempiLato(r.F, r.U, r.C); });
     riempiLato(vsDifF, vsDifU, vsDifC);
     vsAggiorna();
   }
 
-  // Scelta una nuova unità attaccante, i suoi modelli tornano a quelli predefiniti.
-  function vsAttaccanteScelto(){
-    var a = unitaPerChiave[vsAttU.value];
-    if(a) vsAttModelli.value = modelliPredefiniti(a);
-    vsAggiorna();
+  // Etichette "Attaccante", "Attaccante 2", … e stato del pulsante +.
+  function vsEtichetteAttaccanti(){
+    vsAttaccanti.forEach(function(r, i){
+      r.etichetta.textContent = "Attaccante" + (i > 0 ? " " + (i + 1) : "");
+    });
+    var piu = document.getElementById("v-a-piu");
+    if(piu) piu.disabled = vsAttaccanti.length >= MAX_ATTACCANTI;
   }
 
-  // Cambiando fazione la ricerca riparte da zero.
-  vsAttF.addEventListener("change", function(){
-    vsAttC.value = "";
-    riempiUnita(vsAttF, vsAttU, vsAttC);
-    vsAggiorna();
-  });
-  // Scrivendo nella ricerca la lista si restringe in tempo reale; se l'unità scelta esce dalla lista
-  // (select tornato vuoto) la schermata si svuota.
-  vsAttC.addEventListener("input", function(){
-    var prima = vsAttU.value;
-    riempiUnita(vsAttF, vsAttU, vsAttC);
-    if(vsAttU.value !== prima) vsAggiorna();
-  });
-  vsAttU.addEventListener("change", vsAttaccanteScelto);
-  vsAttModelli.addEventListener("input", vsAggiorna);
+  function vsAggiungiAttaccante(){
+    if(vsAttaccanti.length >= MAX_ATTACCANTI) return;
+    var n = ++vsContaRighe;
+    var prefisso = n === 1 ? "v-a" : "v-a" + n;
+    var card = document.createElement("div");
+    card.className = "card side-card attacker";
+    card.innerHTML =
+      '<div class="vs-riga">' +
+        '<h2 class="card-title vs-ruolo"><span></span>' +
+          (n === 1
+            ? '<button type="button" class="vs-piu" id="v-a-piu" title="Aggiungi un altro attaccante" aria-label="Aggiungi un altro attaccante">+</button>'
+            : '<button type="button" class="vs-piu" title="Togli questo attaccante" aria-label="Togli questo attaccante">−</button>') +
+        '</h2>' +
+        righeFazioneUnita(prefisso) +
+        '<div class="vs-campo vs-modelli"><span class="field-label">Modelli</span>' +
+          '<input type="number" class="num-input" id="' + prefisso + '-modelli" min="1" step="1" value="1" inputmode="numeric"></div>' +
+      '</div>';
+    vsContenitoreAtt.appendChild(card);
+    var r = {
+      card: card, etichetta: card.querySelector(".vs-ruolo span"),
+      F: card.querySelector("#" + prefisso + "-fazione-select"), U: card.querySelector("#" + prefisso + "-unita-select"),
+      C: card.querySelector("#" + prefisso + "-cerca"), M: card.querySelector("#" + prefisso + "-modelli")
+    };
+    vsAttaccanti.push(r);
+
+    // Cambiando fazione la ricerca riparte da zero.
+    r.F.addEventListener("change", function(){
+      r.C.value = "";
+      riempiUnita(r.F, r.U, r.C);
+      vsAggiorna();
+    });
+    // Scrivendo nella ricerca la lista si restringe in tempo reale; se l'unità scelta esce dalla lista
+    // (select tornato vuoto) la schermata si aggiorna.
+    r.C.addEventListener("input", function(){
+      var prima = r.U.value;
+      riempiUnita(r.F, r.U, r.C);
+      if(r.U.value !== prima) vsAggiorna();
+    });
+    // Scelta una nuova unità, i suoi modelli tornano a quelli predefiniti.
+    r.U.addEventListener("change", function(){
+      var u = unitaPerChiave[r.U.value];
+      if(u) r.M.value = modelliPredefiniti(u);
+      vsAggiorna();
+    });
+    r.M.addEventListener("input", vsAggiorna);
+
+    var bottone = card.querySelector(".vs-piu");
+    if(n === 1){
+      bottone.addEventListener("click", function(){ vsAggiungiAttaccante(); });
+    } else {
+      bottone.addEventListener("click", function(){
+        vsAttaccanti.splice(vsAttaccanti.indexOf(r), 1);
+        card.parentNode.removeChild(card);
+        vsEtichetteAttaccanti();
+        vsAggiorna();
+      });
+    }
+    riempiLato(r.F, r.U, r.C);
+    vsEtichetteAttaccanti();
+  }
+
+  vsAggiungiAttaccante();
 
   vsDifF.addEventListener("change", function(){
     vsDifC.value = "";
@@ -2410,7 +2476,7 @@ select.dl-in{width:auto; padding:0 3px;}
       // hanno un solo `attaccante` con la `distanza` a parte.
       var elenco = Array.isArray(dati.attaccanti) && dati.attaccanti.length ? dati.attaccanti
         : [Object.assign({}, dati.attaccante, { distanza: dati.distanza })];
-      var chiave = elenco.map(function(a){ return a.id || a.nome; }).sort().join("+") + "|" + (dif.id || dif.nome);
+      var idDif = dif.id || dif.nome;
       var difensore = dlNuovoDifensore({ res: dif.res, ts: dif.ts, tsPiu: dif.tsPiu, w: dif.w, fnp: dif.fnp, modelli: dif.modelli, ferite: dif.ferite });
       var attaccanti = elenco.map(function(att){
         return {
@@ -2420,19 +2486,18 @@ select.dl-in{width:auto; padding:0 3px;}
         };
       });
 
-      // Riaprendo lo stesso confronto si ritrovano le modifiche già fatte (modelli per arma, regole, difensore).
-      var prima = memoria[chiave];
-      if(prima){
-        attaccanti.forEach(function(att){
-          var p = prima.attaccanti.filter(function(x){ return x.id === att.id; })[0];
-          if(!p) return;
-          att.armi.forEach(function(a, i){
-            var pa = p.armi[i];
-            if(pa && pa.nome === a.nome) DL_CAMPI_ARMA.forEach(function(k){ a[k] = pa[k]; });
-          });
+      // Riaprendo lo stesso confronto si ritrovano le modifiche già fatte: armi di ogni attaccante contro quel
+      // difensore (modelli per arma, regole) e dati del difensore. Aggiungere o togliere un attaccante non le perde.
+      attaccanti.forEach(function(att){
+        var pa = memoria["a|" + att.id + "|" + idDif];
+        if(!pa) return;
+        att.armi.forEach(function(a, i){
+          var prec = pa[i];
+          if(prec && prec.nome === a.nome) DL_CAMPI_ARMA.forEach(function(k){ a[k] = prec[k]; });
         });
-        DL_CAMPI_DIFENSORE.forEach(function(k){ difensore[k] = prima.dif[k]; });
-      }
+      });
+      var precDif = memoria["d|" + idDif];
+      if(precDif) DL_CAMPI_DIFENSORE.forEach(function(k){ difensore[k] = precDif[k]; });
       // Non si possono usare più modelli di quelli dell'unità attaccante.
       attaccanti.forEach(function(att){
         att.armi.forEach(function(a){ if(a.modelli > att.modelli) a.modelli = att.modelli; });
@@ -2445,7 +2510,8 @@ select.dl-in{width:auto; padding:0 3px;}
         });
       });
       duello = { attaccanti: attaccanti, armi: armi, dif: difensore };
-      memoria[chiave] = duello;
+      attaccanti.forEach(function(att){ memoria["a|" + att.id + "|" + idDif] = att.armi; });
+      memoria["d|" + idDif] = difensore;
 
       el("vuoto").style.display = "none";
       el("contenuto").style.display = "";
