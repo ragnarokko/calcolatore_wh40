@@ -2235,6 +2235,7 @@ select.dl-in{width:auto; padding:0 3px;}
   function dlNuovoDifensore(d){
     return {
       res: dlIntero(d.res, 4, 1), save: dlSoglia(d.ts) || 4, w: dlIntero(d.w, 1, 1),
+      w0: dlIntero(d.w, 1, 1), // W ricevuto: i modelli a ferite piene seguono le modifiche di W, quelli feriti no
       invulT: dlSoglia(d.tsPiu), fnpT: dlSoglia(d.fnp),
       modelli: dlIntero(d.modelli, 1, 1),
       // Ferite attuali di ogni modello (una voce per basetta attiva); se mancano si assume W pieno.
@@ -2310,7 +2311,10 @@ select.dl-in{width:auto; padding:0 3px;}
   // Ferite attuali dei modelli del difensore, dal più ferito al meno ferito (un modello già ferito
   // subisce i danni per primo); i modelli in più rispetto ai dati ricevuti hanno W pieno.
   function dlFeriteModelli(d){
-    var lista = d.ferite.slice(0, d.modelli).sort(function(x, y){ return x - y; });
+    // Un modello a ferite piene (rispetto al W ricevuto) prende il W modificato; uno già ferito ne tiene le
+    // ferite rimaste (al massimo W).
+    var lista = d.ferite.slice(0, d.modelli).map(function(f){ return f >= d.w0 ? d.w : Math.min(f, d.w); })
+      .sort(function(x, y){ return x - y; });
     while(lista.length < d.modelli) lista.push(d.w);
     return lista;
   }
@@ -2456,6 +2460,7 @@ select.dl-in{width:auto; padding:0 3px;}
       var morti = 0, armiUsate = 0, attacchi = 0, usate = [];
       var elAttuali = el("ferite-attuali");
       if(elAttuali) elAttuali.textContent = dlTestoFerite(lista);
+      dlTitolo(el("dif-titolo"), "Difensore", duello.nomeDif, d.modelli);
       duello.armi.forEach(function(a){
         var attiva = a.modelli > 0;
         a._riga.classList.toggle("attiva", attiva);
@@ -2537,7 +2542,7 @@ select.dl-in{width:auto; padding:0 3px;}
           armi.push(a);
         });
       });
-      duello = { attaccanti: attaccanti, armi: armi, dif: difensore };
+      duello = { attaccanti: attaccanti, armi: armi, dif: difensore, nomeDif: dif.nome || "?" };
       attaccanti.forEach(function(att){ memoria["a|" + att.id + "|" + idDif] = att.armi; });
       memoria["d|" + idDif] = difensore;
 
