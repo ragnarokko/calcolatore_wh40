@@ -611,6 +611,8 @@ select.dl-in{width:auto; padding:0 3px;}
   cursor:pointer;
 }
 .dl-chip[aria-pressed="true"]{background:var(--att); border-color:var(--att); color:#fff;}
+.dl-nome small.dl-uso{color:var(--text-dim); font-style:italic;}
+.dl-nome small.dl-uso:empty{display:none;}
 .dl-max{min-height:.8rem; font-family:"IBM Plex Mono",monospace; font-size:.6rem; line-height:.8rem; text-align:center; color:var(--text-dim); cursor:help;}
 .dl-c.oltre .dl-mod{border-color:var(--fail); background:var(--fail-soft); color:var(--fail);}
 .dl-c.oltre .dl-max{color:var(--fail); font-weight:700;}
@@ -1978,20 +1980,65 @@ select.dl-in{width:auto; padding:0 3px;}
   }
 
   // Elenco di armi "1 A; 2 B" / "A and B" → chiavi riconosciute fra le armi note (indice: chiave → nome base).
-  function lmArmiDaElenco(testo, indice){
+  function lmDistanza(a, b){
+    var prec = [], i, j;
+    for(j = 0; j <= b.length; j++) prec.push(j);
+    for(i = 1; i <= a.length; i++){
+      var corr = [i];
+      for(j = 1; j <= b.length; j++){
+        corr.push(Math.min(prec[j] + 1, corr[j - 1] + 1, prec[j - 1] + (a.charAt(i - 1) === b.charAt(j - 1) ? 0 : 1)));
+      }
+      prec = corr;
+    }
+    return prec[b.length];
+  }
+
+  // Chiave di un'arma nota, anche con un errore di battitura alla fonte ("twin lighting claws" = "Twin lightning claws").
+  function lmTrovaChiave(k, indice){
+    if(indice[k]) return k;
+    var tol = k.length >= 14 ? 2 : k.length >= 8 ? 1 : 0;
+    if(!tol) return null;
+    var migliore = null, d = tol + 1;
+    Object.keys(indice).forEach(function(c){
+      if(Math.abs(c.length - k.length) > tol) return;
+      var x = lmDistanza(k, c);
+      if(x < d){ d = x; migliore = c; }
+    });
+    return migliore;
+  }
+
+  // ignoti (facoltativo): raccoglie i nomi che non sono armi note (es. "Relic Shield").
+  function lmArmiDaElenco(testo, indice, ignoti){
     var t = lmNormTesto(testo).replace(/\(.*?\)/g, "").replace(/[.:]+$/, "").trim();
     var trovate = [];
     function aggiungi(pezzo){
-      var k = lmChiaveArma(pezzo);
+      var k = lmChiaveArma(lmNomeBaseArma(pezzo));
       if(!k) return true;
-      if(indice[k]){ if(trovate.indexOf(k) < 0) trovate.push(k); return true; }
+      var nota = lmTrovaChiave(k, indice);
+      if(nota){ if(trovate.indexOf(nota) < 0) trovate.push(nota); return true; }
       return false;
     }
-    t.split(/\s*[|;]\s*|,\s+(?=\d|[A-Za-z])/).forEach(function(blocco){
+    function segnalaIgnoto(pezzo){
+      var nome = pezzo.replace(/^(?:\d+|one|an?)\s+/i, "").replace(/[*.\s]+$/, "").trim();
+      var k = lmChiaveArma(nome);
+      if(!ignoti || !nome || nome.length > 40 || /following/i.test(nome) || ignoti.indexOf(nome) >= 0) return;
+      // Variante di un'arma nota (es. "Astartes chainsword" per "Chainsword"): non è una voce nuova.
+      if(Object.keys(indice).some(function(c){ return c.length >= 6 && (k.indexOf(c) >= 0 || c.indexOf(k) >= 0 && k.length >= 6); })) return;
+      ignoti.push(nome);
+    }
+    t.replace(/\s+and\s+one of the following:?/i, " | ").split(/\s*[|;]\s*|,\s+(?=\d|[A-Za-z])/).forEach(function(blocco){
       blocco = blocco.trim();
       if(!blocco || aggiungi(blocco)) return;
-      // blocco composto: "1 flamer and 1 close combat weapon"
-      blocco.split(/\s+and\s+/i).forEach(aggiungi);
+      // blocco composto: "1 flamer and 1 close combat weapon" (ma "Knives and Fists" è un nome solo)
+      var parti = blocco.split(/\s+and\s+/i), i = 0;
+      while(i < parti.length){
+        var j = parti.length, fatto = false;
+        for(; j > i; j--){
+          if(aggiungi(parti.slice(i, j).join(" and "))){ fatto = true; break; }
+        }
+        if(fatto) i = j;
+        else { segnalaIgnoto(parti[i]); i++; }
+      }
     });
     return trovate;
   }
@@ -2018,7 +2065,8 @@ select.dl-in{width:auto; padding:0 3px;}
   }
 
   // Una riga di opzioni → regola; { nessuna } se non riguarda armi del CSV; { errore } se le riguarda ma non si capisce.
-  function lmParseOpzione(testo, tipi, indice){
+  // extra: raccoglie le "armi" nuove che non hanno un profilo nei dati (scudi, icone…) quando sostituiscono un'arma nota.
+  function lmParseOpzione(testo, tipi, indice, extra){
     var t = lmNormTesto(testo);
     if(!t || /^none\.?$/i.test(t) || /^\*/.test(t)) return { nessuna: true };
     var perOgni = null, seUnita = null;
@@ -2026,13 +2074,16 @@ select.dl-in{width:auto; padding:0 3px;}
     if(m){ perOgni = parseInt(m[1], 10); t = t.slice(m[0].length); }
     m = t.match(/^If this unit contains (\d+) models?,\s*/i);
     if(m){ seUnita = parseInt(m[1], 10); t = t.slice(m[0].length); }
+    t = t.replace(/^If (?:this model|a model|this unit) is equipped with [^,]*,\s*/i, ""); // condizione sull'equipaggiamento: ignorata
 
     var verbo = null, sostituitiTesto = "", destinazione = "", sogg = "", r;
     if((r = t.match(/^(.+?)\s+can\s+(?:each\s+)?have\s+(?:their|its|his|her|these models'|this model's)\s+(.+?)\s+replaced\s+with\s+(.*)$/i))){
       verbo = "sostituisce"; sogg = r[1]; sostituitiTesto = r[2]; destinazione = r[3];
     } else if((r = t.match(/^(.+?)\s+can\s+(?:each\s+)?replace\s+(?:one of\s+)?(?:their|its|his|her)\s+(.+?)\s+with\s*:?\s*(.*)$/i))){
       verbo = "sostituisce"; sogg = r[1]; sostituitiTesto = r[2]; destinazione = r[3];
-    } else if((r = t.match(/^(.+?)'s?\s+(.+?)\s+can\s+(?:each\s+)?be\s+replaced\s+with\s+(.*)$/i))){
+    } else if((r = t.match(/^(?:its|their)\s+(.+?)\s+can\s+(?:each\s+)?be\s+replaced\s+with\s*:?\s*(.*)$/i))){
+      verbo = "sostituisce"; sogg = "this model"; sostituitiTesto = r[1]; destinazione = r[2]; // senza soggetto: il modello stesso
+    } else if((r = t.match(/^(.+?)'s?\s+(.+?)\s+can\s+(?:each\s+)?be\s+replaced\s+with\s*:?\s*(.*)$/i))){
       verbo = "sostituisce"; sogg = r[1]; sostituitiTesto = r[2]; destinazione = r[3];
     } else if((r = t.match(/^(.+?)\s+can\s+(?:each\s+)?(?:be\s+equipped\s+with|have)\s*:?\s*(.*)$/i))){
       verbo = "aggiunge"; sogg = r[1]; destinazione = r[2];
@@ -2040,8 +2091,19 @@ select.dl-in{width:auto; padding:0 3px;}
       return lmCitaArmi(t, indice) ? { errore: "forma non riconosciuta" } : { nessuna: true };
     }
     var sostituiti = verbo === "sostituisce" ? lmArmiDaElenco(sostituitiTesto.replace(/\s+or\s+/gi, " | "), indice) : [];
-    destinazione = destinazione.replace(/^:\s*/, "").replace(/^(?:up to \w+ of )?one of the following(?: options)?\s*(?:\(.*?\))?\s*:?\s*/i, "");
-    var alt = lmArmiDaElenco(destinazione, indice);
+    destinazione = destinazione.split(/\.\s+(?=[A-Z])/)[0].replace(/^:\s*/, "").replace(/^(?:up to \w+ of )?one of the following(?: options)?\s*(?:\(.*?\))?\s*:?\s*/i, "");
+    var ignoti = [];
+    var alt = lmArmiDaElenco(destinazione, indice, ignoti);
+    // Un'arma nota sostituita da qualcosa senza profilo nei dati (scudo, icona, arma mancante): resta una "voce" con il
+    // solo nome, così si può dire quanti modelli la prendono e controllare che tolgano l'arma di serie.
+    if(extra && verbo === "sostituisce" && sostituiti.length){
+      ignoti.forEach(function(nome){
+        var k = lmChiaveArma(lmNomeBaseArma(nome));
+        if(!k) return;
+        if(!indice[k]){ indice[k] = nome; extra[k] = nome; }
+        if(alt.indexOf(k) < 0) alt.push(k);
+      });
+    }
     if(!alt.length && !sostituiti.length) return { nessuna: true };
     if(!alt.length) return { errore: "armi nuove non riconosciute" };
     if(verbo === "sostituisce" && !sostituiti.length) verbo = "aggiunge"; // l'arma sostituita non è nel CSV: vale solo il numero consentito
@@ -2063,13 +2125,17 @@ select.dl-in{width:auto; padding:0 3px;}
     var indice = {};
     (dati.armi || []).forEach(function(n){ var b = lmNomeBaseArma(n); indice[lmChiaveArma(b)] = b; });
     var tipi = lmTipiModelli(dati.comp || []);
-    var info = { indice: indice, tipi: tipi, base: lmParseBase(dati.equip || "", tipi, indice), regole: [], dubbie: [] };
+    var testoBase = dati.equip || "";
+    var info = { indice: indice, tipi: tipi, regole: [], dubbie: [], extra: {} };
     (dati.opzioni || []).forEach(function(o){
-      var r = lmParseOpzione(o, tipi, indice);
+      // Alcune schede (es. squadre di personaggi con nome) descrivono l'equipaggiamento fra le opzioni.
+      if(/\bis equipped with/i.test(o) && !/\bcan\b/i.test(o)){ testoBase += ". " + o; return; }
+      var r = lmParseOpzione(o, tipi, indice, info.extra);
       if(r.nessuna) return;
       if(r.errore){ info.dubbie.push({ testo: o, motivo: r.errore }); return; }
       info.regole.push(r);
     });
+    info.base = lmParseBase(testoBase, tipi, indice);
     info.haLimiti = !!(info.regole.length || Object.keys(info.base).length);
     return info;
   }
@@ -2108,15 +2174,63 @@ select.dl-in{width:auto; padding:0 3px;}
     return Math.min(volte * r.q, cap);
   }
 
+  // Dotazione standard: quanti modelli portano ogni arma di serie. Con i modelli dell'unità si riempiono prima i
+  // minimi di ogni tipo (Sergente 1, Intercessor 4…), poi il resto va ai tipi che possono crescere; con un profilo
+  // di un solo tipo (Boy, Nob) ci sono solo i suoi modelli. → { chiave arma di serie: modelli }
+  function lmDefault(info, modelli, tipoProfilo){
+    var perTipo = [], resto = modelli;
+    if(tipoProfilo){
+      info.tipi.forEach(function(t){ perTipo.push(t === tipoProfilo ? modelli : 0); });
+    } else {
+      info.tipi.forEach(function(t){ var n = Math.min(t.min, resto); perTipo.push(n); resto -= n; });
+      info.tipi.map(function(t, i){ return i; })
+        .sort(function(a, b){ return (info.tipi[b].max - info.tipi[b].min) - (info.tipi[a].max - info.tipi[a].min); })
+        .forEach(function(i){
+          var aggiunta = Math.min(resto, info.tipi[i].max - perTipo[i]);
+          if(aggiunta > 0){ perTipo[i] += aggiunta; resto -= aggiunta; }
+        });
+    }
+    var conteggi = {};
+    Object.keys(info.base).forEach(function(k){
+      var tipi = info.base[k], n = 0;
+      if(tipi === null) n = modelli;
+      else tipi.forEach(function(t){ n += perTipo[info.tipi.indexOf(t)]; });
+      conteggi[k] = Math.min(n, modelli);
+    });
+    return conteggi;
+  }
+
+  // "Si può usare eliminando Bolt Rifle (max 2)": come ottenere un'arma che non è di serie.
+  function lmTestoUso(info, limite, modelli){
+    // Regole con la stessa arma da eliminare si sommano ("Bolt pistol (max 1)" + "(max 4)" = max 5).
+    var gruppi = [], perChiave = {};
+    limite.fonti.forEach(function(f){
+      var chiave = f.verbo === "sostituisce" ? f.sostituiti.join("+") : "";
+      if(!perChiave[chiave]){ perChiave[chiave] = { f: f, max: 0 }; gruppi.push(perChiave[chiave]); }
+      perChiave[chiave].max += f.max;
+    });
+    var parti = gruppi.map(function(g){
+      return g.f.verbo === "sostituisce"
+        ? "eliminando " + g.f.sostituiti.map(function(k){ return info.indice[k] || k; }).join(" e ") + " (max " + Math.min(g.max, modelli) + ")"
+        : "in aggiunta, senza eliminare armi di serie (max " + Math.min(g.max, modelli) + ")";
+    });
+    return (limite.max === 0 ? "Non disponibile con " + modelli + (modelli === 1 ? " modello" : " modelli") + ". " : "") +
+      "Si può usare " + parti.join(" oppure ");
+  }
+
   // conteggi: { chiave arma: modelli } → { limiti: { chiave: { max, motivi } }, avvisi: [{ testo, chiavi }] }
   function lmValuta(info, modelli, conteggi, tipoProfilo, nomi){
     var ctx = lmContesto(info, modelli, tipoProfilo);
     var limiti = {}, avvisi = [];
     function nome(k){ return (nomi && nomi[k]) || info.indice[k] || k; }
-    function limite(k){ return limiti[k] || (limiti[k] = { max: 0, motivi: [], daRegola: false }); }
+    function limite(k){ return limiti[k] || (limiti[k] = { max: 0, motivi: [], daRegola: false, fonti: [] }); }
     info.regole.forEach(function(r){
       var c = lmConsentiti(ctx, r);
-      r.alt.forEach(function(k){ var l = limite(k); l.max += c; l.daRegola = true; l.motivi.push(r.testo); });
+      r.alt.forEach(function(k){
+        var l = limite(k);
+        l.max += c; l.daRegola = true; l.motivi.push(r.testo);
+        l.fonti.push({ verbo: r.verbo, sostituiti: r.sostituiti, max: c });
+      });
     });
     Object.keys(info.base).forEach(function(k){
       var cap = ctx.max(info.base[k]), l = limite(k);
@@ -2512,6 +2626,14 @@ select.dl-in{width:auto; padding:0 3px;}
     };
   }
 
+  // Equipaggiamento che sostituisce un'arma ma non ha un profilo nei dati (es. Storm Shield): solo nome e modelli, serve
+  // a controllare che chi lo prende abbia tolto l'arma di serie; non entra nei calcoli.
+  function dlArmaSenzaProfilo(nome){
+    var a = dlNuovaArma({ nome: nome });
+    a.senzaProfilo = true;
+    return a;
+  }
+
   function dlNuovoDifensore(d){
     return {
       res: dlIntero(d.res, 4, 1), save: dlSoglia(d.ts) || 4, w: dlIntero(d.w, 1, 1),
@@ -2634,8 +2756,25 @@ select.dl-in{width:auto; padding:0 3px;}
     var memoria = {};
     function el(id){ return document.getElementById(prefisso + "dl-" + id); }
 
-    function dlCostruisciArma(a, distanza, massimoModelli){
+    function dlCostruisciArma(a, distanza, massimoModelli, chiaveManuale){
       var riga = dlEl("div", "dl-riga dl-arma");
+      if(a.senzaProfilo){
+        var nomeS = dlEl("div", "dl-nome");
+        nomeS.appendChild(dlEl("span", "dl-tipo", "\u00b7"));
+        nomeS.appendChild(document.createTextNode(a.nome));
+        nomeS.appendChild(dlEl("small", "", "senza profilo d'arma nei dati"));
+        a._uso = dlEl("small", "dl-uso");
+        nomeS.appendChild(a._uso);
+        riga.appendChild(nomeS);
+        var campoS = dlCampo("Modelli", dlInputNumero(a.modelli, 0, "dl-mod", function(v){ memoria[chiaveManuale] = true; a.modelli = v; dlAggiorna(); }, massimoModelli));
+        a._max = dlEl("small", "dl-max");
+        campoS.appendChild(a._max);
+        a._campoMod = campoS;
+        riga.appendChild(campoS);
+        a._tot = dlEl("span", "dl-tot");
+        a._riga = riga;
+        return riga;
+      }
       var gittata = parseInt(a.gittata, 10);
       var fuori = a.tipo !== "Melee" && !isNaN(gittata) && distanza !== null && distanza !== undefined && distanza > gittata;
 
@@ -2645,9 +2784,11 @@ select.dl-in{width:auto; padding:0 3px;}
       nome.appendChild(document.createTextNode(a.nome));
       var info = [isNaN(gittata) ? "" : gittata + "″", a.descrizione, fuori ? "fuori portata" : ""].filter(Boolean).join(" · ");
       if(info) nome.appendChild(dlEl("small", "", info));
+      a._uso = dlEl("small", "dl-uso"); // come ottenere un'arma che non è di serie (sotto il nome)
+      nome.appendChild(a._uso);
       riga.appendChild(nome);
 
-      var campoMod = dlCampo("Modelli", dlInputNumero(a.modelli, 0, "dl-mod", function(v){ a.modelli = v; dlAggiorna(); }, massimoModelli));
+      var campoMod = dlCampo("Modelli", dlInputNumero(a.modelli, 0, "dl-mod", function(v){ memoria[chiaveManuale] = true; a.modelli = v; dlAggiorna(); }, massimoModelli));
       a._max = dlEl("small", "dl-max"); // massimo consentito dalla composizione dell'unità
       campoMod.appendChild(a._max);
       a._campoMod = campoMod;
@@ -2748,6 +2889,7 @@ select.dl-in{width:auto; padding:0 3px;}
       duello.armi.forEach(function(a){
         var attiva = a.modelli > 0;
         a._riga.classList.toggle("attiva", attiva);
+        if(a.senzaProfilo) return; // niente da calcolare
         a._tot.textContent = attiva ? "= " + (a.modelli * a.att) + " att" : "";
         if(!attiva) return;
         armiUsate++;
@@ -2805,6 +2947,7 @@ select.dl-in{width:auto; padding:0 3px;}
           var k = lmChiaveArma(lmNomeBaseArma(a.nome)), l = v.limiti[k];
           if(a.modelli > 0) inUso = true;
           a._max.textContent = l && l.max < att.modelli ? "max " + l.max : "";
+          a._uso.textContent = l && l.daRegola && !(k in att.comp.info.base) ? lmTestoUso(att.comp.info, l, att.modelli) : "";
           a._max.title = l ? "Consentiti dalla composizione dell'unità (" + v.modelliTotali + " modelli):\n" + l.motivi.join("\n") : "";
           a._campoMod.classList.toggle("oltre", a.modelli > 0 && !!evidenziate[k]);
         });
@@ -2837,6 +2980,16 @@ select.dl-in{width:auto; padding:0 3px;}
         };
       });
 
+      // Composizione dell'unità e voci senza profilo d'arma (scudi, icone…) che sostituiscono armi di serie.
+      attaccanti.forEach(function(att){
+        att.comp = composizioneArmi(att);
+        if(!att.comp) return;
+        Object.keys(att.comp.info.extra).forEach(function(k){
+          var presente = att.armi.some(function(a){ return lmChiaveArma(lmNomeBaseArma(a.nome)) === k; });
+          if(!presente) att.armi.push(dlArmaSenzaProfilo(att.comp.info.extra[k]));
+        });
+      });
+
       // Riaprendo lo stesso confronto si ritrovano le modifiche già fatte: armi di ogni attaccante contro quel
       // difensore (modelli per arma, regole) e dati del difensore. Aggiungere o togliere un attaccante non le perde.
       attaccanti.forEach(function(att){
@@ -2855,7 +3008,16 @@ select.dl-in{width:auto; padding:0 3px;}
       });
       var armi = [];
       attaccanti.forEach(function(att){
-        att.comp = composizioneArmi(att);
+        // Dotazione standard: finché le armi non si modificano a mano, ogni arma di serie è portata dai modelli che la
+        // hanno (per i profili di una stessa arma, es. Focused Fire / Saturation, solo il primo) e le altre sono a 0.
+        if(att.comp && !memoria["m|" + att.id + "|" + idDif]){
+          var standard = lmDefault(att.comp.info, att.modelli, att.comp.tipoProfilo), assegnate = {};
+          att.armi.forEach(function(a){
+            var k = lmChiaveArma(lmNomeBaseArma(a.nome));
+            a.modelli = (k in standard && !assegnate[k]) ? Math.min(standard[k], att.modelli) : 0;
+            assegnate[k] = true;
+          });
+        }
         att.armi.forEach(function(a){
           if(attaccanti.length > 1) a.attaccante = att.nome;
           armi.push(a);
@@ -2878,7 +3040,7 @@ select.dl-in{width:auto; padding:0 3px;}
         card.appendChild(titolo);
         var elArmi = dlEl("div", "dl-armi");
         if(!att.armi.length) elArmi.appendChild(dlEl("div", "dl-vuoto", "Nessuna arma nei dati per questa unità."));
-        att.armi.forEach(function(a){ elArmi.appendChild(dlCostruisciArma(a, att.distanza, att.modelli)); });
+        att.armi.forEach(function(a){ elArmi.appendChild(dlCostruisciArma(a, att.distanza, att.modelli, "m|" + att.id + "|" + idDif)); });
         card.appendChild(elArmi);
         att._avvisi = dlEl("div", "dl-avvisi");
         card.appendChild(att._avvisi);
