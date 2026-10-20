@@ -613,6 +613,7 @@ select.dl-in{width:auto; padding:0 3px;}
 .dl-chip[aria-pressed="true"]{background:var(--att); border-color:var(--att); color:#fff;}
 .dl-nome small.dl-uso{color:var(--text-dim); font-style:italic;}
 .dl-nome small.dl-uso:empty{display:none;}
+.dl-copie{display:inline-block; margin-left:5px; padding:0 4px; border-radius:4px; background:var(--att); color:#fff; font-family:"IBM Plex Mono",monospace; font-size:.68rem; font-weight:700; cursor:help;}
 .dl-max{min-height:.8rem; font-family:"IBM Plex Mono",monospace; font-size:.6rem; line-height:.8rem; text-align:center; color:var(--text-dim); cursor:help;}
 .dl-c.oltre .dl-mod{border-color:var(--fail); background:var(--fail-soft); color:var(--fail);}
 .dl-c.oltre .dl-max{color:var(--fail); font-weight:700;}
@@ -2008,14 +2009,20 @@ select.dl-in{width:auto; padding:0 3px;}
   }
 
   // ignoti (facoltativo): raccoglie i nomi che non sono armi note (es. "Relic Shield").
-  function lmArmiDaElenco(testo, indice, ignoti){
+  // quantita (facoltativo): per ogni arma trovata, il numero scritto davanti ("2 Armiger autocannons" → 2).
+  function lmArmiDaElenco(testo, indice, ignoti, quantita){
     var t = lmNormTesto(testo).replace(/\(.*?\)/g, "").replace(/[.:]+$/, "").trim();
     var trovate = [];
     function aggiungi(pezzo){
       var k = lmChiaveArma(lmNomeBaseArma(pezzo));
       if(!k) return true;
       var nota = lmTrovaChiave(k, indice);
-      if(nota){ if(trovate.indexOf(nota) < 0) trovate.push(nota); return true; }
+      if(nota){
+        if(trovate.indexOf(nota) < 0) trovate.push(nota);
+        var qm = pezzo.match(/^(?:up to )?(\d+)\s/i);
+        if(quantita) quantita[nota] = Math.max(quantita[nota] || 0, qm ? parseInt(qm[1], 10) : 1);
+        return true;
+      }
       return false;
     }
     function segnalaIgnoto(pezzo){
@@ -2045,13 +2052,14 @@ select.dl-in{width:auto; padding:0 3px;}
 
   // Equipaggiamento di serie: "Every Nob is equipped with: 1 A; 1 B. Every Boy is equipped with: …"
   // → { chiave arma: null (tutti i modelli) | [tipi] }
-  function lmParseBase(testo, tipi, indice){
+  function lmParseBase(testo, tipi, indice, copie){
     var base = {};
     lmNormTesto(testo).split(/\.\s+(?=[A-Z])/).forEach(function(f){
       var m = f.match(/^(.*?)\s+(?:is|are)\s+equipped\s+with:?\s*(.*)$/i);
       if(!m) return;
-      var sogg = lmTipiDelSoggetto(m[1], tipi);
-      lmArmiDaElenco(m[2], indice).forEach(function(k){
+      var sogg = lmTipiDelSoggetto(m[1], tipi), q = {};
+      lmArmiDaElenco(m[2], indice, null, q).forEach(function(k){
+        if(copie) copie[k] = q[k]; // quante copie dell'arma ha ogni modello (es. 2 autocannon)
         if(sogg === null || base[k] === null){ base[k] = null; return; }
         base[k] = (base[k] || []).concat(sogg.filter(function(t){ return (base[k] || []).indexOf(t) < 0; }));
       });
@@ -2066,7 +2074,7 @@ select.dl-in{width:auto; padding:0 3px;}
 
   // Una riga di opzioni → regola; { nessuna } se non riguarda armi del CSV; { errore } se le riguarda ma non si capisce.
   // extra: raccoglie le "armi" nuove che non hanno un profilo nei dati (scudi, icone…) quando sostituiscono un'arma nota.
-  function lmParseOpzione(testo, tipi, indice, extra){
+  function lmParseOpzione(testo, tipi, indice, extra, copie){
     var t = lmNormTesto(testo);
     if(!t || /^none\.?$/i.test(t) || /^\*/.test(t)) return { nessuna: true };
     var perOgni = null, seUnita = null;
@@ -2093,7 +2101,9 @@ select.dl-in{width:auto; padding:0 3px;}
     var sostituiti = verbo === "sostituisce" ? lmArmiDaElenco(sostituitiTesto.replace(/\s+or\s+/gi, " | "), indice) : [];
     destinazione = destinazione.split(/\.\s+(?=[A-Z])/)[0].replace(/^:\s*/, "").replace(/^(?:up to \w+ of )?one of the following(?: options)?\s*(?:\(.*?\))?\s*:?\s*/i, "");
     var ignoti = [];
-    var alt = lmArmiDaElenco(destinazione, indice, ignoti);
+    var qAlt = {};
+    var alt = lmArmiDaElenco(destinazione, indice, ignoti, qAlt);
+    if(copie) Object.keys(qAlt).forEach(function(k){ if(!(k in copie)) copie[k] = qAlt[k]; });
     // Un'arma nota sostituita da qualcosa senza profilo nei dati (scudo, icona, arma mancante): resta una "voce" con il
     // solo nome, così si può dire quanti modelli la prendono e controllare che tolgano l'arma di serie.
     if(extra && verbo === "sostituisce" && sostituiti.length){
@@ -2126,16 +2136,16 @@ select.dl-in{width:auto; padding:0 3px;}
     (dati.armi || []).forEach(function(n){ var b = lmNomeBaseArma(n); indice[lmChiaveArma(b)] = b; });
     var tipi = lmTipiModelli(dati.comp || []);
     var testoBase = dati.equip || "";
-    var info = { indice: indice, tipi: tipi, regole: [], dubbie: [], extra: {} };
+    var info = { indice: indice, tipi: tipi, regole: [], dubbie: [], extra: {}, copie: {} };
     (dati.opzioni || []).forEach(function(o){
       // Alcune schede (es. squadre di personaggi con nome) descrivono l'equipaggiamento fra le opzioni.
       if(/\bis equipped with/i.test(o) && !/\bcan\b/i.test(o)){ testoBase += ". " + o; return; }
-      var r = lmParseOpzione(o, tipi, indice, info.extra);
+      var r = lmParseOpzione(o, tipi, indice, info.extra, info.copie);
       if(r.nessuna) return;
       if(r.errore){ info.dubbie.push({ testo: o, motivo: r.errore }); return; }
       info.regole.push(r);
     });
-    info.base = lmParseBase(testoBase, tipi, indice);
+    info.base = lmParseBase(testoBase, tipi, indice, info.copie);
     info.haLimiti = !!(info.regole.length || Object.keys(info.base).length);
     return info;
   }
@@ -2618,7 +2628,7 @@ select.dl-in{width:auto; padding:0 3px;}
     var f = dlFlagDaDescrizione(a.descrizione);
     return {
       nome: a.nome, descrizione: a.descrizione || "", tipo: a.tipo || "", gittata: a.range || "",
-      modelli: 0, att: a.att || 1,
+      modelli: 0, copie: 1, att: a.att || 1, // copie: quante ne ha ogni modello (es. 2 autocannon)
       xcol: a.xcol || 1, // senza soglia per colpire (es. Torrent) i colpi vanno sempre a segno
       forza: a.forza || 1, ap: a.ap || 0, danni: a.danni || 1,
       lethal: f.lethal, sust: f.sust, dev: f.dev, twin: f.twin, lancia: f.lancia,
@@ -2782,6 +2792,11 @@ select.dl-in{width:auto; padding:0 3px;}
       nome.title = a.nome + (a.descrizione ? " — " + a.descrizione : "");
       nome.appendChild(dlEl("span", "dl-tipo", a.tipo === "Melee" ? "M" : "T"));
       nome.appendChild(document.createTextNode(a.nome));
+      if(a.copie > 1){
+        var copie = dlEl("span", "dl-copie", "\u00d7" + a.copie);
+        copie.title = "Ogni modello ha " + a.copie + " di quest'arma: gli attacchi si moltiplicano";
+        nome.appendChild(copie);
+      }
       var info = [isNaN(gittata) ? "" : gittata + "″", a.descrizione, fuori ? "fuori portata" : ""].filter(Boolean).join(" · ");
       if(info) nome.appendChild(dlEl("small", "", info));
       a._uso = dlEl("small", "dl-uso"); // come ottenere un'arma che non è di serie (sotto il nome)
@@ -2890,12 +2905,12 @@ select.dl-in{width:auto; padding:0 3px;}
         var attiva = a.modelli > 0;
         a._riga.classList.toggle("attiva", attiva);
         if(a.senzaProfilo) return; // niente da calcolare
-        a._tot.textContent = attiva ? "= " + (a.modelli * a.att) + " att" : "";
+        a._tot.textContent = attiva ? "= " + (a.modelli * a.copie * a.att) + " att" : "";
         if(!attiva) return;
         armiUsate++;
-        attacchi += a.modelli * a.att;
+        attacchi += a.modelli * a.copie * a.att;
         var r = calcolaAttacco({
-          att: a.modelli * a.att, xcol: a.xcol, for_: a.forza, ap: a.ap, danni: a.danni,
+          att: a.modelli * a.copie * a.att, xcol: a.xcol, for_: a.forza, ap: a.ap, danni: a.danni,
           lethal: a.lethal > 0, lethalThreshold: a.lethal || 6,
           repeat: a.ripCol, repeatOnesHit: a.rip1Col !== "", repeatOnesHitMode: a.rip1Col || "tutti",
           sustained: a.sust, sustainedThreshold: 6,
@@ -2906,7 +2921,7 @@ select.dl-in{width:auto; padding:0 3px;}
           invul: d.invulT > 0, invulThreshold: d.invulT || 4,
           fnp: d.fnpT > 0, fnpThreshold: d.fnpT || 4
         });
-        usate.push({ a: a, att: a.modelli * a.att, r: r });
+        usate.push({ a: a, att: a.modelli * a.copie * a.att, r: r });
         // Come in Combattimento il danno oltre le ferite rimaste a un modello si perde.
         for(var i = 0; i < r.effectiveAttacks && indice < lista.length; i++){
           resto -= a.danni;
@@ -2987,6 +3002,14 @@ select.dl-in{width:auto; padding:0 3px;}
         Object.keys(att.comp.info.extra).forEach(function(k){
           var presente = att.armi.some(function(a){ return lmChiaveArma(lmNomeBaseArma(a.nome)) === k; });
           if(!presente) att.armi.push(dlArmaSenzaProfilo(att.comp.info.extra[k]));
+        });
+      });
+
+      // Armi che ogni modello porta in più copie (es. 2 Armiger autocannons): gli attacchi si moltiplicano.
+      attaccanti.forEach(function(att){
+        att.armi.forEach(function(a){
+          var q = att.comp ? att.comp.info.copie[lmChiaveArma(lmNomeBaseArma(a.nome))] : 1;
+          a.copie = q > 1 ? q : 1;
         });
       });
 
