@@ -2398,6 +2398,20 @@ select.dl-in{width:auto; padding:0 3px;}
   var vsDifC = document.getElementById("v-d-cerca");
   var vsUltimoDif = "";
 
+  // Fazione "Test" (solo tra i difensori): tipi generici di unità per le statistiche, senza passare dai dati.
+  var FAZIONE_TEST = "Test";
+  var UNITA_TEST = [
+    { nome: "Light infantry",  res: "3",  w: "1",  ts: "5+" },
+    { nome: "Elite infantry",  res: "5",  w: "2",  ts: "3+" },
+    { nome: "Heavy infantry",  res: "6",  w: "4",  ts: "2+", tsPiu: "4" },
+    { nome: "Light vehicle",   res: "9",  w: "11", ts: "3+" },
+    { nome: "Heavy vehicle",   res: "12", w: "18", ts: "2+" },
+    { nome: "Titanic",         res: "11", w: "28", ts: "3+", tsPiu: "5" }
+  ].map(function(u, i){
+    return { chiave: "test-" + (i + 1), datasheetId: "", riga: i + 1, fazione: FAZIONE_TEST, nome: u.nome, nomeProfilo: u.nome,
+             mov: "", oc: "", note: "", baseSize: "", res: u.res, ts: u.ts, tsPiu: u.tsPiu || "", w: u.w, fnp: "" };
+  });
+
   function riempiSelect(select, voci, segnaposto, valoreCorrente){
     select.innerHTML = "";
     var vuota = document.createElement("option");
@@ -2422,9 +2436,10 @@ select.dl-in{width:auto; padding:0 3px;}
   function riempiUnita(selF, selU, inCerca){
     var fazione = selF.value;
     var q = normalizzaTesto(inCerca.value);
-    var voci = unitaVisibili().filter(function(u){
+    var elenco = selU === vsDifU && fazione === FAZIONE_TEST ? UNITA_TEST : unitaVisibili();
+    var voci = elenco.filter(function(u){
       return u.fazione === fazione && (!q || normalizzaTesto(u.nome).indexOf(q) >= 0);
-    }).sort(function(a, b){ return a.nome.localeCompare(b.nome) || a.riga - b.riga; }).map(function(u){
+    }).sort(function(a, b){ return selU === vsDifU && fazione === FAZIONE_TEST ? a.riga - b.riga : a.nome.localeCompare(b.nome) || a.riga - b.riga; }).map(function(u){
       unitaPerChiave[u.chiave] = u;
       return { valore: u.chiave, testo: u.nome };
     });
@@ -2439,6 +2454,7 @@ select.dl-in{width:auto; padding:0 3px;}
     var fazioni = [];
     unitaVisibili().forEach(function(u){ if(fazioni.indexOf(u.fazione) < 0) fazioni.push(u.fazione); });
     fazioni.sort(function(a, b){ return a.localeCompare(b); });
+    if(selF === vsDifF) fazioni.push(FAZIONE_TEST); // in fondo, dopo le fazioni vere
     riempiSelect(selF, fazioni.map(function(f){ return { valore: f, testo: f }; }), "— Seleziona fazione —", selF.value);
     riempiUnita(selF, selU, inCerca);
   }
