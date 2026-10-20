@@ -2473,7 +2473,7 @@ select.dl-in{width:auto; padding:0 3px;}
       return;
     }
     var stato = VSDL.stato();
-    var modelliDif = (vsUltimoDif === d.chiave && stato) ? stato.dif.modelli : modelliPredefiniti(d);
+    var modelliDif = (vsUltimoDif === d.chiave && stato) ? stato.dif.modelli : 0; // 0 = nessun limite di modelli
     vsUltimoDif = d.chiave;
     // Due righe con la stessa unità: il nome porta il numero d'ordine, per distinguerle nei riquadri.
     var visti = {};
@@ -2665,7 +2665,7 @@ select.dl-in{width:auto; padding:0 3px;}
       res: dlIntero(d.res, 4, 1), save: dlSoglia(d.ts) || 4, w: dlIntero(d.w, 1, 1),
       w0: dlIntero(d.w, 1, 1), // W ricevuto: i modelli a ferite piene seguono le modifiche di W, quelli feriti no
       invulT: dlSoglia(d.tsPiu), fnpT: dlSoglia(d.fnp),
-      modelli: dlIntero(d.modelli, 1, 1),
+      modelli: parseInt(d.modelli, 10) === 0 ? 0 : dlIntero(d.modelli, 1, 1), // 0 = nessun limite (VSunità)
       // Ferite attuali di ogni modello (una voce per basetta attiva); se mancano si assume W pieno.
       ferite: Array.isArray(d.ferite) ? d.ferite.map(function(n){ return dlIntero(n, 0, 0); }) : []
     };
@@ -2765,7 +2765,7 @@ select.dl-in{width:auto; padding:0 3px;}
   function dlTitolo(titolo, ruolo, nome, modelli, distanza){
     titolo.textContent = "";
     titolo.appendChild(document.createTextNode(ruolo));
-    titolo.appendChild(dlEl("span", "dl-sub", nome + " · " + modelli + (modelli === 1 ? " modello" : " modelli")));
+    titolo.appendChild(dlEl("span", "dl-sub", nome + " · " + (modelli === 0 ? "modelli illimitati" : modelli + (modelli === 1 ? " modello" : " modelli"))));
     if(distanza !== undefined){
       var d = dlEl("span", "dl-dist", distanza === null ? "—" : distanza.toFixed(1) + "″");
       d.title = "Distanza tra i punti più vicini delle due unità";
@@ -2855,7 +2855,14 @@ select.dl-in{width:auto; padding:0 3px;}
       riga.appendChild(dlCampo("W", dlInputNumero(c.w, 1, "", function(v){ c.w = v; dlAggiorna(); })));
       riga.appendChild(dlCampo("Invulnerabile", dlSelect(dlVociSoglie(false), c.invulT, function(v){ c.invulT = parseInt(v, 10); dlAggiorna(); })));
       riga.appendChild(dlCampo("Feel No Pain", dlSelect(dlVociSoglie(false), c.fnpT, function(v){ c.fnpT = parseInt(v, 10); dlAggiorna(); })));
-      riga.appendChild(dlCampo("Modelli", dlInputNumero(c.modelli, 1, "", function(v){ c.modelli = v; dlAggiorna(); }), "Basette attive del difensore (meno quelle cancellate sul tavolo)"));
+      if(opzioni.modelliLiberi){
+        // VSunità: vuoto = nessun limite, si calcola quanti modelli verrebbero uccisi/feriti.
+        var campoModelli = dlInputNumero(c.modelli || "", 0, "", function(v){ c.modelli = v; dlAggiorna(); });
+        campoModelli.placeholder = "illimitati";
+        riga.appendChild(dlCampo("Modelli", campoModelli, "Vuoto = nessun limite: si calcola quanti modelli verrebbero uccisi o feriti. Con un numero il calcolo si ferma a quei modelli."));
+      } else {
+        riga.appendChild(dlCampo("Modelli", dlInputNumero(c.modelli, 1, "", function(v){ c.modelli = v; dlAggiorna(); }), "Basette attive del difensore (meno quelle cancellate sul tavolo)"));
+      }
       var attuali = dlEl("span", "dl-attuali");
       attuali.id = prefisso + "dl-ferite-attuali";
       riga.appendChild(dlCampo("Ferite attuali", attuali, "Quanti modelli hanno quante ferite rimaste (dal Tavolo da Gioco). I modelli già feriti subiscono i danni per primi."));
@@ -2911,11 +2918,12 @@ select.dl-in{width:auto; padding:0 3px;}
     function dlAggiorna(){
       if(!duello) return;
       var d = duello.dif;
-      var lista = dlFeriteModelli(d);
-      var indice = 0, resto = lista.length ? lista[0] : 0;
+      var libero = d.modelli === 0; // nessun limite di modelli: tutti a ferite piene, quanti ne servono
+      var lista = libero ? [] : dlFeriteModelli(d);
+      var indice = 0, resto = libero ? d.w : (lista.length ? lista[0] : 0);
       var morti = 0, armiUsate = 0, attacchi = 0, usate = [];
       var elAttuali = el("ferite-attuali");
-      if(elAttuali) elAttuali.textContent = dlTestoFerite(lista);
+      if(elAttuali) elAttuali.textContent = libero ? "tutti a " + d.w + " F" : dlTestoFerite(lista);
       dlTitolo(el("dif-titolo"), "Difensore", duello.nomeDif, d.modelli);
       duello.armi.forEach(function(a){
         var attiva = a.modelli > 0;
@@ -2939,25 +2947,27 @@ select.dl-in{width:auto; padding:0 3px;}
         });
         usate.push({ a: a, att: a.modelli * a.copie * a.att, r: r });
         // Come in Combattimento il danno oltre le ferite rimaste a un modello si perde.
-        for(var i = 0; i < r.effectiveAttacks && indice < lista.length; i++){
+        for(var i = 0; i < r.effectiveAttacks && (libero || indice < lista.length); i++){
           resto -= a.danni;
           if(resto <= 0){
             morti++;
             indice++;
-            resto = indice < lista.length ? lista[indice] : 0;
+            resto = libero ? d.w : (indice < lista.length ? lista[indice] : 0);
           }
         }
       });
       dlStatistiche(usate, d);
-      var distrutta = indice >= lista.length;
-      var feriteFatte = distrutta ? 0 : lista[indice] - resto;
+      var distrutta = !libero && indice >= lista.length;
+      var feriteModello = libero ? d.w : lista[indice];
+      var feriteFatte = distrutta ? 0 : feriteModello - resto;
+      var textArmi = armiUsate ? armiUsate + (armiUsate === 1 ? " arma, " : " armi, ") + attacchi + " attacchi" : "nessuna arma in uso";
       el("morti").textContent = morti;
-      el("morti-sub").textContent =
-        "su " + d.modelli + (d.modelli === 1 ? " modello" : " modelli") + (distrutta ? " · unità distrutta" : "") +
-        " · " + (armiUsate ? armiUsate + (armiUsate === 1 ? " arma, " : " armi, ") + attacchi + " attacchi" : "nessuna arma in uso");
+      el("morti-sub").textContent = (libero ? "modelli senza limite" : "su " + d.modelli + (d.modelli === 1 ? " modello" : " modelli")) +
+        (distrutta ? " · unità distrutta" : "") + " · " + textArmi;
       el("ferite").textContent = feriteFatte;
       el("ferite-sub").textContent = distrutta ? "nessun modello rimasto" :
-        "su " + lista[indice] + (lista[indice] === 1 ? " ferita" : " ferite") + " attuali (ne restano " + resto + ")";
+        libero && !feriteFatte ? "nessun altro modello ferito" :
+        (libero ? "modello ferito, " : "su ") + feriteModello + (feriteModello === 1 ? " ferita" : " ferite") + (libero ? "" : " attuali") + " (ne restano " + resto + ")";
       dlControllaComposizione();
     }
 
@@ -3100,7 +3110,7 @@ select.dl-in{width:auto; padding:0 3px;}
   }
 
   var DL = creaDuello("");
-  var VSDL = creaDuello("vs-", { senzaDistanza: true });
+  var VSDL = creaDuello("vs-", { senzaDistanza: true, modelliLiberi: true });
   // VSunità riparte dal messaggio iniziale (le unità si scelgono dopo il caricamento dei dati).
   VSDL.svuota();
 
