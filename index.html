@@ -2903,6 +2903,9 @@ select.dl-in{width:auto; padding:0 3px;}
         ["Colpiti", function(u){ return u.r.attOk; }, true],
         ["di cui Lethal (feriscono da soli)", function(u){ return u.r.critTotal; }, qualcuna(function(u){ return u.a.lethal > 0; })],
         ["Colpi extra Sustained", function(u){ return u.r.sustTotal; }, qualcuna(function(u){ return u.a.sust > 0; })],
+        // Soglia (testo): senza totale. Il risultato è in numeri interi arrotondati, quindi con pochi attacchi un
+        // malus di 1 può non cambiare i feriti: la soglia mostra comunque che è applicato.
+        [d.malusFer ? "Per ferire (-1 fer)" : "Per ferire", function(u){ return u.r.woundT + "+"; }, true, true],
         ["Feriti", function(u){ return u.r.ferOk; }, true],
         ["di cui Dev (saltano la salvezza)", function(u){ return u.r.devBypassCount; }, qualcuna(function(u){ return u.a.dev > 0; })],
         ["Salvati", function(u){ return u.r.ferOk - u.r.nonSalvati; }, true],
@@ -2928,10 +2931,10 @@ select.dl-in{width:auto; padding:0 3px;}
         var somma = 0;
         usate.forEach(function(u){
           var v = riga[1](u);
-          somma += v;
+          if(!riga[3]) somma += v;
           tr.appendChild(dlEl("td", "", String(v)));
         });
-        if(usate.length > 1) tr.appendChild(dlEl("td", "dl-totale", String(somma)));
+        if(usate.length > 1) tr.appendChild(dlEl("td", "dl-totale", riga[3] ? "" : String(somma)));
         tabella.appendChild(tr);
       });
       cont.appendChild(tabella);
