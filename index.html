@@ -935,6 +935,14 @@ select.dl-in{width:auto; padding:0 3px;}
           <span class="field-label">Soglia FNP</span>
           <div class="threshold-group" id="d-fnp-threshold" data-selected="4" style="margin-top:8px"></div>
         </div>
+
+        <div class="toggle-row">
+          <div>
+            <div class="toggle-label">-1 fer</div>
+            <div class="toggle-desc">Malus di 1 al tiro per ferire dell'attaccante (es. 2+ diventa 3+)</div>
+          </div>
+          <input type="checkbox" class="switch" id="d-malus-fer">
+        </div>
       </div>
     </div>
 
@@ -1199,7 +1207,13 @@ select.dl-in{width:auto; padding:0 3px;}
 
     // FASE 2 - PER FERIRE
     var woundT = combat.antiX ? combat.antiXThreshold : woundThreshold(combat.for_, combat.res);
-    if(combat.lancia) woundT = Math.max(2, woundT - 1);
+    if(combat.antiX){
+      if(combat.lancia) woundT = Math.max(2, woundT - 1);
+    } else {
+      // Lancia (+1 per ferire) e "-1 fer" del difensore si sommano; con Anti-X la soglia è fissa (un ferimento
+      // critico non ha modificatori), quindi il malus non la tocca. Il 6 naturale ferisce sempre: soglia al massimo 6.
+      woundT = Math.min(6, Math.max(2, woundT - (combat.lancia ? 1 : 0) + (combat.malusFerire ? 1 : 0)));
+    }
     // Dev: un ferimento critico (dado >= soglia Dev) ferisce sempre, quindi se la soglia Dev è
     // più facile di quella per ferire è lei a decidere quali dadi feriscono.
     var devFacce = 7 - combat.devThreshold;
@@ -1278,7 +1292,7 @@ select.dl-in{width:auto; padding:0 3px;}
       antiX: false, antiXThreshold: 4,
       res: 4, save: 4, w: 1,
       invul: false, invulThreshold: 4,
-      fnp: false, fnpThreshold: 4
+      fnp: false, fnpThreshold: 4, malusFerire: false
     };
 
     var elAttVal = E("c-att-val");
@@ -1411,6 +1425,8 @@ select.dl-in{width:auto; padding:0 3px;}
       fnpSub.style.display = combat.fnp ? "" : "none";
       renderCombat();
     });
+
+    E("d-malus-fer").addEventListener("change", function(e){ combat.malusFerire = e.target.checked; renderCombat(); });
 
     var antiXSub = E("c-antix-sub");
     var forRow = E("c-for-row");
@@ -2316,11 +2332,15 @@ select.dl-in{width:auto; padding:0 3px;}
     elStato.style.color = errore ? "var(--att, #c0392b)" : "";
   }
 
+  // Caricamento dei dati in corso (o ultimo concluso): il Duello aperto da Botte! lo aspetta, perché il messaggio
+  // della mappa può arrivare prima che i CSV di composizione siano scaricati (senza, niente armi di serie).
+  var datiPronti = Promise.resolve();
+
   function caricaDati(){
     mostraStato("Caricamento dati…");
     // I file dell'army builder sono facoltativi: se mancano (sito non aggiornato) si procede senza.
     var facoltativo = function(nome){ return scaricaCsv("army_builder/" + nome).catch(function(){ return ""; }); };
-    return Promise.all([scaricaCsv(SET_DATI[setDati].info), scaricaCsv(SET_DATI[setDati].armi),
+    datiPronti = Promise.all([scaricaCsv(SET_DATI[setDati].info), scaricaCsv(SET_DATI[setDati].armi),
                         facoltativo("punti.csv"), facoltativo("composizione.csv"),
                         facoltativo("schede.csv"), facoltativo("opzioni.csv")]).then(function(testi){
       armyBuilder = costruisciArmyBuilder(testi[2], testi[3], testi[4], testi[5]);
@@ -2336,6 +2356,7 @@ select.dl-in{width:auto; padding:0 3px;}
       var aggiunta = location.protocol === "file:" ? " (aprendo il file da disco il browser blocca la lettura dei CSV: serve un server web)" : "";
       mostraStato("⚠ " + err.message + aggiunta, true);
     });
+    return datiPronti;
   }
 
   // ---------------- VSunità: FILTRO "IN GIOCO" ----------------
@@ -2593,7 +2614,7 @@ select.dl-in{width:auto; padding:0 3px;}
     }
     // Attacco tra due unità dal Tavolo da Gioco (E + click sul bersaglio): riempie e mostra la scheda Duello.
     if(dati && dati.type === "wh40-duello"){
-      DL.imposta(dati);
+      datiPronti.then(function(){ DL.imposta(dati); });
       tabs[3].btn.click();
       try { window.focus(); } catch(err) {}
       return;
@@ -2615,7 +2636,7 @@ select.dl-in{width:auto; padding:0 3px;}
   // dell'elenco, si applicano poi uno dopo l'altro ai modelli del difensore (come in Combattimento:
   // il danno oltre le ferite di un modello si perde); con più attaccanti si procede riquadro per riquadro.
   var DL_CAMPI_ARMA = ["modelli", "att", "xcol", "forza", "ap", "danni", "lethal", "sust", "dev", "twin", "lancia", "antiX", "ripCol", "rip1Col", "rip1Fer"];
-  var DL_CAMPI_DIFENSORE = ["res", "save", "w", "invulT", "fnpT"];
+  var DL_CAMPI_DIFENSORE = ["res", "save", "w", "invulT", "fnpT", "malusFer"];
 
   function dlSoglia(testo){
     var n = parseInt(testo, 10);
@@ -2664,7 +2685,7 @@ select.dl-in{width:auto; padding:0 3px;}
     return {
       res: dlIntero(d.res, 4, 1), save: dlSoglia(d.ts) || 4, w: dlIntero(d.w, 1, 1),
       w0: dlIntero(d.w, 1, 1), // W ricevuto: i modelli a ferite piene seguono le modifiche di W, quelli feriti no
-      invulT: dlSoglia(d.tsPiu), fnpT: dlSoglia(d.fnp),
+      invulT: dlSoglia(d.tsPiu), fnpT: dlSoglia(d.fnp), malusFer: false, // malusFer: "-1 fer", -1 al tiro per ferire dell'attaccante
       modelli: parseInt(d.modelli, 10) === 0 ? 0 : dlIntero(d.modelli, 1, 1), // 0 = nessun limite (VSunità)
       // Ferite attuali di ogni modello (una voce per basetta attiva); se mancano si assume W pieno.
       ferite: Array.isArray(d.ferite) ? d.ferite.map(function(n){ return dlIntero(n, 0, 0); }) : []
@@ -2855,6 +2876,7 @@ select.dl-in{width:auto; padding:0 3px;}
       riga.appendChild(dlCampo("W", dlInputNumero(c.w, 1, "", function(v){ c.w = v; dlAggiorna(); })));
       riga.appendChild(dlCampo("Invulnerabile", dlSelect(dlVociSoglie(false), c.invulT, function(v){ c.invulT = parseInt(v, 10); dlAggiorna(); })));
       riga.appendChild(dlCampo("Feel No Pain", dlSelect(dlVociSoglie(false), c.fnpT, function(v){ c.fnpT = parseInt(v, 10); dlAggiorna(); })));
+      riga.appendChild(dlChip("-1 fer", c.malusFer, "Malus di 1 al tiro per ferire dell'attaccante (es. 2+ diventa 3+)", function(v){ c.malusFer = v; dlAggiorna(); }));
       if(opzioni.modelliLiberi){
         // VSunità: vuoto = nessun limite, si calcola quanti modelli verrebbero uccisi/feriti.
         var campoModelli = dlInputNumero(c.modelli || "", 0, "", function(v){ c.modelli = v; dlAggiorna(); });
@@ -2943,7 +2965,7 @@ select.dl-in{width:auto; padding:0 3px;}
           antiX: a.antiX > 0, antiXThreshold: a.antiX || 4,
           res: d.res, save: d.save, w: d.w,
           invul: d.invulT > 0, invulThreshold: d.invulT || 4,
-          fnp: d.fnpT > 0, fnpThreshold: d.fnpT || 4
+          fnp: d.fnpT > 0, fnpThreshold: d.fnpT || 4, malusFerire: d.malusFer
         });
         usate.push({ a: a, att: a.modelli * a.copie * a.att, r: r });
         // Come in Combattimento il danno oltre le ferite rimaste a un modello si perde.
