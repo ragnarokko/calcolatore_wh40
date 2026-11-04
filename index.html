@@ -3036,6 +3036,9 @@ select.dl-in{width:auto; padding:0 3px;}
       var elenco = Array.isArray(dati.attaccanti) && dati.attaccanti.length ? dati.attaccanti
         : [Object.assign({}, dati.attaccante, { distanza: dati.distanza })];
       var idDif = dif.id || dif.nome;
+      // Armi scelte e modifiche: nel Duello valgono per la coppia attaccante-difensore; in VSunità seguono
+      // l'attaccante, così cambiando difensore si vede l'effetto della stessa scelta di armi su difensori diversi.
+      var idConf = opzioni.modelliLiberi ? "*" : idDif;
       var difensore = dlNuovoDifensore({ res: dif.res, ts: dif.ts, tsPiu: dif.tsPiu, w: dif.w, fnp: dif.fnp, modelli: dif.modelli, ferite: dif.ferite });
       var attaccanti = elenco.map(function(att){
         return {
@@ -3067,7 +3070,7 @@ select.dl-in{width:auto; padding:0 3px;}
       // Riaprendo lo stesso confronto si ritrovano le modifiche già fatte: armi di ogni attaccante contro quel
       // difensore (modelli per arma, regole) e dati del difensore. Aggiungere o togliere un attaccante non le perde.
       attaccanti.forEach(function(att){
-        var pa = memoria["a|" + att.id + "|" + idDif];
+        var pa = memoria["a|" + att.id + "|" + idConf];
         if(!pa) return;
         att.armi.forEach(function(a, i){
           var prec = pa[i];
@@ -3084,7 +3087,7 @@ select.dl-in{width:auto; padding:0 3px;}
       attaccanti.forEach(function(att){
         // Dotazione standard: finché le armi non si modificano a mano, ogni arma di serie è portata dai modelli che la
         // hanno (per i profili di una stessa arma, es. Focused Fire / Saturation, solo il primo) e le altre sono a 0.
-        if(att.comp && !memoria["m|" + att.id + "|" + idDif]){
+        if(att.comp && !memoria["m|" + att.id + "|" + idConf]){
           var standard = lmDefault(att.comp.info, att.modelli, att.comp.tipoProfilo), assegnate = {};
           att.armi.forEach(function(a){
             var k = lmChiaveArma(lmNomeBaseArma(a.nome));
@@ -3098,7 +3101,7 @@ select.dl-in{width:auto; padding:0 3px;}
         });
       });
       duello = { attaccanti: attaccanti, armi: armi, dif: difensore, nomeDif: dif.nome || "?" };
-      attaccanti.forEach(function(att){ memoria["a|" + att.id + "|" + idDif] = att.armi; });
+      attaccanti.forEach(function(att){ memoria["a|" + att.id + "|" + idConf] = att.armi; });
       memoria["d|" + idDif] = difensore;
 
       el("vuoto").style.display = "none";
@@ -3114,7 +3117,7 @@ select.dl-in{width:auto; padding:0 3px;}
         card.appendChild(titolo);
         var elArmi = dlEl("div", "dl-armi");
         if(!att.armi.length) elArmi.appendChild(dlEl("div", "dl-vuoto", "Nessuna arma nei dati per questa unità."));
-        att.armi.forEach(function(a){ elArmi.appendChild(dlCostruisciArma(a, att.distanza, att.modelli, "m|" + att.id + "|" + idDif)); });
+        att.armi.forEach(function(a){ elArmi.appendChild(dlCostruisciArma(a, att.distanza, att.modelli, "m|" + att.id + "|" + idConf)); });
         card.appendChild(elArmi);
         att._avvisi = dlEl("div", "dl-avvisi");
         card.appendChild(att._avvisi);
