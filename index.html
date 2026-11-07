@@ -650,7 +650,14 @@ select.dl-in{width:auto; padding:0 3px;}
 .ef-riepilogo{margin-bottom:8px; font-size:.85rem; line-height:1.4; color:var(--text-dim);}
 .ef-riepilogo b{color:var(--text);}
 .ef-bers small{display:block; font-family:"IBM Plex Sans",sans-serif; font-weight:400; font-size:.66rem; color:var(--text-faint);}
-.ef-dett{flex:0 0 auto; min-width:0;}
+.ef-dett{flex:0 0 auto; min-width:0; flex-direction:row; gap:6px;}
+.ef-all th.ef-ordina{cursor:pointer; user-select:none;}
+.ef-all th.ef-ordina:hover{color:var(--text);}
+.ef-all th.ef-gruppo-th{text-align:center; border-bottom:1px solid var(--border);}
+.ef-all td{padding:4px 3px; font-size:.74rem;}
+.ef-all th{padding:2px 3px 6px; font-size:.58rem; letter-spacing:.02em;}
+.ef-all td.dl-stat-nome{white-space:normal; max-width:118px; font-size:.78rem; line-height:1.2;}
+.ef-all td.dl-stat-nome small{font-size:.62rem;}
 .ef-dett .dl-chip{min-height:36px; padding:0 14px; font-size:.85rem;}
 .ef-sommario{display:flex; flex-wrap:wrap; gap:8px 20px; margin-bottom:10px;}
 .ef-dato small{display:block; font-size:.62rem; font-weight:600; letter-spacing:.07em; text-transform:uppercase; color:var(--text-dim);}
@@ -3299,6 +3306,7 @@ select.dl-in{width:auto; padding:0 3px;}
     var ef = {
       unita: null, modelli: 1, punti: 0, notaPunti: "", puntiManuale: false, manuale: false, fase: "Ranged", armi: [], comp: null,
       dettaglio: false, bersaglio: 0, // dettaglio spento: configurazione ottimale contro il bersaglio scelto
+      all: false, tutte: null, versioneDati: 0, ordine: { col: "eTot", dir: -1 }, // "All": tutte le unità della fazione
       bonus: { piuColpire: false, piuFerire: false, lance: false, fermo: false, tiroRapido: false, melta: false, anti: true,
                ripCol: "", ripFer: "", piuSalvezza: false, menoFerire: false }
     };
@@ -3320,14 +3328,14 @@ select.dl-in{width:auto; padding:0 3px;}
           '<div class="field-hint" id="e-punti-nota" style="margin-top:6px"></div>' +
         '</div>' +
       '</div>' +
+      '<div class="card" id="e-bers-card"><h2 class="card-title">Bersaglio</h2>' +
+        '<div class="ef-pills" id="e-bers"></div><div class="field-hint" id="e-bers-info" style="margin-top:6px"></div></div>' +
+      '<div class="card"><h2 class="card-title">Bonus</h2><div class="ef-bonus" id="e-bonus"></div></div>' +
       '<div class="card dl-vuoto" id="e-vuoto">Scegli un\'unità: compaiono le sue armi, i bonus e la tabella con i danni contro ogni bersaglio di test ' +
         '(Light infantry, Titanic…) e il costo in punti per danno inflitto.</div>' +
       '<div id="e-contenuto" style="display:none">' +
-        '<div class="card" id="e-bers-card"><h2 class="card-title">Bersaglio</h2>' +
-          '<div class="ef-pills" id="e-bers"></div><div class="field-hint" id="e-bers-info" style="margin-top:6px"></div></div>' +
         '<div class="card" id="e-armi-card"><h2 class="card-title">Armi<span class="dl-sub" id="e-armi-sub"></span></h2>' +
           '<div class="dl-armi" id="e-armi"></div><div class="dl-avvisi" id="e-avvisi"></div></div>' +
-        '<div class="card"><h2 class="card-title">Bonus</h2><div class="ef-bonus" id="e-bonus"></div></div>' +
         '<div id="e-ott-card">' +
           '<div class="card" id="e-ott-eff"></div>' +
           '<div class="card" id="e-ott-Ranged"></div><div class="card" id="e-ott-Melee"></div>' +
@@ -3345,10 +3353,12 @@ select.dl-in{width:auto; padding:0 3px;}
           'Anti-X e le regole con condizione valgono solo contro i bersagli con quella parola chiave (indicata sotto il nome). ' +
           'Tutte le armi con modelli > 0 sparano insieme: per escluderne una (es. la pistola di chi usa anche il fucile) mettila a 0. ' +
           'Blast, Ignores Cover, Hazardous, abilità e stratagemmi dell\'unità non sono considerati.</div></div>' +
-      '</div>';
+      '</div>' +
+      '<div class="card" id="e-all-card" style="display:none"></div>';
 
     function g(id){ return document.getElementById("e-" + id); }
     var F = g("a-fazione-select"), C = g("a-cerca"), U = g("a-unita-select");
+    var chipAll; // pulsante "All", creato in fondo
     var chiaveArma = function(a){ return lmChiaveArma(lmNomeBaseArma(a.nome)); };
 
     // Armi di un'unità dai dati, con le regole speciali lette dalla descrizione.
@@ -3357,18 +3367,33 @@ select.dl-in{width:auto; padding:0 3px;}
         return {
           nome: a.arma, descrizione: a.descrizione || "", tipo: a.tipo === "Melee" ? "Melee" : "Ranged", gittata: a.range,
           att: efMedia(a.att, 1), xcol: sogliaDaTesto(a.bsWs), forza: Number(a.forza) || 1, ap: apDaTesto(a.ap), danni: efMedia(a.danni, 1),
-          attTesto: a.att || "1", danniTesto: a.danni || "1", regole: efRegole(a.descrizione), modelli: 0, copie: 1
+          attTesto: a.att || "1", danniTesto: a.danni || "1", regole: efRegole(a.descrizione), modelli: 0, copie: 1,
+          extra: /extra attacks/i.test(a.descrizione || "") // arma di mischia che si usa in aggiunta alle altre
         };
       });
     }
 
     // Dotazione standard per arma (chiave → modelli), come nel Duello; senza dati di composizione ogni arma va a tutti
     // i modelli, da correggere a mano.
-    function contiStandard(){
-      if(ef.comp) return lmDefault(ef.comp.info, ef.modelli, ef.comp.tipoProfilo);
+    // s: stato di un'unità { armi, modelli, comp } (predefinito: quella scelta).
+    function contiStandard(s){
+      s = s || ef;
+      if(s.comp) return lmDefault(s.comp.info, s.modelli, s.comp.tipoProfilo);
       var tutte = {};
-      ef.armi.forEach(function(a){ tutte[chiaveArma(a)] = ef.modelli; });
+      s.armi.forEach(function(a){ tutte[chiaveArma(a)] = s.modelli; });
       return tutte;
+    }
+
+    // Stato di un'unità con modelli, armi e composizione predefiniti. Si valuta l'intera scheda (es. Boy e Nob insieme,
+    // Sergente compreso), non il singolo profilo scelto nell'elenco.
+    function costruisciStato(u){
+      var s = { unita: u, modelli: modelliPredefiniti(Object.assign({}, u, { unito: true })), armi: armiEfficienza(u), comp: null };
+      s.comp = s.armi.length ? composizioneArmi({ datasheetId: u.datasheetId, nome: u.nome, nomeProfilo: u.nomeProfilo, unito: true, armi: s.armi }) : null;
+      s.armi.forEach(function(a){
+        var q = s.comp ? s.comp.info.copie[chiaveArma(a)] : 1;
+        a.copie = q > 1 ? q : 1;
+      });
+      return s;
     }
 
     // Nei profili di una stessa arma (es. Frag e Krak) i modelli vanno solo al primo.
@@ -3382,13 +3407,15 @@ select.dl-in{width:auto; padding:0 3px;}
     }
 
     // Costo dai punti dell'army builder: la taglia esatta se c'è, altrimenti proporzionale alla più vicina.
-    function costoDaiDati(){
-      var s = armyBuilder.puntiPerId[idScheda(ef.unita)];
+    function costoDaiDati(unita, modelli){
+      unita = unita || ef.unita;
+      modelli = modelli || ef.modelli;
+      var s = armyBuilder.puntiPerId[idScheda(unita)];
       var taglie = s && s.tagli ? Object.keys(s.tagli).map(Number).sort(function(x, y){ return x - y; }) : [];
       if(!taglie.length) return { punti: 0, nota: "Nessun dato sui punti per questa unità: scrivi il costo a mano." };
-      if(s.tagli[ef.modelli] !== undefined) return { punti: s.tagli[ef.modelli], nota: "Punti da punti.csv per " + ef.modelli + (ef.modelli === 1 ? " modello." : " modelli.") };
-      var vicina = taglie.reduce(function(m, t){ return Math.abs(t - ef.modelli) < Math.abs(m - ef.modelli) ? t : m; }, taglie[0]);
-      return { punti: Math.round(s.tagli[vicina] / vicina * ef.modelli),
+      if(s.tagli[modelli] !== undefined) return { punti: s.tagli[modelli], nota: "Punti da punti.csv per " + modelli + (modelli === 1 ? " modello." : " modelli.") };
+      var vicina = taglie.reduce(function(m, t){ return Math.abs(t - modelli) < Math.abs(m - modelli) ? t : m; }, taglie[0]);
+      return { punti: Math.round(s.tagli[vicina] / vicina * modelli),
                nota: "Stima proporzionale dalla taglia da " + vicina + " modelli (" + s.tagli[vicina] + " pt): per questo numero non c'è un prezzo." };
     }
 
@@ -3581,30 +3608,51 @@ select.dl-in{width:auto; padding:0 3px;}
     // aggiungendo modelli finché le opzioni di equipaggiamento lo permettono (limiti per arma, sostituzioni, "una fra
     // queste"); le armi dell'altra fase restano alla dotazione standard. Dove c'è il confronto con la dotazione
     // standard, vince la migliore. Per un'arma si usa il profilo (es. Frag o Krak) che rende di più.
-    function ottimizza(fase, d){
+    function ottimizza(fase, d, s){
+      s = s || ef;
       var b = ef.bonus, perChiave = {}, ordine = [];
-      ef.armi.forEach(function(a){
+      s.armi.forEach(function(a){
         if(a.tipo !== fase) return;
         var k = chiaveArma(a), danni = efCalcolaArma(a, d, b, a.copie).danni; // un modello
+        var extra = !!a.extra || (perChiave[k] && perChiave[k].extra);
         if(!perChiave[k]){ perChiave[k] = { a: a, danni: danni }; ordine.push(k); }
         else if(danni > perChiave[k].danni) perChiave[k] = { a: a, danni: danni };
+        perChiave[k].extra = extra;
       });
       if(!ordine.length) return null;
-      var std = contiStandard(), stdFase = {}, conta = {};
-      ordine.forEach(function(k){ stdFase[k] = Math.min(std[k] || 0, ef.modelli); conta[k] = 0; });
+      // In mischia un modello combatte con una sola arma (tranne quelle con Extra Attacks): i modelli totali bastano per
+      // tutte le armi normali insieme, quindi si tolgono quelle che rendono di meno.
+      function soloMischia(contaX){
+        if(fase !== "Melee") return contaX;
+        var budget = s.modelli, r = {};
+        ordine.forEach(function(k){ r[k] = contaX[k]; });
+        ordine.filter(function(k){ return !perChiave[k].extra; })
+          .sort(function(x, y){ return perChiave[y].danni - perChiave[x].danni; })
+          .forEach(function(k){ r[k] = Math.min(r[k], budget); budget -= r[k]; });
+        return r;
+      }
+      function usiMischia(contaX){
+        var n = 0;
+        ordine.forEach(function(k){ if(!perChiave[k].extra) n += contaX[k]; });
+        return n;
+      }
+      var std = contiStandard(s), stdFase = {}, conta = {};
+      ordine.forEach(function(k){ stdFase[k] = Math.min(std[k] || 0, s.modelli); conta[k] = 0; });
+      stdFase = soloMischia(stdFase);
 
-      if(ef.comp){
-        var info = ef.comp.info, ctx = lmContesto(info, ef.modelli, null);
+      if(s.comp){
+        var info = s.comp.info, ctx = lmContesto(info, s.modelli, null);
         // Stessa arma e stesso tipo di avviso (il testo, senza i numeri): un avviso nuovo sulle stesse armi non è tollerato.
         var firma = function(x){ return x.chiavi.slice().sort().join("|") + "#" + x.testo.replace(/\d+/g, "N"); };
         // Gli avvisi che già ci sono con la dotazione standard (opzioni lette in modo approssimato) non bloccano.
         var tollerati = {};
-        lmValuta(info, ef.modelli, std, null).avvisi.forEach(function(x){ tollerati[firma(x)] = true; });
+        lmValuta(info, s.modelli, std, null).avvisi.forEach(function(x){ tollerati[firma(x)] = true; });
         var fisso = {};
         Object.keys(std).forEach(function(k){ if(!(k in perChiave)) fisso[k] = std[k]; });
         var valido = function(){
+          if(fase === "Melee" && usiMischia(conta) > s.modelli) return false;
           var cont = Object.assign({}, fisso, conta);
-          var v = lmValuta(info, ef.modelli, cont, null), i;
+          var v = lmValuta(info, s.modelli, cont, null), i;
           for(i = 0; i < v.avvisi.length; i++) if(!tollerati[firma(v.avvisi[i])]) return false;
           // Un'arma che nessuna regola descrive non può superare la dotazione standard.
           for(i = 0; i < ordine.length; i++) if(!(ordine[i] in v.limiti) && conta[ordine[i]] > stdFase[ordine[i]]) return false;
@@ -3620,7 +3668,7 @@ select.dl-in{width:auto; padding:0 3px;}
         };
         ordine.slice().sort(function(x, y){ return perChiave[y].danni - perChiave[x].danni; }).forEach(function(k){
           if(perChiave[k].danni <= 0) return;
-          while(conta[k] < ef.modelli){
+          while(conta[k] < s.modelli){
             conta[k]++;
             if(!valido()){ conta[k]--; break; }
           }
@@ -3645,7 +3693,7 @@ select.dl-in{width:auto; padding:0 3px;}
       var standard = valuta(stdFase), scelta = valuta(conta);
       if(standard.danni > scelta.danni + 1e-9){ scelta = standard; conta = stdFase; }
       scelta.standard = standard.danni;
-      scelta.senzaDati = !ef.comp;
+      scelta.senzaDati = !s.comp;
       scelta.diff = [];
       ordine.forEach(function(k){
         var delta = (conta[k] || 0) - stdFase[k];
@@ -3741,15 +3789,129 @@ select.dl-in{width:auto; padding:0 3px;}
       cardOttima(g("ott-Melee"), "Mischia — configurazione ottimale", mischia, dM > dT + 0.0005);
     }
 
+    // ---- "All": tutte le unità della fazione scelta contro il bersaglio, con la configurazione ottimale di ognuna ----
+    // Per ogni scheda (una riga per scheda, non per profilo) si usano i modelli predefiniti e il loro prezzo. Il calcolo
+    // va a blocchi, per non bloccare la pagina, e si rifà solo se cambiano fazione, bersaglio, bonus o dati.
+    function rigaTutte(u, d){
+      var s = costruisciStato(u);
+      if(!s.armi.length) return null;
+      var tiro = ottimizza("Ranged", d, s), mischia = ottimizza("Melee", d, s);
+      var dT = tiro ? tiro.danni : 0, dM = mischia ? mischia.danni : 0;
+      var punti = costoDaiDati(u, s.modelli).punti, scheda = armyBuilder.puntiPerId[idScheda(u)];
+      var per = function(x){ return punti > 0 ? x * 100 / punti : null; };
+      return { nome: scheda && scheda.nome ? scheda.nome : u.nome, modelli: s.modelli, punti: punti, senzaDati: !s.comp,
+               dM: dM, eM: per(dM), dT: dT, eT: per(dT), dTot: dM + dT, eTot: per(dM + dT) };
+    }
+
+    function disegnaTutte(){
+      var cont = g("all-card"), t = ef.tutte;
+      cont.innerHTML = "";
+      var h = dlEl("h2", "card-title", "Tutte le unità");
+      h.appendChild(dlEl("span", "dl-sub", F.value + " · contro " + BERSAGLI[ef.bersaglio].nome + " · efficienza = danni ogni 100 pt"));
+      cont.appendChild(h);
+      if(!t.completa) cont.appendChild(dlEl("div", "ef-nota", "Calcolo in corso… " + t.righe.length + " / " + t.totale));
+      if(!t.righe.length){
+        if(t.completa) cont.appendChild(dlEl("div", "dl-vuoto", "Nessuna unità con armi nei dati per questa fazione."));
+        return;
+      }
+      var o = ef.ordine;
+      var righe = t.righe.slice().sort(function(x, y){
+        var a = x[o.col], b = y[o.col];
+        if(o.col === "nome") return o.dir * a.localeCompare(b);
+        if(a === null && b === null) return 0;
+        if(a === null) return 1; // senza punti: in fondo
+        if(b === null) return -1;
+        return o.dir * (a - b);
+      });
+      var tab = dlEl("table", "dl-stat-tab ef-all");
+      var gruppi = dlEl("tr");
+      var vuota = dlEl("th", "", "");
+      vuota.rowSpan = 2;
+      gruppi.appendChild(vuota);
+      ["Mischia", "Range", "Totale"].forEach(function(n){
+        var th = dlEl("th", "ef-gruppo-th", n);
+        th.colSpan = 2;
+        gruppi.appendChild(th);
+      });
+      tab.appendChild(gruppi);
+      var colonne = [["dM", "danni"], ["eM", "eff."], ["dT", "danni"], ["eT", "eff."], ["dTot", "danni"], ["eTot", "eff."]];
+      var intest = dlEl("tr");
+      colonne.forEach(function(c){
+        var th = dlEl("th", "ef-ordina", c[1] + (o.col === c[0] ? (o.dir < 0 ? " ▼" : " ▲") : ""));
+        th.title = c[1] === "danni" ? "Danni attesi della configurazione ottimale (clic per ordinare)" : "Danni ogni 100 punti dell'unità (clic per ordinare)";
+        th.addEventListener("click", function(){
+          ef.ordine = { col: c[0], dir: o.col === c[0] ? -o.dir : -1 };
+          disegnaTutte();
+        });
+        intest.appendChild(th);
+      });
+      tab.appendChild(intest);
+      // il nome si ordina dal titolo della colonna, nella prima riga di intestazione
+      vuota.textContent = "Unità" + (o.col === "nome" ? (o.dir < 0 ? " ▼" : " ▲") : "");
+      vuota.classList.add("ef-ordina");
+      vuota.style.textAlign = "left";
+      vuota.title = "Ordina per nome";
+      vuota.addEventListener("click", function(){
+        ef.ordine = { col: "nome", dir: o.col === "nome" ? -o.dir : 1 };
+        disegnaTutte();
+      });
+      righe.forEach(function(r){
+        var tr = dlEl("tr");
+        var nome = dlEl("td", "dl-stat-nome ef-bers", r.nome);
+        var sub = dlEl("small", "", r.modelli + (r.modelli === 1 ? " modello" : " modelli") + (r.punti > 0 ? " · " + r.punti + " pt" : "") + (r.senzaDati ? " · stima" : ""));
+        if(r.senzaDati) sub.title = "Senza dati di composizione: tutte le armi sono assegnate a tutti i modelli, il valore può essere sovrastimato";
+        nome.appendChild(sub);
+        tr.appendChild(nome);
+        colonne.forEach(function(c){
+          var v = r[c[0]];
+          tr.appendChild(dlEl("td", c[0].charAt(0) === "e" ? "ef-eff" : "", c[0].charAt(0) === "e" ? efPt(v) : efNum(v)));
+        });
+        tab.appendChild(tr);
+      });
+      var scroll = dlEl("div", "dl-stat");
+      scroll.appendChild(tab);
+      cont.appendChild(scroll);
+    }
+
+    function aggiornaTutte(){
+      var card = g("all-card");
+      var visibile = ef.all && !ef.dettaglio && !!F.value;
+      card.style.display = visibile ? "" : "none";
+      if(!visibile) return;
+      var chiave = [F.value, ef.bersaglio, JSON.stringify(ef.bonus), ef.versioneDati].join("|");
+      if(ef.tutte && ef.tutte.chiave === chiave){ disegnaTutte(); return; }
+      var viste = {}, elenco = [], d = BERSAGLI[ef.bersaglio];
+      datiCsv.unita.forEach(function(u){
+        if(u.fazione !== F.value || viste[u.datasheetId]) return;
+        viste[u.datasheetId] = true;
+        elenco.push(u);
+      });
+      var t = ef.tutte = { chiave: chiave, righe: [], totale: elenco.length, completa: false };
+      var i = 0;
+      (function passo(){
+        if(ef.tutte !== t) return; // nel frattempo è cambiato qualcosa: si è ripartiti da capo
+        var fine = Math.min(elenco.length, i + 6);
+        for(; i < fine; i++){
+          var r = rigaTutte(elenco[i], d);
+          if(r) t.righe.push(r);
+        }
+        t.completa = i >= elenco.length;
+        if(ef.all && !ef.dettaglio && F.value) disegnaTutte();
+        if(!t.completa) setTimeout(passo, 0);
+      })();
+    }
+
     // Dettaglio spento: bersaglio e configurazioni ottimali; acceso: armi, modelli e tabella contro tutti i bersagli.
     function mostra(){
       var det = ef.dettaglio;
       g("fasi").style.display = det ? "" : "none";
       ["armi-card", "tab-card"].forEach(function(id){ g(id).style.display = det ? "" : "none"; });
       ["bers-card", "ott-card"].forEach(function(id){ g(id).style.display = det ? "none" : ""; });
+      chipAll.style.display = !det && F.value ? "" : "none";
     }
 
     function aggiorna(){
+      aggiornaTutte();
       if(!ef.unita) return;
       if(!ef.dettaglio){ semplice(); return; }
       var b = ef.bonus;
@@ -3781,14 +3943,10 @@ select.dl-in{width:auto; padding:0 3px;}
       ef.unita = u;
       ef.manuale = false;
       ef.puntiManuale = false;
-      // Si valuta l'intera scheda (es. Boy e Nob insieme, Sergente compreso), non il singolo profilo scelto nell'elenco.
-      ef.modelli = modelliPredefiniti(Object.assign({}, u, { unito: true }));
-      ef.armi = armiEfficienza(u);
-      ef.comp = ef.armi.length ? composizioneArmi({ datasheetId: u.datasheetId, nome: u.nome, nomeProfilo: u.nomeProfilo, unito: true, armi: ef.armi }) : null;
-      ef.armi.forEach(function(a){
-        var q = ef.comp ? ef.comp.info.copie[chiaveArma(a)] : 1;
-        a.copie = q > 1 ? q : 1;
-      });
+      var s = costruisciStato(u);
+      ef.modelli = s.modelli;
+      ef.armi = s.armi;
+      ef.comp = s.comp;
       predefinite();
       aggiornaCosto();
       ef.fase = ef.armi.some(function(a){ return a.tipo === "Ranged" && a.modelli > 0; }) ? "Ranged" : "Melee";
@@ -3831,10 +3989,13 @@ select.dl-in{width:auto; padding:0 3px;}
       fazioni.sort(function(a, b){ return a.localeCompare(b); });
       riempiSelect(F, fazioni.map(function(f){ return { valore: f, testo: f }; }), "— Seleziona fazione —", F.value);
       riempiElencoUnita();
+      ef.versioneDati++;
       scelta();
+      mostra();
+      aggiornaTutte();
     }
 
-    F.addEventListener("change", function(){ C.value = ""; riempiElencoUnita(); scelta(); });
+    F.addEventListener("change", function(){ C.value = ""; riempiElencoUnita(); scelta(); mostra(); aggiornaTutte(); });
     C.addEventListener("input", function(){
       var prima = U.value;
       riempiElencoUnita();
@@ -3858,6 +4019,11 @@ select.dl-in{width:auto; padding:0 3px;}
     g("dett").appendChild(dlChip("Dettaglio", ef.dettaglio,
       "Acceso: armi, modelli per arma e tabella contro tutti i bersagli. Spento: scegli un bersaglio e vedi la configurazione di armi che fa più danni.",
       function(v){ ef.dettaglio = v; mostra(); aggiorna(); }));
+    chipAll = dlChip("All", ef.all,
+      "Calcola la configurazione ottimale di tutte le unità della fazione contro il bersaglio scelto e le elenca qui sotto con danni ed efficienza di mischia, range e totale.",
+      function(v){ ef.all = v; aggiornaTutte(); });
+    g("dett").appendChild(chipAll);
+    mostra();
     return { ripopola: ripopola, stato: function(){ return ef; } };
   }
 
