@@ -656,6 +656,8 @@ select.dl-in{width:auto; padding:0 3px;}
 .ef-dato small{display:block; font-size:.62rem; font-weight:600; letter-spacing:.07em; text-transform:uppercase; color:var(--text-dim);}
 .ef-dato b{font-family:"IBM Plex Mono",monospace; font-size:1.3rem; line-height:1.2;}
 .ef-dato.ef-evid b{color:var(--att);}
+#e-ott-eff .ef-sommario{display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-bottom:0;}
+.ef-dato small.ef-sub{margin-top:1px; font-weight:500; letter-spacing:0; text-transform:none;}
 .ef-tag{margin-left:8px; padding:1px 8px; border-radius:var(--radius-pill); background:var(--ok); color:#fff; font-family:"IBM Plex Sans",sans-serif; font-size:.62rem; font-weight:600; letter-spacing:.05em; text-transform:uppercase;}
 .ef-nota{margin-top:8px; font-size:.8rem; line-height:1.4; color:var(--text-dim);}
 .dl-stat-tab td.ef-eff{color:var(--att); font-weight:700;}
@@ -3327,6 +3329,7 @@ select.dl-in{width:auto; padding:0 3px;}
           '<div class="dl-armi" id="e-armi"></div><div class="dl-avvisi" id="e-avvisi"></div></div>' +
         '<div class="card"><h2 class="card-title">Bonus</h2><div class="ef-bonus" id="e-bonus"></div></div>' +
         '<div id="e-ott-card">' +
+          '<div class="card" id="e-ott-eff"></div>' +
           '<div class="card" id="e-ott-Ranged"></div><div class="card" id="e-ott-Melee"></div>' +
           '<div class="footnote">Per ogni fase la configurazione è quella che fa più danni al bersaglio scelto, cercata tra le distribuzioni dei modelli ' +
           'sulle armi consentite dalle opzioni di equipaggiamento (le armi dell\'altra fase restano alla dotazione standard) e confrontata con la ' +
@@ -3680,9 +3683,9 @@ select.dl-in{width:auto; padding:0 3px;}
         cont.appendChild(dlEl("div", "dl-vuoto", "Nessuna arma di questo tipo infligge danni a questo bersaglio."));
         return;
       }
-      var costo = ef.punti, eff = costo > 0 && o.danni > 0.0005 ? costo / o.danni : null;
+      var costo = ef.punti;
       var sommario = dlEl("div", "ef-sommario");
-      [["Danni", efNum(o.danni), ""], ["pt/danno", efPt(eff), "ef-evid"], ["Danni/100 pt", costo > 0 ? efNum(o.danni * 100 / costo) : "—", ""],
+      [["Danni", efNum(o.danni), ""], ["Danni/100 pt", efPt(costo > 0 ? o.danni * 100 / costo : null), "ef-evid"],
        ["Uccisi", efNum(o.uccisi), ""], ["Attacchi", efNum(o.attacchi), ""]].forEach(function(x){
         var t = dlEl("div", "ef-dato " + x[2]);
         t.appendChild(dlEl("small", "", x[0]));
@@ -3718,6 +3721,22 @@ select.dl-in{width:auto; padding:0 3px;}
       var d = BERSAGLI[ef.bersaglio];
       var tiro = ottimizza("Ranged", d), mischia = ottimizza("Melee", d);
       var dT = tiro ? tiro.danni : 0, dM = mischia ? mischia.danni : 0;
+      // Efficienza = danni ogni 100 punti dell'unità; la totale somma i danni di tiro e mischia.
+      var costo = ef.punti, cont = g("ott-eff");
+      cont.innerHTML = "";
+      var h = dlEl("h2", "card-title", "Efficienza");
+      h.appendChild(dlEl("span", "dl-sub", "danni ogni 100 pt · contro " + d.nome));
+      cont.appendChild(h);
+      var tessere = dlEl("div", "ef-sommario");
+      [["Mischia", dM, ""], ["Distanza", dT, ""], ["Totale", dT + dM, "ef-evid"]].forEach(function(x){
+        var t = dlEl("div", "ef-dato " + x[2]);
+        t.appendChild(dlEl("small", "", "Efficienza " + x[0].toLowerCase()));
+        t.appendChild(dlEl("b", "", efPt(costo > 0 ? x[1] * 100 / costo : null)));
+        t.appendChild(dlEl("small", "ef-sub", efNum(x[1]) + " danni"));
+        tessere.appendChild(t);
+      });
+      cont.appendChild(tessere);
+      if(!(costo > 0)) cont.appendChild(dlEl("div", "ef-nota", "Scrivi i punti dell'unità per calcolare l'efficienza."));
       cardOttima(g("ott-Ranged"), "Tiro — configurazione ottimale", tiro, dT > dM + 0.0005);
       cardOttima(g("ott-Melee"), "Mischia — configurazione ottimale", mischia, dM > dT + 0.0005);
     }
