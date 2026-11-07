@@ -159,7 +159,7 @@ body{
 /* ---------- tab bar ---------- */
 .tabbar{
   display:grid;
-  grid-template-columns:repeat(4,1fr);
+  grid-template-columns:repeat(5,1fr);
   gap:8px;
   background:var(--surface-2);
   border:1px solid var(--border);
@@ -191,7 +191,7 @@ body{
   box-shadow:0 1px 3px rgba(0,0,0,.15);
 }
 .tab-btn:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
-@media (max-width:480px){.tab-btn{font-size:.82rem; padding:12px 4px; letter-spacing:.02em;}}
+@media (max-width:480px){.tabbar{gap:2px;} .tab-btn{font-size:.62rem; padding:12px 0; letter-spacing:0; min-width:0;}}
 
 .panel{display:none;}
 .panel.active{display:block; animation:fadein .18s ease;}
@@ -553,8 +553,8 @@ body{
 }
 
 /* ---------- duello: schermata compatta di attacco tra due unità, riempita dal Tavolo da Gioco; VSunità la riusa con la scelta delle unità ---------- */
-#panel-duello .card, #panel-vs .card{padding:10px 12px; margin-bottom:10px;}
-#panel-duello .card + .card, #panel-vs .card + .card{margin-top:10px;}
+#panel-duello .card, #panel-vs .card, #panel-eff .card{padding:10px 12px; margin-bottom:10px;}
+#panel-duello .card + .card, #panel-vs .card + .card, #panel-eff .card + .card{margin-top:10px;}
 /* VSunità: scelta delle unità, una sola riga per attaccante e per difensore (a capo solo se manca spazio) */
 .vs-riga{display:flex; flex-wrap:wrap; align-items:flex-end; gap:8px;}
 .vs-ruolo{flex:0 0 136px; align-self:center; margin:0 !important; font-size:.95rem;}
@@ -569,7 +569,7 @@ body{
   color:var(--accent); background:var(--surface-2); border:1px solid var(--accent);
 }
 .vs-piu:disabled{opacity:.4; cursor:default;}
-#panel-duello .card-title, #panel-vs .card-title{margin:0 0 8px; font-size:.95rem; flex-wrap:wrap;}
+#panel-duello .card-title, #panel-vs .card-title, #panel-eff .card-title{margin:0 0 8px; font-size:.95rem; flex-wrap:wrap;}
 .dl-vuoto{color:var(--text-dim); font-size:.9rem; line-height:1.5;}
 .dl-dist{margin-left:auto; font-family:"IBM Plex Mono",monospace; font-weight:700; font-size:1.05rem; line-height:1; color:var(--text);}
 .dl-dist small{font-family:inherit; font-weight:500; font-size:.7rem; color:var(--text-dim); margin-right:4px; text-transform:none; letter-spacing:0;}
@@ -639,6 +639,20 @@ select.dl-in{width:auto; padding:0 3px;}
 .dl-stat-tab td.dl-stat-nome{text-align:left; font-family:"IBM Plex Sans",sans-serif; font-weight:500; color:var(--text-dim); white-space:nowrap;}
 .dl-stat-tab .dl-totale{border-left:1px solid var(--border); color:var(--att);}
 .dl-risultato .rt-sub{display:block; margin-top:3px; font-size:.7rem; font-weight:500; color:var(--text-dim);}
+
+/* ---------- efficienza: una unità contro i bersagli di test, costo in punti per danno inflitto ---------- */
+.ef-riga{display:flex; flex-wrap:wrap; align-items:flex-end; gap:8px; margin-top:8px;}
+.ef-pills{display:flex; flex-wrap:wrap; gap:6px; align-items:center;}
+.ef-pills .pill-btn{min-height:32px; padding:0 12px; font-size:.9rem;}
+.ef-bonus{display:flex; flex-direction:column; gap:8px;}
+.ef-gruppo{display:flex; flex-wrap:wrap; align-items:flex-end; gap:6px 8px;}
+.ef-gruppo > b{flex:0 0 78px; align-self:center; font-size:.7rem; letter-spacing:.07em; text-transform:uppercase; color:var(--text-dim);}
+.ef-riepilogo{margin-bottom:8px; font-size:.85rem; line-height:1.4; color:var(--text-dim);}
+.ef-riepilogo b{color:var(--text);}
+.ef-bers small{display:block; font-family:"IBM Plex Sans",sans-serif; font-weight:400; font-size:.66rem; color:var(--text-faint);}
+.dl-stat-tab td.ef-eff{color:var(--att); font-weight:700;}
+.dl-stat-tab tr.ef-meglio td.ef-eff{color:var(--ok);}
+.ef-profilo{display:block; font-family:"IBM Plex Mono",monospace; font-weight:400; font-size:.66rem; color:var(--text-faint);}
 </style>
 <script>
   // Applica subito il tema scelto in precedenza (prima del primo disegno, niente lampo di colore);
@@ -686,6 +700,7 @@ select.dl-in{width:auto; padding:0 3px;}
     <button class="tab-btn" id="tab-combat-btn" role="tab" aria-selected="false">Combattimento</button>
     <button class="tab-btn" id="tab-vs-btn" role="tab" aria-selected="false">VSunità</button>
     <button class="tab-btn" id="tab-duello-btn" role="tab" aria-selected="false">Duello</button>
+    <button class="tab-btn" id="tab-eff-btn" role="tab" aria-selected="false">Efficienza</button>
   </nav>
 
   <!-- ============ STATISTICHE ============ -->
@@ -1018,6 +1033,9 @@ select.dl-in{width:auto; padding:0 3px;}
       </div>
     </div>
   </section>
+
+  <!-- ============ EFFICIENZA ============ -->
+  <section class="panel" id="panel-eff"></section>
 </div>
 
 <script>
@@ -1627,7 +1645,8 @@ select.dl-in{width:auto; padding:0 3px;}
     { btn: document.getElementById("tab-stats-btn"), panel: document.getElementById("panel-stats") },
     { btn: document.getElementById("tab-combat-btn"), panel: panelCombat },
     { btn: document.getElementById("tab-vs-btn"), panel: panelVs },
-    { btn: document.getElementById("tab-duello-btn"), panel: document.getElementById("panel-duello") }
+    { btn: document.getElementById("tab-duello-btn"), panel: document.getElementById("panel-duello") },
+    { btn: document.getElementById("tab-eff-btn"), panel: document.getElementById("panel-eff") }
   ];
   tabs.forEach(function(t){
     t.btn.addEventListener("click", function(){
@@ -1648,6 +1667,8 @@ select.dl-in{width:auto; padding:0 3px;}
     tabs[2].btn.click();
   } else if(location.hash === "#duello"){
     tabs[3].btn.click();
+  } else if(location.hash === "#efficienza"){
+    tabs[4].btn.click();
   }
 
   // ---------------- INTEGRAZIONE TAVOLO DA GIOCO (tab Combattimento) ----------------
@@ -1829,7 +1850,7 @@ select.dl-in{width:auto; padding:0 3px;}
       parseTabella(testoPunti).forEach(function(r){
         var id = String(r.datasheet_id);
         if(!id) return;
-        var scheda = ab.puntiPerId[id] || (ab.puntiPerId[id] = { nome: r.name, scaglione: null, minModelli: 0 });
+        var scheda = ab.puntiPerId[id] || (ab.puntiPerId[id] = { nome: r.name, scaglione: null, minModelli: 0, tagli: {} });
         var k = chiaveNome(r.name);
         if(k && !(k in ab.idPerNome)) ab.idPerNome[k] = id;
         var modelli = parseInt(r.modelli, 10);
@@ -1837,6 +1858,9 @@ select.dl-in{width:auto; padding:0 3px;}
         // Taglia più piccola del primo scaglione della scheda.
         if(scheda.scaglione === null) scheda.scaglione = r.scaglione;
         if(r.scaglione === scheda.scaglione && (!scheda.minModelli || modelli < scheda.minModelli)) scheda.minModelli = modelli;
+        // Costo di ogni taglia dell'unità (es. 5 e 10 modelli), al prezzo del primo scaglione: serve al tab Efficienza.
+        var costo = parseInt(r.punti, 10);
+        if(r.scaglione === scheda.scaglione && !isNaN(costo) && !(modelli in scheda.tagli)) scheda.tagli[modelli] = costo;
       });
     }
     if(testoComposizione){
@@ -2352,6 +2376,7 @@ select.dl-in{width:auto; padding:0 3px;}
       datiCsv = { unita: unita, armiPerId: perId, righeArmi: armi.length };
       aggiornaStato();
       vsRipopola();
+      EF.ripopola();
     }).catch(function(err){
       var aggiunta = location.protocol === "file:" ? " (aprendo il file da disco il browser blocca la lettura dei CSV: serve un server web)" : "";
       mostraStato("⚠ " + err.message + aggiunta, true);
@@ -3141,6 +3166,494 @@ select.dl-in{width:auto; padding:0 3px;}
   var VSDL = creaDuello("vs-", { senzaDistanza: true, modelliLiberi: true });
   // VSunità riparte dal messaggio iniziale (le unità si scelgono dopo il caricamento dei dati).
   VSDL.svuota();
+
+  // ---------------- EFFICIENZA ----------------
+  // Una unità (con modelli, armi e bonus scelti) contro i bersagli generici di test: per ognuno si calcolano i danni
+  // attesi e il costo in punti per ogni danno inflitto. Il calcolo è a valore atteso, senza arrotondamenti (calcolaAttacco
+  // arrotonda a interi a ogni fase: con pochi attacchi i bersagli non sarebbero confrontabili). Le regole delle armi si
+  // leggono dalla descrizione del CSV; quelle con una condizione ("LETHAL HITS: non-MONSTER/VEHICLE") e Anti-X valgono
+  // solo contro i bersagli che hanno (o non hanno) quella parola chiave.
+  var EF_PAROLE = {
+    "Light infantry": ["INFANTRY"], "Elite infantry": ["INFANTRY"], "Heavy infantry": ["INFANTRY"],
+    "Light vehicle": ["VEHICLE"], "Heavy vehicle": ["VEHICLE"], "Titanic": ["VEHICLE", "TITANIC"]
+  };
+
+  // "NdM+K" → media esatta (senza arrotondare, a differenza di valoreMedioDado); un numero passa invariato.
+  function efMedia(grezzo, minimo){
+    var testo = (grezzo || "").trim();
+    if(!testo || testo === "-") return minimo;
+    var n = Number(testo);
+    if(!isNaN(n)) return Math.max(minimo, n);
+    var m = testo.match(/^(\d*)d(\d+)(?:\+(\d+))?$/i);
+    if(!m) return minimo;
+    return Math.max(minimo, (m[1] ? Number(m[1]) : 1) * (Number(m[2]) + 1) / 2 + (m[3] ? Number(m[3]) : 0));
+  }
+
+  // "non-MONSTER/VEHICLE" → { neg: true, tags: ["MONSTER", "VEHICLE"] }
+  function efCondizione(testo){
+    var t = (testo || "").trim();
+    var tags = t.replace(/^non[\s-]*/i, "").toUpperCase().split(/[\/,]|\bOR\b/).map(function(s){ return s.trim(); }).filter(Boolean);
+    return tags.length ? { neg: /^non[\s-]/i.test(t), tags: tags } : null;
+  }
+
+  // Una regola ({ cond }) vale contro un bersaglio con queste parole chiave? Senza condizione vale sempre.
+  function efOn(regola, parole){
+    if(!regola) return false;
+    if(!regola.cond) return true;
+    var presente = regola.cond.tags.some(function(t){ return parole.indexOf(t) >= 0; });
+    return regola.cond.neg ? !presente : presente;
+  }
+
+  function efRegole(descrizione){
+    var r = { rapid: 0, melta: 0, sust: null, lethal: null, dev: null, twin: null, torrent: null, lancia: null, heavy: null, anti: [] };
+    (descrizione || "").split(",").forEach(function(pezzo){
+      var parti = pezzo.trim().split(/\s*:\s*/), nome = parti[0].trim();
+      var cond = parti.length > 1 ? efCondizione(parti.slice(1).join(":")) : null, m;
+      if((m = nome.match(/^rapid fire\s*(\d+|d\d)$/i))) r.rapid = efMedia(m[1], 0);
+      else if((m = nome.match(/^melta\s*(\d+|d\d)$/i))) r.melta = efMedia(m[1], 0);
+      else if((m = nome.match(/^sustained hits\s*(\d+|d\d)$/i))) r.sust = { v: efMedia(m[1], 0), cond: cond };
+      else if(/^lethal hits$/i.test(nome)) r.lethal = { cond: cond };
+      else if(/^devastating wounds$/i.test(nome)) r.dev = { cond: cond };
+      else if(/^twin-?linked$/i.test(nome)) r.twin = { cond: cond };
+      else if(/^torrent$/i.test(nome)) r.torrent = { cond: cond };
+      else if(/^lance$/i.test(nome)) r.lancia = { cond: cond };
+      else if(/^heavy$/i.test(nome)) r.heavy = { cond: cond };
+      else if((m = nome.match(/^anti-([a-z ]+?)\s*(\d)\+$/i))) r.anti.push({ parola: m[1].trim().toUpperCase(), soglia: parseInt(m[2], 10), cond: cond });
+    });
+    return r;
+  }
+
+  // Probabilità finale di un tiro con probabilità base p e di un suo esito speciale x (es. il 6 naturale), dopo una
+  // ripetizione: "tutti" rilancia ogni fallito, "1" solo gli 1 naturali.
+  function efRipeti(p, x, modo){
+    return x + (modo === "tutti" ? 1 - p : modo === "1" ? 1 / 6 : 0) * x;
+  }
+
+  // Valori attesi di un'arma usata da n modelli (già moltiplicati per le copie) contro un bersaglio, con i bonus b.
+  function efCalcolaArma(a, d, b, n){
+    var rg = a.regole, parole = d.parole;
+    var attacchi = n * (a.att + (b.tiroRapido ? rg.rapid : 0));
+
+    // Colpire: senza soglia (o Torrent) si colpisce sempre; il 6 naturale è un colpo critico (Lethal, Sustained).
+    var pH = 1, cH = 0;
+    if(a.xcol !== null && !efOn(rg.torrent, parole)){
+      var modH = (b.piuColpire || (b.fermo && efOn(rg.heavy, parole))) ? 1 : 0;
+      var p = (7 - Math.min(6, Math.max(2, a.xcol - modH))) / 6;
+      pH = efRipeti(p, p, b.ripCol);
+      cH = efRipeti(p, 1 / 6, b.ripCol);
+    }
+    var extra = efOn(rg.sust, parole) ? rg.sust.v * cH : 0; // colpi in più, normali
+    var automatici = efOn(rg.lethal, parole) ? cH : 0; // Lethal: feriscono senza tirare
+    var daTirare = pH - automatici + extra;
+
+    // Ferire: Anti-X ferisce con X+ (se più facile del normale); il 6 naturale (o X+) è un ferimento critico.
+    var soglia = woundThreshold(a.forza, d.res), anti = 0;
+    if(b.anti) rg.anti.forEach(function(x){
+      if(parole.indexOf(x.parola) >= 0 && efOn(x, parole) && (!anti || x.soglia < anti)) anti = x.soglia;
+    });
+    // I modificatori al tiro per ferire non superano +1 né -1 in totale.
+    var modF = ((b.piuFerire || (b.lance && efOn(rg.lancia, parole))) ? 1 : 0) - (b.menoFerire ? 1 : 0);
+    var pW = (7 - Math.min(6, Math.max(2, soglia - modF))) / 6, cW = 1 / 6;
+    if(anti){
+      pW = Math.max(pW, (7 - anti) / 6);
+      cW = Math.max(cW, (7 - anti) / 6);
+    }
+    var modoFer = (efOn(rg.twin, parole) || b.ripFer === "tutti") ? "tutti" : b.ripFer;
+    var pW2 = efRipeti(pW, pW, modoFer), cW2 = efRipeti(pW, cW, modoFer);
+    var ferimenti = daTirare * pW2;
+    var devastanti = efOn(rg.dev, parole) ? daTirare * cW2 : 0; // saltano la salvezza
+    var feriti = automatici + ferimenti;
+
+    // Salvezza: il bonus alla salvezza vale per l'armatura, non per l'invulnerabile; il 1 naturale fallisce sempre.
+    var sv = d.save - (b.piuSalvezza ? 1 : 0) + a.ap;
+    if(d.inv) sv = Math.min(sv, d.inv);
+    var pS = sv >= 7 ? 0 : (7 - Math.max(2, sv)) / 6;
+    var nonSalvati = (feriti - devastanti) * (1 - pS) + devastanti;
+
+    // Danni: il danno oltre le ferite di un modello si perde (con D < W si accumula sullo stesso modello).
+    var danni = a.danni + (b.melta ? rg.melta : 0);
+    var perColpo = Math.min(danni, d.w);
+    return {
+      attacchi: attacchi, colpiti: attacchi * (pH + extra), feriti: attacchi * feriti, nonSalvati: attacchi * nonSalvati,
+      danni: attacchi * nonSalvati * perColpo, uccisi: attacchi * nonSalvati * perColpo / d.w
+    };
+  }
+
+  function efNum(v){ return String(Math.round(v * 10) / 10); }
+
+  function creaEfficienza(){
+    var panel = document.getElementById("panel-eff");
+    var BERSAGLI = UNITA_TEST.map(function(u){
+      return { nome: u.nome, res: dlIntero(u.res, 4, 1), w: dlIntero(u.w, 1, 1), save: dlSoglia(u.ts) || 7, inv: dlSoglia(u.tsPiu), parole: EF_PAROLE[u.nome] || [] };
+    });
+    var ef = {
+      unita: null, modelli: 1, punti: 0, notaPunti: "", puntiManuale: false, manuale: false, fase: "Ranged", armi: [], comp: null,
+      bonus: { piuColpire: false, piuFerire: false, lance: false, fermo: false, tiroRapido: false, melta: false, anti: true,
+               ripCol: "", ripFer: "", piuSalvezza: false, menoFerire: false }
+    };
+
+    panel.innerHTML =
+      '<div class="card">' +
+        '<h2 class="card-title">Unità</h2>' +
+        '<div class="field-hint" id="e-stato" style="margin-top:0"></div>' +
+        '<div class="vs-riga">' + righeFazioneUnita("e-a") + '</div>' +
+        '<div id="e-dettagli" style="display:none">' +
+          '<div class="ef-riga">' +
+            '<div class="vs-campo vs-modelli"><span class="field-label">Modelli</span>' +
+              '<input type="number" class="num-input" id="e-modelli" min="1" step="1" value="1" inputmode="numeric"></div>' +
+            '<div class="ef-pills" id="e-tagli"></div>' +
+            '<div class="vs-campo vs-modelli"><span class="field-label">Punti</span>' +
+              '<input type="number" class="num-input" id="e-punti" min="0" step="1" value="0" inputmode="numeric"></div>' +
+            '<div class="ef-pills" id="e-fasi"></div>' +
+          '</div>' +
+          '<div class="field-hint" id="e-punti-nota" style="margin-top:6px"></div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="card dl-vuoto" id="e-vuoto">Scegli un\'unità: compaiono le sue armi, i bonus e la tabella con i danni contro ogni bersaglio di test ' +
+        '(Light infantry, Titanic…) e il costo in punti per danno inflitto.</div>' +
+      '<div id="e-contenuto" style="display:none">' +
+        '<div class="card"><h2 class="card-title">Armi<span class="dl-sub" id="e-armi-sub"></span></h2>' +
+          '<div class="dl-armi" id="e-armi"></div><div class="dl-avvisi" id="e-avvisi"></div></div>' +
+        '<div class="card"><h2 class="card-title">Bonus</h2><div class="ef-bonus" id="e-bonus"></div></div>' +
+        '<div class="card"><h2 class="card-title">Efficienza contro i bersagli di test</h2>' +
+          '<div class="ef-riepilogo" id="e-riepilogo"></div><div class="dl-stat" id="e-tab"></div>' +
+          '<div class="footnote" style="margin-top:10px">Valori attesi, senza arrotondamenti. «Danni» conta al massimo le ferite del bersaglio per ogni ' +
+          'attacco non salvato (il danno in eccesso si perde); «pt/danno» = punti ÷ danni, più è basso più l\'unità rende (in verde il migliore). ' +
+          'Rapid Fire, Melta, Lethal, Sustained, Devastating, Anti-X, Twin-linked, Torrent, Lance e Heavy sono letti dalla descrizione delle armi; ' +
+          'Anti-X e le regole con condizione valgono solo contro i bersagli con quella parola chiave (indicata sotto il nome). ' +
+          'Tutte le armi con modelli > 0 sparano insieme: per escluderne una (es. la pistola di chi usa anche il fucile) mettila a 0. ' +
+          'Blast, Ignores Cover, Hazardous, abilità e stratagemmi dell\'unità non sono considerati.</div></div>' +
+      '</div>';
+
+    function g(id){ return document.getElementById("e-" + id); }
+    var F = g("a-fazione-select"), C = g("a-cerca"), U = g("a-unita-select");
+    var chiaveArma = function(a){ return lmChiaveArma(lmNomeBaseArma(a.nome)); };
+
+    // Armi di un'unità dai dati, con le regole speciali lette dalla descrizione.
+    function armiEfficienza(unita){
+      return (datiCsv.armiPerId[unita.datasheetId] || []).map(function(a){
+        return {
+          nome: a.arma, descrizione: a.descrizione || "", tipo: a.tipo === "Melee" ? "Melee" : "Ranged", gittata: a.range,
+          att: efMedia(a.att, 1), xcol: sogliaDaTesto(a.bsWs), forza: Number(a.forza) || 1, ap: apDaTesto(a.ap), danni: efMedia(a.danni, 1),
+          attTesto: a.att || "1", danniTesto: a.danni || "1", regole: efRegole(a.descrizione), modelli: 0, copie: 1
+        };
+      });
+    }
+
+    // Dotazione standard (come nel Duello); senza dati di composizione ogni arma va a tutti i modelli (solo il primo
+    // profilo di una stessa arma), da correggere a mano.
+    function predefinite(){
+      var standard = ef.comp ? lmDefault(ef.comp.info, ef.modelli, ef.comp.tipoProfilo) : null, assegnate = {};
+      ef.armi.forEach(function(a){
+        var k = chiaveArma(a), n = standard ? (k in standard ? standard[k] : 0) : ef.modelli;
+        a.modelli = assegnate[k] ? 0 : Math.min(n, ef.modelli);
+        assegnate[k] = true;
+      });
+    }
+
+    // Costo dai punti dell'army builder: la taglia esatta se c'è, altrimenti proporzionale alla più vicina.
+    function costoDaiDati(){
+      var s = armyBuilder.puntiPerId[idScheda(ef.unita)];
+      var taglie = s && s.tagli ? Object.keys(s.tagli).map(Number).sort(function(x, y){ return x - y; }) : [];
+      if(!taglie.length) return { punti: 0, nota: "Nessun dato sui punti per questa unità: scrivi il costo a mano." };
+      if(s.tagli[ef.modelli] !== undefined) return { punti: s.tagli[ef.modelli], nota: "Punti da punti.csv per " + ef.modelli + (ef.modelli === 1 ? " modello." : " modelli.") };
+      var vicina = taglie.reduce(function(m, t){ return Math.abs(t - ef.modelli) < Math.abs(m - ef.modelli) ? t : m; }, taglie[0]);
+      return { punti: Math.round(s.tagli[vicina] / vicina * ef.modelli),
+               nota: "Stima proporzionale dalla taglia da " + vicina + " modelli (" + s.tagli[vicina] + " pt): per questo numero non c'è un prezzo." };
+    }
+
+    function aggiornaCosto(){
+      var c = costoDaiDati();
+      ef.punti = c.punti;
+      ef.notaPunti = c.nota;
+      g("punti").value = c.punti;
+      g("punti-nota").textContent = c.nota;
+    }
+
+    function disegnaTagli(){
+      var cont = g("tagli");
+      cont.innerHTML = "";
+      var s = armyBuilder.puntiPerId[idScheda(ef.unita)];
+      var taglie = s && s.tagli ? Object.keys(s.tagli).map(Number).sort(function(x, y){ return x - y; }) : [];
+      if(taglie.length < 2) return;
+      taglie.forEach(function(t){
+        var b = dlEl("button", "pill-btn" + (t === ef.modelli ? " selected" : ""), t + " mod. · " + s.tagli[t] + " pt");
+        b.type = "button";
+        b.addEventListener("click", function(){ cambiaModelli(t); });
+        cont.appendChild(b);
+      });
+    }
+
+    function disegnaFasi(){
+      var cont = g("fasi");
+      cont.innerHTML = "";
+      [["Ranged", "Tiro"], ["Melee", "Mischia"]].forEach(function(f){
+        var n = ef.armi.filter(function(a){ return a.tipo === f[0]; }).length;
+        var b = dlEl("button", "pill-btn" + (ef.fase === f[0] ? " selected" : ""), f[1]);
+        b.type = "button";
+        b.disabled = n === 0;
+        b.title = n ? n + (n === 1 ? " profilo d'arma" : " profili d'arma") : "Nessuna arma di questo tipo nei dati";
+        b.addEventListener("click", function(){ ef.fase = f[0]; disegnaFasi(); disegnaArmi(); aggiorna(); });
+        cont.appendChild(b);
+      });
+    }
+
+    function disegnaArmi(){
+      var cont = g("armi");
+      cont.innerHTML = "";
+      var scheda = ef.unita ? armyBuilder.puntiPerId[idScheda(ef.unita)] : null;
+      g("armi-sub").textContent = ef.unita ? (scheda && scheda.nome ? scheda.nome : ef.unita.nome) : "";
+      ef.armi.forEach(function(a){ a._riga = null; });
+      var visibili = ef.armi.filter(function(a){ return a.tipo === ef.fase; });
+      if(!visibili.length) cont.appendChild(dlEl("div", "dl-vuoto", "Nessuna arma di questo tipo nei dati per questa unità."));
+      visibili.forEach(function(a){
+        var riga = dlEl("div", "dl-riga dl-arma");
+        var nome = dlEl("div", "dl-nome");
+        nome.title = a.nome + (a.descrizione ? " — " + a.descrizione : "");
+        nome.appendChild(dlEl("span", "dl-tipo", a.tipo === "Melee" ? "M" : "T"));
+        nome.appendChild(document.createTextNode(a.nome));
+        if(a.copie > 1){
+          var copie = dlEl("span", "dl-copie", "×" + a.copie);
+          copie.title = "Ogni modello ha " + a.copie + " di quest'arma: gli attacchi si moltiplicano";
+          nome.appendChild(copie);
+        }
+        nome.appendChild(dlEl("small", "ef-profilo",
+          "A" + a.attTesto + " · " + (a.xcol ? a.xcol + "+" : "auto") + " · F" + a.forza + " · AP-" + a.ap + " · D" + a.danniTesto +
+          (a.tipo === "Melee" || !a.gittata ? "" : " · " + a.gittata + "″")));
+        if(a.descrizione) nome.appendChild(dlEl("small", "", a.descrizione));
+        a._uso = dlEl("small", "dl-uso");
+        nome.appendChild(a._uso);
+        riga.appendChild(nome);
+        var campo = dlCampo("Modelli", dlInputNumero(a.modelli, 0, "dl-mod", function(v){ ef.manuale = true; a.modelli = v; aggiorna(); }, ef.modelli));
+        a._max = dlEl("small", "dl-max");
+        campo.appendChild(a._max);
+        a._campoMod = campo;
+        riga.appendChild(campo);
+        a._tot = dlEl("span", "dl-tot");
+        riga.appendChild(a._tot);
+        a._riga = riga;
+        cont.appendChild(riga);
+      });
+    }
+
+    function disegnaBonus(){
+      var cont = g("bonus");
+      cont.innerHTML = "";
+      function gruppo(titolo, controlli){
+        var r = dlEl("div", "ef-gruppo");
+        r.appendChild(dlEl("b", "", titolo));
+        controlli.forEach(function(c){ r.appendChild(c); });
+        cont.appendChild(r);
+      }
+      function chip(testo, chiave, titolo){
+        return dlChip(testo, ef.bonus[chiave], titolo, function(v){ ef.bonus[chiave] = v; aggiorna(); });
+      }
+      function ripeti(chiave){
+        return dlSelect([["", "—"], ["1", "gli 1"], ["tutti", "tutti"]], ef.bonus[chiave], function(v){ ef.bonus[chiave] = v; aggiorna(); });
+      }
+      gruppo("Attaccante", [
+        chip("+1 colpire", "piuColpire", "+1 ai tiri per colpire di tutte le armi (i modificatori non superano +1 in totale)"),
+        chip("+1 ferire", "piuFerire", "+1 ai tiri per ferire di tutte le armi (i modificatori non superano +1 in totale)"),
+        chip("Lance", "lance", "Carica: le armi con Lance hanno +1 per ferire"),
+        chip("Fermo (Heavy)", "fermo", "Unità ferma: le armi Heavy hanno +1 per colpire"),
+        chip("Tiro rapido", "tiroRapido", "Rapid Fire attivo: +X attacchi per modello alle armi con Rapid Fire X"),
+        chip("Melta", "melta", "Entro mezza gittata: +X danni alle armi con Melta X"),
+        chip("Anti-X", "anti", "Le armi con Anti-X feriscono con X+ contro i bersagli che hanno quella parola chiave")
+      ]);
+      gruppo("Ripeti", [dlCampo("Colpire", ripeti("ripCol"), "Ripete i tiri per colpire falliti: solo gli 1 o tutti"),
+                        dlCampo("Ferire", ripeti("ripFer"), "Ripete i tiri per ferire falliti: solo gli 1 o tutti (Twin-linked è già incluso)")]);
+      gruppo("Bersaglio", [
+        chip("+1 salvezza", "piuSalvezza", "+1 al tiro salvezza del bersaglio (non cambia l'invulnerabile)"),
+        chip("-1 per ferire", "menoFerire", "-1 al tiro per ferire dell'attaccante")
+      ]);
+    }
+
+    // Confronta i modelli assegnati con quelli consentiti dalla composizione (come nel Duello): solo avvisi.
+    function controllaComposizione(){
+      var avvisi = g("avvisi");
+      avvisi.textContent = "";
+      if(!ef.comp) return;
+      var conteggi = {};
+      ef.armi.forEach(function(a){ var k = chiaveArma(a); conteggi[k] = Math.max(conteggi[k] || 0, a.modelli); });
+      var v = lmValuta(ef.comp.info, ef.modelli, conteggi, ef.comp.tipoProfilo);
+      var evidenziate = {};
+      v.avvisi.forEach(function(x){ x.chiavi.forEach(function(k){ evidenziate[k] = true; }); });
+      ef.armi.forEach(function(a){
+        if(!a._riga) return;
+        var k = chiaveArma(a), l = v.limiti[k];
+        a._max.textContent = l && l.max < ef.modelli ? "max " + l.max : "";
+        a._uso.textContent = l && l.daRegola && !(k in ef.comp.info.base) ? lmTestoUso(ef.comp.info, l, ef.modelli) : "";
+        a._max.title = l ? "Consentiti dalla composizione dell'unità (" + v.modelliTotali + " modelli):\n" + l.motivi.join("\n") : "";
+        a._campoMod.classList.toggle("oltre", a.modelli > 0 && !!evidenziate[k]);
+      });
+      v.avvisi.forEach(function(x){ avvisi.appendChild(dlEl("div", "avviso", "⚠ " + x.testo)); });
+    }
+
+    function tabella(usate){
+      var b = ef.bonus, cont = g("tab"), riepilogo = g("riepilogo");
+      cont.innerHTML = "";
+      riepilogo.textContent = "";
+      if(!usate.length){
+        cont.appendChild(dlEl("div", "dl-vuoto", "Imposta i modelli di almeno un'arma per vedere i risultati."));
+        return;
+      }
+      var attacchi = 0;
+      usate.forEach(function(a){ attacchi += a.modelli * a.copie * (a.att + (b.tiroRapido ? a.regole.rapid : 0)); });
+      var costo = ef.punti;
+      var strong = function(t){ var s = dlEl("b", "", t); return s; };
+      riepilogo.appendChild(document.createTextNode(usate.length + (usate.length === 1 ? " arma · " : " armi · ")));
+      riepilogo.appendChild(strong(efNum(attacchi)));
+      riepilogo.appendChild(document.createTextNode(" attacchi · costo "));
+      riepilogo.appendChild(strong(costo > 0 ? costo + " pt" : "non indicato"));
+
+      var righe = BERSAGLI.map(function(d){
+        var t = { colpiti: 0, feriti: 0, nonSalvati: 0, danni: 0, uccisi: 0 };
+        usate.forEach(function(a){
+          var r = efCalcolaArma(a, d, b, a.modelli * a.copie);
+          Object.keys(t).forEach(function(k){ t[k] += r[k]; });
+        });
+        t.bers = d;
+        t.eff = costo > 0 && t.danni > 0.0005 ? costo / t.danni : null;
+        return t;
+      });
+      var migliore = null;
+      righe.forEach(function(r){ if(r.eff !== null && (migliore === null || r.eff < migliore.eff)) migliore = r; });
+
+      var tab = dlEl("table", "dl-stat-tab");
+      var intest = dlEl("tr");
+      [["Bersaglio", ""], ["Danni", "Danni inflitti, senza contare quelli oltre le ferite del bersaglio"],
+       ["pt/danno", "Punti dell'unità divisi per i danni inflitti: più basso = più efficiente"],
+       ["Danni/100 pt", "Danni inflitti ogni 100 punti dell'unità"], ["Uccisi", "Modelli uccisi (stima)"],
+       ["Colpiti", "Colpi a segno (compresi i colpi extra di Sustained)"], ["Feriti", "Ferimenti riusciti"],
+       ["Non salvati", "Ferimenti non fermati dalla salvezza"]].forEach(function(h, i){
+        var th = dlEl("th", "", h[0]);
+        if(h[1]) th.title = h[1];
+        if(i === 0) th.style.textAlign = "left";
+        intest.appendChild(th);
+      });
+      tab.appendChild(intest);
+      righe.forEach(function(r){
+        var d = r.bers, tr = dlEl("tr", r === migliore ? "ef-meglio" : "");
+        var nome = dlEl("td", "dl-stat-nome ef-bers", d.nome);
+        nome.appendChild(dlEl("small", "", "RES " + d.res + " · W " + d.w + " · " + (d.save < 7 ? d.save + "+" : "—") +
+          (d.inv ? " / " + d.inv + "++" : "") + " · " + d.parole.join(", ")));
+        tr.appendChild(nome);
+        tr.appendChild(dlEl("td", "", efNum(r.danni)));
+        tr.appendChild(dlEl("td", "ef-eff", r.eff === null ? "—" : (r.eff < 10 ? r.eff.toFixed(2) : r.eff.toFixed(1))));
+        tr.appendChild(dlEl("td", "", costo > 0 ? efNum(r.danni * 100 / costo) : "—"));
+        [efNum(r.uccisi), efNum(r.colpiti), efNum(r.feriti), efNum(r.nonSalvati)].forEach(function(v){ tr.appendChild(dlEl("td", "", v)); });
+        tab.appendChild(tr);
+      });
+      cont.appendChild(tab);
+    }
+
+    function aggiorna(){
+      if(!ef.unita) return;
+      var b = ef.bonus;
+      ef.armi.forEach(function(a){
+        if(!a._riga) return;
+        var attiva = a.modelli > 0;
+        a._riga.classList.toggle("attiva", attiva);
+        a._tot.textContent = attiva ? "= " + efNum(a.modelli * a.copie * (a.att + (b.tiroRapido ? a.regole.rapid : 0))) + " att" : "";
+      });
+      controllaComposizione();
+      tabella(ef.armi.filter(function(a){ return a.tipo === ef.fase && a.modelli > 0; }));
+    }
+
+    function cambiaModelli(n){
+      ef.modelli = n;
+      g("modelli").value = n;
+      if(ef.manuale){
+        ef.armi.forEach(function(a){ if(a.modelli > n) a.modelli = n; });
+      } else {
+        predefinite();
+      }
+      if(!ef.puntiManuale) aggiornaCosto();
+      disegnaTagli();
+      disegnaArmi();
+      aggiorna();
+    }
+
+    function impostaUnita(u){
+      ef.unita = u;
+      ef.manuale = false;
+      ef.puntiManuale = false;
+      // Si valuta l'intera scheda (es. Boy e Nob insieme, Sergente compreso), non il singolo profilo scelto nell'elenco.
+      ef.modelli = modelliPredefiniti(Object.assign({}, u, { unito: true }));
+      ef.armi = armiEfficienza(u);
+      ef.comp = ef.armi.length ? composizioneArmi({ datasheetId: u.datasheetId, nome: u.nome, nomeProfilo: u.nomeProfilo, unito: true, armi: ef.armi }) : null;
+      ef.armi.forEach(function(a){
+        var q = ef.comp ? ef.comp.info.copie[chiaveArma(a)] : 1;
+        a.copie = q > 1 ? q : 1;
+      });
+      predefinite();
+      aggiornaCosto();
+      ef.fase = ef.armi.some(function(a){ return a.tipo === "Ranged" && a.modelli > 0; }) ? "Ranged" : "Melee";
+      g("modelli").value = ef.modelli;
+      g("dettagli").style.display = "";
+      g("vuoto").style.display = "none";
+      g("contenuto").style.display = "";
+      disegnaTagli();
+      disegnaFasi();
+      disegnaArmi();
+      aggiorna();
+    }
+
+    function svuota(){
+      ef.unita = null;
+      g("dettagli").style.display = "none";
+      g("vuoto").style.display = "";
+      g("contenuto").style.display = "none";
+    }
+
+    function scelta(){
+      var u = unitaPerChiave[U.value];
+      if(u) impostaUnita(u); else svuota();
+    }
+
+    function riempiElencoUnita(){
+      var q = normalizzaTesto(C.value), fazione = F.value;
+      var voci = datiCsv.unita.filter(function(u){ return u.fazione === fazione && (!q || normalizzaTesto(u.nome).indexOf(q) >= 0); })
+        .sort(function(a, b){ return a.nome.localeCompare(b.nome) || a.riga - b.riga; })
+        .map(function(u){ unitaPerChiave[u.chiave] = u; return { valore: u.chiave, testo: u.nome }; });
+      riempiSelect(U, voci, !fazione ? "— Prima la fazione —" : !q ? "— Seleziona unità —" :
+        voci.length ? "— Seleziona unità (" + voci.length + " trovate) —" : "— Nessuna unità trovata —", U.value);
+    }
+
+    function ripopola(){
+      g("stato").textContent = datiCsv.unita.length ? "" : "Dati non ancora caricati.";
+      var fazioni = [];
+      datiCsv.unita.forEach(function(u){ if(fazioni.indexOf(u.fazione) < 0) fazioni.push(u.fazione); });
+      fazioni.sort(function(a, b){ return a.localeCompare(b); });
+      riempiSelect(F, fazioni.map(function(f){ return { valore: f, testo: f }; }), "— Seleziona fazione —", F.value);
+      riempiElencoUnita();
+      scelta();
+    }
+
+    F.addEventListener("change", function(){ C.value = ""; riempiElencoUnita(); scelta(); });
+    C.addEventListener("input", function(){
+      var prima = U.value;
+      riempiElencoUnita();
+      if(U.value !== prima) scelta();
+    });
+    U.addEventListener("change", scelta);
+    g("modelli").addEventListener("input", function(){
+      if(g("modelli").value === "") return;
+      cambiaModelli(dlIntero(g("modelli").value, 1, 1));
+    });
+    g("punti").addEventListener("input", function(){
+      if(g("punti").value === "") return;
+      ef.punti = dlIntero(g("punti").value, 0, 0);
+      ef.puntiManuale = true;
+      g("punti-nota").textContent = "Punti scritti a mano.";
+      aggiorna();
+    });
+
+    disegnaBonus();
+    return { ripopola: ripopola, stato: function(){ return ef; } };
+  }
+
+  var EF = creaEfficienza();
 
   // ---------------- IMPOSTAZIONI (rotella): SET DI DATI ----------------
   var btnImpostazioni = document.getElementById("impostazioni-btn");
