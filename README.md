@@ -49,3 +49,13 @@ Anche info_11e.csv ha la colonna FNP: in BSData è il collegamento alla regola "
 I punti (army_builder/punti.csv) sono indicizzati per id Wahapedia: le unità BSData con lo stesso id o lo stesso nome li trovano (circa il 93%).
 
 Per tornare ai file tradizionali: in index.html imposta SET_PREDEFINITO = "originale" (o apri la pagina con ?dati=originale) e fai lo stesso nel Tavolo da Gioco (src/config/datiCsv.js, oppure rotella Impostazioni).
+
+Efficienza, metodo «Dado» (efficienza_dado.json):
+Il tab Efficienza ha due metodi, Stat (probabilità) e Dado (media di 10.000 lanci simulati per arma, bersaglio e bonus). Il metodo Dado usa di base il file efficienza_dado.json di questa cartella, che contiene i valori per i bonus predefiniti (all'apertura del tab) di tutte le armi di entrambi i set di dati; con altri bonus i valori si calcolano nel browser e si ricordano lì. «Ricalcola» ignora il file e rifà tutto in locale con un nuovo seme; «Usa file del sito» torna al file.
+
+Quando aggiornare il file: dopo aver cambiato i dati delle armi (Datasheets_wargear*.csv) o le regole di calcolo del Dado in index.html (in tal caso alzare anche EF_VERSIONE_DADO). Le armi nuove o modificate hanno una firma diversa: finché non si rigenera il file si calcolano nel browser, quindi nulla si rompe.
+1. Apri il calcolatore (anche in locale con python -m http.server), tab Efficienza, scegli Dado.
+2. Rotella ⚙: set Wahapedia, poi «Genera tutto» (la prima volta azzera la memoria e usa un seme nuovo; circa 30 secondi).
+3. Rotella ⚙: set BSData, poi «Genera tutto» di nuovo (si aggiunge ai valori già generati; pochi secondi).
+4. «Scarica file», sostituisci efficienza_dado.json in questa cartella con quello scaricato (circa 0,8 MB), commit e push.
+Poi «Usa file del sito» (o svuota la memoria del browser) per tornare a leggere il file pubblicato.

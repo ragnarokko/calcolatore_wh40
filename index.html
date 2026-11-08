@@ -3232,9 +3232,9 @@ select.dl-in{width:auto; padding:0 3px;}
     (descrizione || "").split(",").forEach(function(pezzo){
       var parti = pezzo.trim().split(/\s*:\s*/), nome = parti[0].trim();
       var cond = parti.length > 1 ? efCondizione(parti.slice(1).join(":")) : null, m;
-      if((m = nome.match(/^rapid fire\s*(\d+|d\d)$/i))) r.rapid = efMedia(m[1], 0);
-      else if((m = nome.match(/^melta\s*(\d+|d\d)$/i))) r.melta = efMedia(m[1], 0);
-      else if((m = nome.match(/^sustained hits\s*(\d+|d\d)$/i))) r.sust = { v: efMedia(m[1], 0), cond: cond };
+      if((m = nome.match(/^rapid fire\s*(\d+|d\d)$/i))){ r.rapid = efMedia(m[1], 0); r.rapidT = m[1]; }
+      else if((m = nome.match(/^melta\s*(\d+|d\d)$/i))){ r.melta = efMedia(m[1], 0); r.meltaT = m[1]; }
+      else if((m = nome.match(/^sustained hits\s*(\d+|d\d)$/i))) r.sust = { v: efMedia(m[1], 0), t: m[1], cond: cond };
       else if(/^lethal hits$/i.test(nome)) r.lethal = { cond: cond };
       else if(/^devastating wounds$/i.test(nome)) r.dev = { cond: cond };
       else if(/^twin-?linked$/i.test(nome)) r.twin = { cond: cond };
@@ -3252,8 +3252,214 @@ select.dl-in{width:auto; padding:0 3px;}
     return x + (modo === "tutti" ? 1 - p : modo === "1" ? 1 / 6 : 0) * x;
   }
 
+  // ---- Metodo «Dado»: media di EF_LANCI lanci simulati ----
+  // Per ogni profilo d'arma (un modello), bersaglio e insieme di bonus si simulano EF_LANCI usi dell'arma tirando
+  // davvero i dadi (numero di attacchi e danni se sono D6/D3…, colpire, ferire, salvezza, Feel No Pain, con ripetizioni
+  // e regole). Le medie sono memorizzate (memoria + localStorage, esportabili in un file .json) e moltiplicate per i
+  // modelli: si simula una volta sola. Il generatore è con seme: stesso seme = stessi risultati; «Ricalcola» lo cambia.
+  // Base: il file del sito (efficienza_dado.json, scaricato alla prima volta che si usa «Dado»), valido per i bonus
+  // predefiniti. Quello che non c'è (altri bonus) si simula e si ricorda nel browser (cache). Con «Ricalcola»
+  // (soloLocale) il file del sito si ignora e tutto si rifà in locale, con un nuovo seme.
+  var EF_LANCI = 10000, EF_VERSIONE_DADO = 1, EF_CHIAVE_DADO = "wh40-ef-dado", EF_CHIAVE_METODO = "wh40-ef-metodo";
+  var EF_CHIAVE_LOCALE = "wh40-ef-locale", EF_FILE_DADO = "efficienza_dado.json";
+  var EFD = { metodo: "stat", seme: 1, cache: {}, quanti: 0, memoriaPiena: false, timer: null, alCambio: null,
+              sito: {}, quantiSito: 0, statoSito: "no", soloLocale: false }; // statoSito: no | caricamento | ok | errore
+
+  function efRng(seme){
+    var s = seme >>> 0;
+    return function(){
+      s = (s + 0x6D2B79F5) >>> 0;
+      var t = Math.imul(s ^ (s >>> 15), s | 1);
+      t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  function efHash(testo){
+    var h1 = 0xdeadbeef, h2 = 0x41c6ce57;
+    for(var i = 0; i < testo.length; i++){
+      var c = testo.charCodeAt(i);
+      h1 = Math.imul(h1 ^ c, 2654435761);
+      h2 = Math.imul(h2 ^ c, 1597334677);
+    }
+    h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909);
+    h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909);
+    return [h1 >>> 0, h2 >>> 0];
+  }
+
+  // "D6", "2D3+1", "4" → funzione che tira (almeno `minimo`); se il testo non si capisce, vale la media.
+  function efLancio(testo, media, minimo, rnd){
+    var t = (testo || "").trim(), n = Number(t), m = t.match(/^(\d*)d(\d+)(?:\+(\d+))?$/i);
+    if(!m || (t && !isNaN(n))){
+      var fisso = t && !isNaN(n) ? Math.max(minimo, n) : Math.max(minimo, media);
+      return function(){ return fisso; };
+    }
+    var k = m[1] ? Number(m[1]) : 1, f = Number(m[2]), c = m[3] ? Number(m[3]) : 0;
+    return function(){
+      var s = c;
+      for(var i = 0; i < k; i++) s += 1 + Math.floor(rnd() * f);
+      return Math.max(minimo, s);
+    };
+  }
+
+  function efChiaveDado(a, d, b){
+    if(!a._firmaDado) a._firmaDado = [a.attTesto, a.danniTesto, a.xcol, a.forza, a.ap, (a.descrizione || "").toLowerCase().replace(/\s+/g, " ")].join("|");
+    var bon = [b.piuColpire, b.piuFerire, b.lance, b.fermo, b.tiroRapido, b.melta, b.anti, b.ripCol, b.ripFer, b.piuSalvezza, b.menoFerire, b.fnp]
+      .map(function(x){ return x === true ? "1" : x === false || !x ? "0" : x; }).join("");
+    var h = efHash([EF_VERSIONE_DADO, a._firmaDado, d.nome, d.res, d.w, d.save, d.inv, d.parole.join(","), bon].join("#"));
+    return h[0].toString(36) + h[1].toString(36);
+  }
+
+  // Simula EF_LANCI usi di un'arma da parte di un modello; restituisce le medie [attacchi, colpiti, feriti, non salvati, danni].
+  function efSimula(a, d, b, chiave){
+    var rg = a.regole, parole = d.parole, rnd = efRng(efHash(chiave)[0] ^ EFD.seme);
+    var attF = efLancio(a.attTesto, a.att, 1, rnd);
+    var rapF = b.tiroRapido && rg.rapid ? efLancio(rg.rapidT, rg.rapid, 0, rnd) : null;
+    var dmgF = efLancio(a.danniTesto, a.danni, 1, rnd);
+    var meltaF = b.melta && rg.melta ? efLancio(rg.meltaT, rg.melta, 0, rnd) : null;
+
+    // Colpire
+    var tira = a.xcol !== null && !efOn(rg.torrent, parole);
+    var modH = (b.piuColpire || (b.fermo && efOn(rg.heavy, parole))) ? 1 : 0;
+    var sH = tira ? Math.min(6, Math.max(2, a.xcol - modH)) : 0;
+    var ripH = b.ripCol;
+    var sust = efOn(rg.sust, parole) ? efLancio(rg.sust.t, rg.sust.v, 0, rnd) : null;
+    var lethal = efOn(rg.lethal, parole), dev = efOn(rg.dev, parole);
+
+    // Ferire (Anti-X, +1/-1 con tetto, ripetizioni)
+    var soglia = woundThreshold(a.forza, d.res), anti = 0;
+    if(b.anti) rg.anti.forEach(function(x){
+      if(parole.indexOf(x.parola) >= 0 && efOn(x, parole) && (!anti || x.soglia < anti)) anti = x.soglia;
+    });
+    var modF = ((b.piuFerire || (b.lance && efOn(rg.lancia, parole))) ? 1 : 0) - (b.menoFerire ? 1 : 0);
+    var sW = Math.min(6, Math.max(2, soglia - modF));
+    var tW = anti ? Math.min(sW, anti) : sW; // con Anti-X si ferisce anche con X+
+    var cW = anti || 6; // ferimento critico
+    var ripW = (efOn(rg.twin, parole) || b.ripFer === "tutti") ? "tutti" : b.ripFer;
+
+    // Salvezza (il bonus vale per l'armatura, non per l'invulnerabile) e Feel No Pain
+    var sv = d.save - (b.piuSalvezza ? 1 : 0) + a.ap;
+    if(d.inv) sv = Math.min(sv, d.inv);
+    var passa = sv >= 7 ? 7 : Math.max(2, sv);
+    var fnp = b.fnp ? Number(b.fnp) : 0, w = d.w;
+
+    var sA = 0, sC = 0, sF = 0, sN = 0, sD = 0;
+    for(var s = 0; s < EF_LANCI; s++){
+      var att = attF() + (rapF ? rapF() : 0);
+      sA += att;
+      for(var i = 0; i < att; i++){
+        var colpi = 0, automatico = 0; // colpi da tirare per ferire / ferimenti automatici (Lethal)
+        if(!tira){
+          colpi = 1;
+          sC++;
+        } else {
+          var r = 1 + Math.floor(rnd() * 6);
+          if((ripH === "tutti" && r < sH) || (ripH === "1" && r === 1)) r = 1 + Math.floor(rnd() * 6);
+          if(r >= sH){
+            sC++;
+            if(r === 6 && lethal) automatico = 1; else colpi = 1;
+            if(r === 6 && sust){ var e = sust(); sC += e; colpi += e; }
+          }
+        }
+        var daSalvare = 0, devastanti = 0;
+        if(automatico){ sF++; daSalvare++; }
+        for(var j = 0; j < colpi; j++){
+          var q = 1 + Math.floor(rnd() * 6);
+          if((ripW === "tutti" && q < tW) || (ripW === "1" && q === 1)) q = 1 + Math.floor(rnd() * 6);
+          if(q >= tW){
+            sF++;
+            if(dev && q >= cW) devastanti++; else daSalvare++;
+          }
+        }
+        var nonSalvati = devastanti;
+        for(var k = 0; k < daSalvare; k++) if(1 + Math.floor(rnd() * 6) < passa) nonSalvati++;
+        sN += nonSalvati;
+        for(var u = 0; u < nonSalvati; u++){
+          var danno = Math.min(dmgF() + (meltaF ? meltaF() : 0), w);
+          if(fnp) for(var p = danno; p > 0; p--) if(1 + Math.floor(rnd() * 6) >= fnp) danno--;
+          sD += danno;
+        }
+      }
+    }
+    var r5 = function(x){ return Math.round(x / EF_LANCI * 1e5) / 1e5; };
+    return [r5(sA), r5(sC), r5(sF), r5(sN), r5(sD)];
+  }
+
+  function efSalvaDado(subito){
+    if(EFD.timer) clearTimeout(EFD.timer);
+    EFD.timer = setTimeout(function(){
+      EFD.timer = null;
+      try {
+        localStorage.setItem(EF_CHIAVE_DADO, JSON.stringify(efDatiDado()));
+        EFD.memoriaPiena = false;
+      } catch(err) { EFD.memoriaPiena = true; }
+      if(EFD.alCambio) EFD.alCambio();
+    }, subito ? 0 : 800);
+  }
+
+  function efDatiDado(){
+    return { tipo: "wh40-efficienza-dado", versione: EF_VERSIONE_DADO, lanci: EF_LANCI, seme: EFD.seme, creato: new Date().toISOString(), valori: EFD.cache };
+  }
+
+  // Sostituisce la memoria con i dati letti da localStorage o da un file; false se il formato non è giusto.
+  function efImportaDado(dati){
+    if(!dati || dati.tipo !== "wh40-efficienza-dado" || dati.versione !== EF_VERSIONE_DADO || dati.lanci !== EF_LANCI ||
+       !dati.valori || typeof dati.valori !== "object") return false;
+    EFD.cache = dati.valori;
+    EFD.seme = (dati.seme >>> 0) || 1;
+    EFD.quanti = Object.keys(EFD.cache).length;
+    return true;
+  }
+
+  // Scarica il file dei valori del sito (una volta); poi chiama `fatto`.
+  function efCaricaSito(fatto){
+    if(EFD.soloLocale || EFD.statoSito !== "no"){ if(fatto) fatto(); return; }
+    EFD.statoSito = "caricamento";
+    fetch(EF_FILE_DADO + "?v=" + Date.now(), { cache: "no-cache" }).then(function(r){
+      if(!r.ok) throw new Error("http " + r.status);
+      return r.json();
+    }).then(function(dati){
+      if(!dati || dati.tipo !== "wh40-efficienza-dado" || dati.versione !== EF_VERSIONE_DADO || dati.lanci !== EF_LANCI || !dati.valori) throw new Error("formato");
+      EFD.sito = dati.valori;
+      EFD.quantiSito = Object.keys(dati.valori).length;
+      EFD.statoSito = "ok";
+    }).catch(function(){
+      EFD.statoSito = "errore";
+    }).then(function(){
+      if(EFD.alCambio) EFD.alCambio();
+      if(EFD.alSito) EFD.alSito();
+      if(fatto) fatto();
+    });
+  }
+
+  function efInAttesaSito(){ return EFD.metodo === "dado" && !EFD.soloLocale && EFD.statoSito === "caricamento"; }
+
+  function efImpostaLocale(si){
+    EFD.soloLocale = si;
+    try { localStorage.setItem(EF_CHIAVE_LOCALE, si ? "1" : "0"); } catch(err) {}
+  }
+
+  function efCalcolaDado(a, d, b, n){
+    var chiave = efChiaveDado(a, d, b), v = EFD.cache[chiave] || (EFD.soloLocale ? null : EFD.sito[chiave]);
+    if(!v){
+      v = EFD.cache[chiave] = efSimula(a, d, b, chiave);
+      EFD.quanti++;
+      efSalvaDado(false);
+    }
+    return { attacchi: n * v[0], colpiti: n * v[1], feriti: n * v[2], nonSalvati: n * v[3], danni: n * v[4], uccisi: n * v[4] / d.w };
+  }
+
+  try {
+    efImportaDado(JSON.parse(localStorage.getItem(EF_CHIAVE_DADO)));
+    if(localStorage.getItem(EF_CHIAVE_METODO) === "dado") EFD.metodo = "dado";
+    EFD.soloLocale = localStorage.getItem(EF_CHIAVE_LOCALE) === "1";
+  } catch(err) {}
+  if(EFD.metodo === "dado") efCaricaSito(null);
+  if(EFD.seme === 1 && !EFD.quanti) EFD.seme = (Math.random() * 4294967296) >>> 0 || 1;
+
   // Valori attesi di un'arma usata da n modelli (già moltiplicati per le copie) contro un bersaglio, con i bonus b.
   function efCalcolaArma(a, d, b, n){
+    if(EFD.metodo === "dado") return efCalcolaDado(a, d, b, n);
     var rg = a.regole, parole = d.parole;
     var attacchi = n * (a.att + (b.tiroRapido ? rg.rapid : 0));
 
@@ -3295,7 +3501,7 @@ select.dl-in{width:auto; padding:0 3px;}
 
     // Danni: il danno oltre le ferite di un modello si perde (con D < W si accumula sullo stesso modello).
     var danni = a.danni + (b.melta ? rg.melta : 0);
-    var perColpo = Math.min(danni, d.w);
+    var perColpo = Math.min(danni, d.w) * (b.fnp ? 1 - (7 - Number(b.fnp)) / 6 : 1); // Feel No Pain: ogni punto di danno si ignora con X+
     return {
       attacchi: attacchi, colpiti: attacchi * (pH + extra), feriti: attacchi * feriti, nonSalvati: attacchi * nonSalvati,
       danni: attacchi * nonSalvati * perColpo, uccisi: attacchi * nonSalvati * perColpo / d.w
@@ -3309,15 +3515,23 @@ select.dl-in{width:auto; padding:0 3px;}
     var BERSAGLI = UNITA_TEST.map(function(u){
       return { nome: u.nome, res: dlIntero(u.res, 4, 1), w: dlIntero(u.w, 1, 1), save: dlSoglia(u.ts) || 7, inv: dlSoglia(u.tsPiu), parole: EF_PAROLE[u.nome] || [] };
     });
+    // Bonus all'apertura: sono quelli per cui il file del sito ha già i valori del Dado.
+    var BONUS_INIZIALI = { piuColpire: false, piuFerire: false, lance: false, fermo: false, tiroRapido: false, melta: false, anti: true,
+                           ripCol: "", ripFer: "", piuSalvezza: false, menoFerire: false, fnp: "" };
     var ef = {
       unita: null, modelli: 1, punti: 0, notaPunti: "", puntiManuale: false, manuale: false, fase: "Ranged", armi: [], comp: null,
       dettaglio: false, bersaglio: 0, // dettaglio spento: configurazione ottimale contro il bersaglio scelto
       all: false, tutte: null, versioneDati: 0, ordine: { col: "eTot", dir: -1 }, // "All": tutte le unità della fazione
-      bonus: { piuColpire: false, piuFerire: false, lance: false, fermo: false, tiroRapido: false, melta: false, anti: true,
-               ripCol: "", ripFer: "", piuSalvezza: false, menoFerire: false }
+      bonus: JSON.parse(JSON.stringify(BONUS_INIZIALI))
     };
 
     panel.innerHTML =
+      '<div class="card" id="e-metodo-card">' +
+        '<h2 class="card-title">Metodo di calcolo</h2>' +
+        '<div class="ef-riga" style="margin-top:0"><div class="ef-pills" id="e-metodo"></div><div class="ef-pills" id="e-dado-azioni"></div></div>' +
+        '<div class="field-hint" id="e-metodo-info" style="margin-top:6px"></div>' +
+        '<input type="file" id="e-dado-file" accept=".json,application/json" style="display:none">' +
+      '</div>' +
       '<div class="card">' +
         '<h2 class="card-title">Unità</h2>' +
         '<div class="field-hint" id="e-stato" style="margin-top:0"></div>' +
@@ -3534,9 +3748,137 @@ select.dl-in{width:auto; padding:0 3px;}
                         dlCampo("Ferire", ripeti("ripFer"), "Ripete i tiri per ferire falliti: solo gli 1 o tutti (Twin-linked è già incluso)")]);
       gruppo("Bersaglio", [
         chip("+1 salvezza", "piuSalvezza", "+1 al tiro salvezza del bersaglio (non cambia l'invulnerabile)"),
-        chip("-1 per ferire", "menoFerire", "-1 al tiro per ferire dell'attaccante")
+        chip("-1 per ferire", "menoFerire", "-1 al tiro per ferire dell'attaccante"),
+        dlCampo("Feel No Pain", dlSelect([["", "—"], ["6", "6+"], ["5", "5+"], ["4", "4+"], ["3", "3+"]], ef.bonus.fnp,
+          function(v){ ef.bonus.fnp = v; aggiorna(); }), "Il bersaglio ignora ogni punto di danno con X+ (i bersagli di test non ce l'hanno di serie)")
       ]);
     }
+
+    // ---- Metodo di calcolo: Stat (probabilità) o Dado (media di EF_LANCI lanci simulati) ----
+    function aggiornaInfoDado(){
+      var dado = EFD.metodo === "dado", info = g("metodo-info"), t = [];
+      if(dado){
+        t.push(EF_LANCI.toLocaleString("it-IT") + " lanci per arma, bersaglio e bonus");
+        if(EFD.soloLocale) t.push("calcolo in locale: " + EFD.quanti + " valori memorizzati");
+        else {
+          t.push(EFD.statoSito === "ok" ? "file del sito: " + EFD.quantiSito + " valori (bonus predefiniti)" :
+                 EFD.statoSito === "caricamento" ? "carico il file del sito…" : "file del sito non disponibile: calcolo in locale");
+          if(EFD.quanti) t.push(EFD.quanti + " calcolati qui per altri bonus");
+        }
+        if(EFD.memoriaPiena) t.push("memoria del browser piena: usa «Scarica file»");
+        if(info.dataset.nota) t.push(info.dataset.nota);
+      }
+      info.textContent = dado ? t.join(" · ") : "Probabilità: valori attesi con calcolo percentuale, senza arrotondamenti.";
+    }
+
+    // Genera tutti i valori con i bonus predefiniti per le armi del set di dati caricato, contro ogni bersaglio di test,
+    // e li aggiunge alla memoria (poi «Scarica file»). Va a blocchi per non bloccare la pagina.
+    var generazione = false;
+    function generaTutto(){
+      if(generazione) return;
+      var ids = Object.keys(datiCsv.armiPerId), i = 0, tot = ids.length, b0 = JSON.parse(JSON.stringify(BONUS_INIZIALI));
+      if(!tot){ g("metodo-info").dataset.nota = "dati non ancora caricati"; aggiornaInfoDado(); return; }
+      if(!EFD.soloLocale){ // si parte da zero, con un seme nuovo; i set di dati successivi si aggiungono
+        efImpostaLocale(true);
+        EFD.cache = {};
+        EFD.quanti = 0;
+        EFD.seme = (Math.random() * 4294967296) >>> 0 || 1;
+        disegnaMetodo();
+      }
+      generazione = true;
+      (function passo(){
+        var inizio = Date.now();
+        for(; i < tot && Date.now() - inizio < 40; i++){
+          armiEfficienza({ datasheetId: ids[i] }).forEach(function(a){
+            BERSAGLI.forEach(function(d){ efCalcolaDado(a, d, b0, 1); });
+          });
+        }
+        g("metodo-info").dataset.nota = i < tot ? "genero… " + i + " / " + tot + " schede" : "generati i valori di " + tot + " schede: ora «Scarica file»";
+        aggiornaInfoDado();
+        if(i < tot) setTimeout(passo, 0); else { generazione = false; efSalvaDado(true); }
+      })();
+    }
+
+    function disegnaMetodo(){
+      var cont = g("metodo"), az = g("dado-azioni");
+      cont.innerHTML = "";
+      az.innerHTML = "";
+      [["stat", "Stat", "Calcolo statistico: probabilità di colpire, ferire, salvare…"],
+       ["dado", "Dado", "Si tirano davvero i dadi: media di " + EF_LANCI.toLocaleString("it-IT") + " lanci per arma (attacchi e danni D6/D3 compresi), memorizzata"]].forEach(function(m){
+        var b = dlEl("button", "pill-btn" + (EFD.metodo === m[0] ? " selected" : ""), m[1]);
+        b.type = "button";
+        b.title = m[2];
+        b.addEventListener("click", function(){
+          if(EFD.metodo === m[0]) return;
+          EFD.metodo = m[0];
+          try { localStorage.setItem(EF_CHIAVE_METODO, EFD.metodo); } catch(err) {}
+          g("metodo-info").dataset.nota = "";
+          disegnaMetodo();
+          if(EFD.metodo === "dado") efCaricaSito(function(){ aggiorna(); }); // finché il file non arriva non si calcola nulla
+          else aggiorna();
+        });
+        cont.appendChild(b);
+      });
+      if(EFD.metodo === "dado"){
+        [["Ricalcola", "Ignora il file del sito: cancella i valori calcolati qui e li rifà in locale con un nuovo seme", function(){
+          efImpostaLocale(true);
+          EFD.cache = {};
+          EFD.quanti = 0;
+          EFD.seme = (Math.random() * 4294967296) >>> 0 || 1;
+          efSalvaDado(true);
+          ef.tutte = null;
+          g("metodo-info").dataset.nota = "ricalcolato";
+          disegnaMetodo();
+          aggiorna();
+        }], EFD.soloLocale ? ["Usa file del sito", "Torna ai valori del file del sito, scartando quelli calcolati qui", function(){
+          efImpostaLocale(false);
+          EFD.cache = {};
+          EFD.quanti = 0;
+          efSalvaDado(true);
+          ef.tutte = null;
+          g("metodo-info").dataset.nota = "";
+          disegnaMetodo();
+          efCaricaSito(function(){ aggiorna(); });
+        }] : null, ["Genera tutto", "Calcola i valori (bonus predefiniti) di tutte le armi del set di dati caricato contro ogni bersaglio, per aggiornare il file del sito: poi «Scarica file»", generaTutto],
+        ["Scarica file", "Salva i valori calcolati qui in un file .json (per il sito: efficienza_dado.json)", function(){
+          var url = URL.createObjectURL(new Blob([JSON.stringify(efDatiDado())], { type: "application/json" }));
+          var a = dlEl("a");
+          a.href = url;
+          a.download = "efficienza_dado.json";
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+          setTimeout(function(){ URL.revokeObjectURL(url); }, 1000);
+        }], ["Carica file", "Sostituisce i valori calcolati qui con quelli di un file .json scaricato in precedenza (si lavora in locale)", function(){
+          g("dado-file").click();
+        }]].forEach(function(x){
+          if(!x) return;
+          var b = dlEl("button", "pill-btn", x[0]);
+          b.type = "button";
+          b.title = x[1];
+          b.addEventListener("click", x[2]);
+          az.appendChild(b);
+        });
+      }
+      aggiornaInfoDado();
+    }
+
+    g("dado-file").addEventListener("change", function(){
+      var file = this.files && this.files[0], campo = this;
+      if(!file) return;
+      var lettore = new FileReader();
+      lettore.onload = function(){
+        var ok = false;
+        try { ok = efImportaDado(JSON.parse(lettore.result)); } catch(err) {}
+        g("metodo-info").dataset.nota = ok ? "file caricato" : "file non valido (o con un numero di lanci diverso)";
+        if(ok){ efImpostaLocale(true); efSalvaDado(true); ef.tutte = null; disegnaMetodo(); aggiorna(); }
+        aggiornaInfoDado();
+      };
+      lettore.readAsText(file);
+      campo.value = "";
+    });
+    EFD.alCambio = aggiornaInfoDado;
+    EFD.alSito = function(){ aggiorna(); }; // il file del sito è arrivato (caricamento iniziale)
 
     // Confronta i modelli assegnati con quelli consentiti dalla composizione (come nel Duello): solo avvisi.
     function controllaComposizione(){
@@ -3947,7 +4289,8 @@ select.dl-in{width:auto; padding:0 3px;}
       var visibile = ef.all && !ef.dettaglio && !!F.value;
       card.style.display = visibile ? "" : "none";
       if(!visibile){ aggiornaPosizione(); return; }
-      var chiave = [F.value, ef.bersaglio, JSON.stringify(ef.bonus), ef.versioneDati].join("|");
+      if(efInAttesaSito()){ card.textContent = "Carico il file del sito…"; ef.tutte = null; return; }
+      var chiave = [F.value, ef.bersaglio, JSON.stringify(ef.bonus), ef.versioneDati, EFD.metodo, EFD.seme].join("|");
       if(ef.tutte && ef.tutte.chiave === chiave){ disegnaTutte(); return; }
       var viste = {}, elenco = [], d = BERSAGLI[ef.bersaglio];
       datiCsv.unita.forEach(function(u){
@@ -3959,8 +4302,9 @@ select.dl-in{width:auto; padding:0 3px;}
       var i = 0;
       (function passo(){
         if(ef.tutte !== t) return; // nel frattempo è cambiato qualcosa: si è ripartiti da capo
-        var fine = Math.min(elenco.length, i + 6);
-        for(; i < fine; i++){
+        // Stat: 6 unità per blocco; Dado: finché non passano ~40 ms (la prima volta ogni arma si simula).
+        var inizio = Date.now(), dado = EFD.metodo === "dado", fatte = 0;
+        for(; i < elenco.length && (dado ? (fatte === 0 || Date.now() - inizio < 40) : fatte < 6); i++, fatte++){
           var r = rigaTutte(elenco[i], d);
           if(r) t.righe.push(r);
         }
@@ -3981,7 +4325,7 @@ select.dl-in{width:auto; padding:0 3px;}
 
     function aggiorna(){
       aggiornaTutte();
-      if(!ef.unita) return;
+      if(!ef.unita || efInAttesaSito()) return;
       if(!ef.dettaglio){ semplice(); return; }
       var b = ef.bonus;
       ef.armi.forEach(function(a){
@@ -4085,6 +4429,7 @@ select.dl-in{width:auto; padding:0 3px;}
     });
 
     disegnaBonus();
+    disegnaMetodo();
     disegnaBersagli();
     g("dett").appendChild(dlChip("Dettaglio", ef.dettaglio,
       "Acceso: armi, modelli per arma e tabella contro tutti i bersagli. Spento: scegli un bersaglio e vedi la configurazione di armi che fa più danni.",
