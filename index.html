@@ -658,6 +658,12 @@ select.dl-in{width:auto; padding:0 3px;}
 .ef-all th{padding:2px 3px 6px; font-size:.58rem; letter-spacing:.02em;}
 .ef-all td.dl-stat-nome{white-space:normal; max-width:118px; font-size:.78rem; line-height:1.2;}
 .ef-all td.dl-stat-nome small{font-size:.62rem;}
+.ef-all td.ef-pos{color:var(--text-dim); font-weight:600; text-align:right; padding-right:6px;}
+.ef-all tbody tr.ef-riga-sel, .ef-all tr.ef-riga-click{cursor:pointer;}
+.ef-all tr.ef-riga-click:hover td{background:var(--bg-hover, rgba(127,127,127,.12));}
+.ef-all tr.ef-sel td{background:rgba(127,127,127,.2);}
+.ef-all tr.ef-sel td.ef-pos{color:var(--text);}
+.ef-pos-tag{margin-left:8px; padding:1px 8px; border-radius:var(--radius-pill); background:var(--att); color:#fff; font-family:"IBM Plex Mono",monospace; font-size:.7rem; font-weight:600; letter-spacing:0; text-transform:none;}
 .ef-dett .dl-chip{min-height:36px; padding:0 14px; font-size:.85rem;}
 .ef-sommario{display:flex; flex-wrap:wrap; gap:8px 20px; margin-bottom:10px;}
 .ef-dato small{display:block; font-size:.62rem; font-weight:600; letter-spacing:.07em; text-transform:uppercase; color:var(--text-dim);}
@@ -3359,6 +3365,13 @@ select.dl-in{width:auto; padding:0 3px;}
     function g(id){ return document.getElementById("e-" + id); }
     var F = g("a-fazione-select"), C = g("a-cerca"), U = g("a-unita-select");
     var chipAll; // pulsante "All", creato in fondo
+    (function(){ // badge "# n" accanto all'etichetta «Unità»
+      var etichetta = document.getElementById("e-a-unita-select").parentNode.querySelector(".field-label");
+      var tag = dlEl("span", "ef-pos-tag");
+      tag.id = "e-pos-unita";
+      tag.style.display = "none";
+      etichetta.appendChild(tag);
+    })();
     var chiaveArma = function(a){ return lmChiaveArma(lmNomeBaseArma(a.nome)); };
 
     // Armi di un'unità dai dati, con le regole speciali lette dalla descrizione.
@@ -3774,7 +3787,11 @@ select.dl-in{width:auto; padding:0 3px;}
       cont.innerHTML = "";
       var h = dlEl("h2", "card-title", "Efficienza");
       h.appendChild(dlEl("span", "dl-sub", "danni ogni 100 pt · contro " + d.nome));
+      var tagPos = dlEl("span", "ef-pos-tag");
+      tagPos.id = "e-pos-eff";
+      h.appendChild(tagPos);
       cont.appendChild(h);
+      aggiornaPosizione();
       var tessere = dlEl("div", "ef-sommario");
       [["Mischia", dM, ""], ["Distanza", dT, ""], ["Totale", dT + dM, "ef-evid"]].forEach(function(x){
         var t = dlEl("div", "ef-dato " + x[2]);
@@ -3799,12 +3816,50 @@ select.dl-in{width:auto; padding:0 3px;}
       var dT = tiro ? tiro.danni : 0, dM = mischia ? mischia.danni : 0;
       var punti = costoDaiDati(u, s.modelli).punti, scheda = armyBuilder.puntiPerId[idScheda(u)];
       var per = function(x){ return punti > 0 ? x * 100 / punti : null; };
-      return { nome: scheda && scheda.nome ? scheda.nome : u.nome, modelli: s.modelli, punti: punti, senzaDati: !s.comp,
+      return { u: u, id: idScheda(u) || String(u.datasheetId), pos: null,
+               nome: scheda && scheda.nome ? scheda.nome : u.nome, modelli: s.modelli, punti: punti, senzaDati: !s.comp,
                dM: dM, eM: per(dM), dT: dT, eT: per(dT), dTot: dM + dT, eTot: per(dM + dT) };
+    }
+
+    // Posizione in classifica (#): 1 = efficienza totale più alta contro il bersaglio; senza punti = nessuna posizione.
+    function assegnaPosizioni(t){
+      var con = t.righe.filter(function(r){ return r.eTot !== null; })
+        .sort(function(x, y){ return y.eTot - x.eTot || x.nome.localeCompare(y.nome); });
+      t.righe.forEach(function(r){ r.pos = null; });
+      con.forEach(function(r, i){ r.pos = i + 1; });
+      t.conPosizione = con.length;
+    }
+
+    // Badge "# n" accanto all'unità scelta (etichetta «Unità» e titolo di Efficienza): solo con la tabella All completa.
+    function aggiornaPosizione(){
+      var t = ef.tutte, testo = "", r = null;
+      if(ef.all && !ef.dettaglio && F.value && ef.unita && t && t.completa){
+        var id = idScheda(ef.unita) || String(ef.unita.datasheetId);
+        t.righe.forEach(function(x){ if(x.id === id) r = x; });
+      }
+      if(r) testo = r.pos !== null ? "# " + r.pos : "# —";
+      var titolo = r ? "Posizione per efficienza totale contro " + BERSAGLI[ef.bersaglio].nome + (r.pos !== null ? ": " + r.pos + " su " + t.conPosizione : ": senza punti") : "";
+      [g("pos-unita"), g("pos-eff")].forEach(function(el){
+        if(!el) return;
+        el.textContent = testo;
+        el.title = titolo;
+        el.style.display = testo ? "" : "none";
+      });
+    }
+
+    function selezionaRiga(r){
+      C.value = "";
+      riempiElencoUnita();
+      U.value = r.u.chiave;
+      if(U.value !== r.u.chiave) return;
+      scelta();
+      try { U.scrollIntoView({ block: "center", behavior: "smooth" }); } catch(err) {}
     }
 
     function disegnaTutte(){
       var cont = g("all-card"), t = ef.tutte;
+      assegnaPosizioni(t);
+      aggiornaPosizione();
       cont.innerHTML = "";
       var h = dlEl("h2", "card-title", "Tutte le unità");
       h.appendChild(dlEl("span", "dl-sub", F.value + " · contro " + BERSAGLI[ef.bersaglio].nome + " · efficienza = danni ogni 100 pt"));
@@ -3818,6 +3873,7 @@ select.dl-in{width:auto; padding:0 3px;}
       var righe = t.righe.slice().sort(function(x, y){
         var a = x[o.col], b = y[o.col];
         if(o.col === "nome") return o.dir * a.localeCompare(b);
+        if(o.col === "pos" && a !== null && b !== null) return o.dir * (a - b);
         if(a === null && b === null) return 0;
         if(a === null) return 1; // senza punti: in fondo
         if(b === null) return -1;
@@ -3825,6 +3881,15 @@ select.dl-in{width:auto; padding:0 3px;}
       });
       var tab = dlEl("table", "dl-stat-tab ef-all");
       var gruppi = dlEl("tr");
+      var thPos = dlEl("th", "ef-ordina", "#" + (o.col === "pos" ? (o.dir < 0 ? " ▼" : " ▲") : ""));
+      thPos.rowSpan = 2;
+      thPos.style.textAlign = "right";
+      thPos.title = "Posizione per efficienza totale contro il bersaglio (1 = la più alta); clic per ordinare";
+      thPos.addEventListener("click", function(){
+        ef.ordine = { col: "pos", dir: o.col === "pos" ? -o.dir : 1 };
+        disegnaTutte();
+      });
+      gruppi.appendChild(thPos);
       var vuota = dlEl("th", "", "");
       vuota.rowSpan = 2;
       gruppi.appendChild(vuota);
@@ -3855,8 +3920,12 @@ select.dl-in{width:auto; padding:0 3px;}
         ef.ordine = { col: "nome", dir: o.col === "nome" ? -o.dir : 1 };
         disegnaTutte();
       });
+      var idScelta = ef.unita ? (idScheda(ef.unita) || String(ef.unita.datasheetId)) : null;
       righe.forEach(function(r){
-        var tr = dlEl("tr");
+        var tr = dlEl("tr", "ef-riga-click" + (r.id === idScelta ? " ef-sel" : ""));
+        tr.title = "Clic per vedere la configurazione ottimale di quest'unità";
+        tr.addEventListener("click", function(){ selezionaRiga(r); });
+        tr.appendChild(dlEl("td", "ef-pos", r.pos !== null ? String(r.pos) : "—"));
         var nome = dlEl("td", "dl-stat-nome ef-bers", r.nome);
         var sub = dlEl("small", "", r.modelli + (r.modelli === 1 ? " modello" : " modelli") + (r.punti > 0 ? " · " + r.punti + " pt" : "") + (r.senzaDati ? " · stima" : ""));
         if(r.senzaDati) sub.title = "Senza dati di composizione: tutte le armi sono assegnate a tutti i modelli, il valore può essere sovrastimato";
@@ -3877,7 +3946,7 @@ select.dl-in{width:auto; padding:0 3px;}
       var card = g("all-card");
       var visibile = ef.all && !ef.dettaglio && !!F.value;
       card.style.display = visibile ? "" : "none";
-      if(!visibile) return;
+      if(!visibile){ aggiornaPosizione(); return; }
       var chiave = [F.value, ef.bersaglio, JSON.stringify(ef.bonus), ef.versioneDati].join("|");
       if(ef.tutte && ef.tutte.chiave === chiave){ disegnaTutte(); return; }
       var viste = {}, elenco = [], d = BERSAGLI[ef.bersaglio];
@@ -3966,6 +4035,7 @@ select.dl-in{width:auto; padding:0 3px;}
       g("dettagli").style.display = "none";
       g("vuoto").style.display = "";
       g("contenuto").style.display = "none";
+      aggiornaPosizione();
     }
 
     function scelta(){
