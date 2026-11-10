@@ -1222,7 +1222,9 @@ select.dl-in{width:auto; padding:0 3px;}
 
   function calcolaAttacco(combat){
     // FASE 1 - PER COLPIRE
-    var initial = hitPhase(combat.att, combat.xcol, combat.lethal, combat.sustained, combat.lethalThreshold, combat.sustainedThreshold);
+    // "-1 hit" del difensore: colpire è più difficile di 1 (al massimo 6+); i colpi automatici (senza soglia) non cambiano.
+    var xcolEff = combat.malusColpire && combat.xcol >= 2 ? Math.min(6, combat.xcol + 1) : combat.xcol;
+    var initial = hitPhase(combat.att, xcolEff, combat.lethal, combat.sustained, combat.lethalThreshold, combat.sustainedThreshold);
     var critTotal = initial.crit;
     var normalSuccessTotal = initial.normalSuccess + initial.sustBonus;
     var failTotal = initial.fail;
@@ -1230,7 +1232,7 @@ select.dl-in{width:auto; padding:0 3px;}
     if(combat.repeat){
       // Reroll di tutti i falliti: include già gli 1 naturali, "Ripeti 1 per colpire" (se
       // attivo insieme) non farebbe che rilanciare dadi già rilanciati, quindi va ignorato.
-      var reroll = hitPhase(initial.fail, combat.xcol, combat.lethal, combat.sustained, combat.lethalThreshold, combat.sustainedThreshold);
+      var reroll = hitPhase(initial.fail, xcolEff, combat.lethal, combat.sustained, combat.lethalThreshold, combat.sustainedThreshold);
       critTotal += reroll.crit;
       normalSuccessTotal += reroll.normalSuccess + reroll.sustBonus;
       sustTotal += reroll.sustBonus;
@@ -1238,7 +1240,7 @@ select.dl-in{width:auto; padding:0 3px;}
     } else if(combat.repeatOnesHit){
       // "Un solo 1": si rilancia un solo dado tra quelli con 1 naturale, non tutti.
       var onesToRerollHit = combat.repeatOnesHitMode === "uno" ? Math.min(1, initial.ones) : initial.ones;
-      var rerollOnesHit = hitPhase(onesToRerollHit, combat.xcol, combat.lethal, combat.sustained, combat.lethalThreshold, combat.sustainedThreshold);
+      var rerollOnesHit = hitPhase(onesToRerollHit, xcolEff, combat.lethal, combat.sustained, combat.lethalThreshold, combat.sustainedThreshold);
       critTotal += rerollOnesHit.crit;
       normalSuccessTotal += rerollOnesHit.normalSuccess + rerollOnesHit.sustBonus;
       sustTotal += rerollOnesHit.sustBonus;
@@ -1301,17 +1303,20 @@ select.dl-in{width:auto; padding:0 3px;}
     }
 
     // FASE 5 - DANNI
+    // "-1 D" del difensore: ogni ferita non salvata fa 1 danno in meno, ma mai sotto 1 (il danno 1 resta 1). Si applica
+    // per arma, dopo la salvezza e prima del Feel No Pain (che qui toglie intere ferite).
+    var danniFerita = combat.menoDanno && combat.danni > 1 ? combat.danni - 1 : combat.danni;
     var effectiveAttacks = Math.max(0, Math.round(feriteDopoFnp));
-    var danniTotali = effectiveAttacks * combat.danni;
+    var danniTotali = effectiveAttacks * danniFerita;
     var wCurrent = 0, morti = 0;
     for(var i=0;i<effectiveAttacks;i++){
-      wCurrent += combat.danni;
+      wCurrent += danniFerita;
       if(wCurrent >= combat.w){ morti++; wCurrent = 0; }
     }
     var feriteResidue = wCurrent;
 
     return {
-      attOk: attOk, critTotal: critTotal, sustTotal: sustTotal, woundT: woundT, ferOk: ferOk, calcThreshold: calcThreshold,
+      hitT: xcolEff, danniFerita: danniFerita, attOk: attOk, critTotal: critTotal, sustTotal: sustTotal, woundT: woundT, ferOk: ferOk, calcThreshold: calcThreshold,
       nonSalvati: nonSalvati, devBypassCount: devBypassCount, feriteDopoFnp: feriteDopoFnp,
       effectiveAttacks: effectiveAttacks, danniTotali: danniTotali, morti: morti, feriteResidue: feriteResidue
     };
@@ -2762,7 +2767,7 @@ select.dl-in{width:auto; padding:0 3px;}
   // dell'elenco, si applicano poi uno dopo l'altro ai modelli del difensore (come in Combattimento:
   // il danno oltre le ferite di un modello si perde); con più attaccanti si procede riquadro per riquadro.
   var DL_CAMPI_ARMA = ["modelli", "att", "xcol", "forza", "ap", "danni", "lethal", "sust", "dev", "twin", "lancia", "antiX", "ripCol", "rip1Col", "rip1Fer"];
-  var DL_CAMPI_DIFENSORE = ["res", "save", "w", "invulT", "fnpT", "malusFer"];
+  var DL_CAMPI_DIFENSORE = ["res", "save", "w", "invulT", "fnpT", "malusFer", "malusCol", "menoDanno"];
 
   function dlSoglia(testo){
     var n = parseInt(testo, 10);
@@ -2811,7 +2816,7 @@ select.dl-in{width:auto; padding:0 3px;}
     return {
       res: dlIntero(d.res, 4, 1), save: dlSoglia(d.ts) || 4, w: dlIntero(d.w, 1, 1),
       w0: dlIntero(d.w, 1, 1), // W ricevuto: i modelli a ferite piene seguono le modifiche di W, quelli feriti no
-      invulT: dlSoglia(d.tsPiu), fnpT: dlSoglia(d.fnp), malusFer: false, // malusFer: "-1 fer", -1 al tiro per ferire dell'attaccante
+      invulT: dlSoglia(d.tsPiu), fnpT: dlSoglia(d.fnp), malusFer: false, malusCol: false, menoDanno: false, // malusFer: "-1 fer", -1 al tiro per ferire dell'attaccante
       modelli: parseInt(d.modelli, 10) === 0 ? 0 : dlIntero(d.modelli, 1, 1), // 0 = nessun limite (VSunità)
       // Ferite attuali di ogni modello (una voce per basetta attiva); se mancano si assume W pieno.
       ferite: Array.isArray(d.ferite) ? d.ferite.map(function(n){ return dlIntero(n, 0, 0); }) : []
@@ -3003,6 +3008,8 @@ select.dl-in{width:auto; padding:0 3px;}
       riga.appendChild(dlCampo("Invulnerabile", dlSelect(dlVociSoglie(false), c.invulT, function(v){ c.invulT = parseInt(v, 10); dlAggiorna(); })));
       riga.appendChild(dlCampo("Feel No Pain", dlSelect(dlVociSoglie(false), c.fnpT, function(v){ c.fnpT = parseInt(v, 10); dlAggiorna(); })));
       riga.appendChild(dlChip("-1 fer", c.malusFer, "Malus di 1 al tiro per ferire dell'attaccante (es. 2+ diventa 3+)", function(v){ c.malusFer = v; dlAggiorna(); }));
+      riga.appendChild(dlChip("-1 hit", c.malusCol, "Colpire l'unità è più difficile di 1 (es. 3+ diventa 4+, massimo 6+; i colpi automatici non cambiano)", function(v){ c.malusCol = v; dlAggiorna(); }));
+      riga.appendChild(dlChip("-1 D", c.menoDanno, "Ogni ferita non salvata fa 1 danno in meno, ma non sotto 1: si applica per arma, dopo il tiro salvezza e prima del Feel No Pain", function(v){ c.menoDanno = v; dlAggiorna(); }));
       if(opzioni.modelliLiberi){
         // VSunità: vuoto = nessun limite, si calcola quanti modelli verrebbero uccisi/feriti.
         var campoModelli = dlInputNumero(c.modelli || "", 0, "", function(v){ c.modelli = v; dlAggiorna(); });
@@ -3026,6 +3033,7 @@ select.dl-in{width:auto; padding:0 3px;}
       function qualcuna(fn){ return usate.some(fn); }
       var righe = [
         ["Attacchi", function(u){ return u.att; }, true],
+        [d.malusCol ? "Per colpire (-1 hit)" : "Per colpire", function(u){ return u.r.hitT >= 2 ? u.r.hitT + "+" : "auto"; }, true, true],
         ["Colpiti", function(u){ return u.r.attOk; }, true],
         ["di cui Lethal (feriscono da soli)", function(u){ return u.r.critTotal; }, qualcuna(function(u){ return u.a.lethal > 0; })],
         ["Colpi extra Sustained", function(u){ return u.r.sustTotal; }, qualcuna(function(u){ return u.a.sust > 0; })],
@@ -3037,6 +3045,7 @@ select.dl-in{width:auto; padding:0 3px;}
         ["Salvati", function(u){ return u.r.ferOk - u.r.nonSalvati; }, true],
         ["Non salvati", function(u){ return u.r.nonSalvati; }, true],
         ["Evitati da Feel No Pain", function(u){ return u.r.nonSalvati - u.r.feriteDopoFnp; }, d.fnpT > 0],
+        ["Danni per ferita (-1 D)", function(u){ return u.r.danniFerita; }, d.menoDanno, true],
         ["Danni inflitti", function(u){ return u.r.danniTotali; }, true]
       ];
       var tabella = dlEl("table", "dl-stat-tab");
@@ -3094,12 +3103,12 @@ select.dl-in{width:auto; padding:0 3px;}
           antiX: a.antiX > 0, antiXThreshold: a.antiX || 4,
           res: d.res, save: d.save, w: d.w,
           invul: d.invulT > 0, invulThreshold: d.invulT || 4,
-          fnp: d.fnpT > 0, fnpThreshold: d.fnpT || 4, malusFerire: d.malusFer
+          fnp: d.fnpT > 0, fnpThreshold: d.fnpT || 4, malusFerire: d.malusFer, malusColpire: d.malusCol, menoDanno: d.menoDanno
         });
         usate.push({ a: a, att: a.modelli * a.copie * a.att, r: r });
         // Come in Combattimento il danno oltre le ferite rimaste a un modello si perde.
         for(var i = 0; i < r.effectiveAttacks && (libero || indice < lista.length); i++){
-          resto -= a.danni;
+          resto -= r.danniFerita;
           if(resto <= 0){
             morti++;
             indice++;
