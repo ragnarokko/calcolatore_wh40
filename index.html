@@ -2192,14 +2192,51 @@ select.dl-in{width:auto; padding:0 3px;}
     };
   }
 
+  // Correzioni a mano per le schede dove il testo di Wahapedia non basta (per id della scheda). I nomi sono quelli delle armi.
+  //  gruppi: un insieme di armi di cui se ne possono avere al massimo `max` in totale, oppure `q` ogni `perOgni` modelli
+  //          dell'unità (vale al posto del limite per singola arma letto dalle opzioni);
+  //  slot:   armi che un modello può avere anche più volte (il campo Modelli conta le armi, non i modelli): massimo per arma;
+  //  uguali: armi che si prendono sempre insieme (stesso numero);
+  //  tengono: l'arma nuova non toglie queste armi di serie (es. il Cyclone si prende con il Bolter Storm in più).
+  var LM_ARMIGER_MOIRAX = {
+    gruppi: [{ armi: ["Conversion beam cannon", "Graviton pulsar", "Lightning lock", "Rad cleanser", "Volkite veuglaire"], max: 2,
+               nota: "Al massimo 2 fra queste armi, anche 2 volte la stessa (Siege claw e Rad cleanser si prendono insieme, una volta sola)" }],
+    slot: { "Conversion beam cannon": 2, "Graviton pulsar": 2, "Lightning lock": 2, "Volkite veuglaire": 2, "Rad cleanser": 1, "Siege claw": 1 },
+    uguali: [["Siege claw", "Rad cleanser"]]
+  };
+  var LM_DEATHWATCH_TERMINATOR = {
+    gruppi: [{ armi: ["Assault cannon", "Cyclone missile launcher", "Heavy flamer", "Plasma cannon"], perOgni: 5, q: 3,
+               nota: "Al massimo 3 armi pesanti ogni 5 modelli, fra queste armi" }],
+    tengono: { "Cyclone missile launcher": ["Storm bolter"], "Storm bolter": ["Power fist"] }
+  };
+  var LM_CORREZIONI = { "2769": LM_ARMIGER_MOIRAX, "3822": LM_DEATHWATCH_TERMINATOR, "3873": LM_DEATHWATCH_TERMINATOR };
+
+  // Applica le correzioni di una scheda: traduce i nomi delle armi in chiavi (solo quelle che esistono nei dati).
+  function lmApplicaCorrezioni(info, corr){
+    var chiave = function(n){ var k = lmChiaveArma(lmNomeBaseArma(n)); return info.indice[k] ? k : null; };
+    (corr.gruppi || []).forEach(function(g){
+      var chiavi = g.armi.map(chiave).filter(Boolean);
+      if(chiavi.length) info.gruppi.push({ chiavi: chiavi, max: g.max, perOgni: g.perOgni, q: g.q, nota: g.nota });
+    });
+    Object.keys(corr.slot || {}).forEach(function(n){ var k = chiave(n); if(k) info.slot[k] = corr.slot[n]; });
+    (corr.uguali || []).forEach(function(c){
+      var k = c.map(chiave);
+      if(k[0] && k[1]) info.uguali.push(k);
+    });
+    Object.keys(corr.tengono || {}).forEach(function(n){
+      var k = chiave(n);
+      if(k) info.tengono[k] = corr.tengono[n].map(chiave).filter(Boolean);
+    });
+  }
+
   // Analisi di una scheda (indipendente dal numero di modelli).
-  // dati: { equip: testo, opzioni: [testi], comp: [righe di composizione], armi: [nomi dei profili d'arma] }
+  // dati: { id, equip: testo, opzioni: [testi], comp: [righe di composizione], armi: [nomi dei profili d'arma] }
   function lmAnalizza(dati){
     var indice = {};
     (dati.armi || []).forEach(function(n){ var b = lmNomeBaseArma(n); indice[lmChiaveArma(b)] = b; });
     var tipi = lmTipiModelli(dati.comp || []);
     var testoBase = dati.equip || "";
-    var info = { indice: indice, tipi: tipi, regole: [], dubbie: [], extra: {}, copie: {} };
+    var info = { indice: indice, tipi: tipi, regole: [], dubbie: [], extra: {}, copie: {}, gruppi: [], slot: {}, uguali: [], tengono: {} };
     (dati.opzioni || []).forEach(function(o){
       // Alcune schede (es. squadre di personaggi con nome) descrivono l'equipaggiamento fra le opzioni.
       if(/\bis equipped with/i.test(o) && !/\bcan\b/i.test(o)){ testoBase += ". " + o; return; }
@@ -2209,8 +2246,20 @@ select.dl-in{width:auto; padding:0 3px;}
       info.regole.push(r);
     });
     info.base = lmParseBase(testoBase, tipi, indice, info.copie);
+    if(LM_CORREZIONI[dati.id]) lmApplicaCorrezioni(info, LM_CORREZIONI[dati.id]);
     info.haLimiti = !!(info.regole.length || Object.keys(info.base).length);
     return info;
+  }
+
+  // Massimo del campo Modelli di un'arma: i modelli dell'unità, o di più se un modello può averla più volte (slot).
+  function lmCapCampo(comp, nome, modelli){
+    var s = comp ? comp.info.slot[lmChiaveArma(lmNomeBaseArma(nome))] : 0;
+    return s ? Math.max(modelli, s) : modelli;
+  }
+
+  // Quante armi di un gruppo si possono avere con N modelli.
+  function lmMaxGruppo(g, N){
+    return g.max !== undefined ? g.max : Math.floor(N / g.perOgni) * g.q;
   }
 
   // Il tipo di modello di un profilo non unito (es. "Boy", "Nob"); null per le schede intere.
@@ -2275,6 +2324,7 @@ select.dl-in{width:auto; padding:0 3px;}
 
   // "Si può usare eliminando Bolt Rifle (max 2)": come ottenere un'arma che non è di serie.
   function lmTestoUso(info, limite, modelli){
+    if(limite.nota) return limite.nota; // arma di un gruppo corretto a mano
     // Regole con la stessa arma da eliminare si sommano ("Bolt pistol (max 1)" + "(max 4)" = max 5).
     var gruppi = [], perChiave = {};
     limite.fonti.forEach(function(f){
@@ -2312,18 +2362,35 @@ select.dl-in{width:auto; padding:0 3px;}
     });
     Object.keys(limiti).forEach(function(k){
       limiti[k].max = Math.min(limiti[k].max, ctx.N);
+      // Correzioni a mano: le armi con "slot" hanno il loro massimo (anche oltre i modelli); quelle di un gruppo non
+      // superano il massimo del gruppo, che vale al posto del limite letto dalle opzioni.
+      if(k in info.slot) limiti[k].max = info.slot[k];
+      info.gruppi.forEach(function(g){
+        if(g.chiavi.indexOf(k) < 0) return;
+        var m = lmMaxGruppo(g, ctx.N);
+        limiti[k].max = k in info.slot ? Math.min(info.slot[k], m) : Math.min(ctx.N, m);
+        limiti[k].nota = g.nota;
+        limiti[k].motivi.push(g.nota);
+      });
       var n = conteggi[k] || 0;
       if(n > limiti[k].max) avvisi.push({ testo: nome(k) + ": " + n + " modelli, massimo consentito " + limiti[k].max, chiavi: [k] });
     });
     // Arma di serie sostituita: i modelli che la tengono più quelli che l'hanno cambiata non superano quelli che la portano.
     var sostituite = {};
+    var inGruppo = function(k){ return info.gruppi.some(function(g){ return g.chiavi.indexOf(k) >= 0; }); };
     info.regole.forEach(function(r){
       if(r.verbo !== "sostituisce") return;
-      r.sostituiti.forEach(function(b){ if(b in info.base) (sostituite[b] = sostituite[b] || []).push(r); });
+      r.sostituiti.forEach(function(b){ if(b in info.base && !inGruppo(b)) (sostituite[b] = sostituite[b] || []).push(r); });
     });
     Object.keys(sostituite).forEach(function(b){
       var cap = ctx.max(info.base[b]), alt = [];
-      sostituite[b].forEach(function(r){ r.alt.forEach(function(k){ if(alt.indexOf(k) < 0 && k !== b) alt.push(k); }); });
+      sostituite[b].forEach(function(r){
+        r.alt.forEach(function(k){
+          if(alt.indexOf(k) >= 0 || k === b) return;
+          if(info.tengono[k] && info.tengono[k].indexOf(b) >= 0) return; // l'arma nuova non toglie questa
+          alt.push(k);
+        });
+      });
       var somma = conteggi[b] || 0;
       alt.forEach(function(k){ somma += conteggi[k] || 0; });
       if(somma > cap) avvisi.push({
@@ -2333,7 +2400,7 @@ select.dl-in{width:auto; padding:0 3px;}
     });
     // "Una fra queste": se le armi nuove sono solo di quella regola, il totale non supera i modelli consentiti.
     info.regole.forEach(function(r, i){
-      if(r.alt.length < 2) return;
+      if(r.alt.length < 2 || r.alt.some(inGruppo)) return;
       var esclusiva = r.alt.every(function(k){
         return info.regole.every(function(r2, j){ return j === i || r2.alt.indexOf(k) < 0; });
       });
@@ -2341,6 +2408,17 @@ select.dl-in{width:auto; padding:0 3px;}
       var c = lmConsentiti(ctx, r), somma = 0;
       r.alt.forEach(function(k){ somma += conteggi[k] || 0; });
       if(somma > c) avvisi.push({ testo: r.alt.map(nome).join(" / ") + ": " + somma + " modelli in totale, massimo consentito " + c, chiavi: r.alt.slice() });
+    });
+    // Gruppi corretti a mano: il totale delle armi del gruppo non supera il massimo; "uguali" si prendono insieme.
+    info.gruppi.forEach(function(g){
+      var m = lmMaxGruppo(g, ctx.N), somma = 0;
+      g.chiavi.forEach(function(k){ somma += conteggi[k] || 0; });
+      if(somma > m) avvisi.push({ testo: g.chiavi.map(nome).join(" / ") + ": " + somma + " in totale, massimo consentito " + m, chiavi: g.chiavi.slice() });
+    });
+    info.uguali.forEach(function(c){
+      if((conteggi[c[0]] || 0) !== (conteggi[c[1]] || 0)){
+        avvisi.push({ testo: nome(c[0]) + " e " + nome(c[1]) + " si prendono insieme: stesso numero per entrambe", chiavi: c.slice(), insieme: true });
+      }
     });
     return { limiti: limiti, avvisi: avvisi, modelliTotali: ctx.N };
   }
@@ -2356,7 +2434,7 @@ select.dl-in{width:auto; padding:0 3px;}
     var nomi = att.armi.map(function(a){ return a.nome; });
     var chiave = id + "|" + nomi.join("|");
     var info = composizioneCache[chiave] || (composizioneCache[chiave] = lmAnalizza({
-      equip: equip, opzioni: opzioni, comp: armyBuilder.compRighe[id] || [], armi: nomi }));
+      id: id, equip: equip, opzioni: opzioni, comp: armyBuilder.compRighe[id] || [], armi: nomi }));
     if(!info.haLimiti && !info.dubbie.length) return null;
     return { info: info, tipoProfilo: att.unito ? null : lmTipoProfilo(info, att.nomeProfilo || att.nome) };
   }
@@ -3165,7 +3243,7 @@ select.dl-in{width:auto; padding:0 3px;}
         card.appendChild(titolo);
         var elArmi = dlEl("div", "dl-armi");
         if(!att.armi.length) elArmi.appendChild(dlEl("div", "dl-vuoto", "Nessuna arma nei dati per questa unità."));
-        att.armi.forEach(function(a){ elArmi.appendChild(dlCostruisciArma(a, att.distanza, att.modelli, "m|" + att.id + "|" + idConf)); });
+        att.armi.forEach(function(a){ elArmi.appendChild(dlCostruisciArma(a, att.distanza, lmCapCampo(att.comp, a.nome, att.modelli), "m|" + att.id + "|" + idConf)); });
         card.appendChild(elArmi);
         att._avvisi = dlEl("div", "dl-avvisi");
         card.appendChild(att._avvisi);
@@ -3758,7 +3836,7 @@ select.dl-in{width:auto; padding:0 3px;}
         a._uso = dlEl("small", "dl-uso");
         nome.appendChild(a._uso);
         riga.appendChild(nome);
-        var campo = dlCampo("Modelli", dlInputNumero(a.modelli, 0, "dl-mod", function(v){ ef.manuale = true; a.modelli = v; aggiorna(); }, ef.modelli));
+        var campo = dlCampo("Modelli", dlInputNumero(a.modelli, 0, "dl-mod", function(v){ ef.manuale = true; a.modelli = v; aggiorna(); }, lmCapCampo(ef.comp, a.nome, ef.modelli)));
         a._max = dlEl("small", "dl-max");
         campo.appendChild(a._max);
         a._campoMod = campo;
@@ -4062,7 +4140,8 @@ select.dl-in{width:auto; padding:0 3px;}
           if(fase === "Melee" && usiMischia(conta) > s.modelli) return false;
           var cont = Object.assign({}, fisso, conta);
           var v = lmValuta(info, s.modelli, cont, null), i;
-          for(i = 0; i < v.avvisi.length; i++) if(!tollerati[firma(v.avvisi[i])]) return false;
+          // (le armi "si prendono insieme" stanno in fasi diverse: l'altra metà resta fuori da questo calcolo)
+          for(i = 0; i < v.avvisi.length; i++) if(!v.avvisi[i].insieme && !tollerati[firma(v.avvisi[i])]) return false;
           // Un'arma che nessuna regola descrive non può superare la dotazione standard.
           for(i = 0; i < ordine.length; i++) if(!(ordine[i] in v.limiti) && conta[ordine[i]] > stdFase[ordine[i]]) return false;
           // "Una fra queste": conta solo chi prende un'arma nuova, non chi ha già quella di serie.
@@ -4077,7 +4156,7 @@ select.dl-in{width:auto; padding:0 3px;}
         };
         ordine.slice().sort(function(x, y){ return perChiave[y].danni - perChiave[x].danni; }).forEach(function(k){
           if(perChiave[k].danni <= 0) return;
-          while(conta[k] < s.modelli){
+          while(conta[k] < Math.max(s.modelli, info.slot[k] || 0)){
             conta[k]++;
             if(!valido()){ conta[k]--; break; }
           }
