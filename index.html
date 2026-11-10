@@ -3246,6 +3246,51 @@ select.dl-in{width:auto; padding:0 3px;}
     return r;
   }
 
+  // Modificatore al tiro per colpire: +1 (bonus, Heavy da fermo) -1 (malus dell'attaccante) -1 (cover), in totale tra -1 e +1.
+  function efModColpire(b, rg, parole){
+    var m = ((b.piuColpire || (b.fermo && efOn(rg.heavy, parole))) ? 1 : 0) - (b.menoColpire ? 1 : 0) - (b.cover ? 1 : 0);
+    return Math.max(-1, Math.min(1, m));
+  }
+
+  // AP effettivo (valore positivo: AP-2 = 2): il bonus «-1 AP» lo peggiora per il bersaglio di 1 per ogni arma.
+  function efAp(a, b){ return a.ap + (b.menoAP ? 1 : 0); }
+
+  // Distribuzione esatta di "NdM+K" come [[valore, probabilità], …] (almeno `minimo`); testo non valido = valore fisso.
+  function efDistribuzione(testo, media, minimo){
+    var t = (testo || "").trim(), n = Number(t), m = t.match(/^(\d*)d(\d+)(?:\+(\d+))?$/i);
+    if(!m || (t && !isNaN(n))) return [[t && !isNaN(n) ? Math.max(minimo, n) : Math.max(minimo, media), 1]];
+    var k = m[1] ? Number(m[1]) : 1, f = Number(m[2]), c = m[3] ? Number(m[3]) : 0, dist = {};
+    dist[c] = 1;
+    for(var i = 0; i < k; i++){
+      var nuova = {};
+      for(var v in dist) for(var x = 1; x <= f; x++) nuova[Number(v) + x] = (nuova[Number(v) + x] || 0) + dist[v] / f;
+      dist = nuova;
+    }
+    var fuori = {};
+    for(var s in dist) fuori[Math.max(minimo, Number(s))] = (fuori[Math.max(minimo, Number(s))] || 0) + dist[s];
+    return Object.keys(fuori).map(function(v){ return [Number(v), fuori[v]]; });
+  }
+
+  // Danno medio per ferita non salvata: danni (più Melta) meno 1 se «-1 D» e maggiori di 1, al massimo le ferite del bersaglio.
+  function efDannoMedio(a, b, w){
+    var conMelta = b.melta && a.regole.melta ? 1 : 0;
+    a._dist = a._dist || {};
+    if(!a._dist[conMelta]){
+      var base = efDistribuzione(a.danniTesto, a.danni, 1);
+      if(conMelta){
+        var somma = {};
+        base.forEach(function(x){
+          efDistribuzione(a.regole.meltaT, a.regole.melta, 0).forEach(function(y){ somma[x[0] + y[0]] = (somma[x[0] + y[0]] || 0) + x[1] * y[1]; });
+        });
+        base = Object.keys(somma).map(function(v){ return [Number(v), somma[v]]; });
+      }
+      a._dist[conMelta] = base;
+    }
+    return a._dist[conMelta].reduce(function(tot, x){
+      return tot + x[1] * Math.min(b.menoDanno && x[0] > 1 ? x[0] - 1 : x[0], w);
+    }, 0);
+  }
+
   // Probabilità finale di un tiro con probabilità base p e di un suo esito speciale x (es. il 6 naturale), dopo una
   // ripetizione: "tutti" rilancia ogni fallito, "1" solo gli 1 naturali.
   function efRipeti(p, x, modo){
@@ -3260,7 +3305,7 @@ select.dl-in{width:auto; padding:0 3px;}
   // Base: il file del sito (efficienza_dado.json, scaricato alla prima volta che si usa «Dado»), valido per i bonus
   // predefiniti. Quello che non c'è (altri bonus) si simula e si ricorda nel browser (cache). Con «Ricalcola»
   // (soloLocale) il file del sito si ignora e tutto si rifà in locale, con un nuovo seme.
-  var EF_LANCI = 10000, EF_VERSIONE_DADO = 1, EF_CHIAVE_DADO = "wh40-ef-dado", EF_CHIAVE_METODO = "wh40-ef-metodo";
+  var EF_LANCI = 10000, EF_VERSIONE_DADO = 2, EF_CHIAVE_DADO = "wh40-ef-dado", EF_CHIAVE_METODO = "wh40-ef-metodo";
   var EF_CHIAVE_LOCALE = "wh40-ef-locale", EF_FILE_DADO = "efficienza_dado.json";
   var EFD = { metodo: "stat", seme: 1, cache: {}, quanti: 0, memoriaPiena: false, timer: null, alCambio: null,
               sito: {}, quantiSito: 0, statoSito: "no", soloLocale: false }; // statoSito: no | caricamento | ok | errore
@@ -3304,7 +3349,9 @@ select.dl-in{width:auto; padding:0 3px;}
 
   function efChiaveDado(a, d, b){
     if(!a._firmaDado) a._firmaDado = [a.attTesto, a.danniTesto, a.xcol, a.forza, a.ap, (a.descrizione || "").toLowerCase().replace(/\s+/g, " ")].join("|");
-    var bon = [b.piuColpire, b.piuFerire, b.lance, b.fermo, b.tiroRapido, b.melta, b.anti, b.ripCol, b.ripFer, b.piuSalvezza, b.menoFerire, b.fnp]
+    // Anti-X conta solo per le armi che lo hanno: così accenderlo non fa ricalcolare le altre.
+    var bon = [b.piuColpire, b.piuFerire, b.lance, b.fermo, b.tiroRapido, b.melta, b.anti && a.regole.anti.length > 0, b.ripCol, b.ripFer, b.piuSalvezza, b.menoFerire, b.fnp,
+               b.menoColpire, b.cover, b.menoDanno, b.menoAP]
       .map(function(x){ return x === true ? "1" : x === false || !x ? "0" : x; }).join("");
     var h = efHash([EF_VERSIONE_DADO, a._firmaDado, d.nome, d.res, d.w, d.save, d.inv, d.parole.join(","), bon].join("#"));
     return h[0].toString(36) + h[1].toString(36);
@@ -3320,7 +3367,7 @@ select.dl-in{width:auto; padding:0 3px;}
 
     // Colpire
     var tira = a.xcol !== null && !efOn(rg.torrent, parole);
-    var modH = (b.piuColpire || (b.fermo && efOn(rg.heavy, parole))) ? 1 : 0;
+    var modH = efModColpire(b, rg, parole);
     var sH = tira ? Math.min(6, Math.max(2, a.xcol - modH)) : 0;
     var ripH = b.ripCol;
     var sust = efOn(rg.sust, parole) ? efLancio(rg.sust.t, rg.sust.v, 0, rnd) : null;
@@ -3338,7 +3385,7 @@ select.dl-in{width:auto; padding:0 3px;}
     var ripW = (efOn(rg.twin, parole) || b.ripFer === "tutti") ? "tutti" : b.ripFer;
 
     // Salvezza (il bonus vale per l'armatura, non per l'invulnerabile) e Feel No Pain
-    var sv = d.save - (b.piuSalvezza ? 1 : 0) + a.ap;
+    var sv = d.save - (b.piuSalvezza ? 1 : 0) + efAp(a, b);
     if(d.inv) sv = Math.min(sv, d.inv);
     var passa = sv >= 7 ? 7 : Math.max(2, sv);
     var fnp = b.fnp ? Number(b.fnp) : 0, w = d.w;
@@ -3375,7 +3422,9 @@ select.dl-in{width:auto; padding:0 3px;}
         for(var k = 0; k < daSalvare; k++) if(1 + Math.floor(rnd() * 6) < passa) nonSalvati++;
         sN += nonSalvati;
         for(var u = 0; u < nonSalvati; u++){
-          var danno = Math.min(dmgF() + (meltaF ? meltaF() : 0), w);
+          var danno = dmgF() + (meltaF ? meltaF() : 0);
+          if(b.menoDanno && danno > 1) danno--; // -1 D: dopo la salvezza, prima del Feel No Pain
+          danno = Math.min(danno, w);
           if(fnp) for(var p = danno; p > 0; p--) if(1 + Math.floor(rnd() * 6) >= fnp) danno--;
           sD += danno;
         }
@@ -3466,7 +3515,7 @@ select.dl-in{width:auto; padding:0 3px;}
     // Colpire: senza soglia (o Torrent) si colpisce sempre; il 6 naturale è un colpo critico (Lethal, Sustained).
     var pH = 1, cH = 0;
     if(a.xcol !== null && !efOn(rg.torrent, parole)){
-      var modH = (b.piuColpire || (b.fermo && efOn(rg.heavy, parole))) ? 1 : 0;
+      var modH = efModColpire(b, rg, parole);
       var p = (7 - Math.min(6, Math.max(2, a.xcol - modH))) / 6;
       pH = efRipeti(p, p, b.ripCol);
       cH = efRipeti(p, 1 / 6, b.ripCol);
@@ -3494,14 +3543,14 @@ select.dl-in{width:auto; padding:0 3px;}
     var feriti = automatici + ferimenti;
 
     // Salvezza: il bonus alla salvezza vale per l'armatura, non per l'invulnerabile; il 1 naturale fallisce sempre.
-    var sv = d.save - (b.piuSalvezza ? 1 : 0) + a.ap;
+    var sv = d.save - (b.piuSalvezza ? 1 : 0) + efAp(a, b);
     if(d.inv) sv = Math.min(sv, d.inv);
-    var pS = sv >= 7 ? 0 : (7 - Math.max(2, sv)) / 6;
+    var pS =sv >= 7 ? 0 : (7 - Math.max(2, sv)) / 6;
     var nonSalvati = (feriti - devastanti) * (1 - pS) + devastanti;
 
-    // Danni: il danno oltre le ferite di un modello si perde (con D < W si accumula sullo stesso modello).
-    var danni = a.danni + (b.melta ? rg.melta : 0);
-    var perColpo = Math.min(danni, d.w) * (b.fnp ? 1 - (7 - Number(b.fnp)) / 6 : 1); // Feel No Pain: ogni punto di danno si ignora con X+
+    // Danni: il danno oltre le ferite di un modello si perde (con D < W si accumula sullo stesso modello). Con danno
+    // variabile si usa la distribuzione esatta (D6, D3…): -1 D e il tetto alle ferite agiscono su ogni valore possibile.
+    var perColpo = efDannoMedio(a, b, d.w) * (b.fnp ? 1 - (7 - Number(b.fnp)) / 6 : 1); // Feel No Pain: ogni punto di danno si ignora con X+
     return {
       attacchi: attacchi, colpiti: attacchi * (pH + extra), feriti: attacchi * feriti, nonSalvati: attacchi * nonSalvati,
       danni: attacchi * nonSalvati * perColpo, uccisi: attacchi * nonSalvati * perColpo / d.w
@@ -3516,8 +3565,9 @@ select.dl-in{width:auto; padding:0 3px;}
       return { nome: u.nome, res: dlIntero(u.res, 4, 1), w: dlIntero(u.w, 1, 1), save: dlSoglia(u.ts) || 7, inv: dlSoglia(u.tsPiu), parole: EF_PAROLE[u.nome] || [] };
     });
     // Bonus all'apertura: sono quelli per cui il file del sito ha già i valori del Dado.
-    var BONUS_INIZIALI = { piuColpire: false, piuFerire: false, lance: false, fermo: false, tiroRapido: false, melta: false, anti: true,
-                           ripCol: "", ripFer: "", piuSalvezza: false, menoFerire: false, fnp: "" };
+    var BONUS_INIZIALI = { piuColpire: false, piuFerire: false, lance: false, fermo: false, tiroRapido: false, melta: false, anti: false,
+                           menoAP: false, ripCol: "", ripFer: "", piuSalvezza: false, menoFerire: false, menoColpire: false, cover: false,
+                           menoDanno: false, fnp: "" };
     var ef = {
       unita: null, modelli: 1, punti: 0, notaPunti: "", puntiManuale: false, manuale: false, fase: "Ranged", armi: [], comp: null,
       dettaglio: false, bersaglio: 0, // dettaglio spento: configurazione ottimale contro il bersaglio scelto
@@ -3742,13 +3792,17 @@ select.dl-in{width:auto; padding:0 3px;}
         chip("Fermo (Heavy)", "fermo", "Unità ferma: le armi Heavy hanno +1 per colpire"),
         chip("Tiro rapido", "tiroRapido", "Rapid Fire attivo: +X attacchi per modello alle armi con Rapid Fire X"),
         chip("Melta", "melta", "Entro mezza gittata: +X danni alle armi con Melta X"),
-        chip("Anti-X", "anti", "Le armi con Anti-X feriscono con X+ contro i bersagli che hanno quella parola chiave")
+        chip("Anti-X", "anti", "Le armi con Anti-X feriscono con X+ contro i bersagli che hanno quella parola chiave (spento di default)"),
+        chip("-1 AP", "menoAP", "Migliora di 1 l'AP di tutte le armi (AP 0 diventa AP-1, AP-1 diventa AP-2…)")
       ]);
       gruppo("Ripeti", [dlCampo("Colpire", ripeti("ripCol"), "Ripete i tiri per colpire falliti: solo gli 1 o tutti"),
                         dlCampo("Ferire", ripeti("ripFer"), "Ripete i tiri per ferire falliti: solo gli 1 o tutti (Twin-linked è già incluso)")]);
       gruppo("Bersaglio", [
         chip("+1 salvezza", "piuSalvezza", "+1 al tiro salvezza del bersaglio (non cambia l'invulnerabile)"),
         chip("-1 per ferire", "menoFerire", "-1 al tiro per ferire dell'attaccante"),
+        chip("-1 colpire", "menoColpire", "Malus dell'attaccante: -1 ai tiri per colpire (i modificatori non superano ±1 in totale)"),
+        chip("Cover", "cover", "Il bersaglio è in cover: altro -1 ai tiri per colpire dell'attaccante (si somma a «-1 colpire», entro il tetto di ±1)"),
+        chip("-1 D", "menoDanno", "Ogni ferita non salvata fa 1 danno in meno (solo se il danno è maggiore di 1), dopo il tiro salvezza e prima del Feel No Pain"),
         dlCampo("Feel No Pain", dlSelect([["", "—"], ["6", "6+"], ["5", "5+"], ["4", "4+"], ["3", "3+"]], ef.bonus.fnp,
           function(v){ ef.bonus.fnp = v; aggiorna(); }), "Il bersaglio ignora ogni punto di danno con X+ (i bersagli di test non ce l'hanno di serie)")
       ]);
