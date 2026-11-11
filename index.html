@@ -3333,9 +3333,12 @@ select.dl-in{width:auto; padding:0 3px;}
     return r;
   }
 
-  // Modificatore al tiro per colpire: +1 (bonus, Heavy da fermo) -1 (malus dell'attaccante) -1 (cover), in totale tra -1 e +1.
-  function efModColpire(b, rg, parole){
-    var m = ((b.piuColpire || (b.fermo && efOn(rg.heavy, parole))) ? 1 : 0) - (b.menoColpire ? 1 : 0) - (b.cover ? 1 : 0);
+  // La cover vale solo contro le armi da tiro, non in mischia.
+  function efCoverAttiva(a, b){ return !!b.cover && a.tipo !== "Melee"; }
+
+  // Modificatore al tiro per colpire: +1 (bonus, Heavy da fermo) -1 (malus dell'attaccante) -1 (cover, solo tiro), in totale tra -1 e +1.
+  function efModColpire(a, b, rg, parole){
+    var m = ((b.piuColpire || (b.fermo && efOn(rg.heavy, parole))) ? 1 : 0) - (b.menoColpire ? 1 : 0) - (efCoverAttiva(a, b) ? 1 : 0);
     return Math.max(-1, Math.min(1, m));
   }
 
@@ -3438,7 +3441,7 @@ select.dl-in{width:auto; padding:0 3px;}
     if(!a._firmaDado) a._firmaDado = [a.attTesto, a.danniTesto, a.xcol, a.forza, a.ap, (a.descrizione || "").toLowerCase().replace(/\s+/g, " ")].join("|");
     // Anti-X conta solo per le armi che lo hanno: così accenderlo non fa ricalcolare le altre.
     var bon = [b.piuColpire, b.piuFerire, b.lance, b.fermo, b.tiroRapido, b.melta, b.anti && a.regole.anti.length > 0, b.ripCol, b.ripFer, b.piuSalvezza, b.menoFerire, b.fnp,
-               b.menoColpire, b.cover, b.menoDanno, b.menoAP]
+               b.menoColpire, efCoverAttiva(a, b), b.menoDanno, b.menoAP]
       .map(function(x){ return x === true ? "1" : x === false || !x ? "0" : x; }).join("");
     var h = efHash([EF_VERSIONE_DADO, a._firmaDado, d.nome, d.res, d.w, d.save, d.inv, d.parole.join(","), bon].join("#"));
     return h[0].toString(36) + h[1].toString(36);
@@ -3454,7 +3457,7 @@ select.dl-in{width:auto; padding:0 3px;}
 
     // Colpire
     var tira = a.xcol !== null && !efOn(rg.torrent, parole);
-    var modH = efModColpire(b, rg, parole);
+    var modH = efModColpire(a, b, rg, parole);
     var sH = tira ? Math.min(6, Math.max(2, a.xcol - modH)) : 0;
     var ripH = b.ripCol;
     var sust = efOn(rg.sust, parole) ? efLancio(rg.sust.t, rg.sust.v, 0, rnd) : null;
@@ -3602,7 +3605,7 @@ select.dl-in{width:auto; padding:0 3px;}
     // Colpire: senza soglia (o Torrent) si colpisce sempre; il 6 naturale è un colpo critico (Lethal, Sustained).
     var pH = 1, cH = 0;
     if(a.xcol !== null && !efOn(rg.torrent, parole)){
-      var modH = efModColpire(b, rg, parole);
+      var modH = efModColpire(a, b, rg, parole);
       var p = (7 - Math.min(6, Math.max(2, a.xcol - modH))) / 6;
       pH = efRipeti(p, p, b.ripCol);
       cH = efRipeti(p, 1 / 6, b.ripCol);
@@ -3888,7 +3891,7 @@ select.dl-in{width:auto; padding:0 3px;}
         chip("+1 salvezza", "piuSalvezza", "+1 al tiro salvezza del bersaglio (non cambia l'invulnerabile)"),
         chip("-1 per ferire", "menoFerire", "-1 al tiro per ferire dell'attaccante"),
         chip("-1 colpire", "menoColpire", "Malus dell'attaccante: -1 ai tiri per colpire (i modificatori non superano ±1 in totale)"),
-        chip("Cover", "cover", "Il bersaglio è in cover: altro -1 ai tiri per colpire dell'attaccante (si somma a «-1 colpire», entro il tetto di ±1)"),
+        chip("Cover", "cover", "Il bersaglio è in cover: altro -1 ai tiri per colpire delle armi da tiro (non vale in mischia; si somma a «-1 colpire», entro il tetto di ±1)"),
         chip("-1 D", "menoDanno", "Ogni ferita non salvata fa 1 danno in meno (solo se il danno è maggiore di 1), dopo il tiro salvezza e prima del Feel No Pain"),
         dlCampo("Feel No Pain", dlSelect([["", "—"], ["6", "6+"], ["5", "5+"], ["4", "4+"], ["3", "3+"]], ef.bonus.fnp,
           function(v){ ef.bonus.fnp = v; aggiorna(); }), "Il bersaglio ignora ogni punto di danno con X+ (i bersagli di test non ce l'hanno di serie)")
