@@ -4265,7 +4265,8 @@ select.dl-in{width:auto; padding:0 3px;}
           t.attacchi += r.attacchi;
         }
         if(ns > 0) t.standard += efCalcolaArma(x.a, d, b, ns * x.a.copie).danni;
-        if(n - ns) t.diff.push((n > ns ? "+" : "−") + Math.abs(n - ns) + " " + lmNomeBaseArma(x.a.nome));
+        // nome completo del profilo (es. «Chainfist - Hunter» o «Chainfist - Standard»), così si vede quale si usa
+        if(n - ns) t.diff.push((n > ns ? "+" : "−") + Math.abs(n - ns) + " " + x.a.nome);
       });
       return t;
     }
