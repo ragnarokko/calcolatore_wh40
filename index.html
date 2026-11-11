@@ -4480,11 +4480,14 @@ select.dl-in{width:auto; padding:0 3px;}
       if(!s.armi.length) return null;
       var tiro = ottimizza("Ranged", d, s), mischia = ottimizza("Melee", d, s);
       var dT = tiro ? tiro.danni : 0, dM = mischia ? mischia.danni : 0;
+      // Il totale non è la somma dei due massimi (armi che si escludono a vicenda): è la migliore combinazione possibile.
+      var comb = configura("Tutto", d, s);
+      var dTot = (comb.tiro ? comb.tiro.danni : 0) + (comb.mischia ? comb.mischia.danni : 0);
       var punti = costoDaiDati(u, s.modelli).punti, scheda = armyBuilder.puntiPerId[idScheda(u)];
       var per = function(x){ return punti > 0 ? x * 100 / punti : null; };
       return { u: u, id: idScheda(u) || String(u.datasheetId), pos: null,
                nome: scheda && scheda.nome ? scheda.nome : u.nome, modelli: s.modelli, punti: punti, senzaDati: !s.comp,
-               dM: dM, eM: per(dM), dT: dT, eT: per(dT), dTot: dM + dT, eTot: per(dM + dT) };
+               dM: dM, eM: per(dM), dT: dT, eT: per(dT), dTot: dTot, eTot: per(dTot) };
     }
 
     // Posizione in classifica (#): 1 = efficienza totale più alta contro il bersaglio; senza punti = nessuna posizione.
