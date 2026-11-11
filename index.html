@@ -4163,11 +4163,12 @@ select.dl-in{width:auto; padding:0 3px;}
       return soloMischia(elenco, r, s);
     }
 
-    // Cerca la configurazione migliore per le armi delle fasi indicate (fasi: ["Ranged"], ["Melee"] o tutte e due) → id → modelli.
+    // Ricerca delle armi per le fasi indicate (fasi: ["Ranged"], ["Melee"] o tutte e due) → { valido(conta), trova() }:
+    // valido controlla una configurazione (id → modelli) contro le opzioni di equipaggiamento, trova() cerca la migliore.
     // fissi: conteggi (chiave → modelli) delle armi delle altre fasi già decisi; null = le altre fasi restano alla dotazione
     // standard e i conflitti con questa non contano (le fasi sono ottimizzate separatamente). Dove la dotazione standard
     // fa di più della ricerca golosa, vince lei.
-    function cerca(elenco, fasi, d, s, fissi){
+    function prepara(elenco, fasi, d, s, fissi){
       var std = contiStandard(s), attivi = elenco.filter(function(x){ return fasi.indexOf(x.fase) >= 0; });
       var stdFase = {}, conta = {}, chiaviAttive = {}, chiaviArmi = {};
       attivi.forEach(function(x){ stdFase[x.id] = Math.min(std[x.k] || 0, s.modelli); conta[x.id] = 0; chiaviAttive[x.k] = true; });
@@ -4220,25 +4221,35 @@ select.dl-in{width:auto; padding:0 3px;}
             return somma <= lmConsentiti(ctx, r);
           });
         };
-        attivi.slice().sort(function(x, y){ return y.danni - x.danni; }).forEach(function(x){
-          if(x.danni <= 0) return;
-          // Un'arma che richiede un'altra (Cyclone + Storm bolter) la porta con sé: i modelli che la prendono hanno anche quella.
-          var idReq = null;
-          attivi.forEach(function(y){ if(y.k === info.richiedono[x.k]) idReq = y.id; });
-          while(conta[x.id] < Math.max(s.modelli, info.slot[x.k] || 0)){
-            var prima = idReq ? conta[idReq] : 0;
-            conta[x.id]++;
-            if(idReq && conta[idReq] < conta[x.id]) conta[idReq] = conta[x.id];
-            if(!valido(conta)){ conta[x.id]--; if(idReq) conta[idReq] = prima; break; }
-          }
-        });
-      } else {
-        conta = Object.assign({}, stdFase);
       }
-      // Con le altre fasi già decise la dotazione standard potrebbe non essere più possibile: si controlla.
-      if(danniDi(stdFase) > danniDi(conta) + 1e-9 && (!fissi || valido(stdFase))) conta = stdFase;
-      return conta;
+      // Ricerca golosa: dalle armi che rendono di più, un modello alla volta finché la configurazione resta valida.
+      function trova(){
+        var conta = {};
+        attivi.forEach(function(x){ conta[x.id] = 0; });
+        if(s.comp){
+          attivi.slice().sort(function(x, y){ return y.danni - x.danni; }).forEach(function(x){
+            if(x.danni <= 0) return;
+            // Un'arma che richiede un'altra (Cyclone + Storm bolter) la porta con sé: i modelli che la prendono hanno anche quella.
+            var idReq = null;
+            attivi.forEach(function(y){ if(y.k === info.richiedono[x.k]) idReq = y.id; });
+            while(conta[x.id] < Math.max(s.modelli, info.slot[x.k] || 0)){
+              var prima = idReq ? conta[idReq] : 0;
+              conta[x.id]++;
+              if(idReq && conta[idReq] < conta[x.id]) conta[idReq] = conta[x.id];
+              if(!valido(conta)){ conta[x.id]--; if(idReq) conta[idReq] = prima; break; }
+            }
+          });
+        } else {
+          conta = Object.assign({}, stdFase);
+        }
+        // Con le altre fasi già decise la dotazione standard potrebbe non essere più possibile: si controlla.
+        if(danniDi(stdFase) > danniDi(conta) + 1e-9 && (!fissi || valido(stdFase))) conta = stdFase;
+        return conta;
+      }
+      return { valido: valido, trova: trova };
     }
+
+    function cerca(elenco, fasi, d, s, fissi){ return prepara(elenco, fasi, d, s, fissi).trova(); }
 
     // Risultato di una fase per una configurazione (id → modelli), con il confronto con la dotazione standard.
     function risultatoFase(elenco, fase, conta, std, d, s){
@@ -4290,6 +4301,56 @@ select.dl-in{width:auto; padding:0 3px;}
         var c1 = cerca(el, [prima], d, s, null);
         return Object.assign({}, c1, cerca(el, [seconda], d, s, fissiDa(c1, prima)));
       }
+      // Miglioramento locale: la ricerca golosa sceglie le armi una alla volta e non vede i compromessi (es. meno Thunder
+      // hammer per tenere uno Storm bolter da sostituire con un Plasma cannon). Si parte dalle configurazioni trovate e si
+      // sposta un modello da un'arma di mischia a un'altra (o si toglie/aggiunge) finché i danni totali salgono; per ogni
+      // mischia il tiro è completato con la ricerca golosa. Restituisce la migliore configurazione trovata (id → modelli).
+      function migliora(partenze){
+        var mel = el.filter(function(x){ return x.fase === "Melee"; });
+        var normali = mel.filter(function(x){ return !x.extra; }), extra = mel.filter(function(x){ return x.extra; });
+        var pm = prepara(el, ["Melee"], d, s, null), cache = {};
+        function usi(m){ var n = 0; normali.forEach(function(x){ n += m[x.id]; }); return n; }
+        function valuta(m){
+          var chiave = mel.map(function(x){ return m[x.id]; }).join(",");
+          if(!cache[chiave]){
+            var c = Object.assign({}, m, prepara(el, ["Ranged"], d, s, fissiDa(m, "Melee")).trova());
+            cache[chiave] = { m: m, c: c, t: totale(c) };
+          }
+          return cache[chiave];
+        }
+        var meglio = null;
+        partenze.forEach(function(p){
+          var m = {};
+          mel.forEach(function(x){ m[x.id] = p[x.id] || 0; });
+          if(!pm.valido(m)) return;
+          var v = valuta(m);
+          if(!meglio || v.t > meglio.t) meglio = v;
+        });
+        if(!meglio) return partenze[0];
+        for(var giro = 0; giro < 40; giro++){
+          var vicini = [], m = meglio.m;
+          var prova = function(x, y, dx, dy){ // x, y: armi di mischia da modificare di dx, dy
+            var n = Object.assign({}, m);
+            n[x.id] += dx;
+            if(y) n[y.id] += dy;
+            if(n[x.id] < 0 || (y && n[y.id] < 0) || n[x.id] > s.modelli || (y && n[y.id] > s.modelli)) return;
+            if(pm.valido(n)) vicini.push(valuta(n));
+          };
+          normali.forEach(function(a){
+            if(m[a.id] > 0){
+              prova(a, null, -1, 0);
+              normali.forEach(function(b){ if(b !== a) prova(a, b, -1, 1); });
+            }
+            if(usi(m) < s.modelli) prova(a, null, 1, 0);
+          });
+          extra.forEach(function(x){ prova(x, null, 1, 0); prova(x, null, -1, 0); });
+          var migliore = meglio;
+          vicini.forEach(function(v){ if(v.t > migliore.t + 1e-9) migliore = v; });
+          if(migliore === meglio) break;
+          meglio = migliore;
+        }
+        return meglio.c;
+      }
       var scelta;
       if(obiettivo === "Ranged") scelta = primaPoi("Ranged", "Melee");
       else if(obiettivo === "Melee") scelta = primaPoi("Melee", "Ranged");
@@ -4299,6 +4360,7 @@ select.dl-in{width:auto; padding:0 3px;}
           candidati.push(primaPoi("Melee", "Ranged"));
           candidati.push(primaPoi("Ranged", "Melee"));
         }
+        if(haT && haM && s.comp) candidati.push(migliora(candidati));
         scelta = candidati[0];
         var mt = totale(scelta);
         candidati.forEach(function(c){ var x = totale(c); if(x > mt + 1e-9){ scelta = c; mt = x; } });
