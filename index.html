@@ -1999,7 +1999,8 @@ select.dl-in{width:auto; padding:0 3px;}
 
   // Nome base di un profilo d'arma: "Bolt Rifle - Saturation" → "Bolt Rifle".
   function lmNomeBaseArma(nome){
-    return (nome || "").replace(/\s+[-–—]\s+.*$/, "").trim();
+    // (anche "Melta Rifle HUNTER:Monster/Vehicle" o "Thunder Hammer (Hunter: Monster/Vehicle)" → il nome dell'arma)
+    return (nome || "").replace(/\s+[-–—]\s+.*$/, "").replace(/\s*\(?\bhunter\s*:.*$/i, "").trim();
   }
 
   function lmChiaveArma(nome){
@@ -3611,6 +3612,9 @@ select.dl-in{width:auto; padding:0 3px;}
 
   // Valori attesi di un'arma usata da n modelli (già moltiplicati per le copie) contro un bersaglio, con i bonus b.
   function efCalcolaArma(a, d, b, n){
+    // Un profilo "- Hunter" si usa solo contro veicoli e mostri; contro gli altri vale il profilo "- Standard" della stessa arma.
+    if(a.hunter && d.parole.indexOf("VEHICLE") < 0 && d.parole.indexOf("MONSTER") < 0)
+      return { attacchi: 0, colpiti: 0, feriti: 0, nonSalvati: 0, danni: 0, uccisi: 0 };
     if(EFD.metodo === "dado") return efCalcolaDado(a, d, b, n);
     var rg = a.regole, parole = d.parole;
     var attacchi = n * (a.att + (b.tiroRapido ? rg.rapid : 0));
@@ -3750,7 +3754,10 @@ select.dl-in{width:auto; padding:0 3px;}
           nome: a.arma, descrizione: a.descrizione || "", tipo: a.tipo === "Melee" ? "Melee" : "Ranged", gittata: a.range,
           att: efMedia(a.att, 1), xcol: sogliaDaTesto(a.bsWs), forza: Number(a.forza) || 1, ap: apDaTesto(a.ap), danni: efMedia(a.danni, 1),
           attTesto: a.att || "1", danniTesto: a.danni || "1", regole: efRegole(a.descrizione), modelli: 0, copie: 1,
-          extra: /extra attacks/i.test(a.descrizione || "") // arma di mischia che si usa in aggiunta alle altre
+          extra: /extra attacks/i.test(a.descrizione || ""), // arma di mischia che si usa in aggiunta alle altre
+          // profilo solo contro veicoli e mostri: "Chainfist - Hunter", "… - Hunter (Hunter: MONSTER/VEHICLE)", "… HUNTER:Monster/Vehicle"
+          // (non "Hunter-killer missile")
+          hunter: /(^|[\s(\-–—:])hunter(?![\w'-])/i.test(a.arma || "")
         };
       });
     }
@@ -3864,6 +3871,7 @@ select.dl-in{width:auto; padding:0 3px;}
           "A" + a.attTesto + " · " + (a.xcol ? a.xcol + "+" : "auto") + " · F" + a.forza + " · AP-" + a.ap + " · D" + a.danniTesto +
           (a.tipo === "Melee" || !a.gittata ? "" : " · " + a.gittata + "″")));
         if(a.descrizione) nome.appendChild(dlEl("small", "", a.descrizione));
+        if(a.hunter) nome.appendChild(dlEl("small", "", "Profilo Hunter: solo contro bersagli VEHICLE o MONSTER"));
         a._uso = dlEl("small", "dl-uso");
         nome.appendChild(a._uso);
         riga.appendChild(nome);
