@@ -3713,9 +3713,10 @@ select.dl-in{width:auto; padding:0 3px;}
           '<div class="card" id="e-ott-eff"></div>' +
           '<div class="card" id="e-ott-Ranged"></div><div class="card" id="e-ott-Melee"></div>' +
           '<div class="footnote">«Migliore per» sceglie la configurazione che fa più danni al bersaglio scelto, cercata tra le distribuzioni dei ' +
-          'modelli sulle armi consentite dalle opzioni di equipaggiamento e confrontata con la dotazione standard: <b>Mischia</b> o <b>Range</b> ' +
-          'contano solo i danni di quella fase (l\'altra non è considerata); <b>Tutto</b> cerca la migliore combinazione di tiro e mischia ' +
-          'possibile nella stessa unità (ogni modello combatte con una sola arma in mischia, le armi si sostituiscono come da opzioni). ' +
+          'modelli sulle armi consentite dalle opzioni di equipaggiamento e confrontata con la dotazione standard: con <b>Mischia</b> o <b>Range</b> ' +
+          'si ottimizzano i danni di quella fase e l\'altra si completa con le armi che restano possibili con quelle scelte (es. un Plasma cannon ' +
+          'toglie lo Storm bolter, quindi niente Thunder hammer su quel modello, ma Power fist e Chainfist sì); <b>Tutto</b> cerca la migliore ' +
+          'combinazione di tiro e mischia possibile nella stessa unità (ogni modello combatte con una sola arma in mischia, le armi si sostituiscono come da opzioni). ' +
           'Valgono i bonus qui sopra; per ogni arma si usa il profilo che rende di più. Non sono considerati Blast, ' +
           'Ignores Cover, Hazardous, abilità e stratagemmi. «Dettaglio» mette la stessa configurazione sulle armi e mostra la tabella contro tutti i bersagli.</div>' +
         '</div>' +
@@ -3827,8 +3828,8 @@ select.dl-in{width:auto; padding:0 3px;}
       var cont = g("fasi");
       cont.innerHTML = "";
       cont.appendChild(dlEl("span", "field-label", "Migliore per"));
-      [["Melee", "Mischia", "Armi che fanno più danni in mischia contro il bersaglio scelto"],
-       ["Ranged", "Range", "Armi che fanno più danni a distanza contro il bersaglio scelto"],
+      [["Melee", "Mischia", "Armi che fanno più danni in mischia contro il bersaglio scelto; il tiro si completa con le armi ancora possibili"],
+       ["Ranged", "Range", "Armi che fanno più danni a distanza contro il bersaglio scelto; la mischia si completa con le armi ancora possibili"],
        ["Tutto", "Tutto", "Armi che fanno più danni in totale (tiro + mischia) contro il bersaglio scelto: la migliore combinazione possibile nella stessa unità"]].forEach(function(f){
         var n = ef.armi.filter(function(a){ return f[0] === "Tutto" || a.tipo === f[0]; }).length;
         var b = dlEl("button", "pill-btn" + (ef.obiettivo === f[0] ? " selected" : ""), f[1]);
@@ -3846,7 +3847,7 @@ select.dl-in{width:auto; padding:0 3px;}
       var scheda = ef.unita ? armyBuilder.puntiPerId[idScheda(ef.unita)] : null;
       g("armi-sub").textContent = ef.unita ? (scheda && scheda.nome ? scheda.nome : ef.unita.nome) : "";
       ef.armi.forEach(function(a){ a._riga = null; });
-      var visibili = ef.armi.filter(function(a){ return ef.obiettivo === "Tutto" || a.tipo === ef.obiettivo; });
+      var visibili = ef.armi;
       if(!visibili.length) cont.appendChild(dlEl("div", "dl-vuoto", "Nessuna arma di questo tipo nei dati per questa unità."));
       visibili.forEach(function(a){
         var riga = dlEl("div", "dl-riga dl-arma");
@@ -4258,14 +4259,12 @@ select.dl-in{width:auto; padding:0 3px;}
       return risultatoFase(el, fase, cerca(el, [fase], d, s, null), contaStandard(el, s), d, s);
     }
 
-    // Configurazione per obiettivo: "Ranged" o "Melee" (solo i danni di quella fase) o "Tutto" (danni di tiro e mischia
-    // insieme, con le armi che si possono avere nella stessa unità). Per "Tutto" si confrontano la ricerca su tutte le
-    // armi e ciascuna fase ottimizzata per prima con l'altra completata di conseguenza. → { tiro, mischia } (null = non
-    // considerata); le armi di ogni riga sono quelle da assegnare ai modelli.
+    // Configurazione per obiettivo: "Ranged" o "Melee" (si ottimizzano i danni di quella fase e l'altra si completa con le
+    // armi ancora possibili, a parità di scelte già fatte) o "Tutto" (danni di tiro e mischia insieme: si confrontano la
+    // ricerca su tutte le armi e ciascuna fase ottimizzata per prima con l'altra completata). → { tiro, mischia } (null =
+    // nessuna arma di quella fase); le armi di ogni riga sono quelle da assegnare ai modelli.
     function configura(obiettivo, d, s){
       s = s || ef;
-      if(obiettivo === "Ranged") return { tiro: ottimizza("Ranged", d, s), mischia: null };
-      if(obiettivo === "Melee") return { tiro: null, mischia: ottimizza("Melee", d, s) };
       var el = armiCandidate(d, s), std = contaStandard(el, s);
       var haT = el.some(function(x){ return x.fase === "Ranged"; }), haM = el.some(function(x){ return x.fase === "Melee"; });
       function fissiDa(conta, fase){
@@ -4278,16 +4277,26 @@ select.dl-in{width:auto; padding:0 3px;}
         el.forEach(function(x){ if(conta[x.id] > 0) t += efCalcolaArma(x.a, d, ef.bonus, conta[x.id] * x.a.copie).danni; });
         return t;
       }
-      var candidati = [cerca(el, ["Ranged", "Melee"], d, s, null)];
-      if(haT && haM){
-        var m = cerca(el, ["Melee"], d, s, null), t = cerca(el, ["Ranged"], d, s, null);
-        candidati.push(Object.assign({}, m, cerca(el, ["Ranged"], d, s, fissiDa(m, "Melee"))));
-        candidati.push(Object.assign({}, t, cerca(el, ["Melee"], d, s, fissiDa(t, "Ranged"))));
+      // Prima fase ottimizzata da sola, poi l'altra tra le armi che restano possibili con quelle scelte.
+      function primaPoi(prima, seconda){
+        var c1 = cerca(el, [prima], d, s, null);
+        return Object.assign({}, c1, cerca(el, [seconda], d, s, fissiDa(c1, prima)));
       }
-      var migliore = candidati[0], mt = totale(migliore);
-      candidati.forEach(function(c){ var x = totale(c); if(x > mt + 1e-9){ migliore = c; mt = x; } });
-      return { tiro: haT ? risultatoFase(el, "Ranged", migliore, std, d, s) : null,
-               mischia: haM ? risultatoFase(el, "Melee", migliore, std, d, s) : null };
+      var scelta;
+      if(obiettivo === "Ranged") scelta = primaPoi("Ranged", "Melee");
+      else if(obiettivo === "Melee") scelta = primaPoi("Melee", "Ranged");
+      else {
+        var candidati = [cerca(el, ["Ranged", "Melee"], d, s, null)];
+        if(haT && haM){
+          candidati.push(primaPoi("Melee", "Ranged"));
+          candidati.push(primaPoi("Ranged", "Melee"));
+        }
+        scelta = candidati[0];
+        var mt = totale(scelta);
+        candidati.forEach(function(c){ var x = totale(c); if(x > mt + 1e-9){ scelta = c; mt = x; } });
+      }
+      return { tiro: haT ? risultatoFase(el, "Ranged", scelta, std, d, s) : null,
+               mischia: haM ? risultatoFase(el, "Melee", scelta, std, d, s) : null };
     }
 
     function efPt(eff){ return eff === null ? "—" : (eff < 10 ? eff.toFixed(2) : eff.toFixed(1)); }
@@ -4306,10 +4315,10 @@ select.dl-in{width:auto; padding:0 3px;}
         (d.inv ? " / " + d.inv + "++" : "") + " · " + d.parole.join(", ");
     }
 
-    function cardOttima(cont, titolo, o, piuDanni){
+    function cardOttima(cont, titolo, o, tag){
       cont.innerHTML = "";
       var h = dlEl("h2", "card-title", titolo);
-      if(o && piuDanni) h.appendChild(dlEl("span", "ef-tag", "più danni"));
+      if(o && tag) h.appendChild(dlEl("span", "ef-tag", tag));
       cont.appendChild(h);
       if(!o){
         cont.appendChild(dlEl("div", "dl-vuoto", "Nessuna arma di questo tipo nei dati per questa unità."));
@@ -4368,9 +4377,9 @@ select.dl-in{width:auto; padding:0 3px;}
       cont.appendChild(h);
       aggiornaPosizione();
       var tessere = dlEl("div", "ef-sommario");
-      // Con un solo obiettivo (Mischia o Range) si mostra solo la sua efficienza.
-      (ob === "Melee" ? [["Mischia", dM, "ef-evid"]] : ob === "Ranged" ? [["Distanza", dT, "ef-evid"]] :
-        [["Mischia", dM, ""], ["Distanza", dT, ""], ["Totale", dT + dM, "ef-evid"]]).forEach(function(x){
+      // In evidenza l'efficienza dell'obiettivo; l'altra fase è completata con le armi ancora possibili.
+      [["Mischia", dM, ob === "Melee" ? "ef-evid" : ""], ["Distanza", dT, ob === "Ranged" ? "ef-evid" : ""],
+       ["Totale", dT + dM, ob === "Tutto" ? "ef-evid" : ""]].forEach(function(x){
         var t = dlEl("div", "ef-dato " + x[2]);
         t.appendChild(dlEl("small", "", "Efficienza " + x[0].toLowerCase()));
         t.appendChild(dlEl("b", "", efPt(costo > 0 ? x[1] * 100 / costo : null)));
@@ -4379,10 +4388,9 @@ select.dl-in{width:auto; padding:0 3px;}
       });
       cont.appendChild(tessere);
       if(!(costo > 0)) cont.appendChild(dlEl("div", "ef-nota", "Scrivi i punti dell'unità per calcolare l'efficienza."));
-      g("ott-Ranged").style.display = ob === "Melee" ? "none" : "";
-      g("ott-Melee").style.display = ob === "Ranged" ? "none" : "";
-      if(ob !== "Melee") cardOttima(g("ott-Ranged"), "Tiro — configurazione ottimale", tiro, ob === "Tutto" && dT > dM + 0.0005);
-      if(ob !== "Ranged") cardOttima(g("ott-Melee"), "Mischia — configurazione ottimale", mischia, ob === "Tutto" && dM > dT + 0.0005);
+      var titolo = function(nome, fase){ return nome + (ob === "Tutto" || ob === fase ? " — configurazione ottimale" : " — armi compatibili"); };
+      cardOttima(g("ott-Ranged"), titolo("Tiro", "Ranged"), tiro, ob === "Ranged" ? "obiettivo" : ob === "Tutto" && dT > dM + 0.0005 ? "più danni" : "");
+      cardOttima(g("ott-Melee"), titolo("Mischia", "Melee"), mischia, ob === "Melee" ? "obiettivo" : ob === "Tutto" && dM > dT + 0.0005 ? "più danni" : "");
     }
 
     // Mette sulle armi i modelli della configurazione migliore per l'obiettivo scelto contro il bersaglio scelto.
@@ -4581,7 +4589,7 @@ select.dl-in{width:auto; padding:0 3px;}
         a._tot.textContent = attiva ? "= " + efNum(a.modelli * a.copie * (a.att + (b.tiroRapido ? a.regole.rapid : 0))) + " att" : "";
       });
       controllaComposizione();
-      tabella(ef.armi.filter(function(a){ return (ef.obiettivo === "Tutto" || a.tipo === ef.obiettivo) && a.modelli > 0; }));
+      tabella(ef.armi.filter(function(a){ return a.modelli > 0; }));
     }
 
     function cambiaModelli(n){
