@@ -1033,6 +1033,7 @@ select.dl-in{width:auto; padding:0 3px;}
       qui compaiono un riquadro per ogni attaccante (distanza e armi), il difensore e il risultato complessivo in fondo.
     </div>
     <div id="dl-contenuto" style="display:none">
+      <div id="dl-migliore"></div>
       <div id="dl-attaccanti"></div>
       <div class="card side-card defender">
         <h2 class="card-title" id="dl-dif-titolo">Difensore</h2>
@@ -1856,7 +1857,7 @@ select.dl-in{width:auto; padding:0 3px;}
   // army_builder/composizione.csv e punti.csv (stessa cartella, indipendenti dal set di dati scelto) danno il
   // numero di modelli predefinito di un'unità e il nome dell'intera scheda, come nel Tavolo da Gioco. Se
   // mancano, i modelli predefiniti sono 1 e i nomi restano quelli dei profili.
-  var armyBuilder = { composizione: {}, puntiPerId: {}, idPerNome: {}, compRighe: {}, equip: {}, opzioni: {} };
+  var armyBuilder = { composizione: {}, puntiPerId: {}, idPerNome: {}, compRighe: {}, equip: {}, opzioni: {}, parole: {} };
 
   function chiaveNome(testo){ return (testo || "").toLowerCase().replace(/[^a-z0-9]+/g, ""); }
   function chiaveSingolare(testo){ return chiaveNome(testo).replace(/s$/, ""); }
@@ -1872,8 +1873,17 @@ select.dl-in{width:auto; padding:0 3px;}
     });
   }
 
-  function costruisciArmyBuilder(testoPunti, testoComposizione, testoSchede, testoOpzioni){
-    var ab = { composizione: {}, puntiPerId: {}, idPerNome: {}, compRighe: {}, equip: {}, opzioni: {} };
+  function costruisciArmyBuilder(testoPunti, testoComposizione, testoSchede, testoOpzioni, testoParole){
+    var ab = { composizione: {}, puntiPerId: {}, idPerNome: {}, compRighe: {}, equip: {}, opzioni: {}, parole: {} };
+    // Parole chiave di ogni scheda (keywords.csv), in maiuscolo: servono al difensore di VSunità (profili Hunter, Anti-X).
+    if(testoParole){
+      parseTabella(testoParole).forEach(function(r){
+        var id = String(r.datasheet_id), k = (r.keyword || "").trim().toUpperCase();
+        if(!id || !k) return;
+        var lista = ab.parole[id] || (ab.parole[id] = []);
+        if(lista.indexOf(k) < 0) lista.push(k);
+      });
+    }
     if(testoPunti){
       parseTabella(testoPunti).forEach(function(r){
         var id = String(r.datasheet_id);
@@ -2486,8 +2496,8 @@ select.dl-in{width:auto; padding:0 3px;}
     var facoltativo = function(nome){ return scaricaCsv("army_builder/" + nome).catch(function(){ return ""; }); };
     datiPronti = Promise.all([scaricaCsv(SET_DATI[setDati].info), scaricaCsv(SET_DATI[setDati].armi),
                         facoltativo("punti.csv"), facoltativo("composizione.csv"),
-                        facoltativo("schede.csv"), facoltativo("opzioni.csv")]).then(function(testi){
-      armyBuilder = costruisciArmyBuilder(testi[2], testi[3], testi[4], testi[5]);
+                        facoltativo("schede.csv"), facoltativo("opzioni.csv"), facoltativo("keywords.csv")]).then(function(testi){
+      armyBuilder = costruisciArmyBuilder(testi[2], testi[3], testi[4], testi[5], testi[6]);
       composizioneCache = {};
       var unita = unisciProfili(parseUnita(testi[0]));
       var armi = parseArmi(testi[1]);
@@ -2652,8 +2662,17 @@ select.dl-in{width:auto; padding:0 3px;}
           modelli: dlIntero(x.riga.M.value, 1, 1), armi: armiDi(x.unita)
         };
       }),
-      difensore: { id: d.chiave, nome: d.nome, modelli: modelliDif, res: d.res, ts: d.ts, tsPiu: d.tsPiu, w: d.w, fnp: d.fnp }
+      difensore: { id: d.chiave, nome: d.nome, modelli: modelliDif, res: d.res, ts: d.ts, tsPiu: d.tsPiu, w: d.w, fnp: d.fnp,
+                   parole: paroleDifensore(d) }
     });
+  }
+
+  // Parole chiave del difensore (maiuscole): quelle fisse dei tipi di prova, per le unità vere quelle di keywords.csv.
+  // Servono ai pulsanti «Migliore per» (i profili Hunter valgono solo contro VEHICLE o MONSTER).
+  function paroleDifensore(d){
+    if(d.fazione === FAZIONE_TEST) return (EF_PAROLE[d.nome] || []).slice();
+    var id = idScheda(d);
+    return (id && armyBuilder.parole[id] ? armyBuilder.parole[id] : []).slice();
   }
 
   function vsRipopola(){
@@ -2946,7 +2965,124 @@ select.dl-in{width:auto; padding:0 3px;}
     opzioni = opzioni || {};
     var duello = null;
     var memoria = {};
+    // «Migliore per» (solo VSunità, opzioni.migliorePer): "Standard" = dotazione di serie, oppure "Melee", "Ranged" o "Tutto" =
+    // armi che fanno più danni al difensore, con la stessa ricerca del tab Efficienza.
+    var obiettivo = "Standard";
     function el(id){ return document.getElementById(prefisso + "dl-" + id); }
+
+    // Dotazione standard di un attaccante con dati di composizione: le armi di serie ai modelli che le portano (di un'arma
+    // con più profili, es. Focused Fire / Saturation, solo il primo), le altre a 0.
+    function dlStandard(att){
+      var standard = lmDefault(att.comp.info, att.modelli, att.comp.tipoProfilo), assegnate = {};
+      att.armi.forEach(function(a){
+        var k = lmChiaveArma(lmNomeBaseArma(a.nome));
+        a.modelli = (k in standard && !assegnate[k]) ? Math.min(standard[k], att.modelli) : 0;
+        assegnate[k] = true;
+      });
+    }
+
+    var DL_NOMI_OBIETTIVO = { Melee: "mischia", Ranged: "range", Tutto: "tutto" };
+
+    // Configurazione di armi che fa più danni al difensore attuale per l'obiettivo scelto: stessa ricerca del tab Efficienza
+    // (EF.configura), sempre con il metodo Stat (valori attesi, senza arrotondamenti). Le armi sono quelle dei dati (le
+    // modifiche ai campi delle righe non contano), il difensore è quello della schermata, con i suoi -1 fer, -1 hit, -1 D e
+    // Feel No Pain; i bonus dell'attaccante e Anti-X restano spenti. Mette i modelli sulle armi e prepara la nota.
+    function dlOttimale(att){
+      var csv = EF.armiEfficienza({ datasheetId: att.datasheetId }), dif = duello.dif;
+      att._testoOtt = "";
+      if(!csv.length) return;
+      csv.forEach(function(a, i){ if(att.armi[i]) a.copie = att.armi[i].copie; });
+      var d = { nome: duello.nomeDif, res: dif.res, w: dif.w, save: dif.save, inv: dif.invulT, parole: duello.parole };
+      var s = { modelli: att.modelli, armi: csv, comp: att.comp, bonus: {
+        piuColpire: false, piuFerire: false, lance: false, fermo: false, tiroRapido: false, melta: false, anti: false, menoAP: false,
+        ripCol: "", ripFer: "", piuSalvezza: false, menoFerire: dif.malusFer, menoColpire: dif.malusCol, cover: false,
+        menoDanno: dif.menoDanno, fnp: dif.fnpT > 0 ? String(dif.fnpT) : "" } };
+      var metodo = EFD.metodo, r;
+      EFD.metodo = "stat";
+      try { r = EF.configura(obiettivo, d, s); } finally { EFD.metodo = metodo; }
+      att.armi.forEach(function(a){ a.modelli = 0; });
+      var danni = 0, standard = 0;
+      [r.tiro, r.mischia].forEach(function(o){
+        if(!o) return;
+        danni += o.danni;
+        standard += o.standard;
+        o.righe.forEach(function(x){
+          var i = csv.indexOf(x.a);
+          if(i >= 0 && att.armi[i]) att.armi[i].modelli = x.n;
+        });
+      });
+      var testo = "Configurazione migliore per " + DL_NOMI_OBIETTIVO[obiettivo] + " contro " + duello.nomeDif + ": " + efNum(danni) + " danni attesi" +
+        (r.tiro && r.mischia ? " (tiro " + efNum(r.tiro.danni) + " + mischia " + efNum(r.mischia.danni) + ")" : "");
+      if(!att.comp) testo += ". Senza dati di composizione: tutte le armi sono assegnate a tutti i modelli, il valore può essere sovrastimato";
+      else if(standard > 0.0005) testo += "; dotazione standard " + efNum(standard) + " (" + (danni >= standard ? "+" : "") + Math.round((danni / standard - 1) * 100) + "%)";
+      att._testoOtt = testo + ".";
+    }
+
+    function dlMostraModelli(att){
+      att.armi.forEach(function(a){
+        var campo = a._campoMod && a._campoMod.querySelector("input");
+        if(campo) campo.value = a.modelli;
+      });
+    }
+
+    // Cambia l'obiettivo (o lo ripete, per rimettere la configurazione dopo modifiche a mano): ogni attaccante torna
+    // alla dotazione standard o alla configurazione migliore, e le modifiche a mano dei modelli si perdono.
+    function dlScegliObiettivo(nuovo){
+      obiettivo = nuovo;
+      duello.attaccanti.forEach(function(att){
+        delete memoria[att.chiaveManuale];
+        if(obiettivo === "Standard"){ if(att.comp) dlStandard(att); att._testoOtt = ""; } else dlOttimale(att);
+        dlMostraModelli(att);
+      });
+      dlDisegnaMigliore();
+      dlAggiorna();
+    }
+
+    // Il difensore è cambiato (RES, salvezza, W, invulnerabile, Feel No Pain, -1 fer, -1 hit, -1 D): con «Migliore per» attivo
+    // le armi di chi non è stato modificato a mano si rifanno per il nuovo difensore.
+    function dlDifCambiato(){
+      if(duello && opzioni.migliorePer && obiettivo !== "Standard"){
+        duello.attaccanti.forEach(function(att){
+          if(memoria[att.chiaveManuale]) return;
+          dlOttimale(att);
+          dlMostraModelli(att);
+        });
+      }
+      dlAggiorna();
+    }
+
+    // Riga «Migliore per» in cima alla schermata (solo VSunità): Standard, Mischia, Range, Tutto.
+    function dlDisegnaMigliore(){
+      var cont = el("migliore");
+      if(!opzioni.migliorePer || !cont || !duello) return;
+      cont.innerHTML = "";
+      var card = dlEl("div", "card");
+      var riga = dlEl("div", "ef-riga");
+      riga.style.marginTop = "0";
+      riga.appendChild(dlEl("span", "field-label", "Migliore per"));
+      var pillole = dlEl("div", "ef-pills");
+      [["Standard", "Standard", "Dotazione di serie di ogni attaccante"],
+       ["Melee", "Mischia", "Armi che fanno più danni in mischia contro il difensore; il tiro si completa con le armi ancora possibili"],
+       ["Ranged", "Range", "Armi che fanno più danni a distanza contro il difensore; la mischia si completa con le armi ancora possibili"],
+       ["Tutto", "Tutto", "Armi che fanno più danni in totale (tiro + mischia) contro il difensore: la migliore combinazione possibile nella stessa unità"]].forEach(function(f){
+        var n = f[0] === "Standard" ? 1 : duello.armi.filter(function(a){ return !a.senzaProfilo && (f[0] === "Tutto" || a.tipo === f[0]); }).length;
+        var b = dlEl("button", "pill-btn" + (obiettivo === f[0] ? " selected" : ""), f[1]);
+        b.type = "button";
+        b.disabled = n === 0;
+        b.title = n ? f[2] + (f[0] === "Standard" ? "" : ". Premilo di nuovo per rimettere la configurazione dopo modifiche a mano") : "Nessuna arma di questo tipo nei dati";
+        b.addEventListener("click", function(){ dlScegliObiettivo(f[0]); });
+        pillole.appendChild(b);
+      });
+      riga.appendChild(pillole);
+      card.appendChild(riga);
+      var parole = duello.parole;
+      card.appendChild(dlEl("div", "field-hint", obiettivo === "Standard"
+        ? "Scegli Mischia, Range o Tutto per mettere sulle armi dell'attaccante le combinazioni che fanno più danni a questo difensore (stessa ricerca del tab Efficienza)."
+        : "Valori attesi come nel tab Efficienza, con -1 fer, -1 hit, -1 D e Feel No Pain del difensore; Anti-X e bonus dell'attaccante non contano. " +
+          (parole.length ? "Parole chiave del difensore: " + parole.join(", ") + " (i profili Hunter valgono solo contro VEHICLE o MONSTER)."
+                         : "Parole chiave del difensore non disponibili: i profili Hunter non contano.")));
+      cont.appendChild(card);
+    }
 
     function dlCostruisciArma(a, distanza, massimoModelli, chiaveManuale){
       var riga = dlEl("div", "dl-riga dl-arma");
@@ -3016,14 +3152,14 @@ select.dl-in{width:auto; padding:0 3px;}
     function dlCostruisciDifensore(c){
       var riga = el("dif");
       riga.innerHTML = "";
-      riga.appendChild(dlCampo("RES", dlInputNumero(c.res, 1, "", function(v){ c.res = v; dlAggiorna(); })));
-      riga.appendChild(dlCampo("Salvezza", dlSelect(dlVociSoglie(true), c.save, function(v){ c.save = parseInt(v, 10); dlAggiorna(); })));
-      riga.appendChild(dlCampo("W", dlInputNumero(c.w, 1, "", function(v){ c.w = v; dlAggiorna(); })));
-      riga.appendChild(dlCampo("Invulnerabile", dlSelect(dlVociSoglie(false), c.invulT, function(v){ c.invulT = parseInt(v, 10); dlAggiorna(); })));
-      riga.appendChild(dlCampo("Feel No Pain", dlSelect(dlVociSoglie(false), c.fnpT, function(v){ c.fnpT = parseInt(v, 10); dlAggiorna(); })));
-      riga.appendChild(dlChip("-1 fer", c.malusFer, "Malus di 1 al tiro per ferire dell'attaccante (es. 2+ diventa 3+)", function(v){ c.malusFer = v; dlAggiorna(); }));
-      riga.appendChild(dlChip("-1 hit", c.malusCol, "Colpire l'unità è più difficile di 1 (es. 3+ diventa 4+, massimo 6+; i colpi automatici non cambiano)", function(v){ c.malusCol = v; dlAggiorna(); }));
-      riga.appendChild(dlChip("-1 D", c.menoDanno, "Ogni ferita non salvata fa 1 danno in meno, ma non sotto 1: si applica per arma, dopo il tiro salvezza e prima del Feel No Pain", function(v){ c.menoDanno = v; dlAggiorna(); }));
+      riga.appendChild(dlCampo("RES", dlInputNumero(c.res, 1, "", function(v){ c.res = v; dlDifCambiato(); })));
+      riga.appendChild(dlCampo("Salvezza", dlSelect(dlVociSoglie(true), c.save, function(v){ c.save = parseInt(v, 10); dlDifCambiato(); })));
+      riga.appendChild(dlCampo("W", dlInputNumero(c.w, 1, "", function(v){ c.w = v; dlDifCambiato(); })));
+      riga.appendChild(dlCampo("Invulnerabile", dlSelect(dlVociSoglie(false), c.invulT, function(v){ c.invulT = parseInt(v, 10); dlDifCambiato(); })));
+      riga.appendChild(dlCampo("Feel No Pain", dlSelect(dlVociSoglie(false), c.fnpT, function(v){ c.fnpT = parseInt(v, 10); dlDifCambiato(); })));
+      riga.appendChild(dlChip("-1 fer", c.malusFer, "Malus di 1 al tiro per ferire dell'attaccante (es. 2+ diventa 3+)", function(v){ c.malusFer = v; dlDifCambiato(); }));
+      riga.appendChild(dlChip("-1 hit", c.malusCol, "Colpire l'unità è più difficile di 1 (es. 3+ diventa 4+, massimo 6+; i colpi automatici non cambiano)", function(v){ c.malusCol = v; dlDifCambiato(); }));
+      riga.appendChild(dlChip("-1 D", c.menoDanno, "Ogni ferita non salvata fa 1 danno in meno, ma non sotto 1: si applica per arma, dopo il tiro salvezza e prima del Feel No Pain", function(v){ c.menoDanno = v; dlDifCambiato(); }));
       if(opzioni.modelliLiberi){
         // VSunità: vuoto = nessun limite, si calcola quanti modelli verrebbero uccisi/feriti.
         var campoModelli = dlInputNumero(c.modelli || "", 0, "", function(v){ c.modelli = v; dlAggiorna(); });
@@ -3096,6 +3232,13 @@ select.dl-in{width:auto; padding:0 3px;}
       var lista = libero ? [] : dlFeriteModelli(d);
       var indice = 0, resto = libero ? d.w : (lista.length ? lista[0] : 0);
       var morti = 0, armiUsate = 0, attacchi = 0, usate = [];
+      if(opzioni.migliorePer) duello.attaccanti.forEach(function(att){
+        if(!att._notaOtt) return;
+        att._notaOtt.textContent = obiettivo === "Standard" ? "" : memoria[att.chiaveManuale]
+          ? "Modelli modificati a mano: ripremi il pulsante «Migliore per» per rimettere la configurazione migliore."
+          : (att._testoOtt || "");
+        att._notaOtt.style.display = att._notaOtt.textContent ? "" : "none";
+      });
       var elAttuali = el("ferite-attuali");
       if(elAttuali) elAttuali.textContent = libero ? "tutti a " + d.w + " F" : dlTestoFerite(lista);
       dlTitolo(el("dif-titolo"), "Difensore", duello.nomeDif, d.modelli);
@@ -3236,20 +3379,18 @@ select.dl-in{width:auto; padding:0 3px;}
       attaccanti.forEach(function(att){
         // Dotazione standard: finché le armi non si modificano a mano, ogni arma di serie è portata dai modelli che la
         // hanno (per i profili di una stessa arma, es. Focused Fire / Saturation, solo il primo) e le altre sono a 0.
-        if(att.comp && !memoria["m|" + att.id + "|" + idConf]){
-          var standard = lmDefault(att.comp.info, att.modelli, att.comp.tipoProfilo), assegnate = {};
-          att.armi.forEach(function(a){
-            var k = lmChiaveArma(lmNomeBaseArma(a.nome));
-            a.modelli = (k in standard && !assegnate[k]) ? Math.min(standard[k], att.modelli) : 0;
-            assegnate[k] = true;
-          });
-        }
+        if(att.comp && !memoria["m|" + att.id + "|" + idConf]) dlStandard(att);
         att.armi.forEach(function(a){
           if(attaccanti.length > 1) a.attaccante = att.nome;
           armi.push(a);
         });
       });
-      duello = { attaccanti: attaccanti, armi: armi, dif: difensore, nomeDif: dif.nome || "?" };
+      duello = { attaccanti: attaccanti, armi: armi, dif: difensore, nomeDif: dif.nome || "?", parole: (dif.parole || []).slice() };
+      // Con «Migliore per» attivo le armi di chi non è stato modificato a mano sono quelle della configurazione migliore.
+      attaccanti.forEach(function(att){
+        att.chiaveManuale = "m|" + att.id + "|" + idConf;
+        if(opzioni.migliorePer && obiettivo !== "Standard" && !memoria[att.chiaveManuale]) dlOttimale(att);
+      });
       attaccanti.forEach(function(att){ memoria["a|" + att.id + "|" + idConf] = att.armi; });
       memoria["d|" + idDif] = difensore;
 
@@ -3268,11 +3409,15 @@ select.dl-in{width:auto; padding:0 3px;}
         if(!att.armi.length) elArmi.appendChild(dlEl("div", "dl-vuoto", "Nessuna arma nei dati per questa unità."));
         att.armi.forEach(function(a){ elArmi.appendChild(dlCostruisciArma(a, att.distanza, lmCapCampo(att.comp, a.nome, att.modelli), "m|" + att.id + "|" + idConf)); });
         card.appendChild(elArmi);
+        att._notaOtt = dlEl("div", "ef-nota");
+        att._notaOtt.style.display = "none";
+        card.appendChild(att._notaOtt);
         att._avvisi = dlEl("div", "dl-avvisi");
         card.appendChild(att._avvisi);
         contenitore.appendChild(card);
       });
       dlCostruisciDifensore(difensore);
+      dlDisegnaMigliore();
       dlAggiorna();
     }
 
@@ -3287,7 +3432,7 @@ select.dl-in{width:auto; padding:0 3px;}
   }
 
   var DL = creaDuello("");
-  var VSDL = creaDuello("vs-", { senzaDistanza: true, modelliLiberi: true });
+  var VSDL = creaDuello("vs-", { senzaDistanza: true, modelliLiberi: true, migliorePer: true });
   // VSunità riparte dal messaggio iniziale (le unità si scelgono dopo il caricamento dei dati).
   VSDL.svuota();
 
@@ -4135,7 +4280,7 @@ select.dl-in{width:auto; padding:0 3px;}
     // (limiti per arma, sostituzioni, "una fra queste"). Per un'arma si usa il profilo (es. Frag o Krak) che rende di più.
     // Ogni voce dell'elenco è un'arma di una fase: { id: fase#chiave, k: chiave, fase, a: profilo migliore, danni: per un modello }.
     function armiCandidate(d, s){
-      var b = ef.bonus, perId = {}, elenco = [];
+      var b = s.bonus || ef.bonus, perId = {}, elenco = [];
       s.armi.forEach(function(a){
         var k = chiaveArma(a), id = a.tipo + "#" + k, danni = efCalcolaArma(a, d, b, a.copie).danni; // un modello
         var extra = !!a.extra || (perId[id] && perId[id].extra);
@@ -4181,17 +4326,18 @@ select.dl-in{width:auto; padding:0 3px;}
       }
       function danniDi(c){
         var t = 0;
-        attivi.forEach(function(x){ if(c[x.id] > 0) t += efCalcolaArma(x.a, d, ef.bonus, c[x.id] * x.a.copie).danni; });
+        attivi.forEach(function(x){ if(c[x.id] > 0) t += efCalcolaArma(x.a, d, s.bonus || ef.bonus, c[x.id] * x.a.copie).danni; });
         return t;
       }
       var valido = function(){ return true; };
       if(s.comp){
-        var info = s.comp.info, ctx = lmContesto(info, s.modelli, null);
+        // tp: tipo di modello del profilo (solo in VSunità, per un profilo singolo come il Nob); nel tab Efficienza è sempre null.
+        var info = s.comp.info, tp = s.comp.tipoProfilo || null, ctx = lmContesto(info, s.modelli, tp);
         // Stessa arma e stesso tipo di avviso (il testo, senza i numeri): un avviso nuovo sulle stesse armi non è tollerato.
         var firma = function(x){ return x.chiavi.slice().sort().join("|") + "#" + x.testo.replace(/\d+/g, "N"); };
         // Gli avvisi che già ci sono con la dotazione standard (opzioni lette in modo approssimato) non bloccano.
         var tollerati = {};
-        lmValuta(info, s.modelli, std, null).avvisi.forEach(function(x){ tollerati[firma(x)] = true; });
+        lmValuta(info, s.modelli, std, tp).avvisi.forEach(function(x){ tollerati[firma(x)] = true; });
         // Armi che non cambiano: le altre fasi (dotazione standard o scelte già fatte) e quelle senza profilo nei dati.
         var fisso = {};
         Object.keys(std).forEach(function(k){ if(!chiaviAttive[k] && (!fissi || !chiaviArmi[k])) fisso[k] = std[k]; });
@@ -4200,7 +4346,7 @@ select.dl-in{width:auto; padding:0 3px;}
           if(usiMischia(c) > s.modelli) return false;
           var cont = Object.assign({}, fisso), i;
           attivi.forEach(function(x){ cont[x.k] = Math.max(cont[x.k] || 0, c[x.id]); });
-          var v = lmValuta(info, s.modelli, cont, null);
+          var v = lmValuta(info, s.modelli, cont, tp);
           // (le armi "si prendono insieme" stanno in fasi diverse: l'altra metà resta fuori da questo calcolo)
           // Un'arma dell'altra fase lasciata alla dotazione standard (es. lo Storm bolter mentre si cerca la mischia) non
           // blocca chi la sostituisce: le due fasi sono ottimizzate separatamente.
@@ -4253,7 +4399,7 @@ select.dl-in{width:auto; padding:0 3px;}
 
     // Risultato di una fase per una configurazione (id → modelli), con il confronto con la dotazione standard.
     function risultatoFase(elenco, fase, conta, std, d, s){
-      var b = ef.bonus, t = { righe: [], danni: 0, uccisi: 0, attacchi: 0, standard: 0, senzaDati: !s.comp, diff: [] };
+      var b = s.bonus || ef.bonus, t = { righe: [], danni: 0, uccisi: 0, attacchi: 0, standard: 0, senzaDati: !s.comp, diff: [] };
       elenco.forEach(function(x){
         if(x.fase !== fase) return;
         var n = conta[x.id] || 0, ns = std[x.id] || 0;
@@ -4294,7 +4440,7 @@ select.dl-in{width:auto; padding:0 3px;}
       }
       function totale(conta){
         var t = 0;
-        el.forEach(function(x){ if(conta[x.id] > 0) t += efCalcolaArma(x.a, d, ef.bonus, conta[x.id] * x.a.copie).danni; });
+        el.forEach(function(x){ if(conta[x.id] > 0) t += efCalcolaArma(x.a, d, s.bonus || ef.bonus, conta[x.id] * x.a.copie).danni; });
         return t;
       }
       // Prima fase ottimizzata da sola, poi l'altra tra le armi che restano possibili con quelle scelte.
@@ -4768,7 +4914,9 @@ select.dl-in{width:auto; padding:0 3px;}
       function(v){ ef.all = v; aggiornaTutte(); });
     g("dett").appendChild(chipAll);
     mostra();
-    return { ripopola: ripopola, stato: function(){ return ef; } };
+    // armiEfficienza e configura servono anche a VSunità (pulsanti «Migliore per»): lo stato passato a configura è
+    // { armi, modelli, comp, bonus }, come quello di un'unità del tab Efficienza.
+    return { ripopola: ripopola, stato: function(){ return ef; }, armiEfficienza: armiEfficienza, configura: configura };
   }
 
   var EF = creaEfficienza();
